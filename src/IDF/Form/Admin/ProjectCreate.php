@@ -97,7 +97,6 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                     array('required' => false,
                           'label' => __('Master branch'),
                           'initial' => '',
-                          'widget' => 'Pluf_Form_Widget_Input',
                           'help_text' => __('This should be a world-wide unique identifier for your project. A reverse DNS notation like "com.my-domain.my-project" is a good idea.'),
                           ));
 
