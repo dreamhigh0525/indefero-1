@@ -77,22 +77,20 @@ class IDF_Form_Admin_UserCreate extends Pluf_Form
                                             'initial' => '',
                                             'widget' => 'Pluf_Form_Widget_SelectInput',
                                             'widget_attrs' => array(
-                                                       'choices' => 
+                                                       'choices' =>
                                                        Pluf_L10n::getInstalledLanguages()
                                                                     ),
                                             ));
 
-        $this->fields['ssh_key'] = new Pluf_Form_Field_Varchar(
+        $this->fields['public_key'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
-                                            'label' => __('Add a public SSH key'),
+                                            'label' => __('Add a public key'),
                                             'initial' => '',
                                             'widget_attrs' => array('rows' => 3,
                                                                     'cols' => 40),
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
-                                            'help_text' => __('Be careful to provide the public key and not the private key!')
+                                            'help_text' => __('Paste a SSH or monotone public key. Be careful to not provide your private key here!')
                                             ));
-        
-
     }
 
     /**
@@ -137,11 +135,11 @@ class IDF_Form_Admin_UserCreate extends Pluf_Form
         $params = array('user' => $user);
         Pluf_Signal::send('Pluf_User::passwordUpdated',
                           'IDF_Form_Admin_UserCreate', $params);
-        // Create the ssh key as needed
-        if ('' !== $this->cleaned_data['ssh_key']) {
+        // Create the public key as needed
+        if ('' !== $this->cleaned_data['public_key']) {
             $key = new IDF_Key();
             $key->user = $user;
-            $key->content = $this->cleaned_data['ssh_key'];
+            $key->content = $this->cleaned_data['public_key'];
             $key->create();
         }
         // Send an email to the user with the password
@@ -162,16 +160,11 @@ class IDF_Form_Admin_UserCreate extends Pluf_Form
         return $user;
     }
 
-    function clean_ssh_key()
-    {
-        return IDF_Form_UserAccount::checkSshKey($this->cleaned_data['ssh_key']);
-    }
-
     function clean_last_name()
     {
         $last_name = trim($this->cleaned_data['last_name']);
         if ($last_name == mb_strtoupper($last_name)) {
-            return mb_convert_case(mb_strtolower($last_name), 
+            return mb_convert_case(mb_strtolower($last_name),
                                    MB_CASE_TITLE, 'UTF-8');
         }
         return $last_name;
@@ -181,7 +174,7 @@ class IDF_Form_Admin_UserCreate extends Pluf_Form
     {
         $first_name = trim($this->cleaned_data['first_name']);
         if ($first_name == mb_strtoupper($first_name)) {
-            return mb_convert_case(mb_strtolower($first_name), 
+            return mb_convert_case(mb_strtolower($first_name),
                                    MB_CASE_TITLE, 'UTF-8');
         }
         return $first_name;
@@ -210,5 +203,13 @@ class IDF_Form_Admin_UserCreate extends Pluf_Form
             throw new Pluf_Form_Invalid(sprintf(__('The login "%s" is already used, please find another one.'), $this->cleaned_data['login']));
         }
         return $this->cleaned_data['login'];
+    }
+
+    public function clean_public_key()
+    {
+        $this->cleaned_data['public_key'] =
+            IDF_Form_UserAccount::checkPublicKey($this->cleaned_data['public_key']);
+
+        return $this->cleaned_data['public_key'];
     }
 }

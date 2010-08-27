@@ -27,14 +27,14 @@ $cfg = array();
 # You must set them to false once everything is running ok.
 #
 $cfg['debug'] = true;
-# It will help you catch errors at beginning when configuring your 
+# It will help you catch errors at beginning when configuring your
 # SCM backend. It must be turned off in production.
-$cfg['debug_scm'] = false; 
+$cfg['debug_scm'] = false;
 
 #
-# Note: By default, InDefero will not manage the repositories for 
-# you, you can enable the repositories management with the 
-# built-in plugins. The documentation of the plugins is available 
+# Note: By default, InDefero will not manage the repositories for
+# you, you can enable the repositories management with the
+# built-in plugins. The documentation of the plugins is available
 # in the `doc/` folder.
 #
 
@@ -44,9 +44,9 @@ $cfg['debug_scm'] = false;
 # For example: '/path/to/my/project/.git'
 #
 # If you have multiple repositories, you need to put %s where you
-# want the shortname of the project to be replaced. 
+# want the shortname of the project to be replaced.
 # For example:
-# - You have many projects on your local computer and want to use 
+# - You have many projects on your local computer and want to use
 #   InDefero to see them. Put: '/home/yourlogin/Projects/%s/.git'
 # - You have many projects on a remote server with only "bare" git
 #   repositories. Put: '/home/git/repositories/%s.git'
@@ -64,7 +64,7 @@ $cfg['git_remote_url'] = 'git://localhost/%s.git';
 $cfg['git_write_remote_url'] = 'git@localhost:%s.git';
 
 # Same as for git, you can have multiple repositories, one for each
-# project or a single one for all the projects. 
+# project or a single one for all the projects.
 #
 # In the case of subversion, the admin of a project can also select a
 # remote repository from the web interface. From the web interface
@@ -72,6 +72,90 @@ $cfg['git_write_remote_url'] = 'git@localhost:%s.git';
 # here. This if for security reasons.
 $cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
 $cfg['svn_remote_url'] = 'http://localhost/svn/%s';
+
+# Path to the monotone binary
+$cfg['mtn_path'] = 'mtn';
+# Additional options for the started monotone process
+$cfg['mtn_opts'] = array('--no-workspace', '--norc');
+#
+# You can setup monotone for use with indefero in two ways:
+#
+# 1) One database for everything:
+#    Set 'mtn_repositories' below to a fixed database path, such as
+#    '/home/mtn/repositories/all_projects.mtn'
+#
+#    Pro: - easy to setup and to manage
+#    Con: - while read access can be configured per-branch,
+#           granting write access rights to a user means that
+#           he can write anything in the global database
+#         - database lock problem: the database from which
+#           indefero reads its data cannot be used to serve the
+#           contents to the users, as the serve process locks
+#           the database
+#
+# 2) One database for every project with 'usher':
+#    Set 'mtn_remote_url' below to a string which matches your setup.
+#    Again, the '%s' placeholder will be expanded to the project's
+#    short name. Note that 'mtn_remote_url' is used as internal
+#    URI (to access the data for indefero) as well as external URI
+#    (for end users) at the same time.
+#
+#    Then download and configure 'usher'
+#    (mtn clone mtn://monotone.ca?net.venge.monotone.contrib.usher)
+#    which acts as proxy in front of all single project databases.
+#    Usher's server names should be mapped to the project's short names,
+#    so you end up with something like this for every project:
+#
+#       server  "project"
+#       local   "-d" "/home/mtn/repositories/project.mtn" "*"
+#
+#    Alternatively if you assign every project a unique DNS such as
+#    'project.my-hosting.biz', you can also configure it like this:
+#
+#       host    "project.my-hosting.biz"
+#       local   "-d" "/home/mtn/repositories/project.mtn" "*"
+#
+#    Pro: - read and write access can be granted per project
+#         - no database locking issues
+#         - one public server running on the one well-known port
+#    Con: - harder to setup
+#
+# Usher can also be used to forward sync requests to remote servers,
+# please consult its README file for more information.
+#
+# monotone also allows to use SSH as transport protocol, so if you do not plan
+# to setup a netsync server as described above, then just enter a URI like
+# 'ssh://my-host.biz/home/mtn/repositories/%s.mtn' in 'mtn_remote_url'.
+#
+$cfg['mtn_repositories'] = '/home/mtn/repositories/%s.mtn';
+$cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
+#
+# Whether the particular database(s) are accessed locally (via automate stdio)
+# or remotely (via automate remote_stdio). 'remote' is the default for
+# netsync setups, while 'local' access should be choosed for ssh access.
+#
+# Note that you need to setup the hook 'get_remote_automate_permitted' for
+# each remotely accessible database. A full HOWTO set this up is beyond this
+# scope, please refer to the documentation of monotone and / or ask on the
+# mailing list (monotone-users@nongnu.org) or IRC channel
+# (irc.oftc.net/#monotone)
+#
+$cfg['mtn_db_access'] = 'remote';
+#
+# If configured, this allows basic control of a running usher process
+# via the forge administration
+#
+# 'host' and 'port' must be set to the specific bits from usher's
+# configured 'adminaddr', 'user' and 'pass' must match the values set for
+# the configured 'userpass' combination
+#
+#$cfg['mtn_usher'] = array(
+#    'host' => 'localhost',
+#    'port' => 12345,
+#    'user' => 'admin',
+#    'pass' => 'admin',
+#);
+#
 
 # Mercurial repositories path
 #$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
@@ -90,15 +174,15 @@ $cfg['mail_host'] = 'localhost';
 $cfg['mail_port'] = 25;
 
 # Paths/Url configuration.
-# 
+#
 # Examples:
-# You have: 
+# You have:
 #   http://www.mydomain.com/myfolder/index.php
 # Put:
 #   $cfg['idf_base'] = '/myfolder/index.php';
 #   $cfg['url_base'] = 'http://www.mydomain.com';
 #
-# You have mod_rewrite: 
+# You have mod_rewrite:
 #   http://www.mydomain.com/
 # Put:
 #   $cfg['idf_base'] = '';
@@ -109,7 +193,7 @@ $cfg['mail_port'] = 25;
 $cfg['idf_base'] = '/index.php';
 $cfg['url_base'] = 'http://localhost';
 
-# Url to access the media folder which is in the www folder 
+# Url to access the media folder which is in the www folder
 # of the archive
 $cfg['url_media'] = 'http://localhost/media';
 
@@ -120,9 +204,9 @@ $cfg['url_upload'] = 'http://localhost/media/upload';
 $cfg['upload_path'] = '/home/www/indefero/www/media/upload';
 
 #
-# The following path *MUST NOT* be accessible through a web browser 
-# as user will be able to upload .html, .php files and this can 
-# create *TERRIBLE* security issues. In this folder, the attachments 
+# The following path *MUST NOT* be accessible through a web browser
+# as user will be able to upload .html, .php files and this can
+# create *TERRIBLE* security issues. In this folder, the attachments
 # to the issues will be uploaded and we do not restrict the content type.
 #
 $cfg['upload_issue_path'] = '/home/www/indefero/attachments';
@@ -130,10 +214,10 @@ $cfg['upload_issue_path'] = '/home/www/indefero/attachments';
 #
 # write here a long random string unique for this installation. This
 # is critical to put a long string, with at least 40 characters.
-$cfg['secret_key'] = ''; 
+$cfg['secret_key'] = '';
 
 # the sender of all the emails.
-$cfg['from_email'] = 'sender@example.com'; 
+$cfg['from_email'] = 'sender@example.com';
 
 # Email address for the bounced messages.
 $cfg['bounce_email'] = 'no-reply@example.com';
@@ -150,22 +234,22 @@ $cfg['db_password'] = '';
 $cfg['db_server'] = '';
 $cfg['db_version'] = '5.1'; # Only needed for MySQL
 # If you want to have different installations with the same DB
-$cfg['db_table_prefix'] = 'indefero_'; 
-# ** DO NOT USE SQLITE IN PRODUCTION ** 
+$cfg['db_table_prefix'] = 'indefero_';
+# ** DO NOT USE SQLITE IN PRODUCTION **
 # This is not because of problems with the quality of the SQLite
 # driver or with SQLite itself, this is due to the lack of migration
 # support in Pluf for SQLite, this means we cannot modify the DB
 # easily once it is loaded with data.
 $cfg['db_engine'] = 'PostgreSQL'; # SQLite is also well tested or MySQL
 $cfg['db_database'] = 'website'; # put absolute path to the db if you
-                                 # are using SQLite. 
+                                 # are using SQLite.
 #
 # The extension of the downloads are limited. You can add extra
 # extensions here. The list must start with a space.
 # $cfg['idf_extra_upload_ext'] = ' ext1 ext2';
 #
 # By default, the size of the downloads is limited to 2MB.
-# The php.ini upload_max_filesize configuration setting will 
+# The php.ini upload_max_filesize configuration setting will
 # always have precedence.
 # $cfg['max_upload_size'] = 2097152; // Size in bytes
 
@@ -203,12 +287,13 @@ $cfg['template_context_processors'] = array('IDF_Middleware_ContextPreProcessor'
 $cfg['idf_views'] = dirname(__FILE__).'/urls.php';
 
 # available languages
-$cfg['languages'] = array('en', 'fr'); 
+$cfg['languages'] = array('en', 'fr');
 
 # SCM base configuration
 $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
                             'svn' => 'IDF_Scm_Svn',
                             'mercurial' => 'IDF_Scm_Mercurial',
+                            'mtn' => 'IDF_Scm_Monotone',
                             );
 
 # If you want to use another memtypes database
@@ -218,8 +303,8 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
 # $cfg['idf_extra_text_ext'] = 'ext1 ext2 ext3';
 
 # If you can execute the shell commands executed to get info
-# from the scm  with the user of your PHP process but it is 
-# not working from within PHP, this can be due to the environment 
+# from the scm  with the user of your PHP process but it is
+# not working from within PHP, this can be due to the environment
 # variables not being set correctly. Note the trailing space.
 # $cfg['idf_exec_cmd_prefix'] = '/usr/bin/env -i ';
 
@@ -229,11 +314,11 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
 # To know which path you need to provide, just run:
 # $ which git
 # from the command line. This will give you the path to git.
-# $cfg['svn_path'] = 'svn'; 
-# $cfg['svnlook_path'] = 'svnlook'; 
+# $cfg['svn_path'] = 'svn';
+# $cfg['svnlook_path'] = 'svnlook';
 # $cfg['svnadmin_path'] = 'svnadmin';
 # $cfg['hg_path'] = 'hg';
-# $cfg['git_path'] = 'git'; 
+# $cfg['git_path'] = 'git';
 
 # If you do not want to have calculations of the repositories, attachments
 # and downloads size, set it to true. You can set to false some

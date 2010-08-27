@@ -39,7 +39,7 @@ class IDF_Project extends Pluf_Model
      *
      * @see self::isRestricted
      */
-    protected $_isRestricted = null; 
+    protected $_isRestricted = null;
 
     function init()
     {
@@ -52,7 +52,7 @@ class IDF_Project extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
                             'name' =>
                             array(
@@ -113,7 +113,7 @@ class IDF_Project extends Pluf_Model
         return '';
     }
 
-    
+
     function preSave($create=false)
     {
         if ($this->id == '') {
@@ -181,7 +181,7 @@ class IDF_Project extends Pluf_Model
      */
     public function getTagIdsByStatus($status='open', $cache_refresh=false)
     {
-        if (!$cache_refresh 
+        if (!$cache_refresh
             and isset($this->_extra_cache['getTagIdsByStatus-'.$status])) {
             return $this->_extra_cache['getTagIdsByStatus-'.$status];
         }
@@ -197,7 +197,7 @@ class IDF_Project extends Pluf_Model
             break;
         }
         $tags = array();
-        foreach ($this->getTagsFromConfig($key, $default, 'Status') as $tag) { 
+        foreach ($this->getTagsFromConfig($key, $default, 'Status') as $tag) {
             $tags[] = (int) $tag->id;
         }
         $this->_extra_cache['getTagIdsByStatus-'.$status] = $tags;
@@ -289,9 +289,9 @@ class IDF_Project extends Pluf_Model
         if ($fmt == 'objects') {
             return new Pluf_Template_ContextVars(array('members' => $members, 'owners' => $owners, 'authorized' => $authorized));
         } else {
-            return array('members' => implode("\n", (array) $members), 
+            return array('members' => implode("\n", (array) $members),
                          'owners' => implode("\n", (array) $owners),
-                         'authorized' => implode("\n", (array) $authorized), 
+                         'authorized' => implode("\n", (array) $authorized),
                          );
         }
     }
@@ -382,15 +382,16 @@ class IDF_Project extends Pluf_Model
      * This will return the right url based on the user.
      *
      * @param Pluf_User The user (null)
+     * @param string    A specific commit to access
      */
-    public function getSourceAccessUrl($user=null)
+    public function getSourceAccessUrl($user=null, $commit=null)
     {
         $right = $this->getConf()->getVal('source_access_rights', 'all');
-        if (($user == null or $user->isAnonymous()) 
+        if (($user == null or $user->isAnonymous())
             and  $right == 'all' and !$this->private) {
-            return $this->getRemoteAccessUrl();
+            return $this->getRemoteAccessUrl($commit);
         }
-        return $this->getWriteRemoteAccessUrl($user);
+        return $this->getWriteRemoteAccessUrl($user, $commit);
     }
 
 
@@ -398,15 +399,17 @@ class IDF_Project extends Pluf_Model
      * Get the remote access url to the repository.
      *
      * This will always return the anonymous access url.
+     *
+     * @param string    A specific commit to access
      */
-    public function getRemoteAccessUrl()
+    public function getRemoteAccessUrl($commit=null)
     {
         $conf = $this->getConf();
         $scm = $conf->getVal('scm', 'git');
         $scms = Pluf::f('allowed_scm');
         Pluf::loadClass($scms[$scm]);
         return call_user_func(array($scms[$scm], 'getAnonymousAccessUrl'),
-                              $this);
+                              $this, $commit);
     }
 
     /**
@@ -415,14 +418,16 @@ class IDF_Project extends Pluf_Model
      * Some SCM have a remote access URL to write which is not the
      * same as the one to read. For example, you do a checkout with
      * git-daemon and push with SSH.
+     *
+     * @param string    A specific commit to access
      */
-    public function getWriteRemoteAccessUrl($user)
+    public function getWriteRemoteAccessUrl($user,$commit=null)
     {
         $conf = $this->getConf();
         $scm = $conf->getVal('scm', 'git');
         $scms = Pluf::f('allowed_scm');
         return call_user_func(array($scms[$scm], 'getAuthAccessUrl'),
-                              $this, $user);
+                              $this, $user, $commit);
     }
 
     /**
@@ -445,9 +450,10 @@ class IDF_Project extends Pluf_Model
     {
         $conf = $this->getConf();
         $roots = array(
-                       'git' => 'master', 
-                       'svn' => 'HEAD', 
-                       'mercurial' => 'tip'
+                       'git' => 'master',
+                       'svn' => 'HEAD',
+                       'mercurial' => 'tip',
+                       'mtn' => 'h:'.$conf->getVal('mtn_master_branch', '*'),
                        );
         $scm = $conf->getVal('scm', 'git');
         return $roots[$scm];
@@ -460,7 +466,7 @@ class IDF_Project extends Pluf_Model
      * By convention, all the objects belonging to a project have the
      * 'project' property set, so this is easy to check.
      *
-     * @param Pluf_Model 
+     * @param Pluf_Model
      */
     public function inOr404($obj)
     {
@@ -517,7 +523,7 @@ class IDF_Project extends Pluf_Model
          *
          * [description]
          *
-         * This signal allows an application to update the statistics 
+         * This signal allows an application to update the statistics
          * array of a project. For example to add the on disk size
          * of the repository if available.
          *
@@ -661,7 +667,7 @@ class IDF_Project extends Pluf_Model
                       );
         $conf = $this->getConf();
         foreach ($tabs as $tab) {
-            if (!in_array($conf->getVal($tab, 'all'), 
+            if (!in_array($conf->getVal($tab, 'all'),
                           array('all', 'none'))) {
                 $this->_isRestricted = true;
                 return true;

@@ -38,6 +38,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                          'git' => __('git'),
                          'svn' => __('Subversion'),
                          'mercurial' => __('mercurial'),
+                         'mtn' => __('monotone'),
                          );
         foreach (Pluf::f('allowed_scm', array()) as $key => $class) {
             $choices[$options[$key]] = $key;
@@ -90,6 +91,13 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                           'label' => __('Repository password'),
                           'initial' => '',
                           'widget' => 'Pluf_Form_Widget_PasswordInput',
+                          ));
+
+        $this->fields['mtn_master_branch'] = new Pluf_Form_Field_Varchar(
+                    array('required' => false,
+                          'label' => __('Master branch'),
+                          'initial' => '',
+                          'help_text' => __('This should be a world-wide unique identifier for your project. A reverse DNS notation like "com.my-domain.my-project" is a good idea.'),
                           ));
 
         $this->fields['owners'] = new Pluf_Form_Field_Varchar(
@@ -170,6 +178,34 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         return $url;
     }
 
+    public function clean_mtn_master_branch()
+    {
+        // do not validate, but empty the field if a different
+        // SCM should be used
+        if ($this->cleaned_data['scm'] != 'mtn')
+            return '';
+
+        $mtn_master_branch = mb_strtolower($this->cleaned_data['mtn_master_branch']);
+        if (!preg_match('/^([\w\d]+([-][\w\d]+)*)(\.[\w\d]+([-][\w\d]+)*)*$/',
+                        $mtn_master_branch)) {
+            throw new Pluf_Form_Invalid(__(
+                'The master branch is empty or contains illegal characters, '.
+                'please use only letters, digits, dashs and dots as separators.'
+            ));
+        }
+
+        $sql = new Pluf_SQL('vkey=%s AND vdesc=%s',
+                            array("mtn_master_branch", $mtn_master_branch));
+        $l = Pluf::factory('IDF_Conf')->getList(array('filter'=>$sql->gen()));
+        if ($l->count() > 0) {
+            throw new Pluf_Form_Invalid(__(
+                'This master branch is already used. Please select another one.'
+            ));
+        }
+
+        return $mtn_master_branch;
+    }
+
     public function clean_shortname()
     {
         $shortname = mb_strtolower($this->cleaned_data['shortname']);
@@ -198,6 +234,11 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                 $this->cleaned_data[$key] = '';
             }
         }
+
+        if ($this->cleaned_data['scm'] != 'mtn') {
+            $this->cleaned_data['mtn_master_branch'] = '';
+        }
+
         /**
          * [signal]
          *
@@ -234,8 +275,8 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
 
         if ($this->cleaned_data['template'] != '--') {
             // Find the template project
-            $sql = new Pluf_SQL('shortname=%s', 
-                                array($this->cleaned_data['template'])); 
+            $sql = new Pluf_SQL('shortname=%s',
+                                array($this->cleaned_data['template']));
             $tmpl = Pluf::factory('IDF_Project')->getOne(array('filter' => $sql->gen()));
             $project->private = $tmpl->private;
             $project->description = $tmpl->description;
@@ -246,10 +287,10 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         $project->create();
         $conf = new IDF_Conf();
         $conf->setProject($project);
-        $keys = array('scm', 'svn_remote_url', 
-                      'svn_username', 'svn_password');
+        $keys = array('scm', 'svn_remote_url', 'svn_username',
+                      'svn_password', 'mtn_master_branch');
         foreach ($keys as $key) {
-            $this->cleaned_data[$key] = (!empty($this->cleaned_data[$key])) ? 
+            $this->cleaned_data[$key] = (!empty($this->cleaned_data[$key])) ?
                 $this->cleaned_data[$key] : '';
             $conf->setVal($key, $this->cleaned_data[$key]);
         }
@@ -284,12 +325,13 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
             }
         }
         $project->created();
+
         if ($this->cleaned_data['template'] == '--') {
-            IDF_Form_MembersConf::updateMemberships($project, 
+            IDF_Form_MembersConf::updateMemberships($project,
                                                     $this->cleaned_data);
         } else {
             // Get the membership of the template $tmpl
-            IDF_Form_MembersConf::updateMemberships($project, 
+            IDF_Form_MembersConf::updateMemberships($project,
                                                     $tmpl->getMembershipData('string'));
         }
         $project->membershipsUpdated();
@@ -304,7 +346,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         if ($this->cleaned_data['template'] == '--') {
             return $this->cleaned_data['template'];
         }
-        $sql = new Pluf_SQL('shortname=%s', array($this->cleaned_data['template'])); 
+        $sql = new Pluf_SQL('shortname=%s', array($this->cleaned_data['template']));
         if (Pluf::factory('IDF_Project')->getOne(array('filter' => $sql->gen())) == null) {
             throw new Pluf_Form_Invalid(__('This project is not available.'));
         }

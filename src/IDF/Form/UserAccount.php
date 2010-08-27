@@ -65,7 +65,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             'initial' => $this->user->language,
                                             'widget' => 'Pluf_Form_Widget_SelectInput',
                                             'widget_attrs' => array(
-                                                       'choices' => 
+                                                       'choices' =>
                                                        Pluf_L10n::getInstalledLanguages()
                                                                     ),
                                             ));
@@ -92,17 +92,15 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                                                     ),
                                             ));
 
-        $this->fields['ssh_key'] = new Pluf_Form_Field_Varchar(
+        $this->fields['public_key'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
-                                            'label' => __('Add a public SSH key'),
+                                            'label' => __('Add a public key'),
                                             'initial' => '',
                                             'widget_attrs' => array('rows' => 3,
                                                                     'cols' => 40),
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
-                                            'help_text' => __('Be careful to provide your public key and not your private key!')
+                                            'help_text' => __('Paste a SSH or monotone public key. Be careful to not provide your private key here!')
                                             ));
-        
-
     }
 
     /**
@@ -151,10 +149,10 @@ class IDF_Form_UserAccount  extends Pluf_Form
         }
         $this->user->setFromFormData($this->cleaned_data);
         // Add key as needed.
-        if ('' !== $this->cleaned_data['ssh_key']) {
+        if ('' !== $this->cleaned_data['public_key']) {
             $key = new IDF_Key();
             $key->user = $this->user;
-            $key->content = $this->cleaned_data['ssh_key'];
+            $key->content = $this->cleaned_data['public_key'];
             if ($commit) {
                 $key->create();
             }
@@ -190,7 +188,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
     }
 
     /**
-     * Check an ssh key.
+     * Check arbitrary public keys.
      *
      * It will throw a Pluf_Form_Invalid exception if it cannot
      * validate the key.
@@ -199,27 +197,59 @@ class IDF_Form_UserAccount  extends Pluf_Form
      * @param $user int The user id of the user of the key (0)
      * @return string The clean key
      */
-    public static function checkSshKey($key, $user=0)
+    public static function checkPublicKey($key, $user=0)
     {
         $key = trim($key);
         if (strlen($key) == 0) {
             return '';
         }
-        $key = str_replace(array("\n", "\r"), '', $key);
-        if (!preg_match('#^ssh\-[a-z]{3}\s(\S+)\s\S+$#', $key, $matches)) {
-            throw new Pluf_Form_Invalid(__('The format of the key is not valid. It must start with ssh-dss or ssh-rsa, a long string on a single line and at the end a comment.'));
-        }
-        if (Pluf::f('idf_strong_key_check', false)) {
-            $tmpfile = Pluf::f('tmp_folder', '/tmp').'/'.$user.'-key';
-            file_put_contents($tmpfile, $key, LOCK_EX);
-            $cmd = Pluf::f('idf_exec_cmd_prefix', '').
-                'ssh-keygen -l -f '.escapeshellarg($tmpfile).' > /dev/null 2>&1';
-            exec($cmd, $out, $return);
-            unlink($tmpfile);
-            if ($return != 0) {
-                throw new Pluf_Form_Invalid(__('Please check the key as it does not appears to be a valid key.'));
+
+        if (preg_match('#^ssh\-[a-z]{3}\s\S+\s\S+$#', $key)) {
+            $key = str_replace(array("\n", "\r"), '', $key);
+
+            if (Pluf::f('idf_strong_key_check', false)) {
+
+                $tmpfile = Pluf::f('tmp_folder', '/tmp').'/'.$user.'-key';
+                file_put_contents($tmpfile, $key, LOCK_EX);
+                $cmd = Pluf::f('idf_exec_cmd_prefix', '').
+                    'ssh-keygen -l -f '.escapeshellarg($tmpfile).' > /dev/null 2>&1';
+                exec($cmd, $out, $return);
+                unlink($tmpfile);
+
+                if ($return != 0) {
+                    throw new Pluf_Form_Invalid(
+                        __('Please check the key as it does not appear '.
+                           'to be a valid SSH public key.')
+                    );
+                }
             }
         }
+        else if (preg_match('#^\[pubkey [^\]]+\]\s*\S+\s*\[end\]$#', $key)) {
+            if (Pluf::f('idf_strong_key_check', false)) {
+
+                // if monotone can read it, it should be valid
+                $mtn_opts = implode(' ', Pluf::f('mtn_opts', array()));
+                $cmd = Pluf::f('idf_exec_cmd_prefix', '').
+                    sprintf('%s %s -d :memory: read >/tmp/php-out 2>&1',
+                            Pluf::f('mtn_path', 'mtn'), $mtn_opts);
+                $fp = popen($cmd, 'w');
+                fwrite($fp, $key);
+                $return = pclose($fp);
+
+                if ($return != 0) {
+                       throw new Pluf_Form_Invalid(
+                        __('Please check the key as it does not appear '.
+                           'to be a valid monotone public key.')
+                    );
+                }
+            }
+        }
+        else {
+            throw new Pluf_Form_Invalid(
+                __('Public key looks neither like a SSH '.
+                   'nor monotone public key.'));
+        }
+
         // If $user, then check if not the same key stored
         if ($user) {
             $ruser = Pluf::factory('Pluf_User', $user);
@@ -227,24 +257,20 @@ class IDF_Form_UserAccount  extends Pluf_Form
                 $sql = new Pluf_SQL('content=%s', array($key));
                 $keys = Pluf::factory('IDF_Key')->getList(array('filter' => $sql->gen()));
                 if (count($keys) > 0) {
-                    throw new Pluf_Form_Invalid(__('You already have uploaded this SSH key.'));
+                    throw new Pluf_Form_Invalid(
+                        __('You already have uploaded this key.')
+                    );
                 }
             }
         }
         return $key;
     }
 
-    function clean_ssh_key()
-    {
-        return self::checkSshKey($this->cleaned_data['ssh_key'], 
-                                 $this->user->id);
-    }
-
     function clean_last_name()
     {
         $last_name = trim($this->cleaned_data['last_name']);
         if ($last_name == mb_strtoupper($last_name)) {
-            return mb_convert_case(mb_strtolower($last_name), 
+            return mb_convert_case(mb_strtolower($last_name),
                                    MB_CASE_TITLE, 'UTF-8');
         }
         return $last_name;
@@ -254,7 +280,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
     {
         $first_name = trim($this->cleaned_data['first_name']);
         if ($first_name == mb_strtoupper($first_name)) {
-            return mb_convert_case(mb_strtolower($first_name), 
+            return mb_convert_case(mb_strtolower($first_name),
                                    MB_CASE_TITLE, 'UTF-8');
         }
         return $first_name;
@@ -264,7 +290,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
     {
         $this->cleaned_data['email'] = mb_strtolower(trim($this->cleaned_data['email']));
         $guser = new Pluf_User();
-        $sql = new Pluf_SQL('email=%s AND id!=%s', 
+        $sql = new Pluf_SQL('email=%s AND id!=%s',
                             array($this->cleaned_data['email'], $this->user->id));
         if ($guser->getCount(array('filter' => $sql->gen())) > 0) {
             throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used.'), $this->cleaned_data['email']));
@@ -272,12 +298,20 @@ class IDF_Form_UserAccount  extends Pluf_Form
         return $this->cleaned_data['email'];
     }
 
+    function clean_public_key()
+    {
+        $this->cleaned_data['public_key'] =
+                self::checkPublicKey($this->cleaned_data['public_key'],
+                                     $this->user->id);
+        return $this->cleaned_data['public_key'];
+    }
+
     /**
-     * Check to see if the 2 passwords are the same.
+     * Check to see if the 2 passwords are the same
      */
     public function clean()
     {
-        if (!isset($this->errors['password']) 
+        if (!isset($this->errors['password'])
             && !isset($this->errors['password2'])) {
             $password1 = $this->cleaned_data['password'];
             $password2 = $this->cleaned_data['password2'];
@@ -285,6 +319,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                 throw new Pluf_Form_Invalid(__('The passwords do not match. Please give them again.'));
             }
         }
+
         return $this->cleaned_data;
     }
 }

@@ -35,12 +35,11 @@ class IDF_Views_Source
      * Extension supported by the syntax highlighter.
      */
     public static $supportedExtenstions = array(
-              'ascx', 'ashx', 'asmx', 'aspx', 'browser', 'bsh', 'c', 'cc', 
-              'config', 'cpp', 'cs', 'csh',	'csproj', 'css', 'cv', 'cyc', 
-              'html', 'html', 'java', 'js', 'm', 'master', 'pch', 'perl', 'php',
-              'pl', 'plist', 'pm', 'py', 'rb', 'sh', 'sitemap', 'skin', 'sln', 
-              'svc', 'vala', 'vb', 'vbproj', 'wsdl', 'xhtml', 'xml', 'xsd', 
-              'xsl', 'xslt');
+              'ascx', 'ashx', 'asmx', 'aspx', 'browser', 'bsh', 'c', 'cc',
+              'config', 'cpp', 'cs', 'csh',	'csproj', 'css', 'cv', 'cyc',
+              'html', 'html', 'java', 'js', 'master', 'perl', 'php', 'pl',
+              'pm', 'py', 'rb', 'sh', 'sitemap', 'skin', 'sln', 'svc', 'vala',
+              'vb', 'vbproj', 'wsdl', 'xhtml', 'xml', 'xsd', 'xsl', 'xslt');
 
     /**
      * Display help on how to checkout etc.
@@ -309,7 +308,7 @@ class IDF_Views_Source
         $in_branches = $scm->inBranches($cobject->commit, '');
         $tags = $scm->getTags();
         $in_tags = $scm->inTags($cobject->commit, '');
-        return Pluf_Shortcuts_RenderToResponse('idf/source/commit.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/source/'.$scmConf.'/commit.html',
                                                array(
                                                      'page_title' => $page_title,
                                                      'title' => $title,
@@ -416,7 +415,7 @@ class IDF_Views_Source
                                                   $scm->getMainBranch()));
             return new Pluf_HTTP_Response_Redirect($url);
         }
-        $info = self::getRequestedFileMimeType($request_file_info, 
+        $info = self::getRequestedFileMimeType($request_file_info,
                                                    $commit, $scm);
         $rep = new Pluf_HTTP_Response($scm->getFile($request_file_info),
                                       $info[0]);
@@ -477,7 +476,7 @@ class IDF_Views_Source
     public static function getMimeTypeFromContent($file, $filedata)
     {
         $info = pathinfo($file);
-        $res = array('application/octet-stream', 
+        $res = array('application/octet-stream',
                      $info['basename'],
                      isset($info['extension']) ? $info['extension'] : 'bin');
         if (function_exists('finfo_open')) {
@@ -596,5 +595,18 @@ function IDF_Views_Source_PrettySize($size)
 function IDF_Views_Source_PrettySizeSimple($size)
 {
     return Pluf_Utils::prettySize($size);
+}
+
+function IDF_Views_Source_ShortenString($string, $length)
+{
+    $ellipse = "...";
+    $length = max(strlen($ellipse) + 2, $length);
+    $preflen = ceil($length / 10);
+
+    if (mb_strlen($string) < $length)
+        return $string;
+
+    return substr($string, 0, $preflen).$ellipse.
+           substr($string, -($length - $preflen - mb_strlen($ellipse)));
 }
 

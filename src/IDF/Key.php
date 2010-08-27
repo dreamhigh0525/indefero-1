@@ -22,7 +22,7 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Storage of the SSH keys.
+ * Storage of the public keys (ssh or monotone).
  *
  */
 class IDF_Key extends Pluf_Model
@@ -39,9 +39,9 @@ class IDF_Key extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
                                   //It is automatically added.
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'user' => 
+                            'user' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -52,14 +52,14 @@ class IDF_Key extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Text',
                                   'blank' => false,
-                                  'verbose' => __('ssh key'),
+                                  'verbose' => __('public key'),
                                   ),
                             );
         // WARNING: Not using getSqlTable on the Pluf_User object to
         // avoid recursion.
-        $t_users = $this->_con->pfx.'users'; 
+        $t_users = $this->_con->pfx.'users';
         $this->_a['views'] = array(
-                              'join_user' => 
+                              'join_user' =>
                               array(
                                     'join' => 'LEFT JOIN '.$t_users
                                     .' ON '.$t_users.'.id='.$this->_con->qn('user'),
@@ -73,6 +73,58 @@ class IDF_Key extends Pluf_Model
     function showCompact()
     {
         return Pluf_Template::markSafe(Pluf_esc(substr($this->content, 0, 25)).' [...] '.Pluf_esc(substr($this->content, -55)));
+    }
+
+    private function parseContent()
+    {
+        if (preg_match('#^\[pubkey ([^\]]+)\]\s*(\S+)\s*\[end\]$#', $this->content, $m)) {
+            return array('mtn', $m[1], $m[2]);
+        }
+        else if (preg_match('#^ssh\-[a-z]{3}\s(\S+)\s(\S+)$#', $this->content, $m)) {
+            return array('ssh', $m[2], $m[1]);
+        }
+
+        throw new IDF_Exception('invalid or unknown key data detected');
+    }
+
+    /**
+     * Returns the type of the public key
+     *
+     * @return string 'ssh' or 'mtn'
+     */
+    function getType()
+    {
+        list($type, , ) = $this->parseContent();
+        return $type;
+    }
+
+    /**
+     * Returns the key name of the key
+     *
+     * @return string
+     */
+    function getName()
+    {
+        list(, $keyName, ) = $this->parseContent();
+        return $keyName;
+    }
+
+    /**
+     * This function should be used to calculate the key id from the
+     * public key hash for authentication purposes. This avoids clashes
+     * in case the key name is not unique across the project
+     *
+     * And yes, this is actually how monotone itself calculates the key
+     * id...
+     *
+     * @return string
+     */
+    function getMtnId()
+    {
+        list($type, $keyName, $keyData) = $this->parseContent();
+        if ($type != 'mtn')
+            throw new IDF_Exception('key is not a monotone public key');
+        return sha1($keyName.":".$keyData);
     }
 
     function postSave($create=false)
@@ -89,7 +141,7 @@ class IDF_Key extends Pluf_Model
          * [description]
          *
          * This signal allows an application to perform special
-         * operations after the saving of a SSH Key.
+         * operations after the saving of a public Key.
          *
          * [parameters]
          *
@@ -127,5 +179,4 @@ class IDF_Key extends Pluf_Model
         Pluf_Signal::send('IDF_Key::preDelete',
                           'IDF_Key', $params);
     }
-
 }
