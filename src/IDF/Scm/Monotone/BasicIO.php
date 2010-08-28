@@ -26,7 +26,7 @@
  *
  * @author Thomas Keller <me@thomaskeller.biz>
  */
-class IDF_Scm_Monotone_BasicIO extends IDF_Scm
+class IDF_Scm_Monotone_BasicIO
 {
     /**
      * Parses monotone's basic_io format
@@ -54,6 +54,7 @@ class IDF_Scm_Monotone_BasicIO extends IDF_Scm
                 }
 
                 if ($in[$pos] == '[') {
+                    unset($stanzaLine['values']);
                     ++$pos; // opening square bracket
                     $stanzaLine['hash'] = substr($in, $pos, 40);
                     $pos += 40;
@@ -61,6 +62,7 @@ class IDF_Scm_Monotone_BasicIO extends IDF_Scm
                 }
                 else
                 {
+                    unset($stanzaLine['hash']);
                     $valCount = 0;
                     while ($in[$pos] == '"') {
                         ++$pos; // opening quote
@@ -105,7 +107,56 @@ class IDF_Scm_Monotone_BasicIO extends IDF_Scm
      */
     public static function compile($in)
     {
-        throw new IDF_Scm_Exception("not yet implemented");
+        $out = "";
+        $first = true;
+        foreach ((array)$in as $sx => $stanza) {
+            if ($first)
+                $first = false;
+            else
+                $out .= "\n";
+
+            $maxkeylength = 0;
+            foreach ((array)$stanza as $lx => $line) {
+                if (!array_key_exists('key', $line)) {
+                    throw new IDF_Scm_Exception(
+                        '"key" not found in basicio stanza '.$sx.', line '.$lx
+                    );
+                }
+                $maxkeylength = max($maxkeylength, strlen($line['key']));
+            }
+
+            foreach ((array)$stanza as $lx => $line) {
+                $out .= str_pad($line['key'], $maxkeylength, ' ', STR_PAD_LEFT);
+
+                if (array_key_exists('hash', $line)) {
+                    $out .= ' ['.$line['hash'].']';
+                } else
+                if (array_key_exists('values', $line)) {
+                    if (!is_array($line['values']) || count($line['values']) == 0) {
+                        throw new IDF_Scm_Exception(
+                            '"values" must be an array of a size >= 1 '.
+                            'in basicio stanza '.$sx.', line '.$lx
+                        );
+                    }
+                    foreach ($line['values'] as $value) {
+                        $out .= ' "'.str_replace(
+                             array("\\", "\""),
+                             array("\\\\", "\\\""),
+                             $value).'"';
+                    }
+                }
+                else
+                {
+                    throw new IDF_Scm_Exception(
+                        'neither "hash" nor "values" found in basicio '.
+                        'stanza '.$sx.', line '.$lx
+                    );
+                }
+
+                $out .= "\n";
+            }
+        }
+        return $out;
     }
 }
 
