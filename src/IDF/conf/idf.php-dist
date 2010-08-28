@@ -147,13 +147,16 @@ $cfg['mtn_db_access'] = 'remote';
 #
 # 'host' and 'port' must be set to the specific bits from usher's
 # configured 'adminaddr', 'user' and 'pass' must match the values set for
-# the configured 'userpass' combination
+# the configured 'userpass' combination. The 'rcfile' variable must point
+# to the full (writable) path of the usher configuration file which gets
+# updated when new projects are added
 #
 #$cfg['mtn_usher'] = array(
-#    'host' => 'localhost',
-#    'port' => 12345,
-#    'user' => 'admin',
-#    'pass' => 'admin',
+#    'host'   => 'localhost',
+#    'port'   => 12345,
+#    'user'   => 'admin',
+#    'pass'   => 'admin',
+#    'rcfile' => '/path/to/usher.conf',
 #);
 #
 
