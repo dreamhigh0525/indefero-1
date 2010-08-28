@@ -215,7 +215,7 @@ class IDF_Scm_Monotone_Usher
             );
         }
 
-        fwrite($sock, 'USERPASS '.$uc['user'].' '.$uc['pass'].'\n');
+        fwrite($sock, 'USERPASS '.$uc['user'].' '.$uc['pass']."\n");
         if (feof($sock)) {
             throw new IDF_Scm_Exception(
                 'usher closed the connection - probably wrong admin '.
@@ -223,7 +223,7 @@ class IDF_Scm_Monotone_Usher
             );
         }
 
-        fwrite($sock, $cmd.'\n');
+        fwrite($sock, $cmd."\n");
         $out = '';
         while (!feof($sock)) {
             $out .= fgets($sock);
