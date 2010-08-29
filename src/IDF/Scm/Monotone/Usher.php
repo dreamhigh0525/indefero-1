@@ -21,6 +21,8 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
+require_once(dirname(__FILE__) . "/BasicIO.php");
+
 /**
  * Connects with the admininistrative interface of usher,
  * the monotone proxy. This class contains only static methods because
@@ -190,36 +192,56 @@ class IDF_Scm_Monotone_Usher
 
     private static function _triggerCommand($cmd)
     {
-        $uc = Pluf::f('mtn_usher');
-        if (empty($uc['host'])) {
+        $uc = Pluf::f('mtn_usher_conf', false);
+        if (!$uc || !is_readable($uc)) {
+            throw new IDF_Scm_Exception(
+                '"mtn_usher_conf" is not configured or not readable'
+            );
+        }
+
+        $parsed_config =
+            IDF_Scm_Monotone_BasicIO::parse(file_get_contents($uc));
+        $host = $port = $user = $pass = null;
+        foreach ($parsed_config as $stanza) {
+            foreach ($stanza as $line) {
+                if ($line['key'] == 'adminaddr') {
+                    list($host, $port) = explode(":", @$line['values'][0]);
+                    break;
+                }
+                if ($line['key'] == 'userpass') {
+                    $user = @$line['values'][0];
+                    $pass = @$line['values'][1];
+                }
+            }
+        }
+
+        if (empty($host)) {
             throw new IDF_Scm_Exception('usher host is empty');
         }
-        if (!preg_match('/^\d+$/', $uc['port']) ||
-            $uc['port'] == 0)
+        if (!preg_match('/^\d+$/', $port))
         {
             throw new IDF_Scm_Exception('usher port is invalid');
         }
 
-        if (empty($uc['user'])) {
+        if (empty($user)) {
             throw new IDF_Scm_Exception('usher user is empty');
         }
 
-        if (empty($uc['pass'])) {
+        if (empty($pass)) {
             throw new IDF_Scm_Exception('usher pass is empty');
         }
 
-        $sock = @fsockopen($uc['host'], $uc['port'], $errno, $errstr);
+        $sock = @fsockopen($host, $port, $errno, $errstr);
         if (!$sock) {
             throw new IDF_Scm_Exception(
                 "could not connect to usher: $errstr ($errno)"
             );
         }
 
-        fwrite($sock, 'USERPASS '.$uc['user'].' '.$uc['pass']."\n");
+        fwrite($sock, 'USERPASS '.$user.' '.$pass."\n");
         if (feof($sock)) {
             throw new IDF_Scm_Exception(
-                'usher closed the connection - probably wrong admin '.
-                'username or password'
+                'usher closed the connection - this should not happen'
             );
         }
 
@@ -232,7 +254,7 @@ class IDF_Scm_Monotone_Usher
         $out = rtrim($out);
 
         if ($out == 'unknown command') {
-            throw new IDF_Scm_Exception("unknown command: $cmd");
+            throw new IDF_Scm_Exception('unknown command: '.$cmd);
         }
 
         return $out;
