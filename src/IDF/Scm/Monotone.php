@@ -122,12 +122,6 @@ class IDF_Scm_Monotone extends IDF_Scm
             $branch = "*";
         }
 
-        if (count($this->_resolveSelector("h:$branch")) == 0) {
-            throw new IDF_Scm_Exception(
-                "Branch $branch is empty"
-            );
-        }
-
         return $branch;
     }
 
