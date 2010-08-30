@@ -106,7 +106,8 @@ class IDF_Plugin_SyncMonotone
             escapeshellarg($dbfile)
         );
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        $ll = exec($cmd, $output = array(), $return = 0);
+        $output = $return = null;
+        $ll = exec($cmd, $output, $return);
         if ($return != 0) {
             throw new IDF_Scm_Exception(sprintf(
                 __('The database file %s could not be created.'), $dbfile
@@ -127,12 +128,14 @@ class IDF_Plugin_SyncMonotone
 
         $keyname = $shortname.'-server@'.$server;
         $cmd = sprintf(
-            Pluf::f('mtn_path', 'mtn').' au genkey --confdir=%s %s ""',
+            Pluf::f('mtn_path', 'mtn').' au generate_key --confdir=%s %s ""',
             escapeshellarg($projectpath),
             escapeshellarg($keyname)
         );
+
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        $ll = exec($cmd, $output = array(), $return = 0);
+        $output = $return = null;
+        $ll = exec($cmd, $output, $return);
         if ($return != 0) {
             throw new IDF_Scm_Exception(sprintf(
                 __('The server key %s could not be created.'), $keyname
