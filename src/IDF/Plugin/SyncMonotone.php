@@ -3,7 +3,7 @@
 /*
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of InDefero, an open source project management application.
-# Copyright (C) 2008 Céondo Ltd and contributors.
+# Copyright (C) 2010 Céondo Ltd and contributors.
 #
 # InDefero is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@ class IDF_Plugin_SyncMonotone
         switch ($signal) {
         case 'IDF_Project::created':
             $plug->processMonotoneCreate($params['project']);
+            break;
+        case 'mtnpostpush.php::run':
+            $plug->processSyncTimeline($params);
             break;
         }
     }
@@ -73,6 +76,13 @@ class IDF_Plugin_SyncMonotone
             );
         }
 
+        $mtnpostpush = realpath(dirname(__FILE__) . "/../../../scripts/mtn-post-push");
+        if (!file_exists($mtnpostpush)) {
+            throw new IDF_Scm_Exception(sprintf(
+                __('Could not find mtn-post-push script "%s".'), $mtnpostpush
+            ));
+        }
+    
         $shortname = $project->shortname;
         $projectpath = sprintf($projecttempl, $shortname);
         if (file_exists($projectpath)) {
@@ -132,34 +142,19 @@ class IDF_Plugin_SyncMonotone
         //
         // step 3) write monotonerc for access control
         //         FIXME: netsync access control is still missing!
-        //
-        $monotonerc =<<<END
-function get_remote_automate_permitted(key_identity, command, options)
-    local read_only_commands = {
-        "get_corresponding_path", "get_content_changed", "tags", "branches",
-        "common_ancestors", "packet_for_fdelta", "packet_for_fdata",
-        "packets_for_certs", "packet_for_rdata", "get_manifest_of",
-        "get_revision", "select", "graph", "children", "parents", "roots",
-        "leaves", "ancestry_difference", "toposort", "erase_ancestors",
-        "descendents", "ancestors", "heads", "get_file_of", "get_file",
-        "interface_version", "get_attributes", "content_diff",
-        "file_merge", "show_conflicts", "certs", "keys"
-    }
+        //    
+        $monotonerc = file_get_contents(dirname(__FILE__) . "/SyncMonotone/monotonerc.tpl");
+        $monotonerc = str_replace(
+            array("%%MTNPOSTPUSH%%", "%%PROJECT%%"),
+            array($mtnpostpush, $shortname),
+            $monotonerc
+        );
 
-    for _,v in ipairs(read_only_commands) do
-        if (v == command[1]) then
-            return true
-        end
-    end
-
-    return false
-end
-END;
         $rcfile = $projectpath.'/monotonerc';
 
         if (!file_put_contents($rcfile, $monotonerc, LOCK_EX)) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write mtn configuration file "%s"'), $rcfile)
+                __('Could not write mtn configuration file "%s"'), $rcfile
             ));
         }
 
@@ -210,7 +205,7 @@ END;
         // have a backup copy of usher.conf around...
         if (!file_put_contents($usher_config, $usher_rc, LOCK_EX)) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write usher configuration file "%s"'), $usher_config)
+                __('Could not write usher configuration file "%s"'), $usher_config
             ));
         }
 
@@ -218,5 +213,34 @@ END;
         // step 5) reload usher to pick up the new configuration
         //
         IDF_Scm_Monotone_Usher::reload();
+    }
+
+    /**
+     * Update the timeline after a push
+     *
+     */
+    public function processSyncTimeline($params)
+    {
+        $pname = $params['project'];
+        try {
+            $project = IDF_Project::getOr404($pname);
+        } catch (Pluf_HTTP_Error404 $e) {
+            Pluf_Log::event(array(
+                'IDF_Plugin_SyncMonotone::processSyncTimeline', 
+                'Project not found.',
+                array($pname, $params)
+            ));
+            return false; // Project not found
+        }
+
+        Pluf_Log::debug(array(
+            'IDF_Plugin_SyncMonotone::processSyncTimeline', 
+            'Project found', $pname, $project->id
+        ));
+        IDF_Scm::syncTimeline($project, true);
+        Pluf_Log::event(array(
+            'IDF_Plugin_SyncMonotone::processSyncTimeline',
+            'sync', array($pname, $project->id)
+        ));
     }
 }
