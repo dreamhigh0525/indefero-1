@@ -146,8 +146,9 @@ class IDF_Scm_Monotone_Stdio
             return false;
 
         $read = array($this->pipes[1], $this->pipes[2]);
+        $write = $except = null;
         $streamsChanged = stream_select(
-            $read, $write = null, $except = null, 0, 20000
+            $read, $write, $except, 0, 20000
         );
 
         if ($streamsChanged === false) {
