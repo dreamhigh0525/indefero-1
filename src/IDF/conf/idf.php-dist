@@ -73,10 +73,10 @@ $cfg['git_write_remote_url'] = 'git@localhost:%s.git';
 $cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
 $cfg['svn_remote_url'] = 'http://localhost/svn/%s';
 
-# Path to the monotone binary
+# Path to the monotone binary (you need mtn 0.99 or newer)
 $cfg['mtn_path'] = 'mtn';
 # Additional options for the started monotone process
-$cfg['mtn_opts'] = array('--no-workspace', '--norc');
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles', '--key=');
 #
 # You can setup monotone for use with indefero in several ways. The
 # two most-used should be:
