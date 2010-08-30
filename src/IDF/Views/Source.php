@@ -181,7 +181,7 @@ class IDF_Views_Source
                                                   $request_file));
             return new Pluf_HTTP_Response_Redirect($url, 301);
         }
-        if (!$scm->isValidRevision($commit, $request_file)) {
+        if (!$scm->isValidRevision($commit)) {
             // Redirect to the first branch
             return new Pluf_HTTP_Response_Redirect($fburl);
         }
