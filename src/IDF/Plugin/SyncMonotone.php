@@ -157,10 +157,11 @@ end
 END;
         $rcfile = $projectpath.'/monotonerc';
 
-        // FIXME: sanity
-        $fp = fopen($rcfile, 'w');
-        fwrite($fp, $monotonerc);
-        fclose($fp);
+        if (!file_put_contents($rcfile, $monotonerc, LOCK_EX)) {
+            throw new IDF_Scm_Exception(sprintf(
+                __('Could not write mtn configuration file "%s"'), $rcfile)
+            ));
+        }
 
         //
         // step 4) read in and append the usher config with the new server
@@ -205,10 +206,13 @@ END;
         $parsed_config[] = $new_server;
         $usher_rc = IDF_Scm_Monotone_BasicIO::compile($parsed_config);
 
-        // FIXME: more sanity - what happens on failing writes?
-        $fp = fopen($usher_config, 'w');
-        fwrite($fp, $usher_rc);
-        fclose($fp);
+        // FIXME: more sanity - what happens on failing writes? we do not
+        // have a backup copy of usher.conf around...
+        if (!file_put_contents($usher_config, $usher_rc, LOCK_EX)) {
+            throw new IDF_Scm_Exception(sprintf(
+                __('Could not write usher configuration file "%s"'), $usher_config)
+            ));
+        }
 
         //
         // step 5) reload usher to pick up the new configuration
