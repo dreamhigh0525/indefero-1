@@ -84,7 +84,7 @@ class IDF_Key extends Pluf_Model
             return array('ssh', $m[2], $m[1]);
         }
 
-        throw new IDF_Exception('invalid or unknown key data detected');
+        throw new Exception('invalid or unknown key data detected');
     }
 
     /**
@@ -123,7 +123,7 @@ class IDF_Key extends Pluf_Model
     {
         list($type, $keyName, $keyData) = $this->parseContent();
         if ($type != 'mtn')
-            throw new IDF_Exception('key is not a monotone public key');
+            throw new Exception('key is not a monotone public key');
         return sha1($keyName.":".$keyData);
     }
 
