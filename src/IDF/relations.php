@@ -49,51 +49,58 @@ Pluf_Signal::connect('Pluf_Template_Compiler::construct_template_tags_modifiers'
 # -- Standard plugins, they will run only if configured --
 #
 # Subversion synchronization
-Pluf_Signal::connect('IDF_Project::membershipsUpdated', 
+Pluf_Signal::connect('IDF_Project::membershipsUpdated',
                      array('IDF_Plugin_SyncSvn', 'entry'));
-Pluf_Signal::connect('IDF_Project::created', 
+Pluf_Signal::connect('IDF_Project::created',
                      array('IDF_Plugin_SyncSvn', 'entry'));
-Pluf_Signal::connect('Pluf_User::passwordUpdated', 
+Pluf_Signal::connect('Pluf_User::passwordUpdated',
                      array('IDF_Plugin_SyncSvn', 'entry'));
-Pluf_Signal::connect('IDF_Project::preDelete', 
+Pluf_Signal::connect('IDF_Project::preDelete',
                      array('IDF_Plugin_SyncSvn', 'entry'));
-Pluf_Signal::connect('svnpostcommit.php::run', 
+Pluf_Signal::connect('svnpostcommit.php::run',
                      array('IDF_Plugin_SyncSvn', 'entry'));
 
 #
 # Mercurial synchronization
-Pluf_Signal::connect('IDF_Project::membershipsUpdated', 
+Pluf_Signal::connect('IDF_Project::membershipsUpdated',
                      array('IDF_Plugin_SyncMercurial', 'entry'));
-Pluf_Signal::connect('IDF_Project::created', 
+Pluf_Signal::connect('IDF_Project::created',
                      array('IDF_Plugin_SyncMercurial', 'entry'));
-Pluf_Signal::connect('Pluf_User::passwordUpdated', 
+Pluf_Signal::connect('Pluf_User::passwordUpdated',
                      array('IDF_Plugin_SyncMercurial', 'entry'));
-Pluf_Signal::connect('hgchangegroup.php::run', 
+Pluf_Signal::connect('hgchangegroup.php::run',
                      array('IDF_Plugin_SyncMercurial', 'entry'));
 
 #
 # Git synchronization
-Pluf_Signal::connect('IDF_Project::membershipsUpdated', 
+Pluf_Signal::connect('IDF_Project::membershipsUpdated',
                      array('IDF_Plugin_SyncGit', 'entry'));
-Pluf_Signal::connect('IDF_Key::postSave', 
+Pluf_Signal::connect('IDF_Key::postSave',
                      array('IDF_Plugin_SyncGit', 'entry'));
-Pluf_Signal::connect('IDF_Project::created', 
+Pluf_Signal::connect('IDF_Project::created',
                      array('IDF_Plugin_SyncGit', 'entry'));
-Pluf_Signal::connect('IDF_Key::preDelete', 
+Pluf_Signal::connect('IDF_Key::preDelete',
                      array('IDF_Plugin_SyncGit', 'entry'));
-Pluf_Signal::connect('gitpostupdate.php::run', 
+Pluf_Signal::connect('gitpostupdate.php::run',
                      array('IDF_Plugin_SyncGit', 'entry'));
+
+#
+# monotone synchronization
+Pluf_Signal::connect('IDF_Project::created',
+                     array('IDF_Plugin_SyncMonotone', 'entry'));
+Pluf_Signal::connect('phppostpush.php::run',
+                     array('IDF_Plugin_SyncMonotone', 'entry'));
 
 #
 # -- Processing of the webhook queue --
-Pluf_Signal::connect('queuecron.php::run', 
+Pluf_Signal::connect('queuecron.php::run',
                      array('IDF_Queue', 'process'));
 
 #
-# Processing of a given webhook, the hook can be configured 
-# directly in the configuration file if a different solution 
+# Processing of a given webhook, the hook can be configured
+# directly in the configuration file if a different solution
 # is required.
-Pluf_Signal::connect('IDF_Queue::processItem', 
-                     Pluf::f('idf_hook_process_item', 
+Pluf_Signal::connect('IDF_Queue::processItem',
+                     Pluf::f('idf_hook_process_item',
                              array('IDF_Webhook', 'process')));
 return $m;

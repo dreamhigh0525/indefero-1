@@ -386,7 +386,7 @@ $ctl[] = array('regex' => '#^/admin/users/(\d+)/$#',
                'model' => 'IDF_Views_Admin',
                'method' => 'userUpdate');
 
-if (Pluf::f("mtn_usher", null) !== null)
+if (Pluf::f("mtn_usher_conf", null) !== null)
 {
     $ctl[] = array('regex' => '#^/admin/usher/$#',
                    'base' => $base,

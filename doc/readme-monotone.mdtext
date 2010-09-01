@@ -3,9 +3,8 @@
 ## general
 
     This version of indefero contains an implementation of the monotone 
-    automation interface. It needs at least monotone version 0.47 
-    (interface version 12.0) or newer, but as development continues, its
-    likely that this dependency has to be raised.
+    automation interface. It needs at least monotone version 0.99 
+    (interface version 13.0) or newer.
     
     To set up a new IDF project with monotone quickly, all you need to do
     is to create a new monotone database with

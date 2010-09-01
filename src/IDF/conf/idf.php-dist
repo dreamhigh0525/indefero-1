@@ -73,14 +73,16 @@ $cfg['git_write_remote_url'] = 'git@localhost:%s.git';
 $cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
 $cfg['svn_remote_url'] = 'http://localhost/svn/%s';
 
-# Path to the monotone binary
+# Path to the monotone binary (you need mtn 0.99 or newer)
 $cfg['mtn_path'] = 'mtn';
 # Additional options for the started monotone process
-$cfg['mtn_opts'] = array('--no-workspace', '--norc');
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles', '--key=');
 #
-# You can setup monotone for use with indefero in two ways:
+# You can setup monotone for use with indefero in several ways. The
+# two most-used should be:
 #
 # 1) One database for everything:
+#
 #    Set 'mtn_repositories' below to a fixed database path, such as
 #    '/home/mtn/repositories/all_projects.mtn'
 #
@@ -94,26 +96,39 @@ $cfg['mtn_opts'] = array('--no-workspace', '--norc');
 #           the database
 #
 # 2) One database for every project with 'usher':
-#    Set 'mtn_remote_url' below to a string which matches your setup.
+#
+#    Download and configure 'usher'
+#    (mtn clone mtn://monotone.ca?net.venge.monotone.contrib.usher)
+#    which acts as proxy in front of all single project databases.
+#    Create a basic configuration file for it and add a secret admin
+#    username and password. Finally, point the below variable
+#    'mtn_usher_conf' to this configuration file.
+#
+#    Then set 'mtn_remote_url' below to a string which matches your setup.
 #    Again, the '%s' placeholder will be expanded to the project's
 #    short name. Note that 'mtn_remote_url' is used as internal
 #    URI (to access the data for indefero) as well as external URI
-#    (for end users) at the same time.
+#    (for end users) at the same time. 'mtn_repositories' should then
+#    point to a directory where all project-related files (databases,
+#    keys, configurations) are kept, as these are automatically created
+#    on project creation by IDF.
 #
-#    Then download and configure 'usher'
-#    (mtn clone mtn://monotone.ca?net.venge.monotone.contrib.usher)
-#    which acts as proxy in front of all single project databases.
-#    Usher's server names should be mapped to the project's short names,
-#    so you end up with something like this for every project:
+#    Example: 'mtn_repositories' is configured to be '/var/monotone/%s'
 #
-#       server  "project"
-#       local   "-d" "/home/mtn/repositories/project.mtn" "*"
+#      - IDF tries to create /var/monotone/<projectname> as root directory
+#      - The database is placed in as /var/monotone/<projectname>/database.mtn
+#      - The server key is put into /var/monotone/<projectname>/keys and
+#        is named "<projectname>-server@<host>", where host is the host part
+#        of 'mtn_remote_url'
 #
-#    Alternatively if you assign every project a unique DNS such as
-#    'project.my-hosting.biz', you can also configure it like this:
+#    therefor /var/monotone MUST be read/writable for the www user and all
+#    files which are created underknees MUST be read/writable by the user
+#    who is executing the usher instance! The best way to achieve this is with
+#    default (POSIX) ACLs on /var/monotone.
 #
-#       host    "project.my-hosting.biz"
-#       local   "-d" "/home/mtn/repositories/project.mtn" "*"
+#
+#    You could also choose to setup usher by hand, i.e. with individual
+#    databases, in this case leave 'mtn_usher_conf' below commented out.
 #
 #    Pro: - read and write access can be granted per project
 #         - no database locking issues
@@ -143,19 +158,11 @@ $cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
 $cfg['mtn_db_access'] = 'remote';
 #
 # If configured, this allows basic control of a running usher process
-# via the forge administration
+# via the forge administration. The variable must point to the full (writable)
+# path of the usher configuration file which gets updated when new projects
+# are added
 #
-# 'host' and 'port' must be set to the specific bits from usher's
-# configured 'adminaddr', 'user' and 'pass' must match the values set for
-# the configured 'userpass' combination
-#
-#$cfg['mtn_usher'] = array(
-#    'host' => 'localhost',
-#    'port' => 12345,
-#    'user' => 'admin',
-#    'pass' => 'admin',
-#);
-#
+#$cfg['mtn_usher_conf'] = '/path/to/usher.conf';
 
 # Mercurial repositories path
 #$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';

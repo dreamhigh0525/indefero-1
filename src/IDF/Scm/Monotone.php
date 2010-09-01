@@ -22,6 +22,7 @@
 # ***** END LICENSE BLOCK ***** */
 
 require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
+require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
 
 /**
  * Monotone scm class
@@ -121,12 +122,6 @@ class IDF_Scm_Monotone extends IDF_Scm
             $branch = "*";
         }
 
-        if (count($this->_resolveSelector("h:$branch")) == 0) {
-            throw new IDF_Scm_Exception(
-                "Branch $branch is empty"
-            );
-        }
-
         return $branch;
     }
 
@@ -144,75 +139,6 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
-     * Parses monotone's basic_io format
-     *
-     * @param string $in
-     * @return array of arrays
-     */
-    private static function _parseBasicIO($in)
-    {
-        $pos = 0;
-        $stanzas = array();
-
-        while ($pos < strlen($in)) {
-            $stanza = array();
-            while ($pos < strlen($in)) {
-                if ($in[$pos] == "\n") break;
-
-                $stanzaLine = array('key' => '', 'values' => array(), 'hash' => null);
-                while ($pos < strlen($in)) {
-                    $ch = $in[$pos];
-                    if ($ch == '"' || $ch == '[') break;
-                    ++$pos;
-                    if ($ch == ' ') continue;
-                    $stanzaLine['key'] .= $ch;
-                }
-
-                if ($in[$pos] == '[') {
-                    ++$pos; // opening square bracket
-                    $stanzaLine['hash'] = substr($in, $pos, 40);
-                    $pos += 40;
-                    ++$pos; // closing square bracket
-                }
-                else
-                {
-                    $valCount = 0;
-                    while ($in[$pos] == '"') {
-                        ++$pos; // opening quote
-                        $stanzaLine['values'][$valCount] = '';
-                        while ($pos < strlen($in)) {
-                            $ch = $in[$pos]; $pr = $in[$pos-1];
-                            if ($ch == '"' && $pr != '\\') break;
-                            ++$pos;
-                            $stanzaLine['values'][$valCount] .= $ch;
-                        }
-                        ++$pos; // closing quote
-
-                        if ($in[$pos] == ' ') {
-                            ++$pos; // space
-                            ++$valCount;
-                        }
-                    }
-
-                    for ($i = 0; $i <= $valCount; $i++) {
-                        $stanzaLine['values'][$i] = str_replace(
-                            array("\\\\", "\\\""),
-                            array("\\", "\""),
-                            $stanzaLine['values'][$i]
-                        );
-                    }
-                }
-
-                $stanza[] = $stanzaLine;
-                ++$pos; // newline
-            }
-            $stanzas[] = $stanza;
-            ++$pos; // newline
-        }
-        return $stanzas;
-    }
-
-    /**
      * Queries the certs for a given revision and returns them in an
      * associative array array("branch" => array("branch1", ...), ...)
      *
@@ -226,7 +152,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         if (!array_key_exists($rev, $certCache)) {
             $out = $this->stdio->exec(array('certs', $rev));
 
-            $stanzas = self::_parseBasicIO($out);
+            $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
             $certs = array();
             foreach ($stanzas as $stanza) {
                 $certname = null;
@@ -290,7 +216,7 @@ class IDF_Scm_Monotone extends IDF_Scm
             'get_content_changed', $startrev, $file
         ));
 
-        $stanzas = self::_parseBasicIO($out);
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
 
         // FIXME: we only care about the first returned content mark
         // everything else seem to be very, very rare cases
@@ -326,7 +252,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         $out = $this->stdio->exec(array('tags'));
 
         $tags = array();
-        $stanzas = self::_parseBasicIO($out);
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
         foreach ($stanzas as $stanza) {
             $tagname = null;
             foreach ($stanza as $stanzaline) {
@@ -375,7 +301,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         ));
 
         $files = array();
-        $stanzas = self::_parseBasicIO($out);
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
         $folder = $folder == '/' || empty($folder) ? '' : $folder.'/';
 
         foreach ($stanzas as $stanza) {
@@ -525,7 +451,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         ));
 
         $files = array();
-        $stanzas = self::_parseBasicIO($out);
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
 
         foreach ($stanzas as $stanza) {
             if ($stanza[0]['key'] == 'format_version')
@@ -666,7 +592,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         ));
 
         $newAndPatchedFiles = 0;
-        $stanzas = self::_parseBasicIO($out);
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
 
         foreach ($stanzas as $stanza) {
             if ($stanza[0]['key'] == 'patch' || $stanza[0]['key'] == 'add_file')
