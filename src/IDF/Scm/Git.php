@@ -296,10 +296,12 @@ class IDF_Scm_Git extends IDF_Scm
     }
 
 
-    public function isValidRevision($commit)
+    public function validateRevision($commit)
     {
         $type = $this->testHash($commit);
-        return ('commit' == $type || 'tag' == $type);
+        if ('commit' == $type || 'tag' == $type)
+            return IDF_Scm::REVISION_VALID;
+        return IDF_Scm::REVISION_INVALID;
     }
 
     /**
