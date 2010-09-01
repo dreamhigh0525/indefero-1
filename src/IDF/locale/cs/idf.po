@@ -970,7 +970,7 @@ msgid ""
 "<ul>\n"
 "<li>A commit or revision of the current code in the repository from which you started your work.</li>\n"
 "<li>A patch describing your changes with respect to the reference commit.</li>\n"
-"<li><strong>Check your patch to not provide any password or confidential information!</strong></li>\n"
+"<li><strong>Ensure your patch does not contain any passwords or confidential information!</strong></li>\n"
 "</ul>"
 msgstr ""
 
