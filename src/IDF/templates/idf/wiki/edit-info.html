@@ -1,6 +1,8 @@
-{assign $url = 'http://michelf.com/projects/php-markdown/extra/'}
+{assign $eurl = 'http://michelf.com/projects/php-markdown/extra/'}
+{assign $burl = 'http://daringfireball.net/projects/markdown/syntax'}
 {blocktrans}
 <p><strong>Instructions:</strong></p>
-<p>The content of the page can use the <a href="{$url}">Markdown syntax</a>.</p>
+<p>The content of the page can use the <a href="{$burl}">Markdown syntax</a> with the <a href="{$eurl}"><em>Extra</em> extension</a>.</p>
 <p>Website addresses are automatically linked and you can link to another page in the documentation using double square brackets like that [[AnotherPage]].</p>
+<p>To directly include a file content from the repository, embrace its path with triple square brackets: [[[path/to/file.txt]]].</p>
 {/blocktrans}
