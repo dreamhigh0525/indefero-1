@@ -43,6 +43,14 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                             'initial' => $this->project->name,
                                             ));
 
+        $this->fields['shortdesc'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => true,
+                                            'label' => __('short description'),
+                                            'help_text' => __('A one line description of the project.'),
+                                            'initial' => $this->project->shortdesc,
+                                            'widget_attrs' => array('size' => '35'),
+                                            ));
+
         $this->fields['owners'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('Project owners'),
@@ -80,6 +88,7 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                                 $this->cleaned_data);
         $this->project->membershipsUpdated();
         $this->project->name = $this->cleaned_data['name'];
+        $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->update();
     }
 }
