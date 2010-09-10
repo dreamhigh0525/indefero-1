@@ -340,7 +340,14 @@ class IDF_Scm_Monotone extends IDF_Scm
                 foreach ($certs['date'] as $date)
                     $dates[] = date('Y-m-d H:i:s', strtotime($date));
                 $file['date'] = implode(', ', $dates);
-                $file['log'] = implode("\n---\n", $certs['changelog']);
+                $combinedChangelog = implode("\n---\n", $certs['changelog']);
+                $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+                // FIXME: the complete log message is currently not used in the
+                // tree view (the same is true for the other SCM implementations)
+                // but we _should_ really use or at least return that here
+                // in case we want to do fancy stuff like described in
+                // issue 492
+                $file['log'] =  $split[0];
             }
 
             $files[] = (object) $file;
