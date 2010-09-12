@@ -75,6 +75,9 @@ class IDF_Scm_Monotone_BasicIO
                         }
                         ++$pos; // closing quote
 
+                        if ($pos >= strlen($in))
+                            break;
+
                         if ($in[$pos] == ' ') {
                             ++$pos; // space
                             ++$valCount;
