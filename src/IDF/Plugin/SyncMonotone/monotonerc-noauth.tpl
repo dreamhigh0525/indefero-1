@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- This file is part of InDefero, an open source project management application.
--- Copyright (C) 2008 Céondo Ltd and contributors.
+-- Copyright (C) 2010 Céondo Ltd and contributors.
 --
 -- InDefero is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 --
 -- controls the access rights for remote_stdio which is used by IDFs frontend
+-- and other interested parties
 --
 function get_remote_automate_permitted(key_identity, command, options)
     local read_only_commands = {
@@ -38,10 +39,13 @@ function get_remote_automate_permitted(key_identity, command, options)
             return true
         end
     end
-            
+
     return false
 end
 
+--
+-- let IDF know of new arriving revisions to fill its timeline
+--
 _idf_revs = {}
 function note_netsync_start(session_id)
     _idf_revs[session_id] = {}
@@ -61,11 +65,11 @@ function note_netsync_end (session_id, ...)
         print("could execute %%MTNPOSTPUSH%%")
         return
     end
-    
+
     for _,r in ipairs(_idf_revs[session_id]) do
         pin:write(r .. "\n")
     end
     pin:close()
-    
+
     wait(pid)
 end

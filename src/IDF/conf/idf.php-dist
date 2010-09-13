@@ -76,7 +76,7 @@ $cfg['svn_remote_url'] = 'http://localhost/svn/%s';
 # Path to the monotone binary (you need mtn 0.99 or newer)
 $cfg['mtn_path'] = 'mtn';
 # Additional options for the started monotone process
-$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles', '--key=');
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
 #
 # You can setup monotone for use with indefero in several ways. The
 # two most-used should be:
@@ -156,6 +156,19 @@ $cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
 # (irc.oftc.net/#monotone)
 #
 $cfg['mtn_db_access'] = 'remote';
+#
+# If true, each access to the database is authenticated with an auto-generated
+# project key which is stored in the IDF project configuration
+# ('mtn_client_key_*') and written out to $cfg['tmp_folder']/mtn-client-keys
+# for its actual use. This key is then configured on the server to have
+# full read / write access to all functions, while anonymous access can be
+# completely disabled.
+# If false, IDF tries to connect anonymously, without authentication, to
+# the remote monotone server instance. In this case no project-specific
+# keys are generated and the server must be configured to allow at least
+# anonymous read access to the main functions.
+#
+$cfg['mtn_remote_auth'] = true;
 #
 # If configured, this allows basic control of a running usher process
 # via the forge administration. The variable must point to the full (writable)
