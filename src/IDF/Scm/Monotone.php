@@ -48,6 +48,16 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * Returns the stdio instance in use
+     *
+     * @return IDF_Scm_Monotone_Stdio
+     */
+    public function getStdio()
+    {
+        return $this->stdio;
+    }
+
+    /**
      * @see IDF_Scm::getRepositorySize()
      */
     public function getRepositorySize()
