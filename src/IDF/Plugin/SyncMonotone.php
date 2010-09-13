@@ -163,7 +163,6 @@ class IDF_Plugin_SyncMonotone
                 $parsed_keyinfo = IDF_Scm_Monotone_BasicIO::parse($keyinfo);
             }
             catch (Exception $e) {
-                echo $e->getTraceAsString(); exit;
                 throw new IDF_Scm_Exception(sprintf(
                     __('Could not parse key information: %s'), $e->getMessage()
                 ));
@@ -184,11 +183,11 @@ class IDF_Plugin_SyncMonotone
             );
             $clientkey_pubdata = self::_mtn_exec($cmd);
 
-            $cmd = sprintf('au put_public_key --confdir=%s %s',
-                escapeshellarg($projectpath),
+            $cmd = sprintf('au put_public_key --db=%s %s',
+                escapeshellarg($dbfile),
                 escapeshellarg($clientkey_pubdata)
             );
-            $keyinfo = self::_mtn_exec($cmd);
+            self::_mtn_exec($cmd);
         }
 
         //
@@ -631,8 +630,13 @@ class IDF_Plugin_SyncMonotone
             $stdio = $mtn->getStdio();
             // if the public key did not sign any revisions, drop it from
             // the database as well
-            if (strlen($stdio->exec(array('select', 'k:' . $mtn_key_id))) == 0) {
-                $stdio->exec(array('drop_public_key', $mtn_key_id));
+            try {
+                if (strlen($stdio->exec(array('select', 'k:' . $mtn_key_id))) == 0) {
+                    $stdio->exec(array('drop_public_key', $mtn_key_id));
+                }
+            } catch (IDF_Scm_Exception $e) {
+                if (strpos($e->getMessage(), 'there is no key named') === false)
+                    throw $e;
             }
         }
     }
