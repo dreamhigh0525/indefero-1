@@ -79,18 +79,18 @@ class IDF_Plugin_SyncMonotone
         $projecttempl = Pluf::f('mtn_repositories', false);
         if ($projecttempl === false) {
             throw new IDF_Scm_Exception(
-                 '"mtn_repositories" must be defined in your configuration file.'
+                 __('"mtn_repositories" must be defined in your configuration file.')
             );
         }
 
         $usher_config = Pluf::f('mtn_usher_conf', false);
         if (!$usher_config || !is_writable($usher_config)) {
             throw new IDF_Scm_Exception(
-                 '"mtn_usher_conf" does not exist or is not writable.'
+                 __('"mtn_usher_conf" does not exist or is not writable.')
             );
         }
 
-        $mtnpostpush = realpath(dirname(__FILE__) . "/../../../scripts/mtn-post-push");
+        $mtnpostpush = realpath(dirname(__FILE__) . '/../../../scripts/mtn-post-push');
         if (!file_exists($mtnpostpush)) {
             throw new IDF_Scm_Exception(sprintf(
                 __('Could not find mtn-post-push script "%s".'), $mtnpostpush
@@ -274,21 +274,16 @@ class IDF_Plugin_SyncMonotone
      */
     public function processMembershipsUpdated($project)
     {
-        $projecttempl = Pluf::f('mtn_repositories', false);
-        if ($projecttempl === false) {
-            throw new IDF_Scm_Exception(
-                 '"mtn_repositories" must be defined in your configuration file.'
-            );
+        if ($project->getConf()->getVal('scm') != 'mtn') {
+            return;
         }
-
-        $shortname = $project->shortname;
-        $projectpath = sprintf($projecttempl, $shortname);
 
         $mtn = IDF_Scm_Monotone::factory($project);
         $stdio = $mtn->getStdio();
 
-        $auth_ids = self::getAuthorizedUserIds($project);
-        $key_ids = array();
+        $projectpath = self::_get_project_path($project);
+        $auth_ids    = self::_get_authorized_user_ids($project);
+        $key_ids     = array();
         foreach ($auth_ids as $auth_id) {
             $sql = new Pluf_SQL('user=%s', array($auth_id));
             $keys = Pluf::factory('IDF_Key')->getList(array('filter' => $sql->gen()));
@@ -346,7 +341,7 @@ class IDF_Plugin_SyncMonotone
         $usher_config = Pluf::f('mtn_usher_conf', false);
         if (!$usher_config || !is_writable($usher_config)) {
             throw new IDF_Scm_Exception(
-                 '"mtn_usher_conf" does not exist or is not writable.'
+                 __('"mtn_usher_conf" does not exist or is not writable.')
             );
         }
 
@@ -356,14 +351,7 @@ class IDF_Plugin_SyncMonotone
         $projecttempl = Pluf::f('mtn_repositories', false);
         if ($projecttempl === false) {
             throw new IDF_Scm_Exception(
-                 '"mtn_repositories" must be defined in your configuration file.'
-            );
-        }
-
-        $usher_config = Pluf::f('mtn_usher_conf', false);
-        if (!$usher_config || !is_writable($usher_config)) {
-            throw new IDF_Scm_Exception(
-                 '"mtn_usher_conf" does not exist or is not writable.'
+                 __('"mtn_repositories" must be defined in your configuration file.')
             );
         }
 
@@ -434,13 +422,6 @@ class IDF_Plugin_SyncMonotone
         if ($key->getType() != 'mtn')
             return;
 
-        $projecttempl = Pluf::f('mtn_repositories', false);
-        if ($projecttempl === false) {
-            throw new IDF_Scm_Exception(
-                 '"mtn_repositories" must be defined in your configuration file.'
-            );
-        }
-
         foreach (Pluf::factory('IDF_Project')->getList() as $project) {
             $conf = new IDF_Conf();
             $conf->setProject($project);
@@ -448,15 +429,8 @@ class IDF_Plugin_SyncMonotone
             if ($scm != 'mtn')
                 continue;
 
-            $shortname = $project->shortname;
-            $projectpath = sprintf($projecttempl, $shortname);
-            if (!file_exists($projectpath)) {
-                throw new IDF_Scm_Exception(sprintf(
-                    __('The project path %s does not exists.'), $projectpath
-                ));
-            }
-
-            $auth_ids = self::getAuthorizedUserIds($project);
+            $projectpath = self::_get_project_path($project);
+            $auth_ids    = self::_get_authorized_user_ids($project);
             if (!in_array($key->user, $auth_ids))
                 continue;
 
@@ -554,13 +528,6 @@ class IDF_Plugin_SyncMonotone
         if ($key->getType() != 'mtn')
             return;
 
-        $projecttempl = Pluf::f('mtn_repositories', false);
-        if ($projecttempl === false) {
-            throw new IDF_Scm_Exception(
-                 '"mtn_repositories" must be defined in your configuration file.'
-            );
-        }
-
         foreach (Pluf::factory('IDF_Project')->getList() as $project) {
             $conf = new IDF_Conf();
             $conf->setProject($project);
@@ -568,15 +535,8 @@ class IDF_Plugin_SyncMonotone
             if ($scm != 'mtn')
                 continue;
 
-            $shortname = $project->shortname;
-            $projectpath = sprintf($projecttempl, $shortname);
-            if (!file_exists($projectpath)) {
-                throw new IDF_Scm_Exception(sprintf(
-                    __('The project path %s does not exists.'), $projectpath
-                ));
-            }
-
-            $auth_ids = self::getAuthorizedUserIds($project);
+            $projectpath = self::_get_project_path($project);
+            $auth_ids    = self::_get_authorized_user_ids($project);
             if (!in_array($key->user, $auth_ids))
                 continue;
 
@@ -658,19 +618,6 @@ class IDF_Plugin_SyncMonotone
         }
     }
 
-    private static function getAuthorizedUserIds($project)
-    {
-        $mem = $project->getMembershipData();
-        $members = array_merge((array)$mem['members'],
-                               (array)$mem['owners'],
-                               (array)$mem['authorized']);
-        $userids = array();
-        foreach ($members as $member) {
-            $userids[] = $member->id;
-        }
-        return $userids;
-    }
-
     /**
      * Update the timeline after a push
      *
@@ -697,6 +644,37 @@ class IDF_Plugin_SyncMonotone
             'IDF_Plugin_SyncMonotone::processSyncTimeline',
             'sync', array($project_name, $project->id)
         ));
+    }
+
+    private static function _get_authorized_user_ids($project)
+    {
+        $mem = $project->getMembershipData();
+        $members = array_merge((array)$mem['members'],
+                               (array)$mem['owners'],
+                               (array)$mem['authorized']);
+        $userids = array();
+        foreach ($members as $member) {
+            $userids[] = $member->id;
+        }
+        return $userids;
+    }
+
+    private static function _get_project_path($project)
+    {
+        $projecttempl = Pluf::f('mtn_repositories', false);
+        if ($projecttempl === false) {
+            throw new IDF_Scm_Exception(
+                 __('"mtn_repositories" must be defined in your configuration file.')
+            );
+        }
+
+        $projectpath = sprintf($projecttempl, $project->shortname);
+        if (!file_exists($projectpath)) {
+            throw new IDF_Scm_Exception(sprintf(
+                __('The project path %s does not exists.'), $projectpath
+            ));
+        }
+        return $projectpath;
     }
 
     private static function _mtn_exec($cmd)
