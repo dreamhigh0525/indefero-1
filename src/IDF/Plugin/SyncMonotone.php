@@ -37,6 +37,9 @@ class IDF_Plugin_SyncMonotone
         case 'IDF_Project::created':
             $plug->processProjectCreate($params['project']);
             break;
+        case 'IDF_Project::membershipsUpdated':
+            $plug->processMembershipsUpdated($params['project']);
+            break;
         case 'IDF_Project::preDelete':
             $plug->processProjectDelete($params['project']);
             break;
@@ -62,8 +65,8 @@ class IDF_Plugin_SyncMonotone
      *  4) write monotonerc
      *  5) add the database as new local server in the usher configuration
      *  6) reload the running usher instance so it acknowledges the new server
-     *  7) create read-/write-permissions for the project and add all public
-     *     keys to the project
+     *
+     * The initial right setup happens in processMembershipsUpdated()
      *
      * @param IDF_Project
      */
@@ -262,11 +265,25 @@ class IDF_Plugin_SyncMonotone
         // step 6) reload usher to pick up the new configuration
         //
         IDF_Scm_Monotone_Usher::reload();
+    }
 
-        //
-        // step 7) add public monotone keys for the project to
-        //         read-permissions, write-permissions and the database
-        //
+    /**
+     * Updates the read / write permissions for the monotone database
+     *
+     * @param IDF_Project
+     */
+    public function processMembershipsUpdated($project)
+    {
+        $projecttempl = Pluf::f('mtn_repositories', false);
+        if ($projecttempl === false) {
+            throw new IDF_Scm_Exception(
+                 '"mtn_repositories" must be defined in your configuration file.'
+            );
+        }
+
+        $shortname = $project->shortname;
+        $projectpath = sprintf($projecttempl, $shortname);
+
         $mtn = IDF_Scm_Monotone::factory($project);
         $stdio = $mtn->getStdio();
 
@@ -466,11 +483,11 @@ class IDF_Plugin_SyncMonotone
                 }
 
                 $wildcard_section = null;
-                foreach ($parsed_read_perms as $stanzas) {
-                    foreach ($stanzas as $stanza_line) {
+                for ($i=0; $i<count($parsed_read_perms); ++$i) {
+                    foreach ($parsed_read_perms[$i] as $stanza_line) {
                         if ($stanza_line['key'] == 'pattern' &&
                             $stanza_line['values'][0] == '*') {
-                            $wildcard_section =& $stanzas;
+                            $wildcard_section =& $parsed_read_perms[$i];
                             break;
                         }
                     }
@@ -510,12 +527,12 @@ class IDF_Plugin_SyncMonotone
             }
 
             $write_perms = file_get_contents($projectpath.'/write-permissions');
-            $lines = preg_split("/(\n|\r\n)/", $write_perms);
+            $lines = preg_split("/(\n|\r\n)/", $write_perms, -1, PREG_SPLIT_NO_EMPTY);
             if (!in_array('*', $lines) && !in_array($mtn_key_id, $lines)) {
                 $lines[] = $mtn_key_id;
             }
             if (file_put_contents($projectpath.'/write-permissions',
-                                  implode("\n", $lines), LOCK_EX) === false) {
+                                  implode("\n", $lines) . "\n", LOCK_EX) === false) {
                 throw new IDF_Scm_Exception(sprintf(
                     __('Could not write write-permissions file for project "%s"'),
                     $shortname
@@ -572,7 +589,7 @@ class IDF_Plugin_SyncMonotone
             //      pattern "*"
             //      allow "*"
             // which is the default for non-private projects
-            if ($project->private === true) {
+            if ($project->private) {
                 $read_perms = file_get_contents($projectpath.'/read-permissions');
                 $parsed_read_perms = array();
                 try {
@@ -588,14 +605,13 @@ class IDF_Plugin_SyncMonotone
                 // while we add new keys only to an existing wild-card entry
                 // we remove dropped keys from all sections since the key
                 // should be simply unavailable for all of them
-                foreach ($parsed_read_perms as $stanzas) {
-                    for ($i=0; $i<count($stanzas); ) {
-                        if ($stanzas[$i]['key'] == 'allow' &&
-                            $stanzas[$i]['values'][0] == $mtn_key_id) {
-                            unset($stanzas[$i]);
+                for ($h=0; $h<count($parsed_read_perms); ++$h) {
+                    for ($i=0; $i<count($parsed_read_perms[$h]); ++$i) {
+                        if ($parsed_read_perms[$h][$i]['key'] == 'allow' &&
+                            $parsed_read_perms[$h][$i]['values'][0] == $mtn_key_id) {
+                            unset($parsed_read_perms[$h][$i]);
                             continue;
                         }
-                        ++$i;
                     }
                 }
 
@@ -610,16 +626,17 @@ class IDF_Plugin_SyncMonotone
             }
 
             $write_perms = file_get_contents($projectpath.'/write-permissions');
-            $lines = preg_split("/(\n|\r\n)/", $write_perms);
-            for ($i=0; $i<count($lines); ) {
+            $lines = preg_split("/(\n|\r\n)/", $write_perms, -1, PREG_SPLIT_NO_EMPTY);
+            for ($i=0; $i<count($lines); ++$i) {
                 if ($lines[$i] == $mtn_key_id) {
                     unset($lines[$i]);
+                    // the key should actually only exist once in the
+                    // file, but we're paranoid
                     continue;
                 }
-                ++$i;
             }
             if (file_put_contents($projectpath.'/write-permissions',
-                                  implode("\n", $lines), LOCK_EX) === false) {
+                                  implode("\n", $lines) . "\n", LOCK_EX) === false) {
                 throw new IDF_Scm_Exception(sprintf(
                     __('Could not write write-permissions file for project "%s"'),
                     $shortname

@@ -88,6 +88,8 @@ Pluf_Signal::connect('gitpostupdate.php::run',
 # monotone synchronization
 Pluf_Signal::connect('IDF_Project::created',
                      array('IDF_Plugin_SyncMonotone', 'entry'));
+Pluf_Signal::connect('IDF_Project::membershipsUpdated',
+                     array('IDF_Plugin_SyncMonotone', 'entry'));
 Pluf_Signal::connect('IDF_Project::preDelete',
                      array('IDF_Plugin_SyncMonotone', 'entry'));
 Pluf_Signal::connect('IDF_Key::postSave',
