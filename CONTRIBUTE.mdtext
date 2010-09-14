@@ -1,0 +1,115 @@
+[Indefero][idf] is not only a software you can use either hosted for
+you or hosted by you, but also a free software you can contribute to. 
+
+Here you will get how to contribute and what to contribute.
+
+[idf]: http://www.indefero.net 
+
+# Quick Way on How to Contribute
+
+Simple contribution:
+
+1. Open a ticket with your idea. You can directly propose a patch if
+   you have it.
+
+2. Wait for it to be checked by the devs or meet us on the #indefero
+   channel on [FreeNode][freenode].
+
+Bigger contribution:
+
+1. Fork Indefero where you want (fork from the develop branch).
+
+2. Code your change and document it.
+
+3. Open a ticket with a pull request and talk about it on IRC.
+
+# The General Contribution Workflow for Regular Contributors
+
+1. Fork Indefero from the **develop** branch.
+2. Request a pull request if you do not have write access on the repository.
+3. Merge your changes without fast forward in develop. This keeps track of 
+   the history of the changes and makes understanding what is going on easy.
+4. Merge your changes with fast forward **only if a single commit**.
+
+Indefero is composed of two main branches:
+
+1. **master**: this is the shipped branch, only a select number of people
+   can push into it.
+2. **develop**: this is the development branch, all the people having write
+   access to the repository are welcomed to push in.
+
+**Note:** The branching model we use is [explained in details here][bmi]. You
+**must** understand it to really contribute to the code base in an
+efficient way. 
+
+[bmi]: http://nvie.com/git-model "A successful Git branching model"
+
+# What to Contribute
+
+Contribution is easy, you can contribute in a lot of different fields,
+contributions small or big are always appreciated. Here is an example
+list of what you can do:
+
+- Install InDefero on your system and report the problem you had.
+- Find the bad English and typos and propose corrections.
+- Help with the translation effort.
+- Find little bugs or usability problems and provide ideas on how to fix them.
+- Register to the [discussion group][group] and help new users.
+- Come and chat on IRC #indefero on the [FreeNode][freenode] servers.
+- Find ways to improve the design while keeping it **beautifully simple**.
+- Write a blog post about the project, what you think is good or bad.
+- Translate InDefero for the sake of the community.
+- Or maybe really hack into the code.
+
+As you can see, the real hacking into the code is just a small part of the work, so even if you are not a coder you can do a lot.
+
+[group]: http://groups.google.com/group/indefero-users
+[freenode]: http://freenode.net/ 
+
+## I am a simple user
+
+Thanks a lot! Really! As a project leader, I consider **you** as 
+**the most important person in the success of the project**. So do not
+worry, I will really listen to your needs and make you love this
+project.
+
+What you can do to help:
+
+- Use the software and each time you find something a bit annoying in your daily use, report a bug. Usability issues are high priority issues.
+- Find typos, grammar mistakes, etc. and report a bug.
+- Write about InDefero on your blog/website.
+- Read the issues submitted by the users and provide answers if you have them.
+- ...
+
+## I am a designer
+
+A lot of things to do for you:
+
+- Check the design and find the flaws in it. Is the space well used, does it look really nice and is it also functional for the first users?
+- Do we have good support of all the major browsers?
+- ...
+
+## I am a coder
+
+Checkout the code and have fun, but keep in mind that your results
+must be simple to use. Do not worry about the beautiful part, the
+designers can work on that.
+
+## I am a security guy
+
+Please, do try to break it, if you find a problem, come on IRC or
+contact the developers to get the issue fixed as soon as
+possible. Please, be nice, do not release the issue in the wild
+without first talking to us.
+
+## I am a translator
+
+We currently use (transifex)[http://trac.transifex.org] to help our
+users to translate indefero. You don't have to use it, but it's an
+easy way to do the job. You can visit the indefero page at transifex
+here : http://www.transifex.net/projects/p/indefero/c/indefero/
+
+Please understand that your changes will not be commited instantly,
+but are sent to the maintainers e-mails before. Then, your changes
+will not be in the main repository until da-loic push the changes. In
+that way, try to do big changes with less submissions.

@@ -64,6 +64,14 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                                             'help_text' => __('It must be unique for each project and composed only of letters, digits and dash (-) like "my-project".'),
                                             ));
 
+        $this->fields['shortdesc'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => true,
+                                            'label' => __('short description'),
+                                            'help_text' => __('A one line description of the project.'),
+                                            'initial' => '',
+                                            'widget_attrs' => array('size' => '35'),
+                                            ));
+
         $this->fields['scm'] = new Pluf_Form_Field_Varchar(
                     array('required' => true,
                           'label' => __('Repository type'),
@@ -272,6 +280,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         $project = new IDF_Project();
         $project->name = $this->cleaned_data['name'];
         $project->shortname = $this->cleaned_data['shortname'];
+        $project->shortdesc = $this->cleaned_data['shortdesc'];
 
         if ($this->cleaned_data['template'] != '--') {
             // Find the template project

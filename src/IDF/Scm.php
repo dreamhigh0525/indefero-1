@@ -63,7 +63,7 @@ class IDF_Scm
     public $project = null;
 
     /**
-     * Cache storage. 
+     * Cache storage.
      *
      * It must only be used to store data for the lifetime of the
      * object. For example if you need to get the list of branches in
@@ -166,13 +166,28 @@ class IDF_Scm
         throw new Pluf_Exception_NotImplemented();
     }
 
+    const REVISION_VALID = 0;
+    const REVISION_INVALID = 1;
+    const REVISION_AMBIGUOUS = 2;
+
     /**
-     * Check if a revision or commit is valid.
+     * Check if a revision or commit is valid, invalid or ambiguous.
      *
      * @param string Revision or commit
-     * @return bool 
+     * @return int One of REVISION_VALID, REVISION_INVALID or REVISION_AMBIGIOUS
      */
-    public function isValidRevision($rev)
+    public function validateRevision($rev)
+    {
+        throw new Pluf_Exception_NotImplemented();
+    }
+
+    /**
+     * Returns an array of single commit objects for ambiguous commit identifiers
+     *
+     * @param string Ambiguous commit identifier
+     * @return array of objects
+     */
+    public function disambiguateRevision($commit)
     {
         throw new Pluf_Exception_NotImplemented();
     }
@@ -217,7 +232,7 @@ class IDF_Scm
      *       'foo-branch' => 'branches/foo-branch',)
      * </pre>
      *
-     * @return array Branches 
+     * @return array Branches
      */
     public function getBranches()
     {
@@ -282,7 +297,7 @@ class IDF_Scm
      * @param string Revision or commit
      * @param string Folder ('/')
      * @param string Branch (null)
-     * @return array 
+     * @return array
      */
     public function getTree($rev, $folder='/', $branch=null)
     {
@@ -396,7 +411,7 @@ class IDF_Scm
     public static function syncTimeline($project, $force=false)
     {
         $cache = Pluf_Cache::factory();
-        $key = 'IDF_Scm:'.$project->shortname.':lastsync'; 
+        $key = 'IDF_Scm:'.$project->shortname.':lastsync';
         if ($force or null === ($res=$cache->get($key))) {
             $scm = IDF_Scm::get($project);
             if ($scm->isAvailable()) {

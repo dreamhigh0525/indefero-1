@@ -148,6 +148,16 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/help/$#',
                'model' => 'IDF_Views_Source',
                'method' => 'help');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/source/invalid/([^/]+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Source',
+               'method' => 'invalidRevision');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/source/disambiguate/([^/]+)/from/([^/]+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Source',
+               'method' => 'disambiguateRevision');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/tree/([^/]+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Source',

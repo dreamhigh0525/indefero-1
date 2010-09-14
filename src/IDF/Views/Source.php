@@ -59,30 +59,56 @@ class IDF_Views_Source
                                                $params, $request);
     }
 
-    public $changeLog_precond = array('IDF_Precondition::accessSource');
+    /**
+     * Is displayed in case an invalid revision is requested
+     */
+    public $invalidRevision_precond = array('IDF_Precondition::accessSource');
+    public function invalidRevision($request, $match)
+    {
+        $title = sprintf(__('%s Invalid Revision'), (string) $request->project);
+        $commit = $match[2];
+        $params = array(
+                        'page_title' => $title,
+                        'title' => $title,
+                        'commit' => $commit,
+                        );
+        return Pluf_Shortcuts_RenderToResponse('idf/source/invalid_revision.html',
+                                               $params, $request);
+    }
+
+    /**
+     * Is displayed in case a revision identifier cannot be uniquely resolved
+     * to one single revision
+     */
+    public $disambiguateRevision_precond = array('IDF_Precondition::accessSource',
+                                                 'IDF_Views_Source_Precondition::scmAvailable');
+    public function disambiguateRevision($request, $match)
+    {
+        $title = sprintf(__('%s Ambiguous Revision'), (string) $request->project);
+        $commit = $match[2];
+        $redirect = $match[3];
+        $scm = IDF_Scm::get($request->project);
+        $revisions = $scm->disambiguateRevision($commit);
+        $params = array(
+                        'page_title' => $title,
+                        'title' => $title,
+                        'commit' => $commit,
+                        'revisions' => $revisions,
+                        'redirect' => $redirect,
+                        );
+        return Pluf_Shortcuts_RenderToResponse('idf/source/disambiguate_revision.html',
+                                               $params, $request);
+    }
+
+    public $changeLog_precond = array('IDF_Precondition::accessSource',
+                                      'IDF_Views_Source_Precondition::scmAvailable',
+                                      'IDF_Views_Source_Precondition::revisionValid');
     public function changeLog($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
-        if (!$scm->isAvailable()) {
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::help',
-                                            array($request->project->shortname));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $branches = $scm->getBranches();
         $commit = $match[2];
-        if (!$scm->isValidRevision($commit)) {
-            if (count($branches) == 0) {
-                // Redirect to the project source help
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::help',
-                                                array($request->project->shortname));
-                return new Pluf_HTTP_Response_Redirect($url);
-            }
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::changeLog',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
+
         $title = sprintf(__('%1$s %2$s Change Log'), (string) $request->project,
                          $this->getScmType($request));
         $changes = $scm->getChangeLog($commit, 25);
@@ -111,22 +137,17 @@ class IDF_Views_Source
                                                $request);
     }
 
-    public $treeBase_precond = array('IDF_Precondition::accessSource');
+    public $treeBase_precond = array('IDF_Precondition::accessSource',
+                                     'IDF_Views_Source_Precondition::scmAvailable',
+                                     'IDF_Views_Source_Precondition::revisionValid');
     public function treeBase($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
-        if (!$scm->isAvailable()) {
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::help',
-                                            array($request->project->shortname));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $commit = $match[2];
+
         $cobject = $scm->getCommit($commit);
         if (!$cobject) {
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
+            throw new Exception('could not retrieve commit object for '. $commit);
         }
         $title = sprintf(__('%1$s %2$s Source Tree'),
                          $request->project, $this->getScmType($request));
@@ -159,20 +180,14 @@ class IDF_Views_Source
                                                $request);
     }
 
-    public $tree_precond = array('IDF_Precondition::accessSource');
+    public $tree_precond = array('IDF_Precondition::accessSource',
+                                 'IDF_Views_Source_Precondition::scmAvailable',
+                                 'IDF_Views_Source_Precondition::revisionValid');
     public function tree($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
         $commit = $match[2];
 
-        if (!$scm->isAvailable()) {
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::help',
-                                            array($request->project->shortname));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
-        $fburl = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                          array($request->project->shortname,
-                                                $scm->getMainBranch()));
         $request_file = $match[3];
         if (substr($request_file, -1) == '/') {
             $request_file = substr($request_file, 0, -1);
@@ -181,13 +196,13 @@ class IDF_Views_Source
                                                   $request_file));
             return new Pluf_HTTP_Response_Redirect($url, 301);
         }
-        if (!$scm->isValidRevision($commit, $request_file)) {
-            // Redirect to the first branch
-            return new Pluf_HTTP_Response_Redirect($fburl);
-        }
+
         $request_file_info = $scm->getPathInfo($request_file, $commit);
         if (!$request_file_info) {
-            // Redirect to the first branch
+            // Redirect to the main branch
+            $fburl = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
+                                      array($request->project->shortname,
+                                            $scm->getMainBranch()));
             return new Pluf_HTTP_Response_Redirect($fburl);
         }
         $branches = $scm->getBranches();
@@ -277,26 +292,17 @@ class IDF_Views_Source
         return '<span class="breadcrumb">'.implode('<span class="sep">'.$sep.'</span>', $out).'</span>';
     }
 
-    public $commit_precond = array('IDF_Precondition::accessSource');
+    public $commit_precond = array('IDF_Precondition::accessSource',
+                                   'IDF_Views_Source_Precondition::scmAvailable',
+                                   'IDF_Views_Source_Precondition::revisionValid');
     public function commit($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
         $commit = $match[2];
-        if (!$scm->isValidRevision($commit)) {
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $large = $scm->isCommitLarge($commit);
         $cobject = $scm->getCommit($commit, !$large);
         if (!$cobject) {
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
+            throw new Exception('could not retrieve commit object for '. $commit);
         }
         $title = sprintf(__('%s Commit Details'), (string) $request->project);
         $page_title = sprintf(__('%s Commit Details - %s'), (string) $request->project, $commit);
@@ -326,19 +332,17 @@ class IDF_Views_Source
                                                $request);
     }
 
-    public $downloadDiff_precond = array('IDF_Precondition::accessSource');
+    public $downloadDiff_precond = array('IDF_Precondition::accessSource',
+                                         'IDF_Views_Source_Precondition::scmAvailable',
+                                         'IDF_Views_Source_Precondition::revisionValid');
     public function downloadDiff($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
         $commit = $match[2];
-        if (!$scm->isValidRevision($commit)) {
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $cobject = $scm->getCommit($commit, true);
+        if (!$cobject) {
+            throw new Exception('could not retrieve commit object for '. $commit);
+        }
         $rep = new Pluf_HTTP_Response($cobject->changes, 'text/plain');
         $rep->headers['Content-Disposition'] = 'attachment; filename="'.$commit.'.diff"';
         return $rep;
@@ -394,19 +398,14 @@ class IDF_Views_Source
      * Get a given file at a given commit.
      *
      */
-    public $getFile_precond = array('IDF_Precondition::accessSource');
+    public $getFile_precond = array('IDF_Precondition::accessSource',
+                                    'IDF_Views_Source_Precondition::scmAvailable',
+                                    'IDF_Views_Source_Precondition::revisionValid');
     public function getFile($request, $match)
     {
         $scm = IDF_Scm::get($request->project);
         $commit = $match[2];
         $request_file = $match[3];
-        if (!$scm->isValidRevision($commit)) {
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $request_file_info = $scm->getPathInfo($request_file, $commit);
         if (!$request_file_info or $request_file_info->type == 'tree') {
             // Redirect to the first branch
@@ -427,18 +426,13 @@ class IDF_Views_Source
      * Get a zip archive of the current commit.
      *
      */
-    public $download_precond = array('IDF_Precondition::accessSource');
+    public $download_precond = array('IDF_Precondition::accessSource',
+                                     'IDF_Views_Source_Precondition::scmAvailable',
+                                     'IDF_Views_Source_Precondition::revisionValid');
     public function download($request, $match)
     {
         $commit = trim($match[2]);
         $scm = IDF_Scm::get($request->project);
-        if (!$scm->isValidRevision($commit)) {
-            // Redirect to the first branch
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::treeBase',
-                                            array($request->project->shortname,
-                                                  $scm->getMainBranch()));
-            return new Pluf_HTTP_Response_Redirect($url);
-        }
         $base = $request->project->shortname.'-'.$commit;
         $cmd = $scm->getArchiveCommand($commit, $base.'/');
         $rep = new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
@@ -446,7 +440,6 @@ class IDF_Views_Source
         $rep->headers['Content-Disposition'] = 'attachment; filename="'.$base.'.zip"';
         return $rep;
     }
-
 
     /**
      * Find the mime type of a requested file.
@@ -494,7 +487,6 @@ class IDF_Views_Source
         }
         return $res;
     }
-
 
     /**
      * Find the mime type of a file.
@@ -609,4 +601,3 @@ function IDF_Views_Source_ShortenString($string, $length)
     return substr($string, 0, $preflen).$ellipse.
            substr($string, -($length - $preflen - mb_strlen($ellipse)));
 }
-

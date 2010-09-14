@@ -14,7 +14,7 @@
     <td>{$server.name}</td>
     <td>{$server.status}</td>
     <td>
-        {if preg_match("/ACTIVE|RUNNING|SLEEPING/", $server.status)}
+        {if preg_match("/ACTIVE|WAITING|RUNNING|SLEEPING/", $server.status)}
            <a href="{url 'IDF_Views_Admin::usherServerControl', array($server.name, 'stop')}">
              {trans 'stop'}</a>
         {elseif $server.status == "STOPPED"}

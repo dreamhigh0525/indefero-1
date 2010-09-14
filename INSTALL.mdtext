@@ -213,3 +213,13 @@ may have problems as your certificate is not trusted, check the
 [procedure provided here][svnfix] to solve the problem.
 
 [svnfix]: http://projects.ceondo.com/p/indefero/issues/319/#ic1358
+
+## If the registration links are not working
+
+If You have standard instalaction of PHP ie in Debian, php.ini sets
+mbstring.func_overload to value "2" for overloading str*
+functions. You need to prevent the overload as it does not make sense
+anyway (magic in the background is bad!). 
+See the [corresponding ticket][reglink].
+
+[reglink]: http://projects.ceondo.com/p/indefero/issues/481/

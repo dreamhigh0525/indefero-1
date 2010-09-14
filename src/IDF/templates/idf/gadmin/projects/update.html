@@ -18,6 +18,14 @@
 </td>
 </tr>
 <tr>
+<th><strong>{$form.f.shortdesc.labelTag}:</strong></th>
+<td>
+{if $form.f.shortdesc.errors}{$form.f.shortdesc.fieldErrors}{/if}
+{$form.f.shortdesc|unsafe}<br />
+<span class="helptext">{$form.f.shortdesc.help_text}</span>
+</td>
+</tr>
+<tr>
 <th><strong>{$form.f.owners.labelTag}:</strong></th>
 <td>
 {if $form.f.owners.errors}{$form.f.owners.fieldErrors}{/if}

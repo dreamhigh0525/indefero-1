@@ -48,6 +48,16 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * Returns the stdio instance in use
+     *
+     * @return IDF_Scm_Monotone_Stdio
+     */
+    public function getStdio()
+    {
+        return $this->stdio;
+    }
+
+    /**
      * @see IDF_Scm::getRepositorySize()
      */
     public function getRepositorySize()
@@ -340,7 +350,14 @@ class IDF_Scm_Monotone extends IDF_Scm
                 foreach ($certs['date'] as $date)
                     $dates[] = date('Y-m-d H:i:s', strtotime($date));
                 $file['date'] = implode(', ', $dates);
-                $file['log'] = implode("\n---\n", $certs['changelog']);
+                $combinedChangelog = implode("\n---\n", $certs['changelog']);
+                $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+                // FIXME: the complete log message is currently not used in the
+                // tree view (the same is true for the other SCM implementations)
+                // but we _should_ really use or at least return that here
+                // in case we want to do fancy stuff like described in
+                // issue 492
+                $file['log'] =  $split[0];
             }
 
             $files[] = (object) $file;
@@ -425,12 +442,53 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
-     * @see IDF_Scm::isValidRevision()
+     * @see IDF_Scm::validateRevision()
      */
-    public function isValidRevision($commit)
+    public function validateRevision($commit)
     {
         $revs = $this->_resolveSelector($commit);
-        return count($revs) == 1;
+        if (count($revs) == 0)
+            return IDF_Scm::REVISION_INVALID;
+
+        if (count($revs) > 1)
+            return IDF_Scm::REVISION_AMBIGUOUS;
+
+        return IDF_Scm::REVISION_VALID;
+    }
+
+    /**
+     * @see IDF_Scm::disambiguateRevision
+     */
+    public function disambiguateRevision($commit)
+    {
+        $revs = $this->_resolveSelector($commit);
+
+        $out = array();
+        foreach ($revs as $rev)
+        {
+            $certs = $this->_getCerts($rev);
+
+            $log = array();
+            $log['author'] = implode(', ', $certs['author']);
+
+            $log['branch'] = implode(', ', $certs['branch']);
+
+            $dates = array();
+            foreach ($certs['date'] as $date)
+                $dates[] = date('Y-m-d H:i:s', strtotime($date));
+            $log['date'] = implode(', ', $dates);
+
+            $combinedChangelog = implode("\n---\n", $certs['changelog']);
+            $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+            $log['title'] = $split[0];
+            $log['full_message'] = (isset($split[1])) ? trim($split[1]) : '';
+
+            $log['commit'] = $rev;
+
+            $out[] = (object)$log;
+        }
+
+        return $out;
     }
 
     /**
@@ -630,7 +688,7 @@ class IDF_Scm_Monotone extends IDF_Scm
                 --$n;
 
                 $log = array();
-                $log['author'] = implode(", ", $certs['author']);
+                $log['author'] = implode(', ', $certs['author']);
 
                 $dates = array();
                 foreach ($certs['date'] as $date)

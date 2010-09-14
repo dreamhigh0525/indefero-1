@@ -87,14 +87,19 @@ class IDF_Scm_Mercurial extends IDF_Scm
         return sprintf(Pluf::f('mercurial_remote_url'), $project->shortname);
     }
 
-    public function isValidRevision($rev)
+    public function validateRevision($rev)
     {
         $cmd = sprintf(Pluf::f('hg_path', 'hg').' log -R %s -r %s',
                        escapeshellarg($this->repo),
                        escapeshellarg($rev));
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::isValidRevision', $cmd, $out, $ret);
-        return ($ret == 0) && (count($out) > 0);
+
+        // FIXME: apparently a given hg revision can also be ambigious -
+        //        handle this case here sometime
+        if ($ret == 0 && count($out) > 0)
+            return IDF_Scm::REVISION_VALID;
+        return IDF_Scm::REVISION_INVALID;
     }
 
     /**

@@ -138,7 +138,7 @@ class IDF_Scm_Svn extends IDF_Scm
     /**
      * Subversion revisions are either a number or 'HEAD'.
      */
-    public function isValidRevision($rev)
+    public function validateRevision($rev)
     {
         if ($rev == 'HEAD') {
             return true;
@@ -149,8 +149,11 @@ class IDF_Scm_Svn extends IDF_Scm
                        escapeshellarg($this->repo),
                        escapeshellarg($rev));
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        self::exec('IDF_Scm_Svn::isValidRevision', $cmd, $out, $ret);
-        return (0 == $ret);
+        self::exec('IDF_Scm_Svn::validateRevision', $cmd, $out, $ret);
+
+        if ($ret == 0)
+            return IDF_Scm::REVISION_VALID;
+        return IDF_Scm::REVISION_INVALID;
     }
 
 
