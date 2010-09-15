@@ -680,11 +680,18 @@ class IDF_Scm_Monotone extends IDF_Scm
 
             // read in the initial branches we should follow
             if (count($initialBranches) == 0) {
+                if (!isset($certs['branch'])) {
+                    throw new IDF_Scm_Exception(sprintf(
+                        __("revision %s has no branch cert - cannot start ".
+                           "logging from this revision"), $rev
+                    ));
+                } 
                 $initialBranches = $certs['branch'];
             }
 
             // only add it to our log if it is on one of the initial branches
-            if (count(array_intersect($initialBranches, $certs['branch'])) > 0) {
+            // ignore revisions without any branch certificate
+            if (count(array_intersect($initialBranches, (array)@$certs['branch'])) > 0) {
                 --$n;
 
                 $log = array();
