@@ -1,0 +1,175 @@
+# Plugin SyncMonotone by Thomas Keller (me@thomaskeller.biz)
+
+The SyncMonotone plugin allow the direct creation and synchronisation of
+monotone repositories with the InDefero database. It has been built to
+work together with monotone's "super server" usher, which is used to control
+several repositories at once, acts as proxy and single entrance.
+
+## Prerequisites
+
+* a unixoid operating system
+* monotone >= 0.99
+* for a proxy setup with usher:
+    * boost headers (for usher compilation)
+    * a current version of usher
+    * a daemonizer, like supervise
+
+## Installation of monotone
+
+If you install monotone from a distribution package, ensure you do not
+install and / or activate the server component. We just need a plain
+client installation which usually consists only of the `mtn` binary and
+a few docs.
+
+If you install monotone from source (<http://monotone.ca/downloads.php>),
+please follow the `INSTALL` document which comes with the software.
+It contains detailed instructions, including all needed dependencies.
+
+## Choose your indefero setup
+
+The monotone plugin can be used in several different ways:
+
+1. One database for everything. This is the easiest setup and of possible
+   use in case you do not want indefero to manage the access to your project.
+   Your `idf.php` should look like this:
+
+            $ cat idf.php
+            ...
+            $cfg['mtn_path'] = 'mtn';
+            $cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
+            $cfg['mtn_repositories'] = '/home/monotone/all_projects.mtn';
+            $cfg['mtn_remote_url'] = 'ssh://monotone@my.server.com:~all_projects.mtn';
+            $cfg['mtn_db_access'] = 'local';
+            ...
+
+   Pro:
+      * easy to setup and to manage
+
+   Con:
+      * you need to give committers SSH access to your machine
+      * database lock problem: the database from which
+        indefero reads its data might be locked in case a user
+        syncs at the very moment via SSH
+
+2. One database for every project. Similar to the above setup, but this
+   time you use the '%s' placeholder which is replaced with the short name
+   of the indefero project:
+
+            $ cat idf.php
+            ...
+            $cfg['mtn_path'] = 'mtn';
+            $cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
+            $cfg['mtn_repositories'] = '/home/monotone/%s.mtn';
+            $cfg['mtn_remote_url'] = 'ssh://monotone@my.server.com:~%s.mtn';
+            $cfg['mtn_db_access'] = 'local';
+            ...
+
+   The same pro's and con's apply. Additionally you have to be careful about
+   not giving people physical read/write access of another project's database.
+
+   Furthermore, if you do not want to use `ssh`, but `netsync` transport,
+   each project's database must be served over a separate port.
+
+3. One database for every project, all managed with usher. This is the
+   recommended setup for a mid-size forge setup. The remaining part of this
+   document will describe the process to set this up in detail.
+
+   Pro:
+      * access rights can be granted per project and are automatically
+        managed by indefero, just like the user's public monotone keys
+      * no database locking issues
+      * one public server running on the one well-known port
+
+   Con:
+      * harder to setup
+
+## Installation and configuration of usher
+
+1. Clone usher's monotone repository:
+
+            $ mtn clone "mtn://monotone.ca?net.venge.monotone.contrib.usher"
+
+2. Compile usher:
+
+            $ autoreconf -i
+            $ ./configure && make
+            $ sudo make install
+
+   This installs the usher binary in $prefix/bin.
+
+3. Create a new usher user:
+
+            $ adduser --system --disabled-login --home /var/lib/usher usher
+
+4. Create the basic usher setup:
+
+            $ cd /var/lib/usher
+            $ mkdir projects logs
+            $ cat > usher.conf
+             userpass "admin" "<secret-password>"
+            adminaddr "127.0.0.1:12345"
+               logdir "log"
+            ^D
+            $ chmod 600 usher.conf
+
+    Your indefero www user needs later write access to `usher.conf` and
+    `projects/`. There are two ways of setting this up:
+
+    * Make the usher user the web user, for example via Apache's `suexec`
+    * Use acls, like this:
+
+            $ setfacl -m u:www:rw usher.conf
+            $ setfacl -m d:u:www:rwx projects/
+
+5. Wrap a daemonizer around usher, for example supervise from daemontools
+   (<http://cr.yp.to/damontools.html>):
+
+            $ cat > run
+            #!/bin/sh
+            cd /var/lib/usher
+            exec 2>&1
+            exec \
+                setuidgid usher \
+                usher usher.conf
+            ^D
+
+   The service can now be started through supervise:
+
+            $ supervise /var/lib/usher
+
+## Configuration of indefero
+
+Based on the above setup, the configuration in `src/IDF/conf/idf.php` should
+look like this:
+
+        $ cat idf.php
+        ...
+        $cfg['mtn_path'] = 'mtn';
+        $cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
+        $cfg['mtn_repositories'] = '/var/lib/usher/projects/%s/';
+        $cfg['mtn_remote_url'] = 'mtn://my.server.com/%s';
+        $cfg['mtn_db_access'] = 'remote';
+        $cfg['mtn_remote_auth'] = true;
+        $cfg['mtn_usher_conf'] = '/var/lib/usher/usher.conf';
+        ...
+
+The `%s` placeholders are automatically replaced by the name of the
+indefero project. The plugin assumes that every project is separated
+by a distinct server name in the monotone URL (hence the use of `/%s`),
+so if a user calls
+
+        $ mtn sync mtn://my.server.com/project1
+
+then the database / repository of the indefero `project1` is used.
+Note that 'mtn_remote_url' is also used as internal URI to query the data
+for indefero's source view, so it *must* be a valid host!
+
+Usher also allows the identification of a project repository by hostname,
+which would allow an URL template like `mtn://%s.my.server.com`, however
+the plugin does not write out the configuration which is needed for this
+yet.
+
+For even more advanced setups, usher can also be used to forward sync
+requests to other remote servers for load balancing, please consult the
+README file for more information.
+
