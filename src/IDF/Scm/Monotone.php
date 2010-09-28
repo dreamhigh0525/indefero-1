@@ -623,10 +623,12 @@ class IDF_Scm_Monotone extends IDF_Scm
             $dates[] = date('Y-m-d H:i:s', strtotime($date));
         $res['date'] = implode(', ', $dates);
 
-        $res['title'] = implode("\n---\n", $certs['changelog']);
+        $combinedChangelog = implode("\n---\n", $certs['changelog']);
+        $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+        $res['title'] = $split[0];
+        $res['full_message'] = (isset($split[1])) ? trim($split[1]) : '';
 
         $res['commit'] = $revs[0];
-
         $res['changes'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
 
         return (object) $res;
