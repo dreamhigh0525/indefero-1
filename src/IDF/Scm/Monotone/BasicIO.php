@@ -38,14 +38,15 @@ class IDF_Scm_Monotone_BasicIO
     {
         $pos = 0;
         $stanzas = array();
+        $length = strlen($in);
 
-        while ($pos < strlen($in)) {
+        while ($pos < $length) {
             $stanza = array();
-            while ($pos < strlen($in)) {
+            while ($pos < $length) {
                 if ($in[$pos] == "\n") break;
 
                 $stanzaLine = array('key' => '', 'values' => array(), 'hash' => null);
-                while ($pos < strlen($in)) {
+                while ($pos < $length) {
                     $ch = $in[$pos];
                     if ($ch == '"' || $ch == '[') break;
                     ++$pos;
@@ -53,6 +54,9 @@ class IDF_Scm_Monotone_BasicIO
                     $stanzaLine['key'] .= $ch;
                 }
 
+                // symbol w/o a value list
+                if ($pos >= $length || $in[$pos] == "\n") break;
+ 
                 if ($in[$pos] == '[') {
                     unset($stanzaLine['values']);
                     ++$pos; // opening square bracket
@@ -67,7 +71,7 @@ class IDF_Scm_Monotone_BasicIO
                     while ($in[$pos] == '"') {
                         ++$pos; // opening quote
                         $stanzaLine['values'][$valCount] = '';
-                        while ($pos < strlen($in)) {
+                        while ($pos < $length) {
                             $ch = $in[$pos]; $pr = $in[$pos-1];
                             if ($ch == '"' && $pr != '\\') break;
                             ++$pos;
@@ -75,7 +79,7 @@ class IDF_Scm_Monotone_BasicIO
                         }
                         ++$pos; // closing quote
 
-                        if ($pos >= strlen($in))
+                        if ($pos >= $length)
                             break;
 
                         if ($in[$pos] == ' ') {
