@@ -157,9 +157,11 @@ class IDF_Scm_Monotone extends IDF_Scm
      */
     private function _getCerts($rev)
     {
-        static $certCache = array();
-
-        if (!array_key_exists($rev, $certCache)) {
+        $cache = Pluf_Cache::factory();
+        $cachekey = 'mtn-plugin-certs-for-rev-' . $rev;
+        $certs = $cache->get($cachekey);
+        
+        if ($certs === null) {
             $out = $this->stdio->exec(array('certs', $rev));
 
             $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
@@ -183,10 +185,10 @@ class IDF_Scm_Monotone extends IDF_Scm
                     }
                 }
             }
-            $certCache[$rev] = $certs;
+            $cache->set($cachekey, $certs);
         }
 
-        return $certCache[$rev];
+        return $certs;
     }
 
     /**
