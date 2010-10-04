@@ -68,16 +68,29 @@ class IDF_Scm_Monotone_BasicIO
                 {
                     unset($stanzaLine['hash']);
                     $valCount = 0;
-                    while ($in[$pos] == '"') {
-                        ++$pos; // opening quote
+                    // if hashs and plain values are encountered in the same
+                    // value list, we add the hash values as simple values as well
+                    while ($in[$pos] == '"' || $in[$pos] == '[') {
+                        $isHashValue = $in[$pos] == '[';
+                        ++$pos; // opening quote / bracket
                         $stanzaLine['values'][$valCount] = '';
                         while ($pos < $length) {
                             $ch = $in[$pos]; $pr = $in[$pos-1];
-                            if ($ch == '"' && $pr != '\\') break;
+                            if (($isHashValue && $ch == ']')
+                                ||(!$isHashValue && $ch == '"' && $pr != '\\'))
+                                 break;
                             ++$pos;
                             $stanzaLine['values'][$valCount] .= $ch;
                         }
                         ++$pos; // closing quote
+
+                        if (!$isHashValue) {
+                            $stanzaLine['values'][$valCount] = str_replace(
+                                array("\\\\", "\\\""),
+                                array("\\", "\""),
+                                $stanzaLine['values'][$valCount]
+                            );
+                        }
 
                         if ($pos >= $length)
                             break;
@@ -86,14 +99,6 @@ class IDF_Scm_Monotone_BasicIO
                             ++$pos; // space
                             ++$valCount;
                         }
-                    }
-
-                    for ($i = 0; $i <= $valCount; $i++) {
-                        $stanzaLine['values'][$i] = str_replace(
-                            array("\\\\", "\\\""),
-                            array("\\", "\""),
-                            $stanzaLine['values'][$i]
-                        );
                     }
                 }
 
