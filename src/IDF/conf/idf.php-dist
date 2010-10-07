@@ -118,7 +118,7 @@ $cfg['mtn_db_access'] = 'local';
 #$cfg['mtn_usher_conf'] = '/path/to/usher.conf';
 
 # Mercurial repositories path
-#$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
+$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
 #$cfg['mercurial_remote_url'] = 'http://projects.ceondo.com/hg/%s';
 
 # admins will get an email in case of errors in the system in non
