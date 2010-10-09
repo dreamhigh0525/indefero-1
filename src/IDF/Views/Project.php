@@ -62,44 +62,87 @@ class IDF_Views_Project
     }
 
     /**
+     * Returns an associative array with available model filters
+     *
+     * @return array
+     */
+    private static function getAvailableModelFilters()
+    {
+        return array(
+            'all'       => __('All Updates'),
+            'commits'   => __('Commits'),
+            'issues'    => __('Issues and Comments'),
+            'downloads' => __('Downloads'),
+            'documents' => __('Documents'),
+            'reviews'   => __('Reviews and Patches'),
+        );
+    }
+
+    /**
+     * Returns an array of model classes for which the current user
+     * has rights and which should be used according to his filter
+     *
+     * @param object $request
+     * @param string $model_filter
+     * @return array
+     */
+    private static function determineModelClasses($request, $model_filter = 'all')
+    {
+        $classes = array();
+        if (true === IDF_Precondition::accessSource($request) &&
+            ($model_filter == 'all' || $model_filter == 'commits')) {
+            $classes[] = '\'IDF_Commit\'';
+            // FIXME: this looks like a hack...
+            IDF_Scm::syncTimeline($request->project);
+        }
+        if (true === IDF_Precondition::accessIssues($request) &&
+            ($model_filter == 'all' || $model_filter == 'issues')) {
+            $classes[] = '\'IDF_Issue\'';
+            $classes[] = '\'IDF_IssueComment\'';
+        }
+        if (true === IDF_Precondition::accessDownloads($request) &&
+            ($model_filter == 'all' || $model_filter == 'downloads')) {
+            $classes[] = '\'IDF_Upload\'';
+        }
+        if (true === IDF_Precondition::accessWiki($request) &&
+            ($model_filter == 'all' || $model_filter == 'documents')) {
+            $classes[] = '\'IDF_WikiPage\'';
+            $classes[] = '\'IDF_WikiRevision\'';
+        }
+        if (true === IDF_Precondition::accessReview($request) &&
+            ($model_filter == 'all' || $model_filter == 'reviews')) {
+            $classes[] = '\'IDF_Review_Comment\'';
+            $classes[] = '\'IDF_Review_Patch\'';
+        }
+        if (count($classes) == 0) {
+            $classes[] = '\'IDF_Dummy\'';
+        }
+
+        return $classes;
+    }
+
+    /**
      * Timeline of the project.
      */
     public $timeline_precond = array('IDF_Precondition::baseAccess');
     public function timeline($request, $match)
     {
         $prj = $request->project;
-        $title = sprintf(__('%s Updates'), (string) $prj);
-        $team = $prj->getMembershipData();
+        
+        $model_filter = @$match[2];
+        $all_model_filters = self::getAvailableModelFilters();
+        if (!array_key_exists($model_filter, $all_model_filters)) {
+            $model_filter = 'all';
+        }
+        $title = (string)$prj . ' ' . $all_model_filters[$model_filter];
 
         $pag = new IDF_Timeline_Paginator(new IDF_Timeline());
         $pag->class = 'recent-issues';
         $pag->item_extra_props = array('request' => $request);
         $pag->summary = __('This table shows the project updates.');
-        // Need to check the rights
-        $rights = array();
-        if (true === IDF_Precondition::accessSource($request)) {
-            $rights[] = '\'IDF_Commit\'';
-            IDF_Scm::syncTimeline($request->project);
-        }
-        if (true === IDF_Precondition::accessIssues($request)) {
-            $rights[] = '\'IDF_Issue\'';
-            $rights[] = '\'IDF_IssueComment\'';
-        }
-        if (true === IDF_Precondition::accessDownloads($request)) {
-            $rights[] = '\'IDF_Upload\'';
-        }
-        if (true === IDF_Precondition::accessWiki($request)) {
-            $rights[] = '\'IDF_WikiPage\'';
-            $rights[] = '\'IDF_WikiRevision\'';
-        }
-        if (true === IDF_Precondition::accessReview($request)) {
-            $rights[] = '\'IDF_Review_Comment\'';
-            $rights[] = '\'IDF_Review_Patch\'';
-        }
-        if (count($rights) == 0) {
-            $rights[] = '\'IDF_Dummy\'';
-        }
-        $sql = sprintf('model_class IN (%s)', implode(', ', $rights));
+
+        $classes = self::determineModelClasses($request, $model_filter);
+        $sql = sprintf('model_class IN (%s)', implode(', ', $classes));
         $pag->forced_where = new Pluf_SQL('project=%s AND '.$sql,
                                           array($prj->id));
         $pag->sort_order = array('creation_dtime', 'ASC');
@@ -113,32 +156,23 @@ class IDF_Views_Project
         $pag->items_per_page = 20;
         $pag->no_results_text = __('No changes were found.');
         $pag->setFromRequest($request);
-        $downloads = array();
-        if ($request->rights['hasDownloadsAccess']) {
-            $tags = IDF_Views_Download::getDownloadTags($prj);
-            // the first tag is the featured, the last is the deprecated.
-            $downloads = $tags[0]->get_idf_upload_list();
-        }
-        $pages = array();
-        if ($request->rights['hasWikiAccess']) {
-            $tags = IDF_Views_Wiki::getWikiTags($prj);
-            $pages = $tags[0]->get_idf_wikipage_list();
-        }
+        
         if (!$request->user->isAnonymous() and $prj->isRestricted()) {
             $feedurl = Pluf_HTTP_URL_urlForView('idf_project_timeline_feed_auth',
                                                 array($prj->shortname,
+                                                      $model_filter,
                                                       IDF_Precondition::genFeedToken($prj, $request->user)));
         } else {
             $feedurl = Pluf_HTTP_URL_urlForView('idf_project_timeline_feed',
-                                                array($prj->shortname));
+                                                array($prj->shortname, $model_filter));
         }
         return Pluf_Shortcuts_RenderToResponse('idf/project/timeline.html',
                                                array(
                                                      'page_title' => $title,
                                                      'feedurl' => $feedurl,
                                                      'timeline' => $pag,
-                                                     'team' => $team,
-                                                     'downloads' => $downloads,
+                                                     'model_filter' => $model_filter,
+                                                     'all_model_filters' => $all_model_filters,
                                                      ),
                                                $request);
 
@@ -156,31 +190,17 @@ class IDF_Views_Project
     public function timelineFeed($request, $match)
     {
         $prj = $request->project;
-        // Need to check the rights
-        $rights = array();
-        if (true === IDF_Precondition::accessSource($request)) {
-            $rights[] = '\'IDF_Commit\'';
-            IDF_Scm::syncTimeline($request->project);
+        $model_filter = @$match[2];
+
+        $model_filter = @$match[2];
+        $all_model_filters = self::getAvailableModelFilters();
+        if (!array_key_exists($model_filter, $all_model_filters)) {
+            $model_filter = 'all';
         }
-        if (true === IDF_Precondition::accessIssues($request)) {
-            $rights[] = '\'IDF_Issue\'';
-            $rights[] = '\'IDF_IssueComment\'';
-        }
-        if (true === IDF_Precondition::accessDownloads($request)) {
-            $rights[] = '\'IDF_Upload\'';
-        }
-        if (true === IDF_Precondition::accessWiki($request)) {
-            $rights[] = '\'IDF_WikiPage\'';
-            $rights[] = '\'IDF_WikiRevision\'';
-        }
-        if (true === IDF_Precondition::accessReview($request)) {
-            $rights[] = '\'IDF_Review_Comment\'';
-            $rights[] = '\'IDF_Review_Patch\'';
-        }
-        if (count($rights) == 0) {
-            $rights[] = '\'IDF_Dummy\'';
-        }
-        $sqls = sprintf('model_class IN (%s)', implode(', ', $rights));
+        $title = $all_model_filters[$model_filter];
+       
+        $classes = self::determineModelClasses($request, $model_filter);
+        $sqls = sprintf('model_class IN (%s)', implode(', ', $classes));
         $sql = new Pluf_SQL('project=%s AND '.$sqls, array($prj->id));
         $params = array(
                         'filter' => $sql->gen(),
@@ -203,7 +223,6 @@ class IDF_Views_Project
         }
         $out = Pluf_Template::markSafe(implode("\n", $out));
         $tmpl = new Pluf_Template('idf/index.atom');
-        $title = __('Updates');
         $feedurl = Pluf::f('url_base').Pluf::f('idf_base').$request->query;
         $viewurl = Pluf_HTTP_URL_urlForView('IDF_Views_Project::timeline',
                                             array($prj->shortname));
