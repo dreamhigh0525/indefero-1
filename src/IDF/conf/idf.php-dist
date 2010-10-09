@@ -256,6 +256,13 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
                             'mtn' => 'IDF_Scm_Monotone',
                             );
 
+# Set to true when uploaded public keys should not only be validated
+# syntactically, but also by the specific backend. For SSH public
+# keys, ssh-keygen(3) must be available and usable in PATH, for
+# monotone public keys, the monotone binary (as configured above)
+# is used. 
+# $cfg['idf_strong_key_check'] = false;
+
 # If you want to use another memtypes database
 # $cfg['idf_mimetypes_db'] = '/etc/mime.types';
 
