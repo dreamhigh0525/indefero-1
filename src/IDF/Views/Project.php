@@ -277,7 +277,8 @@ class IDF_Views_Project
             }
         } else {
             $params = array();
-            $keys = array('labels_issue_open', 'labels_issue_closed',
+            $keys = array('labels_issue_template',
+                          'labels_issue_open', 'labels_issue_closed',
                           'labels_issue_predefined', 'labels_issue_one_max');
             foreach ($keys as $key) {
                 $_val = $conf->getVal($key, false);
