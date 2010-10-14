@@ -96,7 +96,7 @@ Pluf_Signal::connect('IDF_Key::postSave',
                      array('IDF_Plugin_SyncMonotone', 'entry'));
 Pluf_Signal::connect('IDF_Key::preDelete',
                      array('IDF_Plugin_SyncMonotone', 'entry'));
-Pluf_Signal::connect('phppostpush.php::run',
+Pluf_Signal::connect('mtnpostpush.php::run',
                      array('IDF_Plugin_SyncMonotone', 'entry'));
 
 #
