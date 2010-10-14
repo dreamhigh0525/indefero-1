@@ -533,8 +533,10 @@ class IDF_Views_Source
         if (0 === strpos($fileinfo[0], 'text/')) {
             return true;
         }
-        $ext = 'mdtext php-dist h gitignore diff patch'
-            .Pluf::f('idf_extra_text_ext', '');
+        $ext = 'mdtext php-dist h gitignore diff patch';
+        $extra_ext = trim(Pluf::f('idf_extra_text_ext', ''));
+        if (!empty($extra_ext))
+            $ext .= ' ' . $extra_ext;
         $ext = array_merge(self::$supportedExtenstions, explode(' ' , $ext));
         return (in_array($fileinfo[2], $ext));
     }
