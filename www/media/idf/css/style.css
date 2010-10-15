@@ -773,7 +773,9 @@ div.deprecated-page {
   -moz-box-shadow: 0 10px 20px #333;
   -webkit-box-shadow: 0 10px 20px #333;
   box-shadow: 0 10px 20px #333;
-
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #project-list ul li {
