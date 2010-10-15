@@ -29,31 +29,27 @@
   <![endif]-->
   {block extraheader}{/block}
   <title>{block pagetitle}{$page_title|strip_tags}{/block}</title>
+  <script type="text/javascript" src="{media '/idf/js/jquery-1.2.6.min.js'}"></script>
 </head>
 <body>
 <div id="{block docid}doc3{/block}" class="{block docclass}yui-t3{/block}">
   <div id="hd">
-    <p class="top"><a href="#title" accesskey="2"></a>
-{if !$user.isAnonymous()}{aurl 'url', 'idf_dashboard'}{blocktrans}Welcome, <strong><a class="userw" href="{$url}">{$user}</a></strong>.{/blocktrans} <a href="{url 'IDF_Views::logout'}">{trans 'Sign Out'}</a>{else}<a href="{url 'IDF_Views::login'}">{trans 'Sign in or create your account'}</a>{/if}
- | <a href="{url 'IDF_Views::index'}">{trans 'Project List'}</a> {if $isAdmin}| <a href="{url 'IDF_Views_Admin::projects'}">{trans 'Forge Management'}</a>{/if}
-| <a href="{url 'IDF_Views::faq'}" title="{trans 'Help and accessibility features'}">{trans 'Help'}</a>
-    </p>
-	  <h1 id="title" class="title">{block title}{$page_title}{/block}</h1>
+     {include 'idf/main-menu.html'}
+     <h1 id="title" class="title">{block title}{$page_title}{/block}</h1>
   </div>
   <div id="bd">
-    <div id="yui-main"> 
+    <div id="yui-main">
       <div class="yui-b">
-	<div class="yui-g"> 
+    <div class="yui-g">
           {if $user and $user.id}{getmsgs $user}{/if}
-	  <div class="content">{block body}{/block}</div>
-	</div>
+      <div class="content">{block body}{/block}</div>
+    </div>
       </div>
     </div>
     <div class="yui-b context">{block context}{/block}</div>
   </div>
   <div id="ft">{block foot}{/block}</div>
 </div>
-<script type="text/javascript" src="{media '/idf/js/jquery-1.2.6.min.js'}"></script>
 {include 'idf/js-hotkeys.html'}
 {block javascript}{/block}
 </body>

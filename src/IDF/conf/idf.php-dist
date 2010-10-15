@@ -205,8 +205,8 @@ $cfg['db_database'] = 'website'; # put absolute path to the db if you
                                  # are using SQLite.
 #
 # The extension of the downloads are limited. You can add extra
-# extensions here. The list must start with a space.
-# $cfg['idf_extra_upload_ext'] = ' ext1 ext2';
+# extensions here.
+# $cfg['idf_extra_upload_ext'] = 'ext1 ext2';
 #
 # By default, the size of the downloads is limited to 2MB.
 # The php.ini upload_max_filesize configuration setting will
@@ -255,6 +255,13 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
                             'mercurial' => 'IDF_Scm_Mercurial',
                             'mtn' => 'IDF_Scm_Monotone',
                             );
+
+# Set to true when uploaded public keys should not only be validated
+# syntactically, but also by the specific backend. For SSH public
+# keys, ssh-keygen(3) must be available and usable in PATH, for
+# monotone public keys, the monotone binary (as configured above)
+# is used. 
+# $cfg['idf_strong_key_check'] = false;
 
 # If you want to use another memtypes database
 # $cfg['idf_mimetypes_db'] = '/etc/mime.types';

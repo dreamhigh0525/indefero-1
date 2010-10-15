@@ -4,6 +4,12 @@
 <form method="post" action=".">
 <table class="form" summary="">
 <tr>
+<td colspan="2"><strong>{$form.f.labels_issue_template.labelTag}:</strong><br />
+{if $form.f.labels_issue_template.errors}{$form.f.labels_issue_template.fieldErrors}{/if}
+{$form.f.labels_issue_template|unsafe}
+</td>
+</tr>
+<tr>
 <td colspan="2"><strong>{$form.f.labels_issue_open.labelTag}:</strong><br />
 {if $form.f.labels_issue_open.errors}{$form.f.labels_issue_open.fieldErrors}{/if}
 {$form.f.labels_issue_open|unsafe}

@@ -413,7 +413,7 @@ class IDF_Scm_Monotone extends IDF_Scm
                 $certs = $scm->_getCerts($revs[0]);
                 // for the very seldom case that a revision
                 // has no branch certificate
-                if (count($certs['branch']) == 0) {
+                if (!array_key_exists('branch', $certs)) {
                     $branch = '*';
                 }
                 else

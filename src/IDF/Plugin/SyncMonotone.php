@@ -250,7 +250,9 @@ class IDF_Plugin_SyncMonotone
             array('key' => 'server', 'values' => array($shortname)),
             array('key' => 'local', 'values' => array(
                 '--confdir', $projectpath,
-                '-d', $dbfile
+                '-d', $dbfile,
+                '--timestamps',
+                '--ticker=dot' 
             )),
         );
 
