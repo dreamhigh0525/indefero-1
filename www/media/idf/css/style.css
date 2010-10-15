@@ -764,26 +764,30 @@ div.deprecated-page {
   background: #A5E26A;
   border-top: 0;
   position: absolute;
-  padding: 5px 5px 5px 20px;
   margin: 0;
   z-index: 1000;
   top: 1.1em;
-  -moz-border-radius: 0 3px 3px 3px;
-  border-radius: 0 3px 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
   -moz-box-shadow: 0 10px 20px #333;
   -webkit-box-shadow: 0 10px 20px #333;
   box-shadow: 0 10px 20px #333;
   max-height: 400px;
+  min-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 #project-list ul li {
-  padding: 5px;
-  padding-left: 0;
+  margin: 7px;
   white-space: nowrap;
   font-size: 0.95em;
   list-style-type: square;
+  list-style-position: inside;
+}
+
+#project-list ul li:first-child {
+  margin-top: 10px;
 }
 
 #project-list ul li a {
