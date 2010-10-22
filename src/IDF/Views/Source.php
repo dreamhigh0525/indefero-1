@@ -37,7 +37,7 @@ class IDF_Views_Source
     public static $supportedExtenstions = array(
               'ascx', 'ashx', 'asmx', 'aspx', 'browser', 'bsh', 'c', 'cc',
               'config', 'cpp', 'cs', 'csh',	'csproj', 'css', 'cv', 'cyc',
-              'html', 'html', 'java', 'js', 'master', 'perl', 'php', 'pl',
+              'html', 'html', 'java', 'js', 'master', 'pas', 'perl', 'php', 'pl',
               'pm', 'py', 'rb', 'sh', 'sitemap', 'skin', 'sln', 'svc', 'vala',
               'vb', 'vbproj', 'wsdl', 'xhtml', 'xml', 'xsd', 'xsl', 'xslt');
 
