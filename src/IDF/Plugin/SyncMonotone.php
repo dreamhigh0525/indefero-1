@@ -76,6 +76,10 @@ class IDF_Plugin_SyncMonotone
             return;
         }
 
+        if (Pluf::f('mtn_db_access', 'local') == 'local') {
+            return;
+        }
+
         $projecttempl = Pluf::f('mtn_repositories', false);
         if ($projecttempl === false) {
             throw new IDF_Scm_Exception(
@@ -246,7 +250,9 @@ class IDF_Plugin_SyncMonotone
             array('key' => 'server', 'values' => array($shortname)),
             array('key' => 'local', 'values' => array(
                 '--confdir', $projectpath,
-                '-d', $dbfile
+                '-d', $dbfile,
+                '--timestamps',
+                '--ticker=dot' 
             )),
         );
 
@@ -275,6 +281,10 @@ class IDF_Plugin_SyncMonotone
     public function processMembershipsUpdated($project)
     {
         if ($project->getConf()->getVal('scm') != 'mtn') {
+            return;
+        }
+
+        if (Pluf::f('mtn_db_access', 'local') == 'local') {
             return;
         }
 
@@ -335,6 +345,10 @@ class IDF_Plugin_SyncMonotone
     public function processProjectDelete($project)
     {
         if ($project->getConf()->getVal('scm') != 'mtn') {
+            return;
+        }
+
+        if (Pluf::f('mtn_db_access', 'local') == 'local') {
             return;
         }
 
@@ -419,8 +433,13 @@ class IDF_Plugin_SyncMonotone
      */
     public function processKeyCreate($key)
     {
-        if ($key->getType() != 'mtn')
+        if ($key->getType() != 'mtn') {
             return;
+        }
+
+        if (Pluf::f('mtn_db_access', 'local') == 'local') {
+            return;
+        }
 
         foreach (Pluf::factory('IDF_Project')->getList() as $project) {
             $conf = new IDF_Conf();
@@ -525,8 +544,13 @@ class IDF_Plugin_SyncMonotone
      */
     public function processKeyDelete($key)
     {
-        if ($key->getType() != 'mtn')
+        if ($key->getType() != 'mtn') {
             return;
+        }
+
+        if (Pluf::f('mtn_db_access', 'local') == 'local') {
+            return;
+        }
 
         foreach (Pluf::factory('IDF_Project')->getList() as $project) {
             $conf = new IDF_Conf();

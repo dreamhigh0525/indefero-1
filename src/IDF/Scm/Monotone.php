@@ -157,9 +157,11 @@ class IDF_Scm_Monotone extends IDF_Scm
      */
     private function _getCerts($rev)
     {
-        static $certCache = array();
-
-        if (!array_key_exists($rev, $certCache)) {
+        $cache = Pluf_Cache::factory();
+        $cachekey = 'mtn-plugin-certs-for-rev-' . $rev;
+        $certs = $cache->get($cachekey);
+        
+        if ($certs === null) {
             $out = $this->stdio->exec(array('certs', $rev));
 
             $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
@@ -183,10 +185,10 @@ class IDF_Scm_Monotone extends IDF_Scm
                     }
                 }
             }
-            $certCache[$rev] = $certs;
+            $cache->set($cachekey, $certs);
         }
 
-        return $certCache[$rev];
+        return $certs;
     }
 
     /**
@@ -210,34 +212,6 @@ class IDF_Scm_Monotone extends IDF_Scm
             }
         }
         return array_unique($certValues);
-    }
-
-    /**
-     * Returns the revision in which the file has been last changed,
-     * starting from the start rev
-     *
-     * @param string
-     * @param string
-     * @return string
-     */
-    private function _getLastChangeFor($file, $startrev)
-    {
-        $out = $this->stdio->exec(array(
-            'get_content_changed', $startrev, $file
-        ));
-
-        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
-
-        // FIXME: we only care about the first returned content mark
-        // everything else seem to be very, very rare cases
-        foreach ($stanzas as $stanza) {
-            foreach ($stanza as $stanzaline) {
-                if ($stanzaline['key'] == 'content_mark') {
-                    return $stanzaline['hash'];
-                }
-            }
-        }
-        return null;
     }
 
     /**
@@ -297,6 +271,84 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * Takes a single stanza coming from an extended manifest output
+     * and converts it into a file structure used by IDF
+     *
+     * @param string $forceBasedir  If given then the element's path is checked
+     *                              to be directly beneath the given directory.
+     *                              If not, null is returned and the parsing is
+     *                              aborted.
+     * @return array | null
+     */
+    private function _fillFileEntry(array $manifestEntry, $forceBasedir = null)
+    {
+        $fullpath = $manifestEntry[0]['values'][0];
+        $filename = basename($fullpath);
+        $dirname = dirname($fullpath);
+        $dirname = $dirname == '.' ? '' : $dirname;
+
+        if ($forceBasedir !== null && $forceBasedir != $dirname) {
+            return null;
+        }
+
+        $file = array();
+        $file['file'] = $filename;
+        $file['fullpath'] = $fullpath;
+        $file['efullpath'] = self::smartEncode($fullpath);
+
+        $wanted_mark = '';
+        if ($manifestEntry[0]['key'] == 'dir') {
+            $file['type'] = 'tree';
+            $file['size'] = 0;
+            $wanted_mark = 'path_mark';
+        }
+        else {
+            $file['type'] = 'blob';
+            $file['hash'] = $manifestEntry[1]['hash'];
+            $size = 0;
+            foreach ($manifestEntry as $line) {
+                if ($line['key'] == 'size') {
+                    $size = $line['values'][0];
+                    break;
+                }
+            }
+            $file['size'] = $size;
+            $wanted_mark = 'content_mark';
+        }
+
+        $rev_mark = null;
+        foreach ($manifestEntry as $line) {
+            if ($line['key'] == $wanted_mark) {
+                $rev_mark = $line['hash'];
+                break;
+            }
+        }
+
+        if ($rev_mark !== null) {
+            $file['rev'] = $rev_mark;
+            $certs = $this->_getCerts($rev_mark);
+
+            // FIXME: this assumes that author, date and changelog are always given
+            $file['author'] = implode(", ", $certs['author']);
+
+            $dates = array();
+            foreach ($certs['date'] as $date)
+                $dates[] = date('Y-m-d H:i:s', strtotime($date));
+            $file['date'] = implode(', ', $dates);
+            $combinedChangelog = implode("\n---\n", $certs['changelog']);
+            $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+            // FIXME: the complete log message is currently not used in the
+            // tree view (the same is true for the other SCM implementations)
+            // but we _should_ really use or at least return that here
+            // in case we want to do fancy stuff like described in
+            // issue 492
+            $file['log'] =  $split[0];
+        }
+
+        return $file;
+    }
+
+    /**
      * @see IDF_Scm::getTree()
      */
     public function getTree($commit, $folder='/', $branch=null)
@@ -307,58 +359,20 @@ class IDF_Scm_Monotone extends IDF_Scm
         }
 
         $out = $this->stdio->exec(array(
-            'get_manifest_of', $revs[0]
+            'get_extended_manifest_of', $revs[0]
         ));
 
         $files = array();
         $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
-        $folder = $folder == '/' || empty($folder) ? '' : $folder.'/';
+        $folder = $folder == '/' || empty($folder) ? '' : $folder;
 
         foreach ($stanzas as $stanza) {
             if ($stanza[0]['key'] == 'format_version')
                 continue;
 
-            $path = $stanza[0]['values'][0];
-            if (!preg_match('#^'.$folder.'([^/]+)$#', $path, $m))
+            $file = $this->_fillFileEntry($stanza, $folder);
+            if ($file === null)
                 continue;
-
-            $file = array();
-            $file['file'] = $m[1];
-            $file['fullpath'] = $path;
-            $file['efullpath'] = self::smartEncode($path);
-
-            if ($stanza[0]['key'] == 'dir') {
-                $file['type'] = 'tree';
-                $file['size'] = 0;
-            }
-            else
-            {
-                $file['type'] = 'blob';
-                $file['hash'] = $stanza[1]['hash'];
-                $file['size'] = strlen($this->getFile((object)$file));
-            }
-
-            $rev = $this->_getLastChangeFor($file['fullpath'], $revs[0]);
-            if ($rev !== null) {
-                $file['rev'] = $rev;
-                $certs = $this->_getCerts($rev);
-
-                // FIXME: this assumes that author, date and changelog are always given
-                $file['author'] = implode(", ", $certs['author']);
-
-                $dates = array();
-                foreach ($certs['date'] as $date)
-                    $dates[] = date('Y-m-d H:i:s', strtotime($date));
-                $file['date'] = implode(', ', $dates);
-                $combinedChangelog = implode("\n---\n", $certs['changelog']);
-                $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
-                // FIXME: the complete log message is currently not used in the
-                // tree view (the same is true for the other SCM implementations)
-                // but we _should_ really use or at least return that here
-                // in case we want to do fancy stuff like described in
-                // issue 492
-                $file['log'] =  $split[0];
-            }
 
             $files[] = (object) $file;
         }
@@ -399,7 +413,7 @@ class IDF_Scm_Monotone extends IDF_Scm
                 $certs = $scm->_getCerts($revs[0]);
                 // for the very seldom case that a revision
                 // has no branch certificate
-                if (count($certs['branch']) == 0) {
+                if (!array_key_exists('branch', $certs)) {
                     $branch = '*';
                 }
                 else
@@ -505,7 +519,7 @@ class IDF_Scm_Monotone extends IDF_Scm
             return false;
 
         $out = $this->stdio->exec(array(
-            'get_manifest_of', $revs[0]
+            'get_extended_manifest_of', $revs[0]
         ));
 
         $files = array();
@@ -515,43 +529,10 @@ class IDF_Scm_Monotone extends IDF_Scm
             if ($stanza[0]['key'] == 'format_version')
                 continue;
 
-            $path = $stanza[0]['values'][0];
-            if (!preg_match('#^'.$file.'$#', $path, $m))
+            if ($stanza[0]['values'][0] != $file)
                 continue;
-
-            $file = array();
-            $file['fullpath'] = $path;
-
-            if ($stanza[0]['key'] == "dir") {
-                $file['type'] = "tree";
-                $file['hash'] = null;
-                $file['size'] = 0;
-            }
-            else
-            {
-                $file['type'] = 'blob';
-                $file['hash'] = $stanza[1]['hash'];
-                $file['size'] = strlen($this->getFile((object)$file));
-            }
-
-            $pathinfo = pathinfo($file['fullpath']);
-            $file['file'] = $pathinfo['basename'];
-
-            $rev = $this->_getLastChangeFor($file['fullpath'], $revs[0]);
-            if ($rev !== null) {
-                $file['rev'] = $rev;
-                $certs = $this->_getCerts($rev);
-
-                // FIXME: this assumes that author, date and changelog are always given
-                $file['author'] = implode(", ", $certs['author']);
-
-                $dates = array();
-                foreach ($certs['date'] as $date)
-                    $dates[] = date('Y-m-d H:i:s', strtotime($date));
-                $file['date'] = implode(', ', $dates);
-                $file['log'] = implode("\n---\n", $certs['changelog']);
-            }
-
+    
+            $file = $this->_fillFileEntry($stanza);
             return (object) $file;
         }
         return false;
@@ -623,10 +604,12 @@ class IDF_Scm_Monotone extends IDF_Scm
             $dates[] = date('Y-m-d H:i:s', strtotime($date));
         $res['date'] = implode(', ', $dates);
 
-        $res['title'] = implode("\n---\n", $certs['changelog']);
+        $combinedChangelog = implode("\n---\n", $certs['changelog']);
+        $split = preg_split("/[\n\r]/", $combinedChangelog, 2);
+        $res['title'] = $split[0];
+        $res['full_message'] = (isset($split[1])) ? trim($split[1]) : '';
 
         $res['commit'] = $revs[0];
-
         $res['changes'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
 
         return (object) $res;
@@ -680,11 +663,18 @@ class IDF_Scm_Monotone extends IDF_Scm
 
             // read in the initial branches we should follow
             if (count($initialBranches) == 0) {
+                if (!isset($certs['branch'])) {
+                    throw new IDF_Scm_Exception(sprintf(
+                        __("revision %s has no branch cert - cannot start ".
+                           "logging from this revision"), $rev
+                    ));
+                } 
                 $initialBranches = $certs['branch'];
             }
 
             // only add it to our log if it is on one of the initial branches
-            if (count(array_intersect($initialBranches, $certs['branch'])) > 0) {
+            // ignore revisions without any branch certificate
+            if (count(array_intersect($initialBranches, (array)@$certs['branch'])) > 0) {
                 --$n;
 
                 $log = array();

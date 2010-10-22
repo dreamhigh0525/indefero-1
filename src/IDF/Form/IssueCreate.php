@@ -45,6 +45,9 @@ class IDF_Form_IssueCreate extends Pluf_Form
             or $this->user->hasPerm('IDF.project-member', $this->project)) {
             $this->show_full = true;
         }
+        $contentTemplate = $this->project->getConf()->getVal(
+            'labels_issue_template', IDF_Form_IssueTrackingConf::init_template
+        );
         $this->fields['summary'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
                                             'label' => __('Summary'),
@@ -57,7 +60,7 @@ class IDF_Form_IssueCreate extends Pluf_Form
         $this->fields['content'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
                                             'label' => __('Description'),
-                                            'initial' => '',
+                                            'initial' => $contentTemplate,
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
                                             'widget_attrs' => array(
                                                        'cols' => 58,

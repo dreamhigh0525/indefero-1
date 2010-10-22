@@ -31,6 +31,15 @@ class IDF_Form_IssueTrackingConf extends Pluf_Form
      * Defined as constants to easily access the value in the
      * IssueUpdate/Create form in the case nothing is in the db yet.
      */
+    const init_template = 'Steps to reproduce the problem:
+1.
+2.
+3.
+
+Expected result:
+
+Actual result:
+';
     const init_open = 'New                 = Issue has not had initial review yet
 Accepted            = Problem reproduced / Need acknowledged
 Started             = Work on this issue has begun';
@@ -66,6 +75,15 @@ Maintainability      = Hinders future changes';
 
     public function initFields($extra=array())
     {
+        $this->fields['labels_issue_template'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => false,
+                                            'label' => __('Define an issue template to hint the reporter to provide certain information'),
+                                            'initial' => self::init_template,
+                                            'widget_attrs' => array('rows' => 7,
+                                                                    'cols' => 75),
+                                            'widget' => 'Pluf_Form_Widget_TextareaInput',
+                                            ));
+
         $this->fields['labels_issue_open'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
                                             'label' => __('Open issue status values'),
@@ -98,8 +116,6 @@ Maintainability      = Hinders future changes';
                                             'initial' => self::init_one_max, 
                                             'widget_attrs' => array('size' => 60),
                                             ));
-
-
 
     }
 }

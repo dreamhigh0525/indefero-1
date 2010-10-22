@@ -38,14 +38,15 @@ class IDF_Scm_Monotone_BasicIO
     {
         $pos = 0;
         $stanzas = array();
+        $length = strlen($in);
 
-        while ($pos < strlen($in)) {
+        while ($pos < $length) {
             $stanza = array();
-            while ($pos < strlen($in)) {
+            while ($pos < $length) {
                 if ($in[$pos] == "\n") break;
 
                 $stanzaLine = array('key' => '', 'values' => array(), 'hash' => null);
-                while ($pos < strlen($in)) {
+                while ($pos < $length) {
                     $ch = $in[$pos];
                     if ($ch == '"' || $ch == '[') break;
                     ++$pos;
@@ -53,6 +54,9 @@ class IDF_Scm_Monotone_BasicIO
                     $stanzaLine['key'] .= $ch;
                 }
 
+                // symbol w/o a value list
+                if ($pos >= $length || $in[$pos] == "\n") break;
+ 
                 if ($in[$pos] == '[') {
                     unset($stanzaLine['values']);
                     ++$pos; // opening square bracket
@@ -64,32 +68,37 @@ class IDF_Scm_Monotone_BasicIO
                 {
                     unset($stanzaLine['hash']);
                     $valCount = 0;
-                    while ($in[$pos] == '"') {
-                        ++$pos; // opening quote
+                    // if hashs and plain values are encountered in the same
+                    // value list, we add the hash values as simple values as well
+                    while ($in[$pos] == '"' || $in[$pos] == '[') {
+                        $isHashValue = $in[$pos] == '[';
+                        ++$pos; // opening quote / bracket
                         $stanzaLine['values'][$valCount] = '';
-                        while ($pos < strlen($in)) {
+                        while ($pos < $length) {
                             $ch = $in[$pos]; $pr = $in[$pos-1];
-                            if ($ch == '"' && $pr != '\\') break;
+                            if (($isHashValue && $ch == ']')
+                                ||(!$isHashValue && $ch == '"' && $pr != '\\'))
+                                 break;
                             ++$pos;
                             $stanzaLine['values'][$valCount] .= $ch;
                         }
                         ++$pos; // closing quote
 
-                        if ($pos >= strlen($in))
+                        if (!$isHashValue) {
+                            $stanzaLine['values'][$valCount] = str_replace(
+                                array("\\\\", "\\\""),
+                                array("\\", "\""),
+                                $stanzaLine['values'][$valCount]
+                            );
+                        }
+
+                        if ($pos >= $length)
                             break;
 
                         if ($in[$pos] == ' ') {
                             ++$pos; // space
                             ++$valCount;
                         }
-                    }
-
-                    for ($i = 0; $i <= $valCount; $i++) {
-                        $stanzaLine['values'][$i] = str_replace(
-                            array("\\\\", "\\\""),
-                            array("\\", "\""),
-                            $stanzaLine['values'][$i]
-                        );
                     }
                 }
 

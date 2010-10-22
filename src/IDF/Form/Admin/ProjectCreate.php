@@ -313,6 +313,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                            'labels_download_one_max' => IDF_Form_UploadConf::init_one_max,
                            'labels_wiki_predefined' => IDF_Form_WikiConf::init_predefined,
                            'labels_wiki_one_max' => IDF_Form_WikiConf::init_one_max,
+                           'labels_issue_template' => IDF_Form_IssueTrackingConf::init_template,
                            'labels_issue_open' => IDF_Form_IssueTrackingConf::init_open,
                            'labels_issue_closed' => IDF_Form_IssueTrackingConf::init_closed,
                            'labels_issue_predefined' =>  IDF_Form_IssueTrackingConf::init_predefined,

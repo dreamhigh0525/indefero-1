@@ -15,8 +15,7 @@ res=$(cd "$dir" && /bin/pwd || "$dir")
 SCRIPTDIR="$res/$(readlink $0)"
 PHP_POST_PUSH=$SCRIPTDIR/mtnpostpush.php
 
-base=$(basename "$0")
-TMPFILE=$(mktemp /tmp/${tempfoo}.XXXXXX) || exit 1
+TMPFILE=$(mktemp /tmp/mtn-post-push.XXXXXX) || exit 1
 while read rev; do echo $rev >> $TMPFILE; done
 
 echo php $PHP_POST_PUSH "$1" \< $TMPFILE \&\& rm -f $TMPFILE |\
