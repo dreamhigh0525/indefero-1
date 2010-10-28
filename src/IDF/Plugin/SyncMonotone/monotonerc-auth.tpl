@@ -34,30 +34,37 @@ end
 -- let IDF know of new arriving revisions to fill its timeline
 --
 _idf_revs = {}
-function note_netsync_start(session_id)
-    _idf_revs[session_id] = {}
-end
+push_hook_functions({
+    ["start"] = function (session_id)
+        _idf_revs[session_id] = {}
+        return "continue",nil
+    end,
+    ["revision_received"] = function (new_id, revision, certs, session_id)
+        table.insert(_idf_revs[session_id], new_id)
+        return "continue",nil
+    end,
+    ["end"] = function (session_id, ...)
+        if table.getn(_idf_revs[session_id]) == 0 then
+           return "continue",nil
+        end
 
-function note_netsync_revision_received(new_id, revision, certs, session_id)
-    table.insert(_idf_revs[session_id], new_id)
-end
+        local pin,pout,pid = spawn_pipe("%%MTNPOSTPUSH%%", "%%PROJECT%%");
+        if pid == -1 then
+            print("could not execute %%MTNPOSTPUSH%%")
+            return
+        end
 
-function note_netsync_end (session_id, ...)
-    if table.getn(_idf_revs[session_id]) == 0 then
-        return
+        for _,r in ipairs(_idf_revs[session_id]) do
+           pin:write(r .. "\n")
+        end
+        pin:close()
+
+        wait(pid)
+        return "continue",nil
     end
+})
 
-    local pin,pout,pid = spawn_pipe("%%MTNPOSTPUSH%%", "%%PROJECT%%");
-    if pid == -1 then
-        print("could execute %%MTNPOSTPUSH%%")
-        return
-    end
-
-    for _,r in ipairs(_idf_revs[session_id]) do
-        pin:write(r .. "\n")
-    end
-    pin:close()
-
-    wait(pid)
-end
-
+--
+-- Load additional local hooks, in case they exist
+--
+include(get_confdir() .. "/hooks.lua")
