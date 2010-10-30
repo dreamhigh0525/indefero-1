@@ -21,8 +21,8 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
-require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
-require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
+//require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
+//require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
 
 /**
  * Monotone scm class
@@ -133,6 +133,20 @@ class IDF_Scm_Monotone extends IDF_Scm
         }
 
         return $branch;
+    }
+
+    /**
+     * @see IDF_Scm::getArchiveStream
+     */
+    public function getArchiveStream($commit, $prefix='repository/')
+    {
+        $revs = $this->_resolveSelector($commit);
+        // sanity: this should actually not happen, because the 
+        // revision is validated before already
+        if (count($revs) == 0) {
+            return new Pluf_HTTP_Response_NotFound();
+        }
+        return new IDF_Scm_Monotone_ZipRender($this->stdio, $revs[0]); 
     }
 
     /**

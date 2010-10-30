@@ -393,13 +393,13 @@ class IDF_Scm
     }
 
     /**
-     * Generate the command to create a zip archive at a given commit.
+     * Generate a zip archive at a given commit, wrapped in a HTTP response, suitable for pushing to client.
      *
      * @param string Commit
      * @param string Prefix ('repository/')
-     * @return string Command
+     * @return Pluf_HTTP_Response The HTTP Response containing the zip archive
      */
-    public function getArchiveCommand($commit, $prefix='repository/')
+    public function getArchiveStream($commit, $prefix='repository/')
     {
         throw new Pluf_Exception_NotImplemented();
     }

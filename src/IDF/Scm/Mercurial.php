@@ -449,17 +449,18 @@ class IDF_Scm_Mercurial extends IDF_Scm
     }
 
     /**
-     * Generate the command to create a zip archive at a given commit.
+     * Generate a zip archive at a given commit.
      *
      * @param string Commit
      * @param string Prefix ('git-repo-dump')
-     * @return string Command
+     * @return Pluf_HTTP_Response The HTTP response containing the zip archive
      */
-    public function getArchiveCommand($commit, $prefix='')
+    protected function getArchiveStream($commit, $prefix='')
     {
-        return sprintf(Pluf::f('idf_exec_cmd_prefix', '').
+        $cmd = sprintf(Pluf::f('idf_exec_cmd_prefix', '').
                        Pluf::f('hg_path', 'hg').' archive --type=zip -R %s -r %s -',
                        escapeshellarg($this->repo),
                        escapeshellarg($commit));
+        return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
     }
 }

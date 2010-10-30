@@ -434,8 +434,7 @@ class IDF_Views_Source
         $commit = trim($match[2]);
         $scm = IDF_Scm::get($request->project);
         $base = $request->project->shortname.'-'.$commit;
-        $cmd = $scm->getArchiveCommand($commit, $base.'/');
-        $rep = new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
+        $rep = $scm->getArchiveStream($commit, $base.'/');
         $rep->headers['Content-Transfer-Encoding'] = 'binary';
         $rep->headers['Content-Disposition'] = 'attachment; filename="'.$base.'.zip"';
         return $rep;

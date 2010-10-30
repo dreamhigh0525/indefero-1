@@ -547,13 +547,14 @@ class IDF_Scm_Git extends IDF_Scm
         return $res;
     }
 
-    public function getArchiveCommand($commit, $prefix='repository/')
+    public function getArchiveStream($commit, $prefix='repository/')
     {
-        return sprintf(Pluf::f('idf_exec_cmd_prefix', '').
+        $cmd = sprintf(Pluf::f('idf_exec_cmd_prefix', '').
                        'GIT_DIR=%s '.Pluf::f('git_path', 'git').' archive --format=zip --prefix=%s %s',
                        escapeshellarg($this->repo),
                        escapeshellarg($prefix),
                        escapeshellarg($commit));
+        return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
     }
 
     /*
