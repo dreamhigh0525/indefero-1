@@ -79,6 +79,14 @@ push_hook_functions({
 })
 
 --
--- Load additional local hooks, in case they exist
+-- Load local hooks if they exist.
 --
-include(get_confdir() .. "/hooks.lua")
+-- The way this is supposed to work is that hooks.d can contain symbolic
+-- links to lua scripts.  These links MUST have the extension .lua
+-- If the script needs some configuration, a corresponding file with
+-- the extension .conf is the right spot.
+--  
+-- First load the configuration of the hooks, if applicable
+includedirpattern(get_confdir() .. "/hooks.d/", "*.conf")
+-- Then load the hooks themselves
+includedirpattern(get_confdir() .. "/hooks.d/", "*.lua")

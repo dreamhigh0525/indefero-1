@@ -199,7 +199,7 @@ somewhere else for backup purposes.  The monotone source tree already comes
 with [many example scripts and hooks](http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/contrib)
 which serve these purposes, after only little additional configuration.
 
-The usher/indefero-controlled setup automatically looks for a file called
-`hooks.lua` in the project's base directory (configured via $cfg['mtn_repositories'])
-and this is the ideal place to put or link these additional lua sources.
-
+The usher/indefero-controlled setup automatically looks for *.lua files
+in a directory called `hooks.d` right under the project's base directory
+(configured via $cfg['mtn_repositories']) and this is the ideal place to 
+put or link these additional lua sources.
