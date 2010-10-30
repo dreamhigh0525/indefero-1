@@ -173,3 +173,33 @@ For even more advanced setups, usher can also be used to forward sync
 requests to other remote servers for load balancing, please consult the
 README file for more information.
 
+## Security and remote access
+
+Indefero distinguishs between public and private projects and so does
+the monotone plugin.
+
+Public projects can be pulled by everybody and pushed by team members
+or additional invited people. Remote command execution is enabled, but
+only for read-only commands.
+
+Remote commands can be helpful for a user or a 3rd party tool (like
+[mtn-browse](http://mtn-browse.sourceforge.net) or
+[guitone](http://guitone.thomaskeller.biz)) to browse the database
+contents remotely without having to pull everything in first instance.
+
+Private projects on the other hand can only be synced by team members
+or additional invited people. Also noo remote command execution is enabled
+by default.
+
+## Notifications
+
+If you have successfully set up your monotone instance, you probably want
+to notify 3rd party systems for incoming changes or simply mirror them
+somewhere else for backup purposes.  The monotone source tree already comes
+with [many example scripts and hooks](http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/contrib)
+which serve these purposes, after only little additional configuration.
+
+The usher/indefero-controlled setup automatically looks for a file called
+`hooks.lua` in the project's base directory (configured via $cfg['mtn_repositories'])
+and this is the ideal place to put or link these additional lua sources.
+
