@@ -105,6 +105,7 @@ Maintainability      = Hinders future changes';
                                       array('required' => true,
                                             'label' => __('Predefined issue labels'),
                                             'initial' => self::init_predefined,
+                                            'help_text' => __('The first "Type:" and "Priority:" entries found in this list are automatically chosen as defaults for new issues.'),
                                             'widget_attrs' => array('rows' => 7,
                                                                     'cols' => 75),
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',

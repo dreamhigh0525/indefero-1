@@ -24,7 +24,8 @@
 <tr>
 <td colspan="2"><strong>{$form.f.labels_issue_predefined.labelTag}:</strong><br />
 {if $form.f.labels_issue_predefined.errors}{$form.f.labels_issue_predefined.fieldErrors}{/if}
-{$form.f.labels_issue_predefined|unsafe}
+{$form.f.labels_issue_predefined|unsafe}<br />
+<span class="helptext">{$form.f.labels_issue_predefined.help_text}</span>
 </td>
 </tr>
 <tr>
