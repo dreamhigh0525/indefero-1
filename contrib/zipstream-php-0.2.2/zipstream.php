@@ -407,7 +407,7 @@ class ZipStream {
     list ($name, $opt, $meth, $crc, $zlen, $len, $ofs) = $args;
 
     # get attributes
-    $comment = $opt['comment'] ? $opt['comment'] : '';
+    $comment = isset($opt['comment']) ? $opt['comment'] : '';
 
     # get dos timestamp
     $dts = $this->dostime($opt['time']);
@@ -450,7 +450,7 @@ class ZipStream {
 
     # grab comment (if specified)
     $comment = '';
-    if ($opt && $opt['comment'])
+    if ($opt && isset($opt['comment']))
       $comment = $opt['comment'];
 
     $fields = array(                # (from V,F of APPNOTE.TXT)
