@@ -66,7 +66,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
 
         $this->fields['shortdesc'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
-                                            'label' => __('short description'),
+                                            'label' => __('Short description'),
                                             'help_text' => __('A one line description of the project.'),
                                             'initial' => '',
                                             'widget_attrs' => array('size' => '35'),
@@ -105,6 +105,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                     array('required' => false,
                           'label' => __('Master branch'),
                           'initial' => '',
+                          'widget_attrs' => array('size' => '35'),
                           'help_text' => __('This should be a world-wide unique identifier for your project. A reverse DNS notation like "com.my-domain.my-project" is a good idea.'),
                           ));
 
@@ -203,7 +204,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         }
 
         $sql = new Pluf_SQL('vkey=%s AND vdesc=%s',
-                            array("mtn_master_branch", $mtn_master_branch));
+                            array('mtn_master_branch', $mtn_master_branch));
         $l = Pluf::factory('IDF_Conf')->getList(array('filter'=>$sql->gen()));
         if ($l->count() > 0) {
             throw new Pluf_Form_Invalid(__(
