@@ -128,7 +128,7 @@ class IDF_Views_Project
     public function timeline($request, $match)
     {
         $prj = $request->project;
-        
+
         $model_filter = @$match[2];
         $all_model_filters = self::getAvailableModelFilters();
         if (!array_key_exists($model_filter, $all_model_filters)) {
@@ -156,7 +156,7 @@ class IDF_Views_Project
         $pag->items_per_page = 20;
         $pag->no_results_text = __('No changes were found.');
         $pag->setFromRequest($request);
-        
+
         if (!$request->user->isAnonymous() and $prj->isRestricted()) {
             $feedurl = Pluf_HTTP_URL_urlForView('idf_project_timeline_feed_auth',
                                                 array($prj->shortname,
@@ -198,7 +198,7 @@ class IDF_Views_Project
             $model_filter = 'all';
         }
         $title = $all_model_filters[$model_filter];
-       
+
         $classes = self::determineModelClasses($request, $model_filter);
         $sqls = sprintf('model_class IN (%s)', implode(', ', $classes));
         $sql = new Pluf_SQL('project=%s AND '.$sqls, array($prj->id));
