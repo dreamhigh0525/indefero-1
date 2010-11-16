@@ -36,10 +36,11 @@ class IDF_Views_Source
      */
     public static $supportedExtenstions = array(
               'ascx', 'ashx', 'asmx', 'aspx', 'browser', 'bsh', 'c', 'cl', 'cc',
-              'config', 'cpp', 'cs', 'csh', 'csproj', 'css', 'cv', 'cyc', 'el', 'fs', 'hs',
-              'html', 'html', 'java', 'js', 'lisp', 'master', 'pas', 'perl', 'php', 'pl',
-              'pm', 'py', 'rb', 'scm', 'sh', 'sitemap', 'skin', 'sln', 'svc', 'vala',
-              'vb', 'vbproj', 'vbs', 'wsdl', 'xhtml', 'xml', 'xsd', 'xsl', 'xslt');
+              'config', 'cpp', 'cs', 'csh', 'csproj', 'css', 'cv', 'cyc', 'el', 'fs',
+              'h', 'hh', 'hpp', 'hs', 'html', 'html', 'java', 'js', 'lisp', 'master',
+              'pas', 'perl', 'php', 'pl', 'pm', 'py', 'rb', 'scm', 'sh', 'sitemap', 
+              'skin', 'sln', 'svc', 'vala', 'vb', 'vbproj', 'vbs', 'wsdl', 'xhtml',
+              'xml', 'xsd', 'xsl', 'xslt');
 
     /**
      * Display help on how to checkout etc.
