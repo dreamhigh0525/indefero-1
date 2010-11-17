@@ -429,6 +429,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
                     $c['author'] = $match[2];
                 } elseif ($match[1] == 'summary') {
                     $c['title'] = $match[2];
+                } elseif ($match[1] == 'branch') {
+                    $c['branch'] = $match[2];
                 } else {
                     $c[$match[1]] = trim($match[2]);
                 }
@@ -443,6 +445,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
             }
         }
         $c['tree'] = !empty($c['commit']) ? trim($c['commit']) : '';
+        $c['branch'] = empty($c['branch']) ? 'default' : $c['branch'];
         $c['full_message'] = !empty($c['full_message']) ? trim($c['full_message']) : '';
         $res[] = (object) $c;
         return $res;

@@ -415,6 +415,7 @@ class IDF_Scm_Svn extends IDF_Scm
         $res['commit'] = (string) $xml->logentry['revision'];
         $res['changes'] = ($getdiff) ? $this->getDiff($commit) : '';
         $res['tree'] = '';
+        $res['branch'] = '';
         return (object) $res;
     }
 

@@ -436,6 +436,8 @@ class IDF_Scm_Git extends IDF_Scm
             $out = self::parseLog($out);
             $out[0]->changes = '';
         }
+
+        $out[0]['branch'] = $this->inBranches($commit, null);
         return $out[0];
     }
 
