@@ -398,7 +398,7 @@ class IDF_Scm_Svn extends IDF_Scm
      */
     public function getCommit($commit, $getdiff=false)
     {
-        if (!$this->isValidRevision($commit)) {
+        if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
             return false;
         }
         $res = array();
