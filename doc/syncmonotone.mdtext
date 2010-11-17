@@ -201,5 +201,24 @@ which serve these purposes, after only little additional configuration.
 
 The usher/indefero-controlled setup automatically looks for *.lua files
 in a directory called `hooks.d` right under the project's base directory
-(configured via $cfg['mtn_repositories']) and this is the ideal place to 
+(configured via $cfg['mtn_repositories']) and this is the ideal place to
 put or link these additional lua sources.
+
+## Q&A
+
+### I pushed a branch to my server, but it does not show up in IDF. Whats wrong?
+
+Check if the heads of your branch are not suspended, i.e. do not carry a
+`suspend` certificate.  This usually hides the branch and all of its history
+from monotone's eyes and therefor also from indefero.  You can either choose
+to "unsuspend" the branch simply by committing and pushing another head or
+by letting monotone ignore all suspend certs.  For the latter, its usually
+enough to add `--ignore-suspend-certs` to the list of options in `$cfg['mtn_opts']`.
+
+### I want to display another default branch when I click the "Source" tab. How can I do that?
+
+Let the forge admin know the new master branch for your project.  He is able
+to change that quickly.  Depending on the backend / server setup this might
+also require some changes in the usher configuration, but only if usher
+recognizes and proxies your database on a branch name level.
+
