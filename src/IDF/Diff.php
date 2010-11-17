@@ -72,6 +72,9 @@ class IDF_Diff
                 $indiff = true;
                 continue;
             } else if (0 === strpos($line, '=========')) {
+                // ignore pseudo stanzas with a hint of a binary file
+                if (preg_match("/^# (.+) is binary/", $this->lines[$i]))
+                    continue;
                 // by default always use the new name of a possibly renamed file
                 $current_file = self::getMtnFile($this->lines[$i+1]);
                 // mtn 0.48 and newer set /dev/null as file path for dropped files

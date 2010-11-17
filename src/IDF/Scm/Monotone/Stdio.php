@@ -63,6 +63,55 @@ class IDF_Scm_Monotone_Stdio
     }
 
     /**
+     * Returns a string with additional options which are passed to
+     * an mtn instance connecting to remote databases
+     *
+     * @return string
+     */
+    public function _getAuthOptions()
+    {
+        // no remote authentication - the simple case
+        if (!Pluf::f('mtn_remote_auth', true)) {
+            return '--key= ';
+        }
+
+        $prjconf = $this->project->getConf();
+        $name = $prjconf->getVal('mtn_client_key_name', false);
+        $hash = $prjconf->getVal('mtn_client_key_hash', false);
+
+        if (!$name || !$hash) {
+            throw new IDF_Scm_Exception(sprintf(
+                __('Monotone client key name or hash not in project conf.')
+            ));
+        }
+
+        $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
+        if (!file_exists($keydir)) {
+            if (!mkdir($keydir)) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('The key directory %s could not be created.'), $keydir
+                ));
+            }
+        }
+
+        // in case somebody cleaned out the cache, we restore the key here
+        $keyfile = $keydir . '/' . $name .'.'. $hash;
+        if (!file_exists($keyfile)) {
+            $data = $prjconf->getVal('mtn_client_key_data');
+            if (!file_put_contents($keyfile, $data, LOCK_EX)) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('Could not write client key "%s"'), $keyfile
+                ));
+            }
+        }
+
+        return sprintf('--keydir=%s --key=%s ',
+               escapeshellarg($keydir),
+               escapeshellarg($hash)
+        );
+    }
+
+    /**
      * Starts the stdio process and resets the command counter
      */
     public function start()
@@ -80,9 +129,8 @@ class IDF_Scm_Monotone_Stdio
             $cmd .= sprintf('%s ', escapeshellarg($opt));
         }
 
-        // FIXME: we might want to add an option for anonymous / no key
-        // access, but upstream bug #30237 prevents that for now
         if ($remote_db_access) {
+            $cmd .= $this->_getAuthOptions();
             $host = sprintf(Pluf::f('mtn_remote_url'), $this->project->shortname);
             $cmd .= sprintf('automate remote_stdio %s', escapeshellarg($host));
         }
@@ -104,7 +152,6 @@ class IDF_Scm_Monotone_Stdio
         );
 
         $env = array('LANG' => 'en_US.UTF-8');
-
         $this->proc = proc_open($cmd, $descriptors, $this->pipes,
                                 null, $env);
 

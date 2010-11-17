@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {*
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of InDefero, an open source project management application.
@@ -29,16 +30,12 @@
   <![endif]-->
   {block extraheader}{/block}
   <title>{block pagetitle}{$page_title|strip_tags}{/block}</title>
+  <script type="text/javascript" src="{media '/idf/js/jquery-1.2.6.min.js'}"></script>
 </head>
 <body>
 <div id="{block docid}doc3{/block}" class="{block docclass}yui-t3{/block}">
   <div id="hd">
-    <p class="top"><a href="#title" accesskey="2"></a>
-{aurl 'url', 'IDF_Views_User::dashboard'}{blocktrans}Welcome, <strong><a class="userw" href="{$url}">{$user}</a></strong>.{/blocktrans} <a href="{url 'IDF_Views::logout'}">{trans 'Sign Out'}</a>
-| <a href="{url 'IDF_Views::index'}">{trans 'Project List'}</a>
-| <a href="{url 'IDF_Views_Admin::projects'}">{trans 'Forge Management'}</a>
-| <a href="{url 'IDF_Views::faq'}" title="{trans 'Help and accessibility features'}">{trans 'Help'}</a>
-    </p>
+    {include 'idf/main-menu.html'}
 <div id="header">
 <div id="main-tabs">
   <a href="{url 'IDF_Views_Admin::projects'}"{block tabprojects}{/block}>{trans 'Projects'}</a>
@@ -64,7 +61,6 @@
   </div>
   <div id="ft">{block foot}{/block}</div>
 </div>
-<script type="text/javascript" src="{media '/idf/js/jquery-1.2.6.min.js'}"></script>
 {include 'idf/js-hotkeys.html'}
 {block javascript}{/block}
 </body>

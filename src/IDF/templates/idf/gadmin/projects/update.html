@@ -18,6 +18,23 @@
 </td>
 </tr>
 <tr>
+<th><strong>{$form.f.shortdesc.labelTag}:</strong></th>
+<td>
+{if $form.f.shortdesc.errors}{$form.f.shortdesc.fieldErrors}{/if}
+{$form.f.shortdesc|unsafe}<br />
+<span class="helptext">{$form.f.shortdesc.help_text}</span>
+</td>
+</tr>
+{if $project.getConf().getVal('scm') == 'mtn'}
+<tr class="mtn-form">
+<th><strong>{$form.f.mtn_master_branch.labelTag}:</strong></th>
+<td>{if $form.f.mtn_master_branch.errors}{$form.f.mtn_master_branch.fieldErrors}{/if}
+{$form.f.mtn_master_branch|unsafe}<br />
+<span class="helptext">{$form.f.mtn_master_branch.help_text}</span>
+</td>
+</tr>
+{/if}
+<tr>
 <th><strong>{$form.f.owners.labelTag}:</strong></th>
 <td>
 {if $form.f.owners.errors}{$form.f.owners.fieldErrors}{/if}
@@ -36,7 +53,7 @@
 <td>&nbsp;</td>
 <td> {aurl 'url', 'IDF_Views_Admin::projectDelete', array($project.id)}
 {* float left is a fix for Firefox < 3.5 *}
-<span style="float: left;"><input type="submit" value="{trans 'Update Project'}" name="submit" /> 
+<span style="float: left;"><input type="submit" value="{trans 'Update Project'}" name="submit" />
 | <a href="{url 'IDF_Views_Admin::projects'}">{trans 'Cancel'}</a></span> {if $isAdmin}
  <span class="dellink"><a href="{$url}" title="{trans 'Delete this project'}"><img src="{media '/idf/img/trash.png'}" style="vertical-align: text-bottom;" alt="{trans 'Trash'}" /></a> <a href="{$url}" title="{trans 'Delete this project'}">{trans 'Delete this project'}</a><br /><span class="note helptext">{trans 'You will be asked to confirm.'}</span></span>{/if}
 </td>

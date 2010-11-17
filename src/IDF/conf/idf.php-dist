@@ -73,99 +73,52 @@ $cfg['git_write_remote_url'] = 'git@localhost:%s.git';
 $cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
 $cfg['svn_remote_url'] = 'http://localhost/svn/%s';
 
-# Path to the monotone binary (you need mtn 0.99 or newer)
+#
+# You can setup monotone for use with indefero in several ways.
+# Please look into doc/syncmonotone.mdtext for more information.
+#
+
+# Path to the monotone binary
 $cfg['mtn_path'] = 'mtn';
+
 # Additional options for the started monotone process
-$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles', '--key=');
-#
-# You can setup monotone for use with indefero in several ways. The
-# two most-used should be:
-#
-# 1) One database for everything:
-#
-#    Set 'mtn_repositories' below to a fixed database path, such as
-#    '/home/mtn/repositories/all_projects.mtn'
-#
-#    Pro: - easy to setup and to manage
-#    Con: - while read access can be configured per-branch,
-#           granting write access rights to a user means that
-#           he can write anything in the global database
-#         - database lock problem: the database from which
-#           indefero reads its data cannot be used to serve the
-#           contents to the users, as the serve process locks
-#           the database
-#
-# 2) One database for every project with 'usher':
-#
-#    Download and configure 'usher'
-#    (mtn clone mtn://monotone.ca?net.venge.monotone.contrib.usher)
-#    which acts as proxy in front of all single project databases.
-#    Create a basic configuration file for it and add a secret admin
-#    username and password. Finally, point the below variable
-#    'mtn_usher_conf' to this configuration file.
-#
-#    Then set 'mtn_remote_url' below to a string which matches your setup.
-#    Again, the '%s' placeholder will be expanded to the project's
-#    short name. Note that 'mtn_remote_url' is used as internal
-#    URI (to access the data for indefero) as well as external URI
-#    (for end users) at the same time. 'mtn_repositories' should then
-#    point to a directory where all project-related files (databases,
-#    keys, configurations) are kept, as these are automatically created
-#    on project creation by IDF.
-#
-#    Example: 'mtn_repositories' is configured to be '/var/monotone/%s'
-#
-#      - IDF tries to create /var/monotone/<projectname> as root directory
-#      - The database is placed in as /var/monotone/<projectname>/database.mtn
-#      - The server key is put into /var/monotone/<projectname>/keys and
-#        is named "<projectname>-server@<host>", where host is the host part
-#        of 'mtn_remote_url'
-#
-#    therefor /var/monotone MUST be read/writable for the www user and all
-#    files which are created underknees MUST be read/writable by the user
-#    who is executing the usher instance! The best way to achieve this is with
-#    default (POSIX) ACLs on /var/monotone.
-#
-#
-#    You could also choose to setup usher by hand, i.e. with individual
-#    databases, in this case leave 'mtn_usher_conf' below commented out.
-#
-#    Pro: - read and write access can be granted per project
-#         - no database locking issues
-#         - one public server running on the one well-known port
-#    Con: - harder to setup
-#
-# Usher can also be used to forward sync requests to remote servers,
-# please consult its README file for more information.
-#
-# monotone also allows to use SSH as transport protocol, so if you do not plan
-# to setup a netsync server as described above, then just enter a URI like
-# 'ssh://my-host.biz/home/mtn/repositories/%s.mtn' in 'mtn_remote_url'.
-#
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
+
+# The path to a specific database (local use) or a writable project
+# directory (remote / usher use). %s is replaced with the project name
 $cfg['mtn_repositories'] = '/home/mtn/repositories/%s.mtn';
+
+# The URL which is displayed as sync URL to the user and which is also
+# used to connect to a remote usher
 $cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
-#
+
 # Whether the particular database(s) are accessed locally (via automate stdio)
 # or remotely (via automate remote_stdio). 'remote' is the default for
-# netsync setups, while 'local' access should be choosed for ssh access.
-#
-# Note that you need to setup the hook 'get_remote_automate_permitted' for
-# each remotely accessible database. A full HOWTO set this up is beyond this
-# scope, please refer to the documentation of monotone and / or ask on the
-# mailing list (monotone-users@nongnu.org) or IRC channel
-# (irc.oftc.net/#monotone)
-#
-$cfg['mtn_db_access'] = 'remote';
-#
-# If configured, this allows basic control of a running usher process
-# via the forge administration. The variable must point to the full (writable)
+# use with usher and the SyncMonotone plugin, while 'local' access should be
+# choosed for manual setups and / or ssh access.
+$cfg['mtn_db_access'] = 'local';
+
+# If true, each access to the database is authenticated with an auto-generated
+# project key which is stored in the IDF project configuration
+# ('mtn_client_key_*') and written out to $cfg['tmp_folder']/mtn-client-keys
+# for its actual use. This key is then configured on the server to have
+# full read / write access to all functions, while anonymous access can be
+# completely disabled.
+# If false, IDF tries to connect anonymously, without authentication, to
+# the remote monotone server instance. In this case no project-specific
+# keys are generated and the server must be configured to allow at least
+# anonymous read access to the main functions.
+#$cfg['mtn_remote_auth'] = true;
+
+# Needs to be configured for remote / usher usage.
+# This allows basic control of a running usher process via the forge
+# administration. The variable must point to the full (writable)
 # path of the usher configuration file which gets updated when new projects
 # are added
-#
 #$cfg['mtn_usher_conf'] = '/path/to/usher.conf';
 
 # Mercurial repositories path
-#$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
+$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
 #$cfg['mercurial_remote_url'] = 'http://projects.ceondo.com/hg/%s';
 
 # admins will get an email in case of errors in the system in non
@@ -252,8 +205,8 @@ $cfg['db_database'] = 'website'; # put absolute path to the db if you
                                  # are using SQLite.
 #
 # The extension of the downloads are limited. You can add extra
-# extensions here. The list must start with a space.
-# $cfg['idf_extra_upload_ext'] = ' ext1 ext2';
+# extensions here.
+# $cfg['idf_extra_upload_ext'] = 'ext1 ext2';
 #
 # By default, the size of the downloads is limited to 2MB.
 # The php.ini upload_max_filesize configuration setting will
@@ -302,6 +255,13 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
                             'mercurial' => 'IDF_Scm_Mercurial',
                             'mtn' => 'IDF_Scm_Monotone',
                             );
+
+# Set to true when uploaded public keys should not only be validated
+# syntactically, but also by the specific backend. For SSH public
+# keys, ssh-keygen(3) must be available and usable in PATH, for
+# monotone public keys, the monotone binary (as configured above)
+# is used. 
+# $cfg['idf_strong_key_check'] = false;
 
 # If you want to use another memtypes database
 # $cfg['idf_mimetypes_db'] = '/etc/mime.types';

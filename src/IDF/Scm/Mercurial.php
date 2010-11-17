@@ -87,14 +87,19 @@ class IDF_Scm_Mercurial extends IDF_Scm
         return sprintf(Pluf::f('mercurial_remote_url'), $project->shortname);
     }
 
-    public function isValidRevision($rev)
+    public function validateRevision($rev)
     {
         $cmd = sprintf(Pluf::f('hg_path', 'hg').' log -R %s -r %s',
                        escapeshellarg($this->repo),
                        escapeshellarg($rev));
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::isValidRevision', $cmd, $out, $ret);
-        return ($ret == 0) && (count($out) > 0);
+
+        // FIXME: apparently a given hg revision can also be ambigious -
+        //        handle this case here sometime
+        if ($ret == 0 && count($out) > 0)
+            return IDF_Scm::REVISION_VALID;
+        return IDF_Scm::REVISION_INVALID;
     }
 
     /**
@@ -424,6 +429,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
                     $c['author'] = $match[2];
                 } elseif ($match[1] == 'summary') {
                     $c['title'] = $match[2];
+                } elseif ($match[1] == 'branch') {
+                    $c['branch'] = $match[2];
                 } else {
                     $c[$match[1]] = trim($match[2]);
                 }
@@ -438,23 +445,25 @@ class IDF_Scm_Mercurial extends IDF_Scm
             }
         }
         $c['tree'] = !empty($c['commit']) ? trim($c['commit']) : '';
+        $c['branch'] = empty($c['branch']) ? 'default' : $c['branch'];
         $c['full_message'] = !empty($c['full_message']) ? trim($c['full_message']) : '';
         $res[] = (object) $c;
         return $res;
     }
 
     /**
-     * Generate the command to create a zip archive at a given commit.
+     * Generate a zip archive at a given commit.
      *
      * @param string Commit
      * @param string Prefix ('git-repo-dump')
-     * @return string Command
+     * @return Pluf_HTTP_Response The HTTP response containing the zip archive
      */
-    public function getArchiveCommand($commit, $prefix='')
+    protected function getArchiveStream($commit, $prefix='')
     {
-        return sprintf(Pluf::f('idf_exec_cmd_prefix', '').
+        $cmd = sprintf(Pluf::f('idf_exec_cmd_prefix', '').
                        Pluf::f('hg_path', 'hg').' archive --type=zip -R %s -r %s -',
                        escapeshellarg($this->repo),
                        escapeshellarg($commit));
+        return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
     }
 }

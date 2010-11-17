@@ -64,6 +64,14 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                                             'help_text' => __('It must be unique for each project and composed only of letters, digits and dash (-) like "my-project".'),
                                             ));
 
+        $this->fields['shortdesc'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => true,
+                                            'label' => __('Short description'),
+                                            'help_text' => __('A one line description of the project.'),
+                                            'initial' => '',
+                                            'widget_attrs' => array('size' => '35'),
+                                            ));
+
         $this->fields['scm'] = new Pluf_Form_Field_Varchar(
                     array('required' => true,
                           'label' => __('Repository type'),
@@ -97,6 +105,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                     array('required' => false,
                           'label' => __('Master branch'),
                           'initial' => '',
+                          'widget_attrs' => array('size' => '35'),
                           'help_text' => __('This should be a world-wide unique identifier for your project. A reverse DNS notation like "com.my-domain.my-project" is a good idea.'),
                           ));
 
@@ -195,7 +204,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         }
 
         $sql = new Pluf_SQL('vkey=%s AND vdesc=%s',
-                            array("mtn_master_branch", $mtn_master_branch));
+                            array('mtn_master_branch', $mtn_master_branch));
         $l = Pluf::factory('IDF_Conf')->getList(array('filter'=>$sql->gen()));
         if ($l->count() > 0) {
             throw new Pluf_Form_Invalid(__(
@@ -272,6 +281,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         $project = new IDF_Project();
         $project->name = $this->cleaned_data['name'];
         $project->shortname = $this->cleaned_data['shortname'];
+        $project->shortdesc = $this->cleaned_data['shortdesc'];
 
         if ($this->cleaned_data['template'] != '--') {
             // Find the template project
@@ -304,6 +314,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                            'labels_download_one_max' => IDF_Form_UploadConf::init_one_max,
                            'labels_wiki_predefined' => IDF_Form_WikiConf::init_predefined,
                            'labels_wiki_one_max' => IDF_Form_WikiConf::init_one_max,
+                           'labels_issue_template' => IDF_Form_IssueTrackingConf::init_template,
                            'labels_issue_open' => IDF_Form_IssueTrackingConf::init_open,
                            'labels_issue_closed' => IDF_Form_IssueTrackingConf::init_closed,
                            'labels_issue_predefined' =>  IDF_Form_IssueTrackingConf::init_predefined,

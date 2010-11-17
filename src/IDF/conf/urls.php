@@ -74,18 +74,18 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/$#',
                'model' => 'IDF_Views_Project',
                'method' => 'home');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/timeline/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/timeline/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
                'method' => 'timeline');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
                'method' => 'timelineFeed',
                'name' => 'idf_project_timeline_feed');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/token/(.*)/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/(\w+)/token/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
                'method' => 'timelineFeed',
@@ -147,6 +147,16 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/help/$#',
                'base' => $base,
                'model' => 'IDF_Views_Source',
                'method' => 'help');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/source/invalid/([^/]+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Source',
+               'method' => 'invalidRevision');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/source/disambiguate/([^/]+)/from/([^/]+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Source',
+               'method' => 'disambiguateRevision');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/tree/([^/]+)/$#',
                'base' => $base,
