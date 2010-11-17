@@ -31,7 +31,8 @@ function get_remote_automate_permitted(key_identity, command, options)
         "leaves", "ancestry_difference", "toposort", "erase_ancestors",
         "descendents", "ancestors", "heads", "get_file_of", "get_file",
         "interface_version", "get_attributes", "content_diff",
-        "file_merge", "show_conflicts", "certs", "keys"
+        "file_merge", "show_conflicts", "certs", "keys", "get_file_size",
+        "get_extended_manifest_of"
     }
 
     for _,v in ipairs(read_only_commands) do
@@ -47,29 +48,45 @@ end
 -- let IDF know of new arriving revisions to fill its timeline
 --
 _idf_revs = {}
-function note_netsync_start(session_id)
-    _idf_revs[session_id] = {}
-end
+push_hook_functions({
+    ["start"] = function (session_id)
+        _idf_revs[session_id] = {}
+        return "continue",nil
+    end,
+    ["revision_received"] = function (new_id, revision, certs, session_id)
+        table.insert(_idf_revs[session_id], new_id)
+        return "continue",nil
+    end,
+    ["end"] = function (session_id, ...)
+        if table.getn(_idf_revs[session_id]) == 0 then
+           return "continue",nil
+        end
 
-function note_netsync_revision_received(new_id, revision, certs, session_id)
-    table.insert(_idf_revs[session_id], new_id)
-end
+        local pin,pout,pid = spawn_pipe("%%MTNPOSTPUSH%%", "%%PROJECT%%");
+        if pid == -1 then
+            print("could not execute %%MTNPOSTPUSH%%")
+            return
+        end
 
-function note_netsync_end (session_id, ...)
-    if table.getn(_idf_revs[session_id]) == 0 then
-        return
+        for _,r in ipairs(_idf_revs[session_id]) do
+           pin:write(r .. "\n")
+        end
+        pin:close()
+
+        wait(pid)
+        return "continue",nil
     end
+})
 
-    local pin,pout,pid = spawn_pipe("%%MTNPOSTPUSH%%", "%%PROJECT%%");
-    if pid == -1 then
-        print("could execute %%MTNPOSTPUSH%%")
-        return
-    end
-
-    for _,r in ipairs(_idf_revs[session_id]) do
-        pin:write(r .. "\n")
-    end
-    pin:close()
-
-    wait(pid)
-end
+--
+-- Load local hooks if they exist.
+--
+-- The way this is supposed to work is that hooks.d can contain symbolic
+-- links to lua scripts.  These links MUST have the extension .lua
+-- If the script needs some configuration, a corresponding file with
+-- the extension .conf is the right spot.
+--  
+-- First load the configuration of the hooks, if applicable
+includedirpattern(get_confdir() .. "/hooks.d/", "*.conf")
+-- Then load the hooks themselves
+includedirpattern(get_confdir() .. "/hooks.d/", "*.lua")

@@ -21,8 +21,8 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
-require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
-require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
+//require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
+//require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
 
 /**
  * Monotone scm class
@@ -136,6 +136,20 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * @see IDF_Scm::getArchiveStream
+     */
+    public function getArchiveStream($commit, $prefix='repository/')
+    {
+        $revs = $this->_resolveSelector($commit);
+        // sanity: this should actually not happen, because the
+        // revision is validated before already
+        if (count($revs) == 0) {
+            return new Pluf_HTTP_Response_NotFound();
+        }
+        return new IDF_Scm_Monotone_ZipRender($this->stdio, $revs[0]);
+    }
+
+    /**
      * expands a selector or a partial revision id to zero, one or
      * multiple 40 byte revision ids
      *
@@ -160,7 +174,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         $cache = Pluf_Cache::factory();
         $cachekey = 'mtn-plugin-certs-for-rev-' . $rev;
         $certs = $cache->get($cachekey);
-        
+
         if ($certs === null) {
             $out = $this->stdio->exec(array('certs', $rev));
 
@@ -531,7 +545,7 @@ class IDF_Scm_Monotone extends IDF_Scm
 
             if ($stanza[0]['values'][0] != $file)
                 continue;
-    
+
             $file = $this->_fillFileEntry($stanza);
             return (object) $file;
         }
@@ -609,7 +623,9 @@ class IDF_Scm_Monotone extends IDF_Scm
         $res['title'] = $split[0];
         $res['full_message'] = (isset($split[1])) ? trim($split[1]) : '';
 
+        $res['branch'] = implode(', ', $certs['branch']);
         $res['commit'] = $revs[0];
+
         $res['changes'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
 
         return (object) $res;
@@ -668,7 +684,7 @@ class IDF_Scm_Monotone extends IDF_Scm
                         __("revision %s has no branch cert - cannot start ".
                            "logging from this revision"), $rev
                     ));
-                } 
+                }
                 $initialBranches = $certs['branch'];
             }
 

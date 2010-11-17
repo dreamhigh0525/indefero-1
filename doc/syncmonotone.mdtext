@@ -173,3 +173,52 @@ For even more advanced setups, usher can also be used to forward sync
 requests to other remote servers for load balancing, please consult the
 README file for more information.
 
+## Security and remote access
+
+Indefero distinguishs between public and private projects and so does
+the monotone plugin.
+
+Public projects can be pulled by everybody and pushed by team members
+or additional invited people. Remote command execution is enabled, but
+only for read-only commands.
+
+Remote commands can be helpful for a user or a 3rd party tool (like
+[mtn-browse](http://mtn-browse.sourceforge.net) or
+[guitone](http://guitone.thomaskeller.biz)) to browse the database
+contents remotely without having to pull everything in first instance.
+
+Private projects on the other hand can only be synced by team members
+or additional invited people. Also noo remote command execution is enabled
+by default.
+
+## Notifications
+
+If you have successfully set up your monotone instance, you probably want
+to notify 3rd party systems for incoming changes or simply mirror them
+somewhere else for backup purposes.  The monotone source tree already comes
+with [many example scripts and hooks](http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/contrib)
+which serve these purposes, after only little additional configuration.
+
+The usher/indefero-controlled setup automatically looks for *.lua files
+in a directory called `hooks.d` right under the project's base directory
+(configured via $cfg['mtn_repositories']) and this is the ideal place to
+put or link these additional lua sources.
+
+## Q&A
+
+### I pushed a branch to my server, but it does not show up in IDF. Whats wrong?
+
+Check if the heads of your branch are not suspended, i.e. do not carry a
+`suspend` certificate.  This usually hides the branch and all of its history
+from monotone's eyes and therefor also from indefero.  You can either choose
+to "unsuspend" the branch simply by committing and pushing another head or
+by letting monotone ignore all suspend certs.  For the latter, its usually
+enough to add `--ignore-suspend-certs` to the list of options in `$cfg['mtn_opts']`.
+
+### I want to display another default branch when I click the "Source" tab. How can I do that?
+
+Let the forge admin know the new master branch for your project.  He is able
+to change that quickly.  Depending on the backend / server setup this might
+also require some changes in the usher configuration, but only if usher
+recognizes and proxies your database on a branch name level.
+

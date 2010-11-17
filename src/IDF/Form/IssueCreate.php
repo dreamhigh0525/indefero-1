@@ -108,14 +108,39 @@ class IDF_Form_IssueCreate extends Pluf_Form
                                                        'size' => 15,
                                                                     ),
                                             ));
+
+            /*
+             * get predefined tags for issues from current project
+             *
+             * first Type:<...> and Priority:<...> will be used
+             *
+             */
+            $predefined = preg_split("/[\r\n]+/", $extra['project']->getConf()->getVal(
+              'labels_issue_predefined'
+            ));
+            $predefined_type = 'Type:Defect';
+            foreach ($predefined as $tag) {
+                if (strpos($tag, 'Type:') === 0) {
+                    $predefined_type = $tag;
+                    break;
+                }
+            }
+            $predefined_priority = 'Priority:Medium';
+            foreach ($predefined as $tag) {
+                if (strpos($tag, 'Priority:') === 0) {
+                    $predefined_priority = $tag;
+                    break;
+                }
+            }
+
             for ($i=1;$i<7;$i++) {
                 $initial = '';
                 switch ($i) {
                 case 1:
-                    $initial = 'Type:Defect';
+                    $initial = $predefined_type;
                     break;
                 case 2:
-                    $initial = 'Priority:Medium';
+                    $initial = $predefined_priority;
                     break;
                 }
                 $this->fields['label'.$i] = new Pluf_Form_Field_Varchar(
