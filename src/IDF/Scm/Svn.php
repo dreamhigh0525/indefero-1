@@ -141,8 +141,9 @@ class IDF_Scm_Svn extends IDF_Scm
     public function validateRevision($rev)
     {
         if ($rev == 'HEAD') {
-            return true;
+            return IDF_Scm::REVISION_VALID;
         }
+
         $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
