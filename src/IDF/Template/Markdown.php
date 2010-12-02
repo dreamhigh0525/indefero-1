@@ -93,7 +93,7 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
         $info = pathinfo($m[1]);
         $fileinfo = array($res->headers['Content-Type'], $m[1], 
                           isset($info['extension']) ? $info['extension'] : 'bin');
-        if (!IDF_Views_Source::isText($fileinfo)) {
+        if (!IDF_FileUtil::isText($fileinfo)) {
             return $m[0];
         }
         return $res->content;

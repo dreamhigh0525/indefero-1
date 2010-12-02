@@ -22,30 +22,26 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Test the source class.
+ * Tests some of the FileUtils
  */
-class IDF_Tests_TestSource extends UnitTestCase 
+class IDF_Tests_TestFileUtil extends UnitTestCase 
 {
  
     public function __construct() 
     {
-        parent::__construct('Test the source class.');
+        parent::__construct('Test the file utils.');
     }
 
-    public function testRegexCommit()
+    public function testGetMimeType()
     {
-        $regex = '#^/p/([\-\w]+)/source/tree/([^\/]+)/(.*)$#';
-        $tests = array('/p/test_project/source/tree/default/current/sources' =>
-                       array('test_project', 'default', 'current/sources'),
-                       '/p/test_project/source/tree/3.6/current/sources' =>
-                       array('test_project', '3.6', 'current/sources'),
+        $files = array(
+                       'whatever.php' => 'application/x-httpd-php',
+                       'whatever.pht' => 'application/x-httpd-php',
+                       'README' => 'text/plain',
                        );
-        foreach ($tests as $test => $res) {
-            $m = array();
-            $t = preg_match($regex, $test, $m);
-            $this->assertEqual($res[0], $m[1]);
-            $this->assertEqual($res[1], $m[2]);
-            $this->assertEqual($res[2], $m[3]);
+        foreach ($files as $file => $mime) {
+            $m = IDF_Views_Source::getMimeType($file);
+            $this->assertEqual($mime, $m[0]);
         }
     }
 }

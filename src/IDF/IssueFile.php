@@ -39,9 +39,9 @@ class IDF_IssueFile extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
                                   //It is automatically added.
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'comment' => 
+                            'comment' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_IssueComment',
@@ -49,7 +49,7 @@ class IDF_IssueFile extends Pluf_Model
                                   'verbose' => __('comment'),
                                   'relate_name' => 'attachment',
                                    ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -63,7 +63,7 @@ class IDF_IssueFile extends Pluf_Model
                                   'size' => 100,
                                   'verbose' => __('file name'),
                                   ),
-                            'attachment' => 
+                            'attachment' =>
                             array(
                                   'type' => 'Pluf_DB_Field_File',
                                   'blank' => false,
@@ -76,7 +76,7 @@ class IDF_IssueFile extends Pluf_Model
                                   'verbose' => __('file size'),
                                   'help_text' => 'Size in bytes.',
                                   ),
-                            'type' => 
+                            'type' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',
                                   'blank' => false,
@@ -111,7 +111,7 @@ class IDF_IssueFile extends Pluf_Model
             $file = Pluf::f('upload_issue_path').'/'.$this->attachment;
             $this->filesize = filesize($file);
             // remove .dummy
-            $this->filename = substr(basename($file), 0, -6); 
+            $this->filename = substr(basename($file), 0, -6);
             $img_extensions = array('jpeg', 'jpg', 'png', 'gif');
             $info = pathinfo($this->filename);
             if (!isset($info['extension'])) $info['extension'] = '';
@@ -127,5 +127,11 @@ class IDF_IssueFile extends Pluf_Model
     function preDelete()
     {
         @unlink(Pluf::f('upload_issue_path').'/'.$this->attachment);
+    }
+
+    function isText()
+    {
+        $info = IDF_FileUtil::getMimeType($this->filename);
+        return IDF_FileUtil::isText($info);
     }
 }

@@ -79,7 +79,7 @@ class IDF_Views_Issue
     }
 
     /**
-     * View the issues of a given user. 
+     * View the issues of a given user.
      *
      * Only open issues are shown.
      */
@@ -201,7 +201,7 @@ class IDF_Views_Issue
     {
         $prj = $request->project;
         if (!isset($request->REQUEST['q']) or trim($request->REQUEST['q']) == '') {
-            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index', 
+            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index',
                                              array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -263,7 +263,7 @@ class IDF_Views_Issue
                             'issue' => $issue,
                             );
             if ($request->method == 'POST') {
-                $form = new IDF_Form_IssueUpdate(array_merge($request->POST, 
+                $form = new IDF_Form_IssueUpdate(array_merge($request->POST,
                                                              $request->FILES),
                                                  $params);
                 if (!isset($request->POST['preview']) && $form->isValid()) {
@@ -306,7 +306,7 @@ class IDF_Views_Issue
         $prj = $request->project;
         $attach = Pluf_Shortcuts_GetObjectOr404('IDF_IssueFile', $match[2]);
         $prj->inOr404($attach->get_comment()->get_issue());
-        $info = IDF_Views_Source::getMimeType($attach->filename);
+        $info = IDF_FileUtil::getMimeType($attach->filename);
         $mime = 'application/octet-stream';
         if (strpos($info[0], 'image/') === 0) {
             $mime = $info[0];
@@ -330,14 +330,14 @@ class IDF_Views_Issue
         $prj->inOr404($attach->get_comment()->get_issue());
         // If one cannot see the attachement, redirect to the
         // getAttachment view.
-        $info = IDF_Views_Source::getMimeType($attach->filename);
-        if (!IDF_Views_Source::isText($info)) {
+        $info = IDF_FileUtil::getMimeType($attach->filename);
+        if (!IDF_FileUtil::isText($info)) {
             return $this->getAttachment($request, $match);
         }
         // Now we want to look at the file but with links back to the
         // issue.
-        $file = IDF_Views_Source::highLight($info, 
-                                            file_get_contents(Pluf::f('upload_issue_path').'/'.$attach->attachment));
+        $file = IDF_FileUtil::highLight($info,
+                                        file_get_contents(Pluf::f('upload_issue_path').'/'.$attach->attachment));
         $title = sprintf(__('View %s'), $attach->filename);
         return Pluf_Shortcuts_RenderToResponse('idf/issues/attachment.html',
                                                array(
@@ -406,7 +406,7 @@ class IDF_Views_Issue
     {
         $prj = $request->project;
         $tag = Pluf_Shortcuts_GetObjectOr404('IDF_Tag', $match[2]);
-        $status = $match[3]; 
+        $status = $match[3];
         if ($tag->project != $prj->id or !in_array($status, array('open', 'closed'))) {
             throw new Pluf_HTTP_Error404();
         }
@@ -414,7 +414,7 @@ class IDF_Views_Issue
             $title = sprintf(__('%1$s Issues with Label %2$s'), (string) $prj,
                              (string) $tag);
         } else {
-            $title = sprintf(__('%1$s Closed Issues with Label %2$s'), 
+            $title = sprintf(__('%1$s Closed Issues with Label %2$s'),
                              (string) $prj, (string) $tag);
         }
         // Get stats about the open/closed issues having this tag.
@@ -547,11 +547,11 @@ class IDF_Views_Issue
  */
 function IDF_Views_Issue_SummaryAndLabels($field, $issue, $extra='')
 {
-    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                      array($issue->shortname, $issue->id));
     $tags = array();
     foreach ($issue->get_tags_list() as $tag) {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::listLabel', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::listLabel',
                                         array($issue->shortname, $tag->id, 'open'));
         $tags[] = sprintf('<a class="label" href="%s">%s</a>', $url, Pluf_esc((string) $tag));
     }
