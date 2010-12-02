@@ -709,10 +709,10 @@ class IDF_Scm_Monotone extends IDF_Scm
                 $log['commit'] = $rev;
 
                 $logs[] = (object)$log;
-            }
 
-            $out = $this->stdio->exec(array('parents', $rev));
-            $horizont += preg_split("/\n/", $out, -1, PREG_SPLIT_NO_EMPTY);
+                $out = $this->stdio->exec(array('parents', $rev));
+                $horizont += preg_split("/\n/", $out, -1, PREG_SPLIT_NO_EMPTY);
+            }
         }
 
         return $logs;
