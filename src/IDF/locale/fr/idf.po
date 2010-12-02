@@ -2193,13 +2193,13 @@ msgid ""
 "If you are changing the email address of the user, you\n"
 "need to ensure that you are providing a valid email\n"
 "address"
-msgstr "Si vous changez l'adresse email d'un utilisateur, vousdevez vous assurez que l'adresse est bien valide."
+msgstr "Si vous changez l'adresse email d'un utilisateur, vous devez vous assurez que l'adresse est bien valide."
 
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:6
 msgid ""
 "If you give the user staff rights, the user will be\n"
 "able to create new projects and update other non staff users.\n"
-msgstr "Si vous ajoutez un utilisateur au staff, l'utilisateur va avoirla possibilité de créer de nouveaux projets et d'éditer lesinformations des autres utilisateurs."
+msgstr "Si vous ajoutez un utilisateur au staff, l'utilisateur va avoir la possibilité de créer de nouveaux projets et d'éditer les informations des autres utilisateurs."
 
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:9
 msgid "The form contains some errors. Please correct them to update the user."
@@ -2321,7 +2321,7 @@ msgid ""
 "<strong>Attention!</strong> Deleting a project is a one second operation\n"
 "with the consequences that <strong>all the data</strong> related to the \n"
 "project <strong>will be deleted</strong>.\n"
-msgstr "<strong>Attention !</strong> Supprimer un projet est une opération rapide pour conséquence<strong>la suppression de toutes les données relatives au projet</strong>."
+msgstr "<strong>Attention !</strong> Supprimer un projet est une opération rapide qui a pour conséquence <strong>la suppression de toutes les données relatives au projet</strong>."
 
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:10
 msgid "The form contains some errors. Please correct them to delete the project."
