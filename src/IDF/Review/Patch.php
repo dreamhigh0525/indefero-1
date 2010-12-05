@@ -197,14 +197,17 @@ class IDF_Review_Patch extends Pluf_Model
                                                      );
         $tmpl = new Pluf_Template('idf/review/review-created-email.txt');
         $text_email = $tmpl->render($context);
-        $email = new Pluf_Mail(Pluf::f('from_email'), 
-                               $conf->getVal('review_notification_email'),
-                               sprintf(__('New Code Review %s - %s (%s)'),
-                                       $this->get_review()->id, 
-                                       $this->get_review()->summary, 
-                                       $this->get_review()->get_project()->shortname));
-        $email->addTextMessage($text_email);
-        $email->sendMail();
+        $addresses = explode(';',$conf->getVal('review_notification_email'));
+        foreach ($addresses as $address) {
+            $email = new Pluf_Mail(Pluf::f('from_email'), 
+                                   $address,
+                                   sprintf(__('New Code Review %s - %s (%s)'),
+                                           $this->get_review()->id, 
+                                           $this->get_review()->summary, 
+                                           $this->get_review()->get_project()->shortname));
+            $email->addTextMessage($text_email);
+            $email->sendMail();
+        }
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

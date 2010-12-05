@@ -38,9 +38,9 @@ class IDF_WikiRevision extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'wikipage' => 
+                            'wikipage' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_WikiPage',
@@ -55,7 +55,7 @@ class IDF_WikiRevision extends Pluf_Model
                                   'default' => false,
                                   'help_text' => 'If this revision is the latest, we mark it as being the head revision.',
                                   'index' => true,
-                            
+
                                   ),
                             'summary' =>
                             array(
@@ -71,7 +71,7 @@ class IDF_WikiRevision extends Pluf_Model
                                   'blank' => false,
                                   'verbose' => __('content'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -92,7 +92,7 @@ class IDF_WikiRevision extends Pluf_Model
                                   'verbose' => __('creation date'),
                                   ),
                             );
-        $this->_a['idx'] = array(                           
+        $this->_a['idx'] = array(
                             'creation_dtime_idx' =>
                             array(
                                   'col' => 'creation_dtime',
@@ -138,7 +138,7 @@ class IDF_WikiRevision extends Pluf_Model
             $sql = new Pluf_SQL('wikipage=%s', array($this->wikipage));
             $rev = Pluf::factory('IDF_WikiRevision')->getList(array('filter'=>$sql->gen()));
             if ($rev->count() > 1) {
-                IDF_Timeline::insert($this, $this->get_wikipage()->get_project(), 
+                IDF_Timeline::insert($this, $this->get_wikipage()->get_project(),
                                      $this->get_submitter());
                 foreach ($rev as $r) {
                     if ($r->id != $this->id and $r->is_head) {
@@ -156,7 +156,7 @@ class IDF_WikiRevision extends Pluf_Model
     public function timelineFragment($request)
     {
         $page = $this->get_wikipage();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                         array($request->project->shortname,
                                               $page->title));
         $out = "\n".'<tr class="log"><td><a href="'.$url.'">'.
@@ -186,7 +186,7 @@ class IDF_WikiRevision extends Pluf_Model
         }
         $out .= '</td></tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Change of <a href="%s">%s</a>, by %s'), $url, Pluf_esc($page->title), $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Change of <a href="%s">%s</a>, by %s'), $url, Pluf_esc($page->title), $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -195,13 +195,13 @@ class IDF_WikiRevision extends Pluf_Model
         $page = $this->get_wikipage();
         if (!$this->is_head) {
             $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                           array($request->project->shortname,
                                                 $page->title),
                                           array('rev' => $this->id));
         } else {
             $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                           array($request->project->shortname,
                                                 $page->title));
         }
@@ -248,7 +248,7 @@ class IDF_WikiRevision extends Pluf_Model
         }
         $current_locale = Pluf_Translation::getLocale();
         $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);        
+        Pluf_Translation::loadSetLocale($langs[0]);
         $context = new Pluf_Template_Context(
                        array(
                              'page' => $this->get_wikipage(),
@@ -260,23 +260,28 @@ class IDF_WikiRevision extends Pluf_Model
         if ($create) {
             $template = 'idf/wiki/wiki-created-email.txt';
             $title = sprintf(__('New Documentation Page %s - %s (%s)'),
-                             $this->get_wikipage()->title, 
-                             $this->get_wikipage()->summary, 
+                             $this->get_wikipage()->title,
+                             $this->get_wikipage()->summary,
                              $this->get_wikipage()->get_project()->shortname);
         } else {
             $template = 'idf/wiki/wiki-updated-email.txt';
             $title = sprintf(__('Documentation Page Changed %s - %s (%s)'),
-                             $this->get_wikipage()->title, 
-                             $this->get_wikipage()->summary, 
+                             $this->get_wikipage()->title,
+                             $this->get_wikipage()->summary,
                              $this->get_wikipage()->get_project()->shortname);
         }
         $tmpl = new Pluf_Template($template);
         $text_email = $tmpl->render($context);
-        $email = new Pluf_Mail(Pluf::f('from_email'), 
-                               $conf->getVal('wiki_notification_email'),
-                               $title);
-        $email->addTextMessage($text_email);
-        $email->sendMail();
+
+        $addresses = explode(',', $conf->getVal('wiki_notification_email'));
+        foreach ($addresses as $address) {
+            $email = new Pluf_Mail(Pluf::f('from_email'),
+                                   $address,
+                                   $title);
+            $email->addTextMessage($text_email);
+            $email->sendMail();
+        }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

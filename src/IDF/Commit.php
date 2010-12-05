@@ -44,9 +44,9 @@ class IDF_Commit extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
@@ -54,7 +54,7 @@ class IDF_Commit extends Pluf_Model
                                   'verbose' => __('project'),
                                   'relate_name' => 'commits',
                                   ),
-                            'author' => 
+                            'author' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -118,7 +118,7 @@ class IDF_Commit extends Pluf_Model
     {
         IDF_Search::index($this);
         if ($create) {
-            IDF_Timeline::insert($this, $this->get_project(), 
+            IDF_Timeline::insert($this, $this->get_project(),
                                  $this->get_author(), $this->creation_dtime);
         }
     }
@@ -200,13 +200,13 @@ class IDF_Commit extends Pluf_Model
      * Returns the timeline fragment for the commit.
      *
      *
-     * @param Pluf_HTTP_Request 
+     * @param Pluf_HTTP_Request
      * @return Pluf_Template_SafeString
      */
     public function timelineFragment($request)
     {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::commit', 
-                                        array($request->project->shortname, 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Source::commit',
+                                        array($request->project->shortname,
                                               $this->scm_id));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
             Pluf_esc(Pluf_Template_dateAgo($this->creation_dtime, 'without')).
@@ -222,24 +222,24 @@ class IDF_Commit extends Pluf_Model
 </tr>
 <tr class="extra">
 <td colspan="2">
-<div class="helptext right">'.sprintf(__('Commit&nbsp;%s, by %s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Commit&nbsp;%s, by %s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     /**
      * Returns the feed fragment for the commit.
      *
-     * @param Pluf_HTTP_Request 
+     * @param Pluf_HTTP_Request
      * @return Pluf_Template_SafeString
      */
     public function feedFragment($request)
     {
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Source::commit', 
-                                      array($request->project->shortname, 
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Source::commit',
+                                      array($request->project->shortname,
                                             $this->scm_id));
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
-        $author = ($this->get_author()) ? 
+        $author = ($this->get_author()) ?
             $this->get_author() : $this->origauthor;
         $cproject = $this->get_project();
         $context = new Pluf_Template_Context_Request(
@@ -298,7 +298,7 @@ class IDF_Commit extends Pluf_Model
 
         $current_locale = Pluf_Translation::getLocale();
         $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);        
+        Pluf_Translation::loadSetLocale($langs[0]);
 
         $context = new Pluf_Template_Context(
                        array(
@@ -309,13 +309,16 @@ class IDF_Commit extends Pluf_Model
                                              );
         $tmpl = new Pluf_Template('idf/source/commit-created-email.txt');
         $text_email = $tmpl->render($context);
-        $email = new Pluf_Mail(Pluf::f('from_email'), 
-                               $conf->getVal('source_notification_email'),
-                               sprintf(__('New Commit %s - %s (%s)'),
-                                       $this->scm_id, $this->summary, 
-                                       $this->get_project()->shortname));
-        $email->addTextMessage($text_email);
-        $email->sendMail();
+        $addresses = explode(',', $conf->getVal('source_notification_email'));
+        foreach ($addresses as $address) {
+            $email = new Pluf_Mail(Pluf::f('from_email'),
+                                   $address,
+                                   sprintf(__('New Commit %s - %s (%s)'),
+                                           $this->scm_id, $this->summary,
+                                           $this->get_project()->shortname));
+            $email->addTextMessage($text_email);
+            $email->sendMail();
+        }
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

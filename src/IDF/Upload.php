@@ -39,9 +39,9 @@ class IDF_Upload extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
@@ -77,7 +77,7 @@ class IDF_Upload extends Pluf_Model
                                   'default' => 0,
                                   'verbose' => __('file size in bytes'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -87,7 +87,7 @@ class IDF_Upload extends Pluf_Model
                                   ),
                             'tags' =>
                             array(
-                                  'type' => 'Pluf_DB_Field_Manytomany', 
+                                  'type' => 'Pluf_DB_Field_Manytomany',
                                   'blank' => true,
                                   'model' => 'IDF_Tag',
                                   'verbose' => __('labels'),
@@ -112,7 +112,7 @@ class IDF_Upload extends Pluf_Model
                                   'verbose' => __('modification date'),
                                   ),
                             );
-        $this->_a['idx'] = array(                           
+        $this->_a['idx'] = array(
                             'modif_dtime_idx' =>
                             array(
                                   'col' => 'modif_dtime',
@@ -121,7 +121,7 @@ class IDF_Upload extends Pluf_Model
                             );
         $table = $this->_con->pfx.'idf_tag_idf_upload_assoc';
         $this->_a['views'] = array(
-                              'join_tags' => 
+                              'join_tags' =>
                               array(
                                     'join' => 'LEFT JOIN '.$table
                                     .' ON idf_upload_id=id',
@@ -150,7 +150,7 @@ class IDF_Upload extends Pluf_Model
     function postSave($create=false)
     {
         if ($create) {
-            IDF_Timeline::insert($this, $this->get_project(), 
+            IDF_Timeline::insert($this, $this->get_project(),
                                  $this->get_submitter(), $this->creation_dtime);
         }
     }
@@ -173,13 +173,13 @@ class IDF_Upload extends Pluf_Model
      * Returns the timeline fragment for the file.
      *
      *
-     * @param Pluf_HTTP_Request 
+     * @param Pluf_HTTP_Request
      * @return Pluf_Template_SafeString
      */
     public function timelineFragment($request)
     {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view', 
-                                        array($request->project->shortname, 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
+                                        array($request->project->shortname,
                                               $this->id));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
             Pluf_esc(Pluf_Template_dateAgo($this->creation_dtime, 'without')).
@@ -189,15 +189,15 @@ class IDF_Upload extends Pluf_Model
         $out .= sprintf(__('<a href="%1$s" title="View download">Download %2$d</a>, %3$s'), $url, $this->id, Pluf_esc($this->summary)).'</td>';
         $out .= '</tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Addition of <a href="%s">download&nbsp;%d</a>, by %s'), $url, $this->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Addition of <a href="%s">download&nbsp;%d</a>, by %s'), $url, $this->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     public function feedFragment($request)
     {
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Download::view', 
-                                      array($request->project->shortname, 
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
+                                      array($request->project->shortname,
                                             $this->id));
         $title = sprintf(__('%s: Download %d added - %s'),
                          $request->project->name,
@@ -227,7 +227,7 @@ class IDF_Upload extends Pluf_Model
         }
         $current_locale = Pluf_Translation::getLocale();
         $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);        
+        Pluf_Translation::loadSetLocale($langs[0]);
 
         $context = new Pluf_Template_Context(
             array('file' => $this,
@@ -237,14 +237,16 @@ class IDF_Upload extends Pluf_Model
                   ));
         $tmpl = new Pluf_Template('idf/downloads/download-created-email.txt');
         $text_email = $tmpl->render($context);
-        $email = new Pluf_Mail(Pluf::f('from_email'), 
-                               $conf->getVal('downloads_notification_email'),
-                               sprintf(__('New download - %s (%s)'),
-                                       $this->summary, 
-                                       $this->get_project()->shortname));
-        $email->addTextMessage($text_email);
-        $email->sendMail();
-
+        $addresses = explode(',', $conf->getVal('downloads_notification_email'));
+        foreach ($addresses as $address) {
+            $email = new Pluf_Mail(Pluf::f('from_email'),
+                                   $address,
+                                   sprintf(__('New download - %s (%s)'),
+                                           $this->summary,
+                                           $this->get_project()->shortname));
+            $email->addTextMessage($text_email);
+            $email->sendMail();
+        }
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

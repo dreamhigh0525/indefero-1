@@ -42,9 +42,9 @@ class IDF_Issue extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
@@ -59,7 +59,7 @@ class IDF_Issue extends Pluf_Model
                                   'size' => 250,
                                   'verbose' => __('summary'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -67,7 +67,7 @@ class IDF_Issue extends Pluf_Model
                                   'verbose' => __('submitter'),
                                   'relate_name' => 'submitted_issue',
                                   ),
-                            'owner' => 
+                            'owner' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -76,7 +76,7 @@ class IDF_Issue extends Pluf_Model
                                   'verbose' => __('owner'),
                                   'relate_name' => 'owned_issue',
                                   ),
-                            'interested' => 
+                            'interested' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Manytomany',
                                   'model' => 'Pluf_User',
@@ -86,14 +86,14 @@ class IDF_Issue extends Pluf_Model
                                   ),
                             'tags' =>
                             array(
-                                  'type' => 'Pluf_DB_Field_Manytomany', 
+                                  'type' => 'Pluf_DB_Field_Manytomany',
                                   'blank' => true,
                                   'model' => 'IDF_Tag',
                                   'verbose' => __('labels'),
                                   ),
-                            'status' => 
+                            'status' =>
                             array(
-                                  'type' => 'Pluf_DB_Field_Foreignkey', 
+                                  'type' => 'Pluf_DB_Field_Foreignkey',
                                   'blank' => false,
                                   'model' => 'IDF_Tag',
                                   'verbose' => __('status'),
@@ -111,7 +111,7 @@ class IDF_Issue extends Pluf_Model
                                   'verbose' => __('modification date'),
                                   ),
                             );
-        $this->_a['idx'] = array(                           
+        $this->_a['idx'] = array(
                             'modif_dtime_idx' =>
                             array(
                                   'col' => 'modif_dtime',
@@ -120,7 +120,7 @@ class IDF_Issue extends Pluf_Model
                             );
         $table = $this->_con->pfx.'idf_issue_idf_tag_assoc';
         $this->_a['views'] = array(
-                              'join_tags' => 
+                              'join_tags' =>
                               array(
                                     'join' => 'LEFT JOIN '.$table
                                     .' ON idf_issue_id=id',
@@ -164,7 +164,7 @@ class IDF_Issue extends Pluf_Model
         // that the issue as at least one comment in the database when
         // doing the indexing.
         if ($create) {
-            IDF_Timeline::insert($this, $this->get_project(), 
+            IDF_Timeline::insert($this, $this->get_project(),
                                  $this->get_submitter());
         }
     }
@@ -177,12 +177,12 @@ class IDF_Issue extends Pluf_Model
      * as such create links to other items etc. You can consider that
      * if displayed, you can create a link to it.
      *
-     * @param Pluf_HTTP_Request 
+     * @param Pluf_HTTP_Request
      * @return Pluf_Template_SafeString
      */
     public function timelineFragment($request)
     {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                         array($request->project->shortname,
                                               $this->id));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
@@ -193,14 +193,14 @@ class IDF_Issue extends Pluf_Model
         $ic = (in_array($this->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View issue">Issue %3$d</a>, %4$s'), $url, $ic, $this->id, Pluf_esc($this->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">issue&nbsp;%d</a>, by %s'), $url, $ic, $this->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">issue&nbsp;%d</a>, by %s'), $url, $ic, $this->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     public function feedFragment($request)
     {
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                       array($request->project->shortname,
                                             $this->id));
         $title = sprintf(__('%s: Issue %d created - %s'),
@@ -241,15 +241,17 @@ class IDF_Issue extends Pluf_Model
         $prj = $this->get_project();
         $to_email = array();
         if ('' != $conf->getVal('issues_notification_email', '')) {
-            $langs = Pluf::f('languages', array('en'));
-            $to_email[] = array($conf->getVal('issues_notification_email'),
-                                $langs[0]);
+            $langs     = Pluf::f('languages', array('en'));
+            $addresses = explode(',', $conf->getVal('issues_notification_email'));
+            foreach ($addresses as $address) {
+                $to_email[] = array($address, $langs[0]);
+            }
         }
         $current_locale = Pluf_Translation::getLocale();
         $id = '<'.md5($this->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
         if ($create) {
-            if (null != $this->get_owner() and $this->owner != $this->submitter) {                
-                $email_lang = array($this->get_owner()->email, 
+            if (null != $this->get_owner() and $this->owner != $this->submitter) {
+                $email_lang = array($this->get_owner()->email,
                                     $this->get_owner()->language);
                 if (!in_array($email_lang, $to_email)) {
                     $to_email[] = $email_lang;

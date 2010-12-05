@@ -57,7 +57,7 @@
 <td colspan="2" class="helptext">
 {blocktrans}
 Only project members and admins have write access to the source.<br />
-If you restrict the access to the source, anonymous access is<br /> 
+If you restrict the access to the source, anonymous access is<br />
 not provided and the users must authenticate themselves with their<br />
 password or SSH key.{/blocktrans}
 </td></tr>
@@ -86,7 +86,7 @@ password or SSH key.{/blocktrans}
 <tr>
 <td>&nbsp;</td>
 <td colspan="2">
-<input type="submit" value="{trans 'Save Changes'}" name="submit" /> 
+<input type="submit" value="{trans 'Save Changes'}" name="submit" />
 </td>
 </tr>
 </table>
@@ -96,7 +96,7 @@ password or SSH key.{/blocktrans}
 <div class="issue-submit-info">
 <p><strong>{trans 'Instructions:'}</strong></p>
 <p>{blocktrans}You can configure here the project tabs access rights and notification emails.{/blocktrans}</p>
-<p>{blocktrans}Notification emails will be sent from the <strong>{$from_email}</strong> address, if you send the email to a mailing list, you may need to register this email address. If you do not want to send emails for a given type of changes, simply leave the corresponding field empty.{/blocktrans}</p>
+<p>{blocktrans}Notification emails will be sent from the <strong>{$from_email}</strong> address, if you send the email to a mailing list, you may need to register this email address. Multiple email addresses must be separated through commas (','). If you do not want to send emails for a given type of changes, simply leave the corresponding field empty.{/blocktrans}</p>
 <p>{blocktrans}If you mark a project as private, only the project members and administrators, together with the extra authorized users you provide will have access to the project. You will still be able to define further access rights for the different tabs but the "Open to all" and "Signed in users" will default to authorized users only.{/blocktrans}</p>
 <p>{blocktrans}Specify each person by its login. Each person must have already registered with the given login. Separate the logins with commas and/or new lines.{/blocktrans}</p>
 </div>
@@ -111,7 +111,7 @@ $(document).ready(function(){
         $("#id_private_project").click(function(){
             if ($("#id_private_project").is(":checked")) {
                 $("#authorized-users-row").show();
-            } else {     
+            } else {
                 $("#authorized-users-row").hide();
             }
         });
