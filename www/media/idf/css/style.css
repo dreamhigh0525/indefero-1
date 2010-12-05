@@ -104,6 +104,11 @@ table.form th {
   font-weight: normal;
 }
 
+table.form td.separator {
+  font-weight: bold;
+  text-align: center;
+}
+
 .px-message-error {
   padding-left: 37px;
   background: url("../img/dialog-error.png");

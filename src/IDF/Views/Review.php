@@ -89,10 +89,10 @@ class IDF_Views_Review
                                                     ));
             if ($form->isValid()) {
                 $review = $form->save();
-                $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+                $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                                  array($prj->shortname, $review->id));
                 $request->user->setMessage(sprintf(__('The <a href="%s">code review %d</a> has been created.'), $urlr, $review->id));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
@@ -155,10 +155,10 @@ class IDF_Views_Review
             if ($form->isValid()) {
                 $review_comment = $form->save();
                 $review = $patch->get_review();
-                $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+                $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                                  array($prj->shortname, $review->id));
                 $request->user->setMessage(sprintf(__('Your <a href="%s">code review %d</a> has been published.'), $urlr, $review->id));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index',
                                                 array($prj->shortname));
                 $review_comment->notify($request->conf);
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -181,7 +181,7 @@ class IDF_Views_Review
             foreach ($cts as $ct) {
                 $reviewers[] = $ct->get_comment()->get_submitter();
             }
-            if (count($def['chunks'])) { 
+            if (count($def['chunks'])) {
                 $orig_file = ($fileinfo) ? $scm->getFile($fileinfo) : '';
                 $files[$filename] = array(
                                           $diff->fileCompare($orig_file, $def, $filename),
@@ -192,6 +192,7 @@ class IDF_Views_Review
                 $files[$filename] = array('', $form->f->{md5($filename)}, $cts);
             }
         }
+
         $reviewers = Pluf_Model_RemoveDuplicates($reviewers);
         return Pluf_Shortcuts_RenderToResponse('idf/review/view.html',
                                                array_merge(
@@ -219,7 +220,7 @@ class IDF_Views_Review
  */
 function IDF_Views_Review_SummaryAndLabels($field, $review, $extra='')
 {
-    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                      array($review->shortname, $review->id));
     $tags = array();
     foreach ($review->get_tags_list() as $tag) {

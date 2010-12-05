@@ -3,8 +3,15 @@
 {block body}
 {assign $i = 0}
 {assign $nc = $comments.count()}
-{foreach $comments as $c}{ashowuser 'submitter', $c.get_submitter(), $request}{assign $who = $c.get_submitter()}
-<div class="issue-comment{if $i == 0} issue-comment-first{/if}{if $i == ($nc-1)} issue-comment-last{/if}" id="ic{$c.id}"><img style="float:right; position: relative;" src="http://www.gravatar.com/avatar/{$who.email|md5}.jpg?s=60&amp;d={media}/idf/img/spacer.gif" alt=" " />
+{foreach $comments as $c}{ashowuser 'submitter', $c.get_submitter(), $request}
+{assign $submitter = $c.get_submitter()}
+{assign $submitter_data = $c.get_submitter_data()}
+<div class="issue-comment{if $i == 0} issue-comment-first{/if}{if $i == ($nc-1)} issue-comment-last{/if}" id="ic{$c.id}">
+{if $submitter_data.avatar != ''}
+<img style="float:right; position: relative; max-height: 60px; max-width: 60px;" src="{media}/upload/avatars/{$submitter_data.avatar}" alt=" " />
+{else}
+<img style="float:right; position: relative; max-height: 60px; max-width: 60px;" src="http://www.gravatar.com/avatar/{$submitter.email|md5}.jpg?s=60&amp;d={media}/idf/img/spacer.gif" alt=" " />
+{/if}
 {if $i == 0}
 <p>{blocktrans}Reported by {$submitter}, {$c.creation_dtime|date}{/blocktrans}</p>
 {else}

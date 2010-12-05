@@ -33,6 +33,8 @@ class IDF_Form_UserAccount  extends Pluf_Form
     public function initFields($extra=array())
     {
         $this->user = $extra['user'];
+        $user_data = IDF_UserData::factory($this->user);
+
         $this->fields['first_name'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('First name'),
@@ -92,6 +94,66 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                                                     ),
                                             ));
 
+        $this->fields['description'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => false,
+                                            'label' => __('Description'),
+                                            'initial' => $user_data->description,
+                                            'widget_attrs' => array('rows' => 3,
+                                                                    'cols' => 40),
+                                            'widget' => 'Pluf_Form_Widget_TextareaInput',
+                                            ));
+
+        $this->fields['twitter'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => false,
+                                            'label' => __('Twitter username'),
+                                            'initial' => $user_data->twitter,
+                                            'widget_attrs' => array(
+                                                       'maxlength' => 50,
+                                                       'size' => 15,
+                                                                    ),
+                                            ));
+
+        $this->fields['public_email'] = new Pluf_Form_Field_Email(
+                                      array('required' => false,
+                                            'label' => __('Public email address'),
+                                            'initial' => $user_data->public_email,
+                                            'widget_attrs' => array(
+                                                       'maxlength' => 50,
+                                                       'size' => 15,
+                                                                    ),
+                                            ));
+
+        $this->fields['website'] = new Pluf_Form_Field_Url(
+                                      array('required' => false,
+                                            'label' => __('Website URL'),
+                                            'initial' => $user_data->website,
+                                            'widget_attrs' => array(
+                                                       'maxlength' => 50,
+                                                       'size' => 15,
+                                                                    ),
+                                            ));
+
+        $this->fields['custom_avatar'] = new Pluf_Form_Field_File(
+                                      array('required' => false,
+                                            'label' => __('Upload custom avatar'),
+                                            'initial' => '',
+                                            'max_size' => Pluf::f('max_upload_size', 2097152),
+                                            'move_function_params' => array('upload_path' => Pluf::f('upload_path').'/avatars',
+                                                                            'upload_path_create' => true,
+                                                                            'upload_overwrite' => true,
+                                                                            'file_name' => 'user_'.$this->user->id.'_%s'),
+                                            'help_text' => __('An image file with a width and height not larger than 60 pixels (bigger images are scaled down).'),
+                                            ));
+
+        $this->fields['remove_custom_avatar'] = new Pluf_Form_Field_Boolean(
+                                      array('required' => false,
+                                            'label' => __('Remove custom avatar'),
+                                            'initial' => false,
+                                            'widget' => 'Pluf_Form_Widget_CheckboxInput',
+                                            'widget_attrs' => array(),
+                                            'help_text' => __('Tick this to delete the custom avatar.'),
+                                            ));
+
         $this->fields['public_key'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('Add a public key'),
@@ -138,7 +200,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                        'email' => $new_email,
                        'user'=> $this->user,
                        )
-                                                 );
+            );
             $tmpl = new Pluf_Template('idf/user/changeemail-email.txt');
             $text_email = $tmpl->render($context);
             $email = new Pluf_Mail(Pluf::f('from_email'), $new_email,
@@ -157,8 +219,37 @@ class IDF_Form_UserAccount  extends Pluf_Form
                 $key->create();
             }
         }
+
         if ($commit) {
             $this->user->update();
+
+            // FIXME: go the extra mile and check the input lengths for
+            // all fields here!
+            // FIXME: this is all doubled in admin/UserUpdate!
+
+            $user_data = IDF_UserData::factory($this->user);
+
+            // Add or remove avatar - we need to do this here because every
+            // single setter directly leads to a save in the database
+            if ($user_data->avatar != '' &&
+                    ($this->cleaned_data['remove_custom_avatar'] == 1 ||
+                     $this->cleaned_data['custom_avatar'] != '')) {
+                $avatar_path = Pluf::f('upload_path').'/avatars/'.basename($user_data->avatar);
+                if (basename($avatar_path) != '' && is_file($avatar_path)) {
+                    unlink($avatar_path);
+                }
+                $user_data->avatar = '';
+            }
+
+            if ($this->cleaned_data['custom_avatar'] != '') {
+                $user_data->avatar = $this->cleaned_data['custom_avatar'];
+            }
+
+            $user_data->description  = $this->cleaned_data['description'];
+            $user_data->twitter      = $this->cleaned_data['twitter'];
+            $user_data->public_email = $this->cleaned_data['public_email'];
+            $user_data->website      = $this->cleaned_data['website'];
+
             if ($update_pass) {
                 /**
                  * [signal]
@@ -266,6 +357,19 @@ class IDF_Form_UserAccount  extends Pluf_Form
         return $key;
     }
 
+
+    function clean_custom_avatar()
+    {
+        // Just png, jpeg/jpg or gif
+        if (!preg_match('/\.(png|jpg|jpeg|gif)$/i', $this->cleaned_data['custom_avatar']) &&
+            $this->cleaned_data['custom_avatar'] != '') {
+            @unlink(Pluf::f('upload_path').'/avatars/'.$this->cleaned_data['custom_avatar']);
+            throw new Pluf_Form_Invalid(__('For security reason, you cannot upload a file with this extension.'));
+        }
+        return $this->cleaned_data['custom_avatar'];
+    }
+
+
     function clean_last_name()
     {
         $last_name = trim($this->cleaned_data['last_name']);
@@ -322,4 +426,6 @@ class IDF_Form_UserAccount  extends Pluf_Form
 
         return $this->cleaned_data;
     }
+
+
 }

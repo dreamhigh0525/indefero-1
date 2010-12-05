@@ -41,9 +41,9 @@ class IDF_IssueComment extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'issue' => 
+                            'issue' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Issue',
@@ -57,7 +57,7 @@ class IDF_IssueComment extends Pluf_Model
                                   'blank' => false,
                                   'verbose' => __('comment'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -79,7 +79,7 @@ class IDF_IssueComment extends Pluf_Model
                                   'verbose' => __('creation date'),
                                   ),
                             );
-        $this->_a['idx'] = array(                           
+        $this->_a['idx'] = array(
                             'creation_dtime_idx' =>
                             array(
                                   'col' => 'creation_dtime',
@@ -119,7 +119,7 @@ class IDF_IssueComment extends Pluf_Model
             $sql = new Pluf_SQL('issue=%s', array($this->issue));
             $co = Pluf::factory('IDF_IssueComment')->getList(array('filter'=>$sql->gen()));
             if ($co->count() > 1) {
-                IDF_Timeline::insert($this, $this->get_issue()->get_project(), 
+                IDF_Timeline::insert($this, $this->get_issue()->get_project(),
                                      $this->get_submitter());
             }
         }
@@ -129,7 +129,7 @@ class IDF_IssueComment extends Pluf_Model
     public function timelineFragment($request)
     {
         $issue = $this->get_issue();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                         array($request->project->shortname,
                                               $issue->id));
         $url .= '#ic'.$this->id;
@@ -168,7 +168,7 @@ class IDF_IssueComment extends Pluf_Model
         }
         $out .= '</td></tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Comment on <a href="%s" class="%s">issue&nbsp;%d</a>, by %s'), $url, $ic, $issue->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Comment on <a href="%s" class="%s">issue&nbsp;%d</a>, by %s'), $url, $ic, $issue->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -176,7 +176,7 @@ class IDF_IssueComment extends Pluf_Model
     {
         $issue = $this->get_issue();
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                       array($request->project->shortname,
                                             $issue->id));
         $title = sprintf(__('%s: Comment on issue %d - %s'),
@@ -195,5 +195,10 @@ class IDF_IssueComment extends Pluf_Model
                                                      );
         $tmpl = new Pluf_Template('idf/issues/feedfragment.xml');
         return $tmpl->render($context);
+    }
+
+    public function get_submitter_data()
+    {
+        return IDF_UserData::factory($this->get_submitter());
     }
 }

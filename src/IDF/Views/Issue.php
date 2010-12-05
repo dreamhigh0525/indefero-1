@@ -279,6 +279,7 @@ class IDF_Views_Issue
                 $form = new IDF_Form_IssueUpdate(null, $params);
             }
         }
+
         $arrays = self::autoCompleteArrays($prj);
         return Pluf_Shortcuts_RenderToResponse('idf/issues/view.html',
                                                array_merge(
@@ -290,7 +291,7 @@ class IDF_Views_Issue
                                                      'page_title' => $title,
                                                      'closed' => $closed,
                                                      'preview' => $preview,
-                                                     'interested' =>$interested->count(),
+                                                     'interested' => $interested->count(),
                                                      ),
                                                $arrays),
                                                $request);
