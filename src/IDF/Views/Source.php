@@ -297,8 +297,9 @@ class IDF_Views_Source
         $title = sprintf(__('%s Commit Details'), (string) $request->project);
         $page_title = sprintf(__('%s Commit Details - %s'), (string) $request->project, $commit);
         $rcommit = IDF_Commit::getOrAdd($cobject, $request->project);
-        $diff = new IDF_Diff($cobject->changes);
+        $diff = new IDF_Diff($cobject->diff);
         $diff->parse();
+        $changes = $scm->getChanges($commit);
         $scmConf = $request->conf->getVal('scm', 'git');
         $branches = $scm->getBranches();
         $in_branches = $scm->inBranches($cobject->commit, '');
@@ -311,6 +312,7 @@ class IDF_Views_Source
                                                      'diff' => $diff,
                                                      'cobject' => $cobject,
                                                      'commit' => $commit,
+                                                     'changes' => $changes,
                                                      'branches' => $branches,
                                                      'tree_in' => $in_branches,
                                                      'tags' => $tags,

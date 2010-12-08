@@ -504,6 +504,21 @@ table.commit th {
 table.commit td, table.commit th {
   padding: 3px;
 }
+table.commit table.changes td {
+  padding: 2px;
+}
+table.commit table.changes table.properties {
+  margin: 0;
+}
+table.commit table.changes table.properties tr:nth-child(even) {
+  background: #E4E8E0;
+}
+table.commit table.changes table.properties td {
+  white-space: pre-wrap;
+}
+table.commit table.changes table.properties td.removed {
+  font-style: italic;
+}
 
 /**
  * syntax highlighting of diffs

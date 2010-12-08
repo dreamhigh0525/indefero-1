@@ -431,10 +431,10 @@ class IDF_Scm_Git extends IDF_Scm
                 }
             }
             $out = self::parseLog($log);
-            $out[0]->changes = implode("\n", $change);
+            $out[0]->diff = implode("\n", $change);
         } else {
             $out = self::parseLog($out);
-            $out[0]->changes = '';
+            $out[0]->diff = '';
         }
 
         $out[0]->branch = implode(', ', $this->inBranches($commit, null));
