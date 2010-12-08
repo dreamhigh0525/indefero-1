@@ -147,7 +147,7 @@ class IDF_Views_Project
                                           array($prj->id));
         $pag->sort_order = array('creation_dtime', 'ASC');
         $pag->sort_reverse_order = array('creation_dtime');
-        $pag->action = array('IDF_Views_Project::timeline', array($prj->shortname));
+        $pag->action = array('IDF_Views_Project::timeline', array($prj->shortname, $model_filter));
         $list_display = array(
              'creation_dtime' => __('Age'),
              'id' => __('Change'),
