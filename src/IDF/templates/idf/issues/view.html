@@ -1,10 +1,17 @@
 {extends "idf/issues/base.html"}
 {block titleicon}{if $form}<form class="star" method="post" action="{url 'IDF_Views_Issue::star', array($project.shortname, $issue.id)}"><input type="image" src="{if $starred}{media '/idf/img/star.png'}{else}{media '/idf/img/star-grey.png'}{/if}" name="submit" /></form> {/if}{/block}
 {block body}
-{assign $i = 0} 
-{assign $nc = $comments.count()} 
-{foreach $comments as $c}{ashowuser 'submitter', $c.get_submitter(), $request}{assign $who = $c.get_submitter()}
-<div class="issue-comment{if $i == 0} issue-comment-first{/if}{if $i == ($nc-1)} issue-comment-last{/if}" id="ic{$c.id}"><img style="float:right; position: relative;" src="http://www.gravatar.com/avatar/{$who.email|md5}.jpg?s=60&amp;d={media}/idf/img/spacer.gif" alt=" " />
+{assign $i = 0}
+{assign $nc = $comments.count()}
+{foreach $comments as $c}{ashowuser 'submitter', $c.get_submitter(), $request}
+{assign $submitter = $c.get_submitter()}
+{assign $submitter_data = $c.get_submitter_data()}
+<div class="issue-comment{if $i == 0} issue-comment-first{/if}{if $i == ($nc-1)} issue-comment-last{/if}" id="ic{$c.id}">
+{if $submitter_data.avatar != ''}
+<img style="float:right; position: relative; max-height: 60px; max-width: 60px;" src="{media}/upload/avatars/{$submitter_data.avatar}" alt=" " />
+{else}
+<img style="float:right; position: relative; max-height: 60px; max-width: 60px;" src="http://www.gravatar.com/avatar/{$submitter.email|md5}.jpg?s=60&amp;d={media}/idf/img/spacer.gif" alt=" " />
+{/if}
 {if $i == 0}
 <p>{blocktrans}Reported by {$submitter}, {$c.creation_dtime|date}{/blocktrans}</p>
 {else}
@@ -20,14 +27,13 @@
 {if $attachments.count() > 0}
 <hr align="left" class="attach" />
 <ul>
-{foreach $attachments as $a}<li><a href="{url 'IDF_Views_Issue::viewAttachment', array($project.shortname, $a.id, $a.filename)}">{$a.filename}</a> - {$a.filesize|size}</li>{/foreach}
-</ul>{/if}
+{foreach $attachments as $a}<li><a href="{url 'IDF_Views_Issue::getAttachment', array($project.shortname, $a.id, $a.filename)}" title="{trans 'download'}">{$a.filename}</a> - {$a.filesize|size}{if $a.isText()} - <a href="{url 'IDF_Views_Issue::viewAttachment', array($project.shortname, $a.id, $a.filename)}">{trans 'view'}</a>{/if}</li>{/foreach}</ul>{/if}
 {if $i> 0 and $c.changedIssue()}
-<div class="issue-changes"> 
+<div class="issue-changes">
 {foreach $c.changes as $w => $v}
 <strong>{if $w == 'su'}{trans 'Summary:'}{/if}{if $w == 'st'}{trans 'Status:'}{/if}{if $w == 'ow'}{trans 'Owner:'}{/if}{if $w == 'lb'}{trans 'Labels:'}{/if}</strong> {if $w == 'lb'}{assign $l = implode(', ', $v)}{$l}{else}{$v}{/if}<br />
 {/foreach}
-</div> 
+</div>
 {/if}
 </div>{assign $i = $i + 1}{if $i == $nc and false == $form}
 <div class="issue-comment-signin">
@@ -119,7 +125,7 @@
 <td>&nbsp;</td>
 <td>
 <input type="submit" value="{trans 'Submit Changes'}" name="submit" />
-<input type="submit" value="{trans 'Preview'}" name="preview" /> | 
+<input type="submit" value="{trans 'Preview'}" name="preview" /> |
 <a href="{url 'IDF_Views_Issue::view', array($project.shortname, $issue.id)}">{trans 'Cancel'}</a>
 </td>
 </tr>

@@ -169,8 +169,8 @@ class IDF_Diff
         $out = '';
         foreach ($this->files as $filename=>$file) {
             $pretty = '';
-            $fileinfo = IDF_Views_Source::getMimeType($filename);
-            if (IDF_Views_Source::isSupportedExtension($fileinfo[2])) {
+            $fileinfo = IDF_FileUtil::getMimeType($filename);
+            if (IDF_FileUtil::isSupportedExtension($fileinfo[2])) {
                 $pretty = ' prettyprint';
             }
             $out .= "\n".'<table class="diff" summary="">'."\n";
@@ -350,9 +350,9 @@ class IDF_Diff
 
     public function renderCompared($chunks, $filename)
     {
-        $fileinfo = IDF_Views_Source::getMimeType($filename);
+        $fileinfo = IDF_FileUtil::getMimeType($filename);
         $pretty = '';
-        if (IDF_Views_Source::isSupportedExtension($fileinfo[2])) {
+        if (IDF_FileUtil::isSupportedExtension($fileinfo[2])) {
             $pretty = ' prettyprint';
         }
         $out = '';

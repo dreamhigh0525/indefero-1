@@ -268,7 +268,9 @@ class IDF_Views_Admin
         }
 
         if ($request->method == 'POST') {
-            $form = new IDF_Form_Admin_UserUpdate($request->POST, $params);
+            $form = new IDF_Form_Admin_UserUpdate(array_merge($request->POST,
+                                                              $request->FILES),
+                                                  $params);
             if ($form->isValid()) {
                 $form->save();
                 $request->user->setMessage(__('The user has been updated.'));
@@ -299,7 +301,9 @@ class IDF_Views_Admin
                         'request' => $request,
                         );
         if ($request->method == 'POST') {
-            $form = new IDF_Form_Admin_UserCreate($request->POST, $params);
+            $form = new IDF_Form_Admin_UserCreate(array_merge($request->POST,
+                                                              $request->FILES),
+                                                  $params);
             if ($form->isValid()) {
                 $cuser = $form->save();
                 $request->user->setMessage(sprintf(__('The user %s has been created.'), (string) $cuser));

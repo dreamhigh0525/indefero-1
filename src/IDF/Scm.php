@@ -317,6 +317,34 @@ class IDF_Scm
     }
 
     /**
+     * Returns all recorded changes which lead to the particular commit
+     * or revision.
+     *
+     * Example output:
+     *
+     * stdClass object {
+     *  'additions' => array('path/to/file', 'path/to/directory', ...),
+     *  'deletions' => array('path/to/file', 'path/to/directory', ...),
+     *  'renames' => array('old/path/to/file' => 'new/path/to/file', ...)
+     *  'patches' => array('path/to/file', ...),
+     *  'properties' => array('path/to/file' => array(
+     *              'propname' => 'propvalue', 'deletedprop' => null, ...)
+     *              ),
+     *      ...)
+     * }
+     *
+     * Each member of the returned object is mandatory, but may contain
+     * an empty array if no changes were recorded.
+     *
+     * @param string    A commit identifier
+     * @return object with arrays of individual changes
+     */
+    public function getChanges($commit)
+    {
+        throw new Pluf_Exception_NotImplemented();
+    }
+
+    /**
      * Get latest changes.
      *
      * It default to the main branch. If possible you should code in a

@@ -51,9 +51,13 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
                                           array($this, 'callbackReviews'), $text);
         }
         if ($request->rights['hasSourceAccess']) {
-            $text = preg_replace_callback('#(commits?\s+)([0-9a-f]{1,40}(?:(?:\s+and|\s+or|,)\s+[0-9a-f]{1,40})*)\b#i',
+            $verbs = array('added', 'fixed', 'reverted', 'changed', 'removed');
+            $nouns = array('commit', 'commits', 'revision', 'revisions', 'rev', 'revs');
+            $prefix = implode(' in|', $verbs).' in' . '|'.
+                      implode('|', $nouns);
+            $text = preg_replace_callback('#((?:'.$prefix.')(?:\s+r?))([0-9a-f]{1,40}((?:\s+and|\s+or|,)\s+r?[0-9a-f]{1,40})*)\b#i',
                                           array($this, 'callbackCommits'), $text);
-            $text = preg_replace_callback('#(src:)([^\s\(\)\\\\]+(?:(\\\\)\s+[^\s\(\)\\\\]+){0,})+#im',
+            $text = preg_replace_callback('=(src:)([^\s@#,\(\)\\\\]+(?:(\\\\)[\s@#][^\s@#,\(\)\\\\]+){0,})+(?:\@([^\s#,]+))(?:#(\d+))?=im',
                                           array($this, 'callbackSource'), $text);
         }
         if ($wordwrap) $text = Pluf_Text::wrapHtml($text, 69, "\n");
@@ -122,15 +126,12 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
     function callbackCommits($m)
     {
         $keyword = rtrim($m[1]);
-        if ('commits' === $keyword) {
-            // Multiple commits like 'commits 6e030e6, a25bfc1 and
-            // 3c094f8'.
-            return $m[1].preg_replace_callback('#\b[0-9a-f]{4,40}\b#i', array($this, 'callbackCommit'), $m[2]);
-        } else if ('commit' === $keyword) {
+        if (empty($m[3])) {
             // Single commit like 'commit 6e030e6'.
             return $m[1].call_user_func(array($this, 'callbackCommit'), array($m[2]));
         }
-        return $m[0];
+        // Multiple commits like 'commits 6e030e6, a25bfc1 and 3c094f8'.
+        return $m[1].preg_replace_callback('#\b[0-9a-f]{1,40}\b#i', array($this, 'callbackCommit'), $m[2]);
     }
 
     /**
@@ -189,17 +190,38 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
 
     function callbackSource($m)
     {
-        if (!$this->scm->isAvailable()) return $m[0];
+        if (!$this->scm->isAvailable())
+            return $m[0];
+        $commit = null;
+        if (!empty($m[4])) {
+            if (!$this->scm->getCommit($m[4])) {
+                return $m[0];
+            }
+            $commit = $m[4];
+        }
         $file = $m[2];
-        if (!empty($m[3])) $file = str_replace($m[3], '', $file);
-        $request_file_info = $this->scm->getPathInfo($file);
+        if (!empty($m[3]))
+            $file = str_replace($m[3], '', $file);
+        $linktext = $file;
+        if (!empty($commit))
+            $linktext .= '@'.$commit;
+        $request_file_info = $this->scm->getPathInfo($file, $commit);
         if (!$request_file_info) {
             return $m[0];
         }
-        if ($request_file_info->type != 'tree') {
-            return $m[1].'<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Source::tree', array($this->project->shortname, $this->scm->getMainBranch(), $file)).'">'.$file.'</a>';
+        if ($request_file_info->type == 'tree') {
+            return $m[0];
         }
-        return $m[0];
+        $link = Pluf_HTTP_URL_urlForView('IDF_Views_Source::tree', array(
+            $this->project->shortname,
+            $commit == null ? $this->scm->getMainBranch() : $commit,
+            $file
+        ));
+        if (!empty($m[5])) {
+            $link .= '#L'.$m[5];
+            $linktext .= '#'.$m[5];
+        }
+        return $m[1].'<a href="'.$link.'">'.$linktext.'</a>';
     }
 
     /**

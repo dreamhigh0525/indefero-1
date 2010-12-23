@@ -9,7 +9,7 @@
 {/if}
 </div>
 {/if}
-<form method="post" action=".">
+<form method="post"  enctype="multipart/form-data" action=".">
 <table class="form" summary="">
 <tr>
 <th>{trans 'Login:'}</th>{aurl 'url', 'IDF_Views_User::view', array($cuser.login)}
@@ -51,7 +51,48 @@
 <td>{if $form.f.password2.errors}{$form.f.password2.fieldErrors}{/if}
 {$form.f.password2|unsafe}
 </td>
-</tr>{if $user.administrator}
+</tr>
+<tr><td colspan="2" class="separator">{trans "Public Profile"}</td></tr>
+<tr>
+<th>{$form.f.description.labelTag}:</th>
+<td>{if $form.f.description.errors}{$form.f.description.fieldErrors}{/if}
+{$form.f.description|unsafe}
+</td>
+</tr>
+<tr>
+<th>{$form.f.twitter.labelTag}:</th>
+<td>{if $form.f.twitter.errors}{$form.f.twitter.fieldErrors}{/if}
+{$form.f.twitter|unsafe}
+</td>
+</tr>
+<tr>
+<th>{$form.f.public_email.labelTag}:</th>
+<td>{if $form.f.public_email.errors}{$form.f.public_email.fieldErrors}{/if}
+{$form.f.public_email|unsafe}
+</td>
+</tr>
+<tr>
+<th>{$form.f.website.labelTag}:</th>
+<td>{if $form.f.website.errors}{$form.f.website.fieldErrors}{/if}
+{$form.f.website|unsafe}
+</td>
+</tr>
+<tr>
+<th>{$form.f.custom_avatar.labelTag}:</th>
+<td>{if $form.f.custom_avatar.errors}{$form.f.custom_avatar.fieldErrors}{/if}
+{$form.f.custom_avatar|unsafe}<br />
+<span class="helptext">{$form.f.custom_avatar.help_text}</span>
+</td>
+</tr>
+<tr>
+<th>{if $form.f.remove_custom_avatar.errors}{$form.f.remove_custom_avatar.fieldErrors}{/if}
+{$form.f.remove_custom_avatar|unsafe}
+</th>
+<td>{$form.f.remove_custom_avatar.labelTag}<br />
+<span class="helptext">{$form.f.remove_custom_avatar.help_text}</span></td>
+</tr>
+{if $user.administrator}
+<tr><td colspan="2" class="separator">{trans "Administrative"}</td></tr>
 <tr>
 <th>{if $form.f.staff.errors}{$form.f.staff.fieldErrors}{/if}
 {$form.f.staff|unsafe}
@@ -69,7 +110,7 @@
 <tr>
 <td>&nbsp;</td>
 <td>
-<input type="submit" value="{trans 'Update User'}" name="submit" /> 
+<input type="submit" value="{trans 'Update User'}" name="submit" />
 | <a href="{url 'IDF_Views_Admin::users'}">{trans 'Cancel'}</a>
 </td>
 </tr>

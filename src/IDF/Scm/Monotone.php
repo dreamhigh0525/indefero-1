@@ -600,6 +600,75 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * @see IDF_Scm::getChanges()
+     */
+    public function getChanges($commit)
+    {
+        $revs = $this->_resolveSelector($commit);
+        if (count($revs) == 0)
+            return null;
+
+        $revision = $revs[0];
+        $out = $this->stdio->exec(array('get_revision', $revision));
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
+
+        $return = (object) array(
+            'additions'  => array(),
+            'deletions'  => array(),
+            'renames'    => array(),
+            'patches'    => array(),
+            'properties' => array(),
+        );
+
+        foreach ($stanzas as $stanza) {
+            if ($stanza[0]['key'] == 'format_version' ||
+                $stanza[0]['key'] == 'old_revision' ||
+                $stanza[0]['key'] == 'new_manifest')
+                continue;
+
+            if ($stanza[0]['key'] == 'add_file' ||
+                $stanza[0]['key'] == 'add_dir') {
+                $return->additions[] = $stanza[0]['values'][0];
+                continue;
+            }
+
+            if ($stanza[0]['key'] == 'delete') {
+                $return->deletions[] = $stanza[0]['values'][0];
+                continue;
+            }
+
+            if ($stanza[0]['key'] == 'rename') {
+                $return->renames[$stanza[0]['values'][0]] =
+                    $stanza[1]['values'][0];
+                continue;
+            }
+
+            if ($stanza[0]['key'] == 'patch') {
+                $return->patches[] = $stanza[0]['values'][0];
+                continue;
+            }
+
+            if ($stanza[0]['key'] == 'clear' ||
+                $stanza[0]['key'] == 'set') {
+
+                $filename = $stanza[0]['values'][0];
+                if (!array_key_exists($filename, $return->properties)) {
+                    $return->properties[$filename] = array();
+                }
+                $key = $stanza[1]['values'][0];
+                $value = null;
+                if (isset($stanza[2])) {
+                    $value = $stanza[2]['values'][0];
+                }
+                $return->properties[$filename][$key] = $value;
+                continue;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * @see IDF_Scm::getCommit()
      */
     public function getCommit($commit, $getdiff=false)
@@ -626,7 +695,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         $res['branch'] = implode(', ', $certs['branch']);
         $res['commit'] = $revs[0];
 
-        $res['changes'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
+        $res['diff'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
 
         return (object) $res;
     }
@@ -709,10 +778,10 @@ class IDF_Scm_Monotone extends IDF_Scm
                 $log['commit'] = $rev;
 
                 $logs[] = (object)$log;
-            }
 
-            $out = $this->stdio->exec(array('parents', $rev));
-            $horizont += preg_split("/\n/", $out, -1, PREG_SPLIT_NO_EMPTY);
+                $out = $this->stdio->exec(array('parents', $rev));
+                $horizont += preg_split("/\n/", $out, -1, PREG_SPLIT_NO_EMPTY);
+            }
         }
 
         return $logs;

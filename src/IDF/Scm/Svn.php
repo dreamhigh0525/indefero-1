@@ -398,7 +398,7 @@ class IDF_Scm_Svn extends IDF_Scm
      */
     public function getCommit($commit, $getdiff=false)
     {
-        if (!$this->isValidRevision($commit)) {
+        if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
             return false;
         }
         $res = array();
@@ -414,7 +414,7 @@ class IDF_Scm_Svn extends IDF_Scm
         $res['date'] = gmdate('Y-m-d H:i:s', strtotime((string) $xml->logentry->date));
         $res['title'] = (string) $xml->logentry->msg;
         $res['commit'] = (string) $xml->logentry['revision'];
-        $res['changes'] = ($getdiff) ? $this->getDiff($commit) : '';
+        $res['diff'] = ($getdiff) ? $this->getDiff($commit) : '';
         $res['tree'] = '';
         $res['branch'] = '';
         return (object) $res;

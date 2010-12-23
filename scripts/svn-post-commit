@@ -18,7 +18,9 @@
 # www$ ln -s /home/www/indefero/scripts/svn-post-commit post-commit
 #
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+dir=$(dirname "$0")
+res=$(cd "$dir" && /bin/pwd || "$dir")
+SCRIPTDIR="$res/$(readlink $0)"
 PHP_POST_COMMIT=$SCRIPTDIR/svnpostcommit.php
 
 echo php $PHP_POST_COMMIT "$1" "$2" | at now > /dev/null 2>&1

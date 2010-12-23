@@ -359,7 +359,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
             }
         }
         $out = self::parseLog($log, 6);
-        $out[0]->changes = implode("\n", $change);
+        $out[0]->diff = implode("\n", $change);
         return $out[0];
     }
 

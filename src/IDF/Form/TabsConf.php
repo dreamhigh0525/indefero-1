@@ -45,7 +45,7 @@ class IDF_Form_TabsConf extends Pluf_Form
                                       array('required' => true,
                                             'label' => $label,
                                             'initial' => $this->conf->getVal($key, 'all'),
-                                            'widget_attrs' => array('choices' => 
+                                            'widget_attrs' => array('choices' =>
                                           array(
                                                 __('Open to all') => 'all',
                                                 __('Signed in users') => 'login',
@@ -63,10 +63,11 @@ class IDF_Form_TabsConf extends Pluf_Form
                     'source_notification_email',
                     'issues_notification_email',);
         foreach ($ak as $key) {
-            $this->fields[$key] = new Pluf_Form_Field_Email(
+            $this->fields[$key] = new IDF_Form_Field_EmailList(
                                       array('required' => false,
                                             'label' => $key,
                                             'initial' => $this->conf->getVal($key, ''),
+                                            'widget_attrs' => array('size' => 40),
                                             ));
         }
 

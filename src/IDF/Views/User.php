@@ -33,13 +33,13 @@ Pluf::loadFunction('Pluf_Shortcuts_RenderToResponse');
 class IDF_Views_User
 {
     /**
-     * Dashboard of a user. 
+     * Dashboard of a user.
      *
      * Shows all the open issues assigned to the user.
      *
      * TODO: This views is a SQL horror. What needs to be done to cut
      * by many the number of SQL queries:
-     * - Add a table to cache the open/closed status ids for all the 
+     * - Add a table to cache the open/closed status ids for all the
      *   projects.
      * - Left join the issues with the project to get the shortname.
      *
@@ -110,7 +110,10 @@ class IDF_Views_User
         $ext_pass = substr(sha1($request->user->password.Pluf::f('secret_key')), 0, 8);
         $params = array('user' => $request->user);
         if ($request->method == 'POST') {
-            $form = new IDF_Form_UserAccount($request->POST, $params);
+            $form = new IDF_Form_UserAccount(array_merge(
+                                                (array)$request->POST,
+                                                (array)$request->FILES
+                                                ), $params);
             if ($form->isValid()) {
                 $user = $form->save();
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::myAccount');
@@ -121,10 +124,11 @@ class IDF_Views_User
         } else {
             $data = $request->user->getData();
             unset($data['password']);
-            $form = new IDF_Form_UserAccount($data, $params);
+            $form = new IDF_Form_UserAccount(null, $params);
         }
         $keys = $request->user->get_idf_key_list();
-        return Pluf_Shortcuts_RenderToResponse('idf/user/myaccount.html', 
+
+        return Pluf_Shortcuts_RenderToResponse('idf/user/myaccount.html',
                                                array('page_title' => __('Your Account'),
                                                      'api_key' => $api_key,
                                                      'ext_pass' => $ext_pass,
@@ -170,11 +174,11 @@ class IDF_Views_User
         } else {
             $form = new IDF_Form_UserChangeEmail();
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/user/changeemail.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/user/changeemail.html',
                                                array('page_title' => __('Confirm The Email Change'),
                                                      'form' => $form),
                                                $request);
-        
+
     }
 
     /**
@@ -208,13 +212,17 @@ class IDF_Views_User
     public function view($request, $match)
     {
         $sql = new Pluf_SQL('login=%s', array($match[1]));
-        $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen())); 
+        $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
         if (count($users) != 1 or !$users[0]->active) {
             throw new Pluf_HTTP_Error404();
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/user/public.html', 
-                                               array('page_title' => (string) $users[0],
-                                                     'member' => $users[0],
+
+        $user = $users[0];
+        $user_data = IDF_UserData::factory($user);
+        return Pluf_Shortcuts_RenderToResponse('idf/user/public.html',
+                                               array('page_title' => (string) $user,
+                                                     'member' => $user,
+                                                     'user_data' => $user_data,
                                                      ),
                                                $request);
     }
@@ -230,11 +238,11 @@ class IDF_Views_User
 function IDF_Views_IssueSummaryAndLabels($field, $issue, $extra='')
 {
     $project = $issue->get_project();
-    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+    $edit = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                      array($project->shortname, $issue->id));
     $tags = array();
     foreach ($issue->get_tags_list() as $tag) {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::listLabel', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::listLabel',
                                         array($project->shortname, $tag->id, 'open'));
         $tags[] = sprintf('<a class="label" href="%s">%s</a>', $url, Pluf_esc((string) $tag));
     }

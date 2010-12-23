@@ -22,30 +22,38 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Test the source class.
+ * Thin wrapper around the general purpose Gconf data driver
+ * to model a userdata object as key value store
  */
-class IDF_Tests_TestSource extends UnitTestCase 
+class IDF_UserData extends IDF_Gconf
 {
- 
-    public function __construct() 
+    /** columns for the underlying model for which we do not want to
+        override __get and __set */
+    private static $protectedVars =
+        array('id', 'model_class', 'model_id', 'vkey', 'vdesc');
+
+    function __set($key, $value)
     {
-        parent::__construct('Test the source class.');
+        if (in_array($key, self::$protectedVars))
+        {
+            parent::__set($key, $value);
+            return;
+        }
+        $this->setVal($key, $value);
     }
 
-    public function testRegexCommit()
+    function __get($key)
     {
-        $regex = '#^/p/([\-\w]+)/source/tree/([^\/]+)/(.*)$#';
-        $tests = array('/p/test_project/source/tree/default/current/sources' =>
-                       array('test_project', 'default', 'current/sources'),
-                       '/p/test_project/source/tree/3.6/current/sources' =>
-                       array('test_project', '3.6', 'current/sources'),
-                       );
-        foreach ($tests as $test => $res) {
-            $m = array();
-            $t = preg_match($regex, $test, $m);
-            $this->assertEqual($res[0], $m[1]);
-            $this->assertEqual($res[1], $m[2]);
-            $this->assertEqual($res[2], $m[3]);
-        }
+        if (in_array($key, self::$protectedVars))
+            return parent::__get($key);
+        return $this->getVal($key, null);
+    }
+
+    public static function factory($user)
+    {
+        $conf = new IDF_UserData();
+        $conf->setModel((object) array('_model'=>'IDF_UserData', 'id' => $user->id));
+        $conf->initCache();
+        return $conf;
     }
 }

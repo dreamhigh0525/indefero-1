@@ -18,7 +18,9 @@
 # www$ ln -s /home/www/indefero/scripts/svn-post-revprop-change post-revprop-change
 #
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+dir=$(dirname "$0")
+res=$(cd "$dir" && /bin/pwd || "$dir")
+SCRIPTDIR="$res/$(readlink $0)"
 PHP_POST_REVPROP=$SCRIPTDIR/svnpostrevpropchange.php
 
 echo php $PHP_POST_REVPROP "$1" "$2" "$3" "$4" "$5" | at now > /dev/null 2>&1

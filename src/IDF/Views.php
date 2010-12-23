@@ -86,7 +86,10 @@ class IDF_Views
         $title = __('Create Your Account');
         $params = array('request'=>$request);
         if ($request->method == 'POST') {
-            $form = new IDF_Form_Register($request->POST, $params);
+            $form = new IDF_Form_Register(array_merge(
+            									(array)$request->POST, 
+												(array)$request->FILES
+												), $params);
             if ($form->isValid()) {
                 $user = $form->save(); // It is sending the confirmation email
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views::registerInputKey');

@@ -25,12 +25,12 @@
  * A comment set on a review.
  *
  * A comment is associated to a patch as a review can have many
- * patches associated to it. 
+ * patches associated to it.
  *
  * A comment is also tracking the changes in the review in the same
  * way the issue comment is tracking the changes in the issue.
  *
- * 
+ *
  */
 class IDF_Review_Comment extends Pluf_Model
 {
@@ -45,9 +45,9 @@ class IDF_Review_Comment extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'patch' => 
+                            'patch' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Review_Patch',
@@ -61,7 +61,7 @@ class IDF_Review_Comment extends Pluf_Model
                                   'blank' => true, // if only commented on lines
                                   'verbose' => __('comment'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -118,8 +118,8 @@ class IDF_Review_Comment extends Pluf_Model
     function postSave($create=false)
     {
         if ($create) {
-            IDF_Timeline::insert($this, 
-                                 $this->get_patch()->get_review()->get_project(), 
+            IDF_Timeline::insert($this,
+                                 $this->get_patch()->get_review()->get_project(),
                                  $this->get_submitter());
         }
     }
@@ -127,7 +127,7 @@ class IDF_Review_Comment extends Pluf_Model
     public function timelineFragment($request)
     {
         $review = $this->get_patch()->get_review();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($request->project->shortname,
                                               $review->id));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
@@ -138,14 +138,14 @@ class IDF_Review_Comment extends Pluf_Model
         $ic = (in_array($review->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View review">Review %3$d</a>, %4$s'), $url, $ic, $review->id, Pluf_esc($review->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Update of <a href="%s" class="%s">review&nbsp;%d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Update of <a href="%s" class="%s">review&nbsp;%d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     public function feedFragment($request)
     {
         $review = $this->get_patch()->get_review();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($request->project->shortname,
                                               $review->id));
         $title = sprintf(__('%s: Updated review %d - %s'),
@@ -220,5 +220,10 @@ class IDF_Review_Comment extends Pluf_Model
             $email->sendMail();
         }
         Pluf_Translation::loadSetLocale($current_locale);
+    }
+
+    public function get_submitter_data()
+    {
+        return IDF_UserData::factory($this->get_submitter());
     }
 }

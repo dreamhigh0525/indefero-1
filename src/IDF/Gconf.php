@@ -46,7 +46,7 @@ class IDF_Gconf extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
                                   //It is automatically added.
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
                             'model_class' =>
                             array(
@@ -108,7 +108,7 @@ class IDF_Gconf extends Pluf_Model
      */
     function setVal($key, $value)
     {
-        if (!is_null($this->getVal($key, null)) 
+        if (!is_null($this->getVal($key, null))
             and $value == $this->getVal($key)) {
             return;
         }
@@ -121,7 +121,7 @@ class IDF_Gconf extends Pluf_Model
                 $this->datacache[$key] = $value;
                 return;
             }
-        } 
+        }
         // we insert
         $conf = new IDF_Gconf();
         $conf->model_class = $this->_mod->_model;
