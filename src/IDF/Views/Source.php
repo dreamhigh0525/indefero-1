@@ -299,8 +299,13 @@ class IDF_Views_Source
         $rcommit = IDF_Commit::getOrAdd($cobject, $request->project);
         $diff = new IDF_Diff($cobject->diff);
         $diff->parse();
-        $changes = $scm->getChanges($commit);
         $scmConf = $request->conf->getVal('scm', 'git');
+        try {
+            $changes = $scm->getChanges($commit);
+        } catch (Exception $e) {
+            // getChanges is not yes supported by this backend.
+            $changes = array();
+        }
         $branches = $scm->getBranches();
         $in_branches = $scm->inBranches($cobject->commit, '');
         $tags = $scm->getTags();
