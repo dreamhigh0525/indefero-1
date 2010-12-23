@@ -121,14 +121,16 @@ class IDF_Form_IssueCreate extends Pluf_Form
             $predefined_type = 'Type:Defect';
             foreach ($predefined as $tag) {
                 if (strpos($tag, 'Type:') === 0) {
-                    $predefined_type = $tag;
+                    $predefined_type = explode('=', $tag, 2);
+                    $predefined_type = trim($predefined_type[0]);
                     break;
                 }
             }
             $predefined_priority = 'Priority:Medium';
             foreach ($predefined as $tag) {
                 if (strpos($tag, 'Priority:') === 0) {
-                    $predefined_priority = $tag;
+                    $predefined_priority = explode('=', $tag, 2);
+                    $predefined_priority = trim($predefined_priority[0]);
                     break;
                 }
             }
