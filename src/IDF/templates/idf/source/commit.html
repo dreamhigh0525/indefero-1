@@ -17,7 +17,7 @@
 </tr>
 <tr>
 <th><strong>{trans 'Message:'}</strong></th><td>{issuetext $cobject.title, $request}{if isset($cobject.full_message)}<br/><br/>{issuetext $cobject.full_message, $request, true, false, true, true, true}{/if}</td>
-</tr>
+</tr>{if count($changes)}
 <tr>
 <th><strong>{trans 'Changes:'}</strong></th>
 <td>
@@ -52,7 +52,7 @@
 {/foreach}
 </table>
 </td>
-</tr>
+</tr>{/if} {* End of the if count($changes) *}
 </table>
 
 {if count($diff.files)}
