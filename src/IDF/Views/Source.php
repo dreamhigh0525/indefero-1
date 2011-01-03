@@ -154,6 +154,7 @@ class IDF_Views_Source
         }
         $scmConf = $request->conf->getVal('scm', 'git');
         $props = $scm->getProperties($commit);
+        $res->uasort(array('IDF_Views_Source', 'treeSort'));
         return Pluf_Shortcuts_RenderToResponse('idf/source/'.$scmConf.'/tree.html',
                                                array(
                                                      'page_title' => $title,
@@ -246,6 +247,7 @@ class IDF_Views_Source
         $previous = substr($request_file, 0, -strlen($l.' '));
         $scmConf = $request->conf->getVal('scm', 'git');
         $props = $scm->getProperties($commit, $request_file);
+        $res->uasort(array('IDF_Views_Source', 'treeSort'));
         return Pluf_Shortcuts_RenderToResponse('idf/source/'.$scmConf.'/tree.html',
                                                array(
                                                      'page_title' => $page_title,
@@ -453,6 +455,28 @@ class IDF_Views_Source
         }
         return IDF_FileUtil::getMimeTypeFromContent($file_info->file,
                                                     $scm->getFile($file_info));
+    }
+
+    /**
+     * Callback function to sort tree entries
+     */
+    public static function treeSort($a, $b)
+    {
+        // compare two nodes of the same type
+        if ($a->type === $b->type) {
+            if (mb_convert_case($a->file, MB_CASE_LOWER) <
+                mb_convert_case ($b->file, MB_CASE_LOWER)) {
+                return -1;
+            }
+            return 1;
+        }
+
+        // compare two nodes of different types, directories ("tree")
+        // should come before files ("blob") 
+        if ($a->type > $b->type) {
+            return -1;
+        }
+        return 1;
     }
 
     /**
