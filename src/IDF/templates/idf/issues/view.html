@@ -1,5 +1,5 @@
 {extends "idf/issues/base.html"}
-{block titleicon}{if $form}<form class="star" method="post" action="{url 'IDF_Views_Issue::star', array($project.shortname, $issue.id)}"><input type="image" src="{if $starred}{media '/idf/img/star.png'}{else}{media '/idf/img/star-grey.png'}{/if}" name="submit" /></form> {/if}{/block}
+{block titleicon}{if $form}<form class="star" method="post" action="{url 'IDF_Views_Issue::star', array($project.shortname, $issue.id)}"><input type="image" src="{if $starred}{media '/idf/img/star.png'}{else}{media '/idf/img/star-grey.png'}{/if}" name="submit" title="{if $starred}{trans 'Remove this issue from your watch list'}{else}{trans 'Add this issue to your watch list'}{/if}" /></form> {/if}{/block}
 {block body}
 {assign $i = 0}
 {assign $nc = $comments.count()}
