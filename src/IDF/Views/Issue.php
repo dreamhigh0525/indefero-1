@@ -209,7 +209,7 @@ class IDF_Views_Issue
         $pag->sort_order = array('modif_dtime', 'ASC'); // will be reverted
         $pag->sort_reverse_order = array('modif_dtime');
         $pag->sort_link_title = true;
-        $pag->extra_classes = array('a-c', '', 'a-c', '');
+        $pag->extra_classes = array('a-c', '', 'a-c', 'a-c', 'a-c');
         $list_display = array(
              'id' => __('Id'),
              array('summary', 'IDF_Views_Issue_SummaryAndLabelsUnknownProject', __('Summary')),
