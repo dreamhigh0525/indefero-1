@@ -82,6 +82,9 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
     function callbackEmbeddedDoc($m)
     {
         $scm = IDF_Scm::get($this->request->project);
+        if (!$scm->isAvailable()) {
+            return $m[0];
+        }
         $view_source = new IDF_Views_Source();
         $match = array('dummy', $this->request->project->shortname);
         $match[] = (isset($m[2])) ? $m[2] : $scm->getMainBranch();
