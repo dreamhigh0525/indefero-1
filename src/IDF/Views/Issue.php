@@ -79,6 +79,158 @@ class IDF_Views_Issue
     }
 
     /**
+     * View the issues watch list of a given user.
+     * Limited to a specified project
+     */
+    public $watchList_precond = array('IDF_Precondition::accessIssues',
+                                      'Pluf_Precondition::loginRequired');
+    public function watchList($request, $match)
+    {
+        $prj = $request->project;
+        $otags = $prj->getTagIdsByStatus('open');
+        $ctags = $prj->getTagIdsByStatus('closed');
+        if (count($otags) == 0) $otags[] = 0;
+        if (count($ctags) == 0) $ctags[] = 0;
+        
+        // Get the id list of issue in the user watch list (for all projects !)
+        $db =& Pluf::db();
+        $issues_id = $db->select('SELECT GROUP_CONCAT(idf_issue_id) as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id.' GROUP BY pluf_user_id');
+        if (empty ($issues_id)) $issues_id = "";
+        else                    $issues_id = $issues_id[0]['id'];
+        
+        // Count open and close issues
+        $sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
+        $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
+        $sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));
+        $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
+        
+        // Generate a filter for the paginator
+        switch ($match[2]) {
+        case 'closed':
+            $title = sprintf(__('Watch List: Closed Issues for %s'), (string) $prj);
+            $summary = __('This table shows the closed issues in your watch list for %s project.', (string) $prj);
+            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));   
+            break; 
+        case 'open':
+        default:
+            $title = sprintf(__('Watch List: Open Issues for %s'), (string) $prj);
+            $summary = __('This table shows the open issues in your watch list for %s project.', (string) $prj);
+            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
+            break;  
+        }
+        
+        // Paginator to paginate the issues
+        $pag = new Pluf_Paginator(new IDF_Issue());
+        $pag->class = 'recent-issues';
+        $pag->item_extra_props = array('project_m' => $prj,
+                                       'shortname' => $prj->shortname,
+                                       'current_user' => $request->user);
+        $pag->summary = $summary;
+        $pag->forced_where = $f_sql;
+        $pag->action = array('IDF_Views_Issue::watchList', array($prj->shortname, $match[1]));
+        $pag->sort_order = array('modif_dtime', 'ASC'); // will be reverted
+        $pag->sort_reverse_order = array('modif_dtime');
+        $pag->sort_link_title = true;
+        $pag->extra_classes = array('a-c', '', 'a-c', '');
+        $list_display = array(
+             'id' => __('Id'),
+             array('summary', 'IDF_Views_Issue_SummaryAndLabels', __('Summary')),
+             array('status', 'IDF_Views_Issue_ShowStatus', __('Status')),
+             array('modif_dtime', 'Pluf_Paginator_DateAgo', __('Last Updated')),
+                              );
+        $pag->configure($list_display, array(), array('id', 'status', 'modif_dtime'));
+        $pag->items_per_page = 10;
+        $pag->no_results_text = __('No issues were found.');
+        $pag->setFromRequest($request);
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/project-watchlist.html',
+                                               array('project' => $prj,
+                                                     'page_title' => $title,
+                                                     'open' => $nb_open,
+                                                     'closed' => $nb_closed,
+                                                     'issues' => $pag,
+                                                     ),
+                                               $request);
+    }
+
+    /**
+     * View the issues watch list of a given user.
+     * For all projects
+     */
+    public $forgeWatchList_precond = array('Pluf_Precondition::loginRequired');
+    public function forgeWatchList($request, $match)
+    {
+        $otags = array();
+        $ctags = array();
+        // Note that this approach does not scale, we will need to add
+        // a table to cache the meaning of the tags for large forges.
+        foreach (IDF_Views::getProjects($request->user) as $project) {
+            $otags = array_merge($otags, $project->getTagIdsByStatus('open'));
+        }
+        foreach (IDF_Views::getProjects($request->user) as $project) {
+            $ctags = array_merge($ctags, $project->getTagIdsByStatus('closed'));
+        }       
+        if (count($otags) == 0) $otags[] = 0;
+        if (count($ctags) == 0) $ctags[] = 0;
+    
+         // Get the id list of issue in the user watch list (for all projects !)
+        $db =& Pluf::db();
+        $issues_id = $db->select('SELECT GROUP_CONCAT(idf_issue_id) as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id.' GROUP BY pluf_user_id');
+        if (empty ($issues_id)) $issues_id = "";
+        else                    $issues_id = $issues_id[0]['id'];   
+
+        // Count open and close issues
+        $sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array());
+        $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
+        $sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array());
+        $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
+
+        // Generate a filter for the paginator
+        switch ($match[1]) {
+        case 'closed':
+            $title = sprintf(__('Watch List: Closed Issues'));
+            $summary = __('This table shows the closed issues in your watch list.');
+            $f_sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array());   
+            break; 
+        case 'open':
+        default:
+            $title = sprintf(__('Watch List: Open Issues'));
+            $summary = __('This table shows the open issues in your watch list.');
+            $f_sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array());
+            break;  
+        }
+        
+        // Paginator to paginate the issues
+        $pag = new Pluf_Paginator(new IDF_Issue());
+        $pag->class = 'recent-issues';
+        $pag->item_extra_props = array('current_user' => $request->user);
+        $pag->summary = $summary;
+        $pag->forced_where = $f_sql;
+        $pag->action = array('IDF_Views_Issue::forgeWatchList', array($match[1]));
+        $pag->sort_order = array('modif_dtime', 'ASC'); // will be reverted
+        $pag->sort_reverse_order = array('modif_dtime');
+        $pag->sort_link_title = true;
+        $pag->extra_classes = array('a-c', '', 'a-c', '');
+        $list_display = array(
+             'id' => __('Id'),
+             array('summary', 'IDF_Views_Issue_SummaryAndLabelsUnknownProject', __('Summary')),
+             array('project', 'Pluf_Paginator_FkToString', __('Project')),
+             array('status', 'IDF_Views_Issue_ShowStatus', __('Status')),
+             array('modif_dtime', 'Pluf_Paginator_DateAgo', __('Last Updated')),
+                              );
+        $pag->configure($list_display, array(), array('id', 'project', 'status', 'modif_dtime'));
+        $pag->items_per_page = 10;
+        $pag->no_results_text = __('No issues were found.');
+        $pag->setFromRequest($request);
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/forge-watchlist.html',
+                                               array('page_title' => $title,
+                                                     'open' => $nb_open,
+                                                     'closed' => $nb_closed,
+                                                     'issues' => $pag,
+                                                     ),
+                                               $request);
+        }
+
+    /**
      * View the issues of a given user.
      *
      * Only open issues are shown.
@@ -541,6 +693,17 @@ class IDF_Views_Issue
 }
 
 /**
+ * When you access to your forge watch list, issue don't known
+ * the project shortname.
+ */
+function IDF_Views_Issue_SummaryAndLabelsUnknownProject($field, $issue, $extra='')
+{
+    $shortname = $issue->get_project()->shortname;
+    $issue->__set('shortname', $shortname);
+    return IDF_Views_Issue_SummaryAndLabels ($field, $issue, $extra);
+}
+
+/**
  * Display the summary of an issue, then on a new line, display the
  * list of labels with a link to a view "by label only".
  *
@@ -576,3 +739,5 @@ function IDF_Views_Issue_ShowStatus($field, $issue, $extra='')
 {
     return Pluf_esc($issue->get_status()->name);
 }
+
+
