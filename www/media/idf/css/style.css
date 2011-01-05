@@ -702,6 +702,14 @@ div.deprecated-page {
   color: #a00;
 }
 
+ul > li {
+  list-style: disc outside none;
+}
+
+ol > li {
+  list-style: decimal outside none;
+}
+
 #branding {
   float: right;
   position: relative;
