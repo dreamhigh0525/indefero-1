@@ -174,9 +174,12 @@ class IDF_Views_Issue
     
          // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
-        $issues_id = $db->select('SELECT GROUP_CONCAT(idf_issue_id) as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id.' GROUP BY pluf_user_id');
-        if (empty ($issues_id)) $issues_id = "";
-        else                    $issues_id = $issues_id[0]['id'];   
+        $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
+        $issues_id = array();
+        foreach ($sql_results as $id) {
+           array_push($issues_id, $id['id']);
+        } 
+        $issues_id = implode (',', $issues_id);
 
         // Count open and close issues
         $sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array());
