@@ -435,6 +435,26 @@ class IDF_Views_Issue
             }
         }
 
+        // Search previous and next issue id
+        $octags = $prj->getTagIdsByStatus(($closed) ? 'closed' : 'open');
+        if (count($octags) == 0) $octags[] = 0;
+        $sql_previous = new Pluf_SQL('project=%s AND status IN ('.implode(', ', $octags).') AND id<%s',
+                                     array($prj->id, $match[2])
+                                    );
+        $sql_next = new Pluf_SQL('project=%s AND status IN ('.implode(', ', $octags).') AND id>%s',
+                                     array($prj->id, $match[2])
+                                );
+        $previous_issue = Pluf::factory('IDF_Issue')->getList(array('filter' => $sql_previous->gen(),
+                                                                    'order' => 'id DESC',
+                                                                    'nb' => 1
+                                                                   ));
+        $next_issue = Pluf::factory('IDF_Issue')->getList(array('filter' => $sql_next->gen(),
+                                                                'order' => 'id ASC',
+                                                                'nb' => 1
+                                                               ));                                 
+        $previous_issue_id = (isset($previous_issue[0])) ? $previous_issue[0]->id : 0;
+        $next_issue_id = (isset($next_issue[0])) ? $next_issue[0]->id : 0;
+
         $arrays = self::autoCompleteArrays($prj);
         return Pluf_Shortcuts_RenderToResponse('idf/issues/view.html',
                                                array_merge(
@@ -447,6 +467,8 @@ class IDF_Views_Issue
                                                      'closed' => $closed,
                                                      'preview' => $preview,
                                                      'interested' => $interested->count(),
+                                                     'previous_issue_id' => $previous_issue_id,
+                                                     'next_issue_id' => $next_issue_id
                                                      ),
                                                $arrays),
                                                $request);

@@ -1,6 +1,15 @@
 {extends "idf/issues/base.html"}
 {block titleicon}{if $form}<form class="star" method="post" action="{url 'IDF_Views_Issue::star', array($project.shortname, $issue.id)}"><input type="image" src="{if $starred}{media '/idf/img/star.png'}{else}{media '/idf/img/star-grey.png'}{/if}" name="submit" title="{if $starred}{trans 'Remove this issue from your watch list'}{else}{trans 'Add this issue to your watch list'}{/if}" /></form> {/if}{/block}
 {block body}
+<div style="float:right;">
+{if $previous_issue_id}
+<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $previous_issue_id)}" title="{if $closed}{trans 'Click here to view the previous closed issue'}{else}{trans 'Click here to view the previous open issue'}{/if}">Previous issue</a>
+{/if}
+{if $previous_issue_id and $next_issue_id} - {/if}
+{if $next_issue_id}
+<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $next_issue_id)}" title="{if $closed}{trans 'Click here to view the next closed issue'}{else}{trans 'Click here to view the next open issue'}{/if}">Next issue</a>
+{/if}
+</div>
 {assign $i = 0}
 {assign $nc = $comments.count()}
 {foreach $comments as $c}{ashowuser 'submitter', $c.get_submitter(), $request}

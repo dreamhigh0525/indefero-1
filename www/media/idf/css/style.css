@@ -225,6 +225,7 @@ div.issue-comment {
 
 div.issue-comment-first {
   border-top: 1px solid #d3d7cf;
+  clear: both;
 }
 
 div.issue-comment-signin {
