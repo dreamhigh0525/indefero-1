@@ -175,16 +175,16 @@ class IDF_Views_Issue
          // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
         $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
-        $issues_id = array();
+        $issues_ids = array();
         foreach ($sql_results as $id) {
-           array_push($issues_id, $id['id']);
+           $issues_ids[] = $id['id'];
         } 
-        $issues_id = implode (',', $issues_id);
+        $issues_ids = implode (',', $issues_ids);
 
         // Count open and close issues
-        $sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array());
+        $sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $otags).')', array());
         $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
-        $sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array());
+        $sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $ctags).')', array());
         $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
 
         // Generate a filter for the paginator
@@ -192,13 +192,13 @@ class IDF_Views_Issue
         case 'closed':
             $title = sprintf(__('Watch List: Closed Issues'));
             $summary = __('This table shows the closed issues in your watch list.');
-            $f_sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array());   
+            $f_sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $ctags).')', array());   
             break; 
         case 'open':
         default:
             $title = sprintf(__('Watch List: Open Issues'));
             $summary = __('This table shows the open issues in your watch list.');
-            $f_sql = new Pluf_SQL('id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array());
+            $f_sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $otags).')', array());
             break;  
         }
         
