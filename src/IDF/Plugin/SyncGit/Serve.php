@@ -230,6 +230,24 @@ class IDF_Plugin_SyncGit_Serve
         }
         Pluf_Log::debug(array('IDF_Plugin_Git_Serve::initRepository', 
                               'Added post-update hook.', $fullpath));
+        // Configure the core.quotepath option
+        $quotepath = (Pluf::f('git_core_quotepath', true) == true) ? 'true' : 'false';
+        $out = array();
+        $res = 0;
+        exec(sprintf(Pluf::f('idf_exec_cmd_prefix', '').
+                     Pluf::f('git_path', 'git').' config -f %s/config --add core.quotepath %s',
+                     escapeshellarg($fullpath),
+                     escapeshellarg($quotepath)
+                    ),
+             $out, $res);
+        if ($res != 0) {
+            Pluf_Log::warn(array('IDF_Plugin_Git_Serve::initRepository', 
+                                 'core.quotepath configuration error.', 
+                                 $quotepath));
+            return;
+        }
+        Pluf_Log::debug(array('IDF_Plugin_Git_Serve::initRepository', 
+                              'core.quotepath configured.', $quotepath));
     }
 
     /**

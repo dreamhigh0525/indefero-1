@@ -255,6 +255,12 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
                             'mtn' => 'IDF_Scm_Monotone',
                             );
 
+# Specific git config
+# The core.quotepath is configured on new repository
+# True -> All characters upper than 0x80 will be escape (default)
+# False -> Characters is print directly, enable accented character in a UTF-8 shell
+# $cfg['git_core_quotepath'] = false;
+
 # Set to true when uploaded public keys should not only be validated
 # syntactically, but also by the specific backend. For SSH public
 # keys, ssh-keygen(3) must be available and usable in PATH, for
