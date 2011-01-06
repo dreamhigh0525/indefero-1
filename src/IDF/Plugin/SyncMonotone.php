@@ -62,7 +62,7 @@ class IDF_Plugin_SyncMonotone
      *     'mtn_repositories'
      *  2) create a new server key in the same directory
      *  3) create a new client key for IDF and store it in the project conf
-     *  4) write monotonerc
+     *  4) setup the configuration
      *  5) add the database as new local server in the usher configuration
      *  6) reload the running usher instance so it acknowledges the new server
      *
@@ -99,6 +99,36 @@ class IDF_Plugin_SyncMonotone
             throw new IDF_Scm_Exception(sprintf(
                 __('Could not find mtn-post-push script "%s".'), $mtnpostpush
             ));
+        }
+
+        // check some static configuration files
+        $confdir = Pluf::f('mtn_confdir', false);
+        if ($confdir === false) {
+            $confdir = dirname(__FILE__).'/SyncMonotone/';
+        }
+        $confdir_contents = array(
+             'monotonerc.in',
+             'remote-automate-permissions.in',
+             'hooks.d/',
+             // this is linked and not copied to be able to update
+             // the list of read-only commands on upgrades
+             'hooks.d/indefero_authorize_remote_automate.conf',
+             'hooks.d/indefero_authorize_remote_automate.lua',
+             'hooks.d/indefero_post_push.conf.in',
+             'hooks.d/indefero_post_push.lua',
+        );
+        // check whether we should handle additional files in the config directory
+        $confdir_extra_contents = Pluf::f('mtn_confdir_extra', false);
+        if ($confdir_extra_contents !== false) {
+            $confdir_contents =
+                array_merge($confdir_contents, $confdir_extra_contents);
+        }
+        foreach ($confdir_contents as $content) {
+            if (!file_exists($confdir.$content)) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('The configuration file %s is missing.'), $content
+                ));
+            }
         }
 
         $shortname = $project->shortname;
@@ -144,77 +174,95 @@ class IDF_Plugin_SyncMonotone
         //
         // step 3) create a client key, and save it in IDF
         //
-        $clientkey_hash = '';
-        $monotonerc_tpl = 'monotonerc-noauth.tpl';
-
-        if (Pluf::f('mtn_remote_auth', true)) {
-            $monotonerc_tpl = 'monotonerc-auth.tpl';
-            $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
-            if (!file_exists($keydir)) {
-                if (!mkdir($keydir)) {
-                    throw new IDF_Scm_Exception(sprintf(
-                        __('The key directory %s could not be created.'), $keydir
-                    ));
-                }
-            }
-
-            $clientkey_name = $shortname.'-client@'.$server;
-            $cmd = sprintf('au generate_key --keydir=%s %s ""',
-                escapeshellarg($keydir),
-                escapeshellarg($clientkey_name)
-            );
-            $keyinfo = self::_mtn_exec($cmd);
-
-            $parsed_keyinfo = array();
-            try {
-                $parsed_keyinfo = IDF_Scm_Monotone_BasicIO::parse($keyinfo);
-            }
-            catch (Exception $e) {
+        $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
+        if (!file_exists($keydir)) {
+            if (!mkdir($keydir)) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not parse key information: %s'), $e->getMessage()
+                    __('The key directory %s could not be created.'), $keydir
                 ));
             }
-
-            $clientkey_hash = $parsed_keyinfo[0][1]['hash'];
-            $clientkey_file = $keydir . '/' . $clientkey_name . '.' . $clientkey_hash;
-            $clientkey_data = file_get_contents($clientkey_file);
-
-            $project->getConf()->setVal('mtn_client_key_name', $clientkey_name);
-            $project->getConf()->setVal('mtn_client_key_hash', $clientkey_hash);
-            $project->getConf()->setVal('mtn_client_key_data', $clientkey_data);
-
-            // add the public client key to the server
-            $cmd = sprintf('au get_public_key --keydir=%s %s',
-                escapeshellarg($keydir),
-                escapeshellarg($clientkey_hash)
-            );
-            $clientkey_pubdata = self::_mtn_exec($cmd);
-
-            $cmd = sprintf('au put_public_key --db=%s %s',
-                escapeshellarg($dbfile),
-                escapeshellarg($clientkey_pubdata)
-            );
-            self::_mtn_exec($cmd);
         }
 
-        //
-        // step 4) write monotonerc
-        //
-        $monotonerc = file_get_contents(
-            dirname(__FILE__).'/SyncMonotone/'.$monotonerc_tpl
+        $clientkey_name = $shortname.'-client@'.$server;
+        $cmd = sprintf('au generate_key --keydir=%s %s ""',
+            escapeshellarg($keydir),
+            escapeshellarg($clientkey_name)
         );
-        $monotonerc = str_replace(
-            array('%%MTNPOSTPUSH%%', '%%PROJECT%%', '%%MTNCLIENTKEY%%'),
-            array($mtnpostpush, $shortname, $clientkey_hash),
-            $monotonerc
-        );
+        $keyinfo = self::_mtn_exec($cmd);
 
-        $rcfile = $projectpath.'/monotonerc';
-
-        if (file_put_contents($rcfile, $monotonerc, LOCK_EX) === false) {
+        $parsed_keyinfo = array();
+        try {
+            $parsed_keyinfo = IDF_Scm_Monotone_BasicIO::parse($keyinfo);
+        }
+        catch (Exception $e) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write mtn configuration file "%s"'), $rcfile
+                __('Could not parse key information: %s'), $e->getMessage()
             ));
+        }
+
+        $clientkey_hash = $parsed_keyinfo[0][1]['hash'];
+        $clientkey_file = $keydir . '/' . $clientkey_name . '.' . $clientkey_hash;
+        $clientkey_data = file_get_contents($clientkey_file);
+
+        $project->getConf()->setVal('mtn_client_key_name', $clientkey_name);
+        $project->getConf()->setVal('mtn_client_key_hash', $clientkey_hash);
+        $project->getConf()->setVal('mtn_client_key_data', $clientkey_data);
+
+        // add the public client key to the server
+        $cmd = sprintf('au get_public_key --keydir=%s %s',
+            escapeshellarg($keydir),
+            escapeshellarg($clientkey_hash)
+        );
+        $clientkey_pubdata = self::_mtn_exec($cmd);
+
+        $cmd = sprintf('au put_public_key --db=%s %s',
+            escapeshellarg($dbfile),
+            escapeshellarg($clientkey_pubdata)
+        );
+        self::_mtn_exec($cmd);
+
+        //
+        // step 4) setup the configuration
+        //
+
+        // we assume that all confdir entries ending with a slash mean a
+        // directory that has to be created, that all files ending on ".in"
+        // have to be processed and copied in place and that all other files
+        // just need to be symlinked from the original location
+        foreach ($confdir_contents as $content) {
+            $filepath = $projectpath.'/'.$content;
+            if (substr($content, -1) == '/') {
+                if (!mkdir($filepath)) {
+                    throw new IDF_Scm_Exception(sprintf(
+                        __('Could not create configuration directory "%s"'), $filepath
+                    ));
+                }
+                continue;
+            }
+
+            if (substr($content, -3) != '.in') {
+                if (!symlink($confdir.$content, $filepath)) {
+                    IDF_Scm_Exception(sprintf(
+                        __('Could not create symlink "%s"'), $filepath
+                    ));
+                }
+                continue;
+            }
+
+            $filecontents = file_get_contents($confdir.'/'.$content);
+            $filecontents = str_replace(
+                array('%%MTNPOSTPUSH%%', '%%PROJECT%%', '%%MTNCLIENTKEY%%'),
+                array($mtnpostpush, $shortname, $clientkey_hash),
+                $filecontents
+            );
+
+            // remove the .in
+            $filepath = substr($filepath, 0, -3);
+            if (file_put_contents($filepath, $filecontents, LOCK_EX) === false) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('Could not write configuration file "%s"'), $filepath
+                ));
+            }
         }
 
         //
@@ -252,7 +300,7 @@ class IDF_Plugin_SyncMonotone
                 '--confdir', $projectpath,
                 '-d', $dbfile,
                 '--timestamps',
-                '--ticker=dot' 
+                '--ticker=dot'
             )),
         );
 
@@ -378,17 +426,15 @@ class IDF_Plugin_SyncMonotone
             }
         }
 
-        if (Pluf::f('mtn_remote_auth', true)) {
-            $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
-            $keyname = $project->getConf()->getVal('mtn_client_key_name', false);
-            $keyhash = $project->getConf()->getVal('mtn_client_key_hash', false);
-            if ($keyname && $keyhash &&
-                file_exists($keydir .'/'. $keyname . '.' . $keyhash)) {
-                if (!@unlink($keydir .'/'. $keyname . '.' . $keyhash)) {
-                    throw new IDF_Scm_Exception(sprintf(
-                        __('Could not delete client private key %s'), $keyname
-                    ));
-                }
+        $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
+        $keyname = $project->getConf()->getVal('mtn_client_key_name', false);
+        $keyhash = $project->getConf()->getVal('mtn_client_key_hash', false);
+        if ($keyname && $keyhash &&
+            file_exists($keydir .'/'. $keyname . '.' . $keyhash)) {
+            if (!@unlink($keydir .'/'. $keyname . '.' . $keyhash)) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('Could not delete client private key %s'), $keyname
+                ));
             }
         }
 
@@ -721,7 +767,7 @@ class IDF_Plugin_SyncMonotone
 
     private static function _delete_recursive($path)
     {
-        if (is_file($path)) {
+        if (is_file($path) || is_link($path)) {
             return @unlink($path);
         }
 

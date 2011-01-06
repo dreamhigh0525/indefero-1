@@ -70,11 +70,6 @@ class IDF_Scm_Monotone_Stdio
      */
     public function _getAuthOptions()
     {
-        // no remote authentication - the simple case
-        if (!Pluf::f('mtn_remote_auth', true)) {
-            return '--key= ';
-        }
-
         $prjconf = $this->project->getConf();
         $name = $prjconf->getVal('mtn_client_key_name', false);
         $hash = $prjconf->getVal('mtn_client_key_hash', false);

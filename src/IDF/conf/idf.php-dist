@@ -98,17 +98,16 @@ $cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
 # choosed for manual setups and / or ssh access.
 $cfg['mtn_db_access'] = 'local';
 
-# If true, each access to the database is authenticated with an auto-generated
-# project key which is stored in the IDF project configuration
-# ('mtn_client_key_*') and written out to $cfg['tmp_folder']/mtn-client-keys
-# for its actual use. This key is then configured on the server to have
-# full read / write access to all functions, while anonymous access can be
-# completely disabled.
-# If false, IDF tries to connect anonymously, without authentication, to
-# the remote monotone server instance. In this case no project-specific
-# keys are generated and the server must be configured to allow at least
-# anonymous read access to the main functions.
-#$cfg['mtn_remote_auth'] = true;
+# Full path to the directory tree which contains default configuration files
+# that are automatically created for new projects. This is only needed
+# if $cfg['mtn_db_access'] is set to remote, i.e. in case the SyncMonotone
+# plugin should be used. If unset, it defaults to the tree underknees
+# src/IDF/Plugin/SyncMonotone/. Don't forget the trailing slash!
+#$cfg['mtn_confdir'] = '/path/to/dir/tree/';
+
+# Additional configuration files you want to create / copy for new setups.
+# All these file paths have to be relative to $cfg['mtn_confdir'].
+#$cfg['mtn_confdir_extra'] = array('hooks.d/something.lua')
 
 # Needs to be configured for remote / usher usage.
 # This allows basic control of a running usher process via the forge
@@ -260,7 +259,7 @@ $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
 # syntactically, but also by the specific backend. For SSH public
 # keys, ssh-keygen(3) must be available and usable in PATH, for
 # monotone public keys, the monotone binary (as configured above)
-# is used. 
+# is used.
 # $cfg['idf_strong_key_check'] = false;
 
 # If you want to use another memtypes database
