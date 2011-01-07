@@ -18,6 +18,9 @@ by {$submitter}.{/blocktrans}</p>
 </div>
 {/if}
 
+<div id="wiki-content">
+<div id="wiki-toc"><span id="contentheader">{trans 'Table of Content'}</span><div id="wiki-toc-content"></div></div>
+<script type="text/javascript" src="{media '/idf/js/wiki-toc.js'}"></script>
 <p class="desc">{$page.summary}</p>
 
 {if !$oldrev}
@@ -29,6 +32,7 @@ by {$submitter}.{/blocktrans}</p>
 {/if}
 {/if}
 
+</div>
 {/block}
 {block context}
 {ashowuser 'submitter', $page.get_submitter(), $request}
