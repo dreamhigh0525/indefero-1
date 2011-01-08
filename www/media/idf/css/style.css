@@ -225,6 +225,7 @@ div.issue-comment {
 
 div.issue-comment-first {
   border-top: 1px solid #d3d7cf;
+  clear: both;
 }
 
 div.issue-comment-signin {
@@ -702,6 +703,14 @@ div.deprecated-page {
   color: #a00;
 }
 
+ul > li {
+  list-style: disc outside none;
+}
+
+ol > li {
+  list-style: decimal outside none;
+}
+
 #branding {
   float: right;
   position: relative;
@@ -735,6 +744,32 @@ div.deprecated-page {
 #ft {
   padding: 0px;
   margin: 0px;
+}
+
+#wiki-toc {
+    float: right;
+    margin-left: 10px;
+}
+
+#wiki-toc-content {
+    border:  1px solid #999999;
+    border-width: 1px 0;
+    padding: 10px 0;
+    padding-bottom: 25px;
+    background-color: #ffffff;
+    display: block;
+}
+
+#wiki-toc-content a {
+    display: block;
+}
+
+#wiki-toc-content a.wiki-h2 {
+    margin-left: 1em;
+}
+
+#wiki-toc-content a.wiki-h3 {
+    margin-left: 2em;
 }
 
 /**

@@ -295,7 +295,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
             return '';
         }
 
-        if (preg_match('#^ssh\-[a-z]{3}\s\S+==(\s\S+)?$#', $key)) {
+        if (preg_match('#^ssh\-[a-z]{3}\s\S+(\s\S+)?$#', $key)) {
             $key = str_replace(array("\n", "\r"), '', $key);
 
             if (Pluf::f('idf_strong_key_check', false)) {

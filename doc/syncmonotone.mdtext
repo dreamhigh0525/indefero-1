@@ -149,7 +149,6 @@ look like this:
         $cfg['mtn_repositories'] = '/var/lib/usher/projects/%s/';
         $cfg['mtn_remote_url'] = 'mtn://my.server.com/%s';
         $cfg['mtn_db_access'] = 'remote';
-        $cfg['mtn_remote_auth'] = true;
         $cfg['mtn_usher_conf'] = '/var/lib/usher/usher.conf';
         ...
 
@@ -188,8 +187,10 @@ Remote commands can be helpful for a user or a 3rd party tool (like
 contents remotely without having to pull everything in first instance.
 
 Private projects on the other hand can only be synced by team members
-or additional invited people. Also noo remote command execution is enabled
-by default.
+or additional invited people. Remote command execution is still enabled
+by default - if you want to disable that, simply remove the symlink to
+the file `indefero_authorize_remote_automate.conf` in your project's `hooks.d`
+directory or copy the file from the original location and adapt it.
 
 ## Notifications
 
@@ -204,7 +205,53 @@ in a directory called `hooks.d` right under the project's base directory
 (configured via $cfg['mtn_repositories']) and this is the ideal place to
 put or link these additional lua sources.
 
+## Custom project configurations and templates
+
+If a new project is created in IDF, the SyncMonotone plugin creates a new
+configuration tree for the project into the project's configuration directory,
+determined by `$cfg['mtn_repositories']`. IDF ships with the minimum set of
+files for this configuration tree and sets up everything automatically for you.
+
+Even more, most of the configuration files from the newly created tree are only
+symlinked to the original configuration directory which is configurable via
+`$cfg['mtn_confdir']` and defaults to `src/IDF/Plugin/SyncMonotone/`. This has
+the advantage that your standard IDF setup automatically receives updates to
+existing (symlinked) configuration files as soon as you update to a newer
+version.
+
+You could, however, also choose to place the directory tree somewhere else
+and adapt the contents of the individual files yourself, so these changes get
+automatically applied to all new projects you create. You could even go so far
+and add new files to the tree and let them be processed automatically just
+as the basic files! All you need to do is to copy your files and / or directories
+underknees your `$cfg['mtn_confdir']` and add their relative paths to
+`$cfg['mtn_confdir_extra']`.
+
+By convention, all entries which end with a slash are considered directories,
+so mkdir(1) is issued for these entries, all files which do not end up with
+".in" are considered to be static script files which are just symlinked from
+the basic configuration dir and all entries ending on ".in" are considered
+configuration files or templates, which are copied over to the project's
+configuration tree and which get some basic project-specific values replaced.
+
+The following placeholders are currently recognized and replaced for these files:
+
+ * %%PROJECT%% - the name of the created project
+ * %%MTNPOSTPUSH%% - the absolute path to the `mtn-post-push` script
+ * %%MTNCLIENTKEY%% - the public key hash of the key which is used by IDF
+   to authenticate remote stdio access
+
+Thats it - I hope you find it useful :)
+
 ## Q&A
+
+### After I created a new project, IDF throws an exception and tells me that it couldn't save the membership data with a cryptic error message. Whats wrong?
+
+Multiple issues could cause that. If you've set up usher, make sure the usher
+can fork your database at all and look out for specific errors in the log file
+of your project. If you stumble upon permission issues, ensure that the user
+who runs the usher can access all files in your project's configuration directory,
+including symlinked files.
 
 ### I pushed a branch to my server, but it does not show up in IDF. Whats wrong?
 

@@ -55,6 +55,7 @@ Pluf_Dispatcher::loadControllers(Pluf::f('idf_views'));
 $params = array('repo_dir' => $argv[1],
                 'revision' => $argv[2],
                 'env' => array_merge($_ENV, $_SERVER));
+Pluf_Log::event(array('svnpostcommit.php', 'Send run signal.', $params));
 Pluf_Signal::send('svnpostcommit.php::run', 'svnpostcommit.php', $params);
 
 

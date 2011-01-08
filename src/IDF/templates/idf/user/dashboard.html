@@ -11,5 +11,7 @@
 <p>{blocktrans}<a href="{$url}">Update your account</a>.{/blocktrans}</p>
 {aurl 'url', 'IDF_Views_User::view', array($user.login)}
 <p>{blocktrans}<a href="{$url}">See your public profile</a>.{/blocktrans}</p>
+{aurl 'url', 'IDF_Views_Issue::forgeWatchList', array('open')}
+<p>{blocktrans}<a href="{$url}">See your forge issue watch list</a>.{/blocktrans}</p>
 {/block}
 

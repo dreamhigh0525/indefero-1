@@ -168,6 +168,7 @@ class IDF_Template_MarkdownPrefilter extends Pluf_Text_HTML_Filter
                                       'https',
                                       'ftp',
                                       'mailto',
+                                      'irc'
                                       );
     // tags which should be removed if they contain no content
     // (e.g. "<b></b>" or "<b />")
