@@ -92,16 +92,19 @@ class IDF_Views_Issue
         if (count($otags) == 0) $otags[] = 0;
         if (count($ctags) == 0) $ctags[] = 0;
         
-        // Get the id list of issue in the user watch list (for all projects !)
+         // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
-        $issues_id = $db->select('SELECT GROUP_CONCAT(idf_issue_id) as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id.' GROUP BY pluf_user_id');
-        if (empty ($issues_id)) $issues_id = "";
-        else                    $issues_id = $issues_id[0]['id'];
+        $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
+        $issue_ids = array(0);
+        foreach ($sql_results as $id) {
+           $issue_ids[] = $id['id'];
+        } 
+        $issue_ids = implode (',', $issue_ids);
         
         // Count open and close issues
-        $sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
+        $sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
         $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
-        $sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));
+        $sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));
         $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
         
         // Generate a filter for the paginator
@@ -109,13 +112,13 @@ class IDF_Views_Issue
         case 'closed':
             $title = sprintf(__('Watch List: Closed Issues for %s'), (string) $prj);
             $summary = __('This table shows the closed issues in your watch list for %s project.', (string) $prj);
-            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));   
+            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));   
             break; 
         case 'open':
         default:
             $title = sprintf(__('Watch List: Open Issues for %s'), (string) $prj);
             $summary = __('This table shows the open issues in your watch list for %s project.', (string) $prj);
-            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issues_id.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
+            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
             break;  
         }
         
@@ -175,16 +178,16 @@ class IDF_Views_Issue
          // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
         $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
-        $issues_ids = array();
+        $issue_ids = array(0);
         foreach ($sql_results as $id) {
-           $issues_ids[] = $id['id'];
+           $issue_ids[] = $id['id'];
         } 
-        $issues_ids = implode (',', $issues_ids);
+        $issue_ids = implode (',', $issue_ids);
 
         // Count open and close issues
-        $sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $otags).')', array());
+        $sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array());
         $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
-        $sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $ctags).')', array());
+        $sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array());
         $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
 
         // Generate a filter for the paginator
@@ -192,13 +195,13 @@ class IDF_Views_Issue
         case 'closed':
             $title = sprintf(__('Watch List: Closed Issues'));
             $summary = __('This table shows the closed issues in your watch list.');
-            $f_sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $ctags).')', array());   
+            $f_sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array());   
             break; 
         case 'open':
         default:
             $title = sprintf(__('Watch List: Open Issues'));
             $summary = __('This table shows the open issues in your watch list.');
-            $f_sql = new Pluf_SQL('id IN ('.$issues_ids.') AND status IN ('.implode(', ', $otags).')', array());
+            $f_sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array());
             break;  
         }
         
