@@ -48,6 +48,25 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function isAvailable()
     {
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --xml --username=%s --password=%s %s',
+                       escapeshellarg($this->username),
+                       escapeshellarg($this->password),
+                       escapeshellarg($this->repo));
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $xmlInfo = self::shell_exec('IDF_Scm_Svn::isAvailable', $cmd);
+
+        try {
+            $xml = simplexml_load_string($xmlInfo);
+        }
+        catch (Exception $e) {
+            return false;
+        }
+        if (!isset($xml->entry->commit['revision'])) {
+            return false;
+        }
+        if (0 == (int)$xml->entry->commit['revision']) {
+            return false;
+        }
         return true;
     }
 
