@@ -53,6 +53,7 @@ Pluf_Dispatcher::loadControllers(Pluf::f('idf_views'));
  */
 $params = array('git_dir' => $argv[1],
                 'env' => array_merge($_ENV, $_SERVER));
+Pluf_Log::event(array('gitpostupdate.php', 'Send run signal.', $params));
 Pluf_Signal::send('gitpostupdate.php::run', 'gitpostupdate.php', $params);
 
 
