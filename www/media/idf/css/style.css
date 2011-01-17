@@ -858,3 +858,84 @@ ol > li {
   color: #2E3436;
 }
 
+/**
+ * List expander for tag and branch view
+ */
+.context {}
+
+.context h1 {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
+.context > .expander {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.context > .expander > ul {
+  margin: 5px;
+}
+
+.context > .expander > ul > li {
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+.context > .expander > ul > li.active {
+  font-weight: bold;
+}
+
+.context > .expander > .gradient {
+  position: absolute;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  z-index: 998;
+  background: url(../img/white_gradient.png) repeat-y;
+}
+
+.context > .expander:hover,
+.context > .expander.activated {
+  position: absolute;
+  z-index: 999;
+  overflow: visible;
+  -moz-border-radius: 0 10px 10px 0;
+  -webkit-border-radius: 0 10px 10px 0;
+  border-radius: 0 10px 10px 0;
+  -moz-box-shadow: 3px 3px 5px #333;
+  -webkit-box-shadow: 3px 3px 5px #333;
+  box-shadow: 3px 3px 5px #333;
+  padding: 5px 10px;
+  margin: -5px -10px;
+  min-width: 180px;
+}
+
+.context > .expander:hover > .gradient,
+.context > .expander.activated > .gradient {
+  display: none;
+}
+
+.context > .expander input.filter-list {
+  font-size: 11px;
+  font-weight: normal;
+  color: #333;
+  border: 1px dotted #474747;
+  margin-left: 10px;
+  padding: 2px;
+  width: 80px;
+  display: none;
+  float: right;
+}
+
+.context > .expander:hover input.filter-list.activated,
+.context > .expander.activated input.filter-list.activated {
+  display: block;
+}
+
+.context > .expander input.filter-list.default {
+  color: #aaa;
+  border-color: #aaa;
+}
