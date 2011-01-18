@@ -187,10 +187,11 @@ Remote commands can be helpful for a user or a 3rd party tool (like
 contents remotely without having to pull everything in first instance.
 
 Private projects on the other hand can only be synced by team members
-or additional invited people. Remote command execution is still enabled
-by default - if you want to disable that, simply remove the symlink to
-the file `indefero_authorize_remote_automate.conf` in your project's `hooks.d`
-directory or copy the file from the original location and adapt it.
+or additional invited people. Remote command execution is disabled
+by default. If you want to enable that, simply put the keys of the users
+you want to give access to in your project's `remote-automate-permissions`
+file. In the future this plugin might handle this file just as it handles
+`read-permissions` and `write-permissions`.
 
 ## Notifications
 
