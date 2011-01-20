@@ -749,10 +749,9 @@ class IDF_Scm_Monotone extends IDF_Scm
             // read in the initial branches we should follow
             if (count($initialBranches) == 0) {
                 if (!isset($certs['branch'])) {
-                    throw new IDF_Scm_Exception(sprintf(
-                        __("revision %s has no branch cert - cannot start ".
-                           "logging from this revision"), $rev
-                    ));
+                    // this revision has no branch cert, we cannot start logging
+                    // from this revision
+                    continue;
                 }
                 $initialBranches = $certs['branch'];
             }

@@ -342,7 +342,7 @@ class IDF_Views_Source
         if (!$cobject) {
             throw new Exception('could not retrieve commit object for '. $commit);
         }
-        $rep = new Pluf_HTTP_Response($cobject->changes, 'text/plain');
+        $rep = new Pluf_HTTP_Response($cobject->diff, 'text/plain');
         $rep->headers['Content-Disposition'] = 'attachment; filename="'.$commit.'.diff"';
         return $rep;
     }
