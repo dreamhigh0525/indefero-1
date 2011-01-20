@@ -21,9 +21,6 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
-//require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
-//require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
-
 /**
  * Monotone scm class
  *
