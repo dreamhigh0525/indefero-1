@@ -674,8 +674,12 @@ class IDF_Scm_Monotone extends IDF_Scm
         if (count($revs) == 0)
             return array();
 
-        $certs = $this->_getCerts($revs[0]);
+        $res = array();
 
+        $parents = $this->stdio->exec(array('parents', $revs[0]));
+        $res['parents'] = preg_split("/\n/", $parents, -1, PREG_SPLIT_NO_EMPTY);
+        
+        $certs = $this->_getCerts($revs[0]);        
         // FIXME: this assumes that author, date and changelog are always given
         $res['author'] = implode(', ', $certs['author']);
 
