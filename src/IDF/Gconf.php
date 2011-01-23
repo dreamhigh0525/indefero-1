@@ -154,6 +154,32 @@ class IDF_Gconf extends Pluf_Model
     }
 
     /**
+     * Collection selection.
+     *
+     * Suppose you have 5 objects with associated meta data in the
+     * Gconf storage, if you load the data independently for each
+     * object, you end up with 5 SELECT queries. With 25 objects, 25
+     * SELECT. You can select with one query all the data and merge in
+     * the code. It is faster. The collection selection get a
+     * model_class and a list of ids and returns an id indexed array
+     * of associative array data. This is for read only access as you
+     * do not get a series of Gconf objects.
+     */
+    public static function collect($class, $ids)
+    {
+        $gconf = new IDF_Gconf();
+        $stmpl = sprintf('model_class=%%s AND model_id IN (%s)', 
+                         implode(',' , $ids));
+        $sql = new Pluf_SQL($stmpl, array($class));
+        $out = array_fill_keys($ids, array());
+        foreach ($gconf->getList(array('filter' => $sql->gen())) as $c) {
+            $out[$c->model_id][$c->vkey] = $c->vdesc;
+        }
+
+        return $out;
+    }
+
+    /**
      * Drop the conf of a model.
      *
      * If your model is using this table, just add the following line

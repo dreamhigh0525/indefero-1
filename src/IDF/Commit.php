@@ -127,6 +127,7 @@ class IDF_Commit extends Pluf_Model
     {
         IDF_Timeline::remove($this);
         IDF_Search::remove($this);
+        IDF_Gconf::dropForModel($this);
     }
 
     /**
