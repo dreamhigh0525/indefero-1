@@ -12,7 +12,7 @@
 {foreach $changes as $change}
 {aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $change.scm_id)}
 <tr class="log">
-<td><a href="{$url}">{$change.creation_dtime|dateago:"without"}</a></td>
+<td class="nobrk"><a href="{$url}">{$change.creation_dtime|dateago:"without"}</a></td>
 <td>{issuetext $change.summary, $request}{if $change.fullmessage}<br /><br />{issuetext $change.fullmessage, $request, true, false, true, true, true}{/if}</td>
 </tr>
 <tr class="extra">
