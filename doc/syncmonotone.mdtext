@@ -8,7 +8,7 @@ several repositories at once, acts as proxy and single entrance.
 ## Prerequisites
 
 * a unixoid operating system
-* monotone >= 0.99
+* monotone >= 0.99.1
 * for a proxy setup with usher:
     * boost headers (for usher compilation)
     * a current version of usher
