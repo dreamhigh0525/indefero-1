@@ -1,0 +1,51 @@
+{**
+ * Looks for input fields like
+ *  <input type="text" class="filter-list" rel="target" />
+ * and filters out anchors below $(target) which do not match
+ * the entered input.
+ *}
+<script type="text/javascript" charset="utf-8">
+{literal}
+$(document).ready(function() {
+  $("input.filter-list").each(function() {
+    var lists = $("ul#" + $(this).attr("rel"));
+    if (lists.length == 0)
+      return;
+    var list = $(lists[0]);
+
+    // a list should contain a reasonable amount of items
+    // to be filterable - we also give the filter input a
+    // special class here so we recognize it later in case
+    // we have to hide it when the list view is collapsed
+    if (list.children("li").length > 10) {
+      $(this).addClass("activated");
+      $(this).focus(function() {
+        // ensure that the parent of the list keeps activated / opened
+        list.parent().addClass("activated");
+        if ($(this)[0].value == $(this).attr("title"))
+          $(this).attr("value", "").removeClass("default");
+      });
+      $(this).blur(function() {
+        list.parent().removeClass("activated");
+        if ($(this)[0].value.length == 0)
+          $(this).attr("value", $(this).attr("title")).addClass("default");
+      });
+      $(this).keyup(function(ev) {
+        var filter = $(this)[0];
+        list.children("li").css('display', 'block');
+        list.children("li").filter(function(index) {
+          if (filter.value == "")
+            return false;
+          if ($(this).text().indexOf(filter.value) > -1)
+            return false;
+          return true;
+        }).css('display', 'none');
+      });
+      // initialize it with the default
+      $(this)[0].value = "";
+      $(this).blur();
+    }
+  });
+});
+{/literal}
+</script>

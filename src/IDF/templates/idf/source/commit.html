@@ -15,6 +15,12 @@
 <tr>
 <th><strong>{trans 'Commit:'}</strong></th><td class="mono"><a href="{url 'IDF_Views_Source::treeBase', array($project.shortname, $commit)}" title="{trans 'View corresponding source tree'}">{$cobject.commit}</a></td>
 </tr>
+{if $cobject.parents}<tr>
+<th><strong>{trans 'Parents:'}</strong></th><td class="mono">{foreach $cobject.parents as $parent}
+<a href="{url 'IDF_Views_Source::commit', array($project.shortname, $parent)}" title="{trans 'View corresponding commit'}">{$parent}</a><br />
+{/foreach}
+</td>
+</tr>{/if}
 <tr>
 <th><strong>{trans 'Message:'}</strong></th><td>{issuetext $cobject.title, $request}{if isset($cobject.full_message)}<br/><br/>{issuetext $cobject.full_message, $request, true, false, true, true, true}{/if}</td>
 </tr>{if count($changes)}

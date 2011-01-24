@@ -117,6 +117,12 @@ class IDF_Plugin_SyncMonotone
              'hooks.d/indefero_post_push.conf.in',
              'hooks.d/indefero_post_push.lua',
         );
+        if (!$project->private) {
+            // this is linked and not copied to be able to update
+            // the list of read-only commands on upgrades
+            $confdir_contents[] = 'hooks.d/indefero_authorize_remote_automate.conf';
+        }
+
         // check whether we should handle additional files in the config directory
         $confdir_extra_contents = Pluf::f('mtn_confdir_extra', false);
         if ($confdir_extra_contents !== false) {
@@ -382,6 +388,41 @@ class IDF_Plugin_SyncMonotone
             throw new IDF_Scm_Exception(sprintf(
                 __('Could not write read-permissions file "%s"'), $rcfile
             ));
+        }
+
+        // link / unlink the read-only automate permissions for the project
+        $confdir = Pluf::f('mtn_confdir', false);
+        if ($confdir === false) {
+            $confdir = dirname(__FILE__).'/SyncMonotone/';
+        }
+        $file = 'hooks.d/indefero_authorize_remote_automate.conf';
+        $projectfile = $projectpath.'/'.$file;
+        $templatefile = $confdir.'/'.$file;
+
+        $serverRestartRequired = false;
+        if ($project->private && file_exists($projectfile) && is_link($projectfile)) {
+            if (!unlink($projectfile)) {
+                IDF_Scm_Exception(sprintf(
+                    __('Could not remove symlink "%s"'), $projectfile
+                ));
+            }
+            $serverRestartRequired = true;
+        } else
+        if (!$project->private && !file_exists($projectfile)) {
+            if (!symlink($templatefile, $projectfile)) {
+                throw new IDF_Scm_Exception(sprintf(
+                    __('Could not create symlink "%s"'), $projectfile
+                ));
+            }
+            $serverRestartRequired = true;
+        }
+
+        if ($serverRestartRequired) {
+            // FIXME: we should actually use stopServer() here, but this
+            // seems to be ignored when the server should be started
+            // again immediately afterwards
+            IDF_Scm_Monotone_Usher::killServer($project->shortname);
+            IDF_Scm_Monotone_Usher::startServer($project->shortname);
         }
     }
 

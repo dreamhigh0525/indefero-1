@@ -1,25 +1,32 @@
 {extends "idf/source/changelog.html"}
 {block context}
-<p><strong>{trans 'Branches:'}</strong><br/>
+<div class="expander">
+<div class="gradient"></div>
+<h1>
+  {trans 'Branches'}
+  <input type="text" rel="branch-list" class="filter-list"  title="{trans 'filter branches'}" />
+</h1>
+<ul id="branch-list">
 {foreach $branches as $selector => $branch}
 {aurl 'url', 'IDF_Views_Source::changeLog', array($project.shortname, $selector)}
-<span class="label{if in_array($selector, $tree_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$branch}">
-        {$branch|shorten:24}
-    </a>
-</span><br/>
+<li class="{if in_array($selector, $tree_in)}active{/if}">
+  <a href="{$url}" class="label">{$branch}</a>
+</li>
 {/foreach}
-</p>
+</ul>
 {if $tags}
-<p><strong>{trans 'Tags:'}</strong><br/>
+<h1>
+  {trans 'Tags'}
+  <input type="text" rel="tag-list" class="filter-list" title="{trans 'filter tags'}" />
+</h1>
+<ul id="tag-list">
 {foreach $tags as $selector => $tag}
 {aurl 'url', 'IDF_Views_Source::changeLog', array($project.shortname, $selector)}
-<span class="label{if in_array($selector, $tags_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$tag}">
-        {$tag|shorten:24}
-    </a>
-</span><br/>
+<li class="{if in_array($selector, $tags_in)}active{/if}">
+  <a href="{$url}" class="label">{$tag}</a>
+</li>
 {/foreach}
-</p>
+</ul>
 {/if}
+</div>
 {/block}

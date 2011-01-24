@@ -55,7 +55,9 @@ class IDF_Scm_Cache_Git extends Pluf_Model
             $cache->project = $this->_project;
             $cache->githash = $blob->hash;
             $blob->title = IDF_Commit::toUTF8($blob->title);
-            $cache->content = $blob->date.chr(31).$blob->author.chr(31).$blob->title;
+            $cache->content = IDF_Commit::toUTF8($blob->date) . chr(31)
+                . IDF_Commit::toUTF8($blob->author) . chr(31)
+                . IDF_Commit::toUTF8($blob->title);
             $sql = new Pluf_SQL('project=%s AND githash=%s',
                                 array($this->_project->id, $blob->hash));
             if (0 == Pluf::factory(__CLASS__)->getCount(array('filter' => $sql->gen()))) {

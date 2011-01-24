@@ -27,7 +27,7 @@
  */
 class IDF_Scm_Git extends IDF_Scm
 {
-    public $mediumtree_fmt = 'commit %H%nAuthor: %an <%ae>%nTree: %T%nDate: %ai%n%n%s%n%n%b';
+    public $mediumtree_fmt = 'commit %H%nAuthor: %an <%ae>%nTree: %T%nParents: %P%nDate: %ai%n%n%s%n%n%b';
 
     /* ============================================== *
      *                                                *
@@ -518,6 +518,9 @@ class IDF_Scm_Git extends IDF_Scm
                     $c['full_message'] = trim($c['full_message']);
                     $c['full_message'] = IDF_Commit::toUTF8($c['full_message']);
                     $c['title'] = IDF_Commit::toUTF8($c['title']);
+                    if (isset($c['parents'])) {
+                        $c['parents'] = explode(' ', trim($c['parents']));
+                    }
                     $res[] = (object) $c;
                 }
                 $c = array();
@@ -553,6 +556,9 @@ class IDF_Scm_Git extends IDF_Scm
         $c['full_message'] = !empty($c['full_message']) ? trim($c['full_message']) : '';
         $c['full_message'] = IDF_Commit::toUTF8($c['full_message']);
         $c['title'] = IDF_Commit::toUTF8($c['title']);
+        if (isset($c['parents'])) {
+            $c['parents'] = explode(' ', trim($c['parents']));
+        }
         $res[] = (object) $c;
         return $res;
     }

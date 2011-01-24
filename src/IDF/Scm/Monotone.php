@@ -21,9 +21,6 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
-//require_once(dirname(__FILE__) . "/Monotone/Stdio.php");
-//require_once(dirname(__FILE__) . "/Monotone/BasicIO.php");
-
 /**
  * Monotone scm class
  *
@@ -677,8 +674,12 @@ class IDF_Scm_Monotone extends IDF_Scm
         if (count($revs) == 0)
             return array();
 
-        $certs = $this->_getCerts($revs[0]);
+        $res = array();
 
+        $parents = $this->stdio->exec(array('parents', $revs[0]));
+        $res['parents'] = preg_split("/\n/", $parents, -1, PREG_SPLIT_NO_EMPTY);
+        
+        $certs = $this->_getCerts($revs[0]);        
         // FIXME: this assumes that author, date and changelog are always given
         $res['author'] = implode(', ', $certs['author']);
 
@@ -749,10 +750,9 @@ class IDF_Scm_Monotone extends IDF_Scm
             // read in the initial branches we should follow
             if (count($initialBranches) == 0) {
                 if (!isset($certs['branch'])) {
-                    throw new IDF_Scm_Exception(sprintf(
-                        __("revision %s has no branch cert - cannot start ".
-                           "logging from this revision"), $rev
-                    ));
+                    // this revision has no branch cert, we cannot start logging
+                    // from this revision
+                    continue;
                 }
                 $initialBranches = $certs['branch'];
             }
