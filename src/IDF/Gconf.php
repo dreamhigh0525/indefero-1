@@ -35,6 +35,10 @@ class IDF_Gconf extends Pluf_Model
     public $dirty = array();
     public $f = null;
     protected $_mod = null;
+    /**
+     * Do we (un)serialize the data when getting/setting them.
+     */
+    public $serialize = false;
 
     function init()
     {
@@ -97,7 +101,7 @@ class IDF_Gconf extends Pluf_Model
         $sql = new Pluf_SQL('model_class=%s AND model_id=%s',
                             array($this->_mod->_model, $this->_mod->id));
         foreach ($this->getList(array('filter' => $sql->gen())) as $val) {
-            $this->datacache[$val->vkey] = $val->vdesc;
+            $this->datacache[$val->vkey] = ($this->serialize) ? unserialize($val->vdesc) : $val->vdesc;
             $this->dirty[$val->vkey] = $val->id;
         }
     }
@@ -112,11 +116,12 @@ class IDF_Gconf extends Pluf_Model
             and $value == $this->getVal($key)) {
             return;
         }
+        $svalue = ($this->serialize) ? serialize($value) : $value;
         if (isset($this->dirty[$key])) {
             // we get to check if deleted by other process + update
             $conf = new IDF_Gconf($this->dirty[$key]);
             if ($conf->id == $this->dirty[$key]) {
-                $conf->vdesc = $value;
+                $conf->vdesc = $svalue;
                 $conf->update();
                 $this->datacache[$key] = $value;
                 return;
@@ -127,7 +132,7 @@ class IDF_Gconf extends Pluf_Model
         $conf->model_class = $this->_mod->_model;
         $conf->model_id = $this->_mod->id;
         $conf->vkey = $key;
-        $conf->vdesc = $value;
+        $conf->vdesc = $svalue;
         $conf->create();
         $this->datacache[$key] = $value;
         $this->dirty[$key] = $conf->id;
@@ -151,6 +156,32 @@ class IDF_Gconf extends Pluf_Model
         if ($initcache) {
             $this->initCache();
         }
+    }
+
+    /**
+     * Collection selection.
+     *
+     * Suppose you have 5 objects with associated meta data in the
+     * Gconf storage, if you load the data independently for each
+     * object, you end up with 5 SELECT queries. With 25 objects, 25
+     * SELECT. You can select with one query all the data and merge in
+     * the code. It is faster. The collection selection get a
+     * model_class and a list of ids and returns an id indexed array
+     * of associative array data. This is for read only access as you
+     * do not get a series of Gconf objects.
+     */
+    public static function collect($class, $ids)
+    {
+        $gconf = new IDF_Gconf();
+        $stmpl = sprintf('model_class=%%s AND model_id IN (%s)', 
+                         implode(',' , $ids));
+        $sql = new Pluf_SQL($stmpl, array($class));
+        $out = array_fill_keys($ids, array());
+        foreach ($gconf->getList(array('filter' => $sql->gen())) as $c) {
+            $out[$c->model_id][$c->vkey] = $c->vdesc;
+        }
+
+        return $out;
     }
 
     /**
