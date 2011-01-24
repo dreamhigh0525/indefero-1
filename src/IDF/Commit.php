@@ -154,7 +154,7 @@ class IDF_Commit extends Pluf_Model
         $commit->summary = self::toUTF8($change->title);
         $commit->fullmessage = self::toUTF8($change->full_message);
         $commit->author = $scm->findAuthor($change->author);
-        $commit->origauthor = $change->author;
+        $commit->origauthor = self::toUTF8($change->author);
         $commit->creation_dtime = $change->date;
         $commit->create();
         $commit->notify($project->getConf());
