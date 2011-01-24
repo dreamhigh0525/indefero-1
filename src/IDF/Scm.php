@@ -421,6 +421,21 @@ class IDF_Scm
     }
 
     /**
+     * Given a changelog parsed node, returns extra data.
+     *
+     * For example, if the node is a commit object from git, it will a
+     * stdClass object with the parents array. The extra value could
+     * then be the parent(s) commit(s).
+     *
+     * @param stdClass Commit object/Parse object
+     * @return array Extra properties
+     */
+    public function getExtraProperties($obj)
+    {
+        return array();
+    }
+
+    /**
      * Generate a zip archive at a given commit, wrapped in a HTTP response, suitable for pushing to client.
      *
      * @param string Commit

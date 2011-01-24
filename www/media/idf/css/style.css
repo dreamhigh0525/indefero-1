@@ -285,7 +285,7 @@ a.label {
   color: #204a87;
 }
 
-span.nobrk {
+.nobrk {
  white-space: nowrap;
 }
 

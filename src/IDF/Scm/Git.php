@@ -117,6 +117,14 @@ class IDF_Scm_Git extends IDF_Scm
     }
 
     /**
+     * Will find the parents if available.
+     */
+    public function getExtraProperties($obj)
+    {
+        return (isset($obj->parents)) ? array('parents' => $obj->parents) : array();
+    }
+
+    /**
      * @see IDF_Scm::getTags()
      **/
     public function getTags()
