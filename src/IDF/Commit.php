@@ -34,6 +34,7 @@ Pluf::loadFunction('Pluf_Template_dateAgo');
 class IDF_Commit extends Pluf_Model
 {
     public $_model = __CLASS__;
+    public $extra = null; /**< Extra data as IDF_Gconf object */
 
     function init()
     {
@@ -143,6 +144,10 @@ class IDF_Commit extends Pluf_Model
                             array($project->id, $change->commit));
         $r = Pluf::factory('IDF_Commit')->getList(array('filter'=>$sql->gen()));
         if ($r->count() > 0) {
+            $r[0]->extra = new IDF_Gconf();
+            $r[0]->extra->serialize = true;
+            $r[0]->extra->setModel($r[0]);
+            $r[0]->extra->initCache();
             return $r[0];
         }
         if (!isset($change->full_message)) {
@@ -158,6 +163,13 @@ class IDF_Commit extends Pluf_Model
         $commit->origauthor = $change->author;
         $commit->creation_dtime = $change->date;
         $commit->create();
+        $extra = $scm->getExtraProperties($change);
+        $commit->extra = new IDF_Gconf();
+        $commit->extra->serialize = true; // As we can store arrays
+        $commit->extra->setModel($commit);
+        foreach ($extra as $key => $val) {
+            $commit->extra->setVal($key, $val);
+        }
         $commit->notify($project->getConf());
         return $commit;
     }

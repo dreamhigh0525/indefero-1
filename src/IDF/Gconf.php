@@ -35,6 +35,10 @@ class IDF_Gconf extends Pluf_Model
     public $dirty = array();
     public $f = null;
     protected $_mod = null;
+    /**
+     * Do we (un)serialize the data when getting/setting them.
+     */
+    public $serialize = false;
 
     function init()
     {
@@ -97,7 +101,7 @@ class IDF_Gconf extends Pluf_Model
         $sql = new Pluf_SQL('model_class=%s AND model_id=%s',
                             array($this->_mod->_model, $this->_mod->id));
         foreach ($this->getList(array('filter' => $sql->gen())) as $val) {
-            $this->datacache[$val->vkey] = $val->vdesc;
+            $this->datacache[$val->vkey] = ($this->serialize) ? unserialize($val->vdesc) : $val->vdesc;
             $this->dirty[$val->vkey] = $val->id;
         }
     }
@@ -112,11 +116,12 @@ class IDF_Gconf extends Pluf_Model
             and $value == $this->getVal($key)) {
             return;
         }
+        $svalue = ($this->serialize) ? serialize($value) : $value;
         if (isset($this->dirty[$key])) {
             // we get to check if deleted by other process + update
             $conf = new IDF_Gconf($this->dirty[$key]);
             if ($conf->id == $this->dirty[$key]) {
-                $conf->vdesc = $value;
+                $conf->vdesc = $svalue;
                 $conf->update();
                 $this->datacache[$key] = $value;
                 return;
@@ -127,7 +132,7 @@ class IDF_Gconf extends Pluf_Model
         $conf->model_class = $this->_mod->_model;
         $conf->model_id = $this->_mod->id;
         $conf->vkey = $key;
-        $conf->vdesc = $value;
+        $conf->vdesc = $svalue;
         $conf->create();
         $this->datacache[$key] = $value;
         $this->dirty[$key] = $conf->id;
