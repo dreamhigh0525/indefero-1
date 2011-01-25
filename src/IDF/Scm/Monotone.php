@@ -702,6 +702,14 @@ class IDF_Scm_Monotone extends IDF_Scm
     }
 
     /**
+     * @see IDF_Scm::getExtraProperties
+     */
+    public function getExtraProperties($obj)
+    {
+        return (isset($obj->parents)) ? array('parents' => $obj->parents) : array();
+    }
+
+    /**
      * @see IDF_Scm::isCommitLarge()
      */
     public function isCommitLarge($commit=null)
