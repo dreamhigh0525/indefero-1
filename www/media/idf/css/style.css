@@ -956,3 +956,41 @@ ol > li {
 .context > .expander div.input-with-delete.default {
   opacity: 0.5;
 }
+
+/**
+ * SCM action icons in the commit view
+ */
+span.scm-action {
+  display: inline-block;
+  line-height: 9px;
+  font-size: 9px;
+  text-align: center;
+  padding: 2px;
+  width: 9px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: white;
+  cursor: default;
+}
+
+span.scm-action.added {
+  background-color: darkgreen;
+}
+
+span.scm-action.deleted {
+  background-color: darkred;
+}
+
+span.scm-action.patched {
+  background-color: orange;
+}
+
+span.scm-action.renamed {
+  background-color: purple;
+}
+
+span.scm-action.property-changed {
+  background-color: blue;
+}
+
