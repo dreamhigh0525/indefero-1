@@ -918,24 +918,41 @@ ol > li {
   display: none;
 }
 
-.context > .expander input.filter-list {
+.context > .expander div.input-with-delete {
+  padding: 1px;
+  border: 1px dotted #474747;
+  display: none;
+  float: right;
+  margin-left: 10px;
+  margin-top: -3px;
+}
+
+.context > .expander div.input-with-delete * {
+  vertical-align: middle;
+}
+
+.context > .expander div.input-with-delete span {
+  display: inline-block;
+  width: 13px;
+  height: 12px;
+  background: url(../img/clear.png) left top no-repeat;
+  cursor: pointer;
+}
+
+.context > .expander div.input-with-delete input.filter-list {
   font-size: 11px;
   font-weight: normal;
   color: #333;
-  border: 1px dotted #474747;
-  margin-left: 10px;
-  padding: 2px;
-  width: 80px;
-  display: none;
-  float: right;
+  border: 0;
+  width: 100px;
+  height: 11px;
 }
 
-.context > .expander:hover input.filter-list.activated,
-.context > .expander.activated input.filter-list.activated {
+.context > .expander:hover div.input-with-delete.activated,
+.context > .expander.activated div.input-with-delete.activated {
   display: block;
 }
 
-.context > .expander input.filter-list.default {
-  color: #aaa;
-  border-color: #aaa;
+.context > .expander div.input-with-delete.default {
+  opacity: 0.5;
 }

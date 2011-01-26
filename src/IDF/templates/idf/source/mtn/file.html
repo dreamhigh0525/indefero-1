@@ -19,33 +19,46 @@
 </table>
 {aurl 'url', 'IDF_Views_Source::getFile', array($project.shortname, $commit, $fullpath)}
 <p class="right soft"><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/package-grey.png'}" alt="{trans 'Archive'}" align="bottom" /></a> <a href="{$url}">{trans 'Download this file'}</a></p>
-
-{/block}
-{block context}
-<p><strong>{trans 'Branches:'}</strong><br/>
-{foreach $branches as $selector => $branch}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<span class="label{if in_array($branch, $tree_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$branch}">
-        {$branch|shorten:25}
-    </a>
-</span><br/>
-{/foreach}
-</p>
-{if $tags}
-<p><strong>{trans 'Tags:'}</strong><br/>
-{foreach $tags as $selector => $tag}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<span class="label{if in_array($tag, $tags_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$tag}">
-        {$tag|shorten:25}
-    </a>
-</span><br/>
-{/foreach}
-</p>
-{/if}
 {/block}
 {block javascript}
 <script type="text/javascript" src="{media '/idf/js/prettify.js'}"></script>
 <script type="text/javascript">prettyPrint();</script>
 {/block}
+{block context}
+<div class="expander">
+<div class="gradient"></div>
+<h1>
+  {trans 'Branches'}
+  <div class="input-with-delete">
+    <input type="text" rel="branch-list" class="filter-list"  title="{trans 'filter branches'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="branch-list">
+{foreach $branches as $selector => $branch}
+{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
+<li class="{if in_array($selector, $tree_in)}active{/if}">
+  <a href="{$url}" class="label">{$branch}</a>
+</li>
+{/foreach}
+</ul>
+{if $tags}
+<h1>
+  {trans 'Tags'}
+  <div class="input-with-delete">
+    <input type="text" rel="tag-list" class="filter-list"  title="{trans 'filter tags'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="tag-list">
+{foreach $tags as $selector => $tag}
+{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
+<li class="{if in_array($selector, $tags_in)}active{/if}">
+  <a href="{$url}" class="label">{$tag}</a>
+</li>
+{/foreach}
+</ul>
+{/if}
+</div>
+{/block}
+

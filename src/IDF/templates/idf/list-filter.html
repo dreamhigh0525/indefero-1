@@ -8,29 +8,35 @@
 {literal}
 $(document).ready(function() {
   $("input.filter-list").each(function() {
-    var lists = $("ul#" + $(this).attr("rel"));
+    var input = $(this);
+    var lists = $("ul#" + input.attr("rel"));
     if (lists.length == 0)
       return;
     var list = $(lists[0]);
+    var wrapper = input.parent();
 
     // a list should contain a reasonable amount of items
     // to be filterable - we also give the filter input a
     // special class here so we recognize it later in case
     // we have to hide it when the list view is collapsed
     if (list.children("li").length > 10) {
-      $(this).addClass("activated");
-      $(this).focus(function() {
+      wrapper.addClass("activated");
+      input.focus(function() {
         // ensure that the parent of the list keeps activated / opened
         list.parent().addClass("activated");
-        if ($(this)[0].value == $(this).attr("title"))
-          $(this).attr("value", "").removeClass("default");
+        if (input.attr("value") == input.attr("title")) {
+          input.attr("value", "");
+          wrapper.removeClass("default");
+        }
       });
-      $(this).blur(function() {
+      input.blur(function() {
         list.parent().removeClass("activated");
-        if ($(this)[0].value.length == 0)
-          $(this).attr("value", $(this).attr("title")).addClass("default");
+        if (input.attr("value").length == 0) {
+          input.attr("value", input.attr("title"));
+          wrapper.addClass("default");
+        }
       });
-      $(this).keyup(function(ev) {
+      input.keyup(function(ev) {
         var filter = $(this)[0];
         list.children("li").css('display', 'block');
         list.children("li").filter(function(index) {
@@ -41,9 +47,11 @@ $(document).ready(function() {
           return true;
         }).css('display', 'none');
       });
+      wrapper.children('span').click(function() {
+        input.val('').keyup().blur();
+      });
       // initialize it with the default
-      $(this)[0].value = "";
-      $(this).blur();
+      input.val('').blur();
     }
   });
 });
