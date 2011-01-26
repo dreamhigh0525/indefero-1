@@ -12,7 +12,7 @@
 <th>{trans 'Size'}</th>
 </tr>
 </thead>{if !$tree_in and !$tags_in}
-{aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)} 
+{aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)}
 <tfoot>
 <tr><th colspan="5">{blocktrans}Source at commit <a class="mono" href="{$url}">{$commit}</a> created {$cobject.date|dateago}.{/blocktrans}<br />
 <span class="smaller">{blocktrans}By {$cobject.author|strip_tags|trim}, {$cobject.title}{/blocktrans}</span>
@@ -34,7 +34,7 @@
 <td{if $file.type != 'blob'} colspan="4"{/if}><a href="{$url}">{$file.file}</a></td>
 {if $file.type == 'blob'}
 {if isset($file.date)}
-<td><span class="smaller">{$file.date|dateago:"without"}</span></td> 
+<td><span class="smaller">{$file.date|dateago:"without"}</span></td>
 <td><span class="smaller">{$file.author|strip_tags|trim}{trans ':'} {$file.log}</span></td>
 {else}<td colspan="2"></td>{/if}
 <td></td>{/if}
@@ -47,17 +47,40 @@
 {/block}
 
 {block context}
-<p><strong>{trans 'Branches:'}</strong><br />
+<div class="expander">
+<div class="gradient"></div>
+<h1>
+  {trans 'Branches'}
+  <div class="input-with-delete">
+    <input type="text" rel="branch-list" class="filter-list"  title="{trans 'filter branches'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="branch-list">
 {foreach $branches as $branch => $path}
 {aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $branch)}
-<span class="label{if in_array($branch, $tree_in)} active{/if}"><a href="{$url}" class="label">{$branch}</a></span><br />
+<li class="label{if in_array($branch, $tree_in)} active{/if}">
+  <a href="{$url}" class="label">{$branch}</a>
+</li>
 {/foreach}
-</p>
-{if $tags}<p><strong>{trans 'Tags:'}</strong><br />
+</ul>
+{if $tags}
+<h1>
+  {trans 'Tags'}
+  <div class="input-with-delete">
+    <input type="text" rel="tag-list" class="filter-list"  title="{trans 'filter tags'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="tag-list">
 {foreach $tags as $tag => $path}
 {aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $tag)}
-<span class="label{if in_array($tag, $tags_in)} active{/if}"><a href="{$url}" class="label">{$tag}</a></span><br />
+<li class="label{if in_array($tag, $tags_in)} active{/if}">
+  <a href="{$url}" class="label">{$tag}</a>
+</li>
 {/foreach}
-</p>{/if}
+</ul>
+{/if}
+</div>
 {/block}
 

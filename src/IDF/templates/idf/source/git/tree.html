@@ -52,18 +52,39 @@
 
 {/block}
 {block context}
-<p><strong>{trans 'Branches:'}</strong><br/>
+<div class="expander">
+<div class="gradient"></div>
+<h1>
+  {trans 'Branches'}
+  <div class="input-with-delete">
+    <input type="text" rel="branch-list" class="filter-list"  title="{trans 'filter branches'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="branch-list">
 {foreach $branches as $branch => $path}
 {aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $branch)}
-<span class="label{if in_array($branch, $tree_in)} active{/if}"><a href="{$url}" class="label">{if $path}{$path}{else}{$branch}{/if}</a></span><br/>
+<li class="label{if in_array($branch, $tree_in)} active{/if}">
+  <a href="{$url}" class="label">{if $path}{$path}{else}{$branch}{/if}</a>
+</li>
 {/foreach}
-</p>
+</ul>
 {if $tags}
-<p><strong>{trans 'Tags:'}</strong><br/>
+<h1>
+  {trans 'Tags'}
+  <div class="input-with-delete">
+    <input type="text" rel="tag-list" class="filter-list"  title="{trans 'filter tags'}" />
+    <span></span>
+  </div>
+</h1>
+<ul id="tag-list">
 {foreach $tags as $tag => $path}
 {aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $tag)}
-<span class="label{if in_array($tag, $tags_in)} active{/if}"><a href="{$url}" class="label">{if $path}{$path}{else}{$tag}{/if}</a></span><br/>
+<li class="label{if in_array($tag, $tags_in)} active{/if}">
+  <a href="{$url}" class="label">{if $path}{$path}{else}{$tag}{/if}</a>
+</li>
 {/foreach}
-</p>
+</ul>
 {/if}
+</div>
 {/block}
