@@ -972,6 +972,7 @@ span.scm-action {
   border-radius: 3px;
   color: white;
   cursor: default;
+  margin-top: 2px;
 }
 
 span.scm-action.added {
@@ -993,4 +994,3 @@ span.scm-action.renamed {
 span.scm-action.property-changed {
   background-color: blue;
 }
-
