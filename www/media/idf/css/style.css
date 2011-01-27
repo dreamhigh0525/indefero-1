@@ -863,7 +863,7 @@ ol > li {
  */
 .context {}
 
-.context h1 {
+.context h3 {
   font-size: 13px;
   font-weight: bold;
   margin: 10px 0 5px;
@@ -918,7 +918,7 @@ ol > li {
   display: none;
 }
 
-.context > .expander div.input-with-delete {
+.context > .expander span.input-with-delete {
   padding: 1px;
   border: 1px dotted #474747;
   display: none;
@@ -927,11 +927,11 @@ ol > li {
   margin-top: -3px;
 }
 
-.context > .expander div.input-with-delete * {
+.context > .expander span.input-with-delete * {
   vertical-align: middle;
 }
 
-.context > .expander div.input-with-delete span {
+.context > .expander span.input-with-delete span {
   display: inline-block;
   width: 13px;
   height: 12px;
@@ -939,7 +939,7 @@ ol > li {
   cursor: pointer;
 }
 
-.context > .expander div.input-with-delete input.filter-list {
+.context > .expander span.input-with-delete input.filter-list {
   font-size: 11px;
   font-weight: normal;
   color: #333;
@@ -948,8 +948,8 @@ ol > li {
   height: 11px;
 }
 
-.context > .expander:hover div.input-with-delete.activated,
-.context > .expander.activated div.input-with-delete.activated {
+.context > .expander:hover span.input-with-delete.activated,
+.context > .expander.activated span.input-with-delete.activated {
   display: block;
 }
 

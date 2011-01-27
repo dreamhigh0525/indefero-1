@@ -25,40 +25,6 @@
 <script type="text/javascript">prettyPrint();</script>
 {/block}
 {block context}
-<div class="expander">
-<div class="gradient"></div>
-<h1>
-  {trans 'Branches'}
-  <div class="input-with-delete">
-    <input type="text" rel="branch-list" class="filter-list"  title="{trans 'filter branches'}" />
-    <span></span>
-  </div>
-</h1>
-<ul id="branch-list">
-{foreach $branches as $selector => $branch}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<li class="{if in_array($selector, $tree_in)}active{/if}">
-  <a href="{$url}" class="label">{$branch}</a>
-</li>
-{/foreach}
-</ul>
-{if $tags}
-<h1>
-  {trans 'Tags'}
-  <div class="input-with-delete">
-    <input type="text" rel="tag-list" class="filter-list"  title="{trans 'filter tags'}" />
-    <span></span>
-  </div>
-</h1>
-<ul id="tag-list">
-{foreach $tags as $selector => $tag}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<li class="{if in_array($selector, $tags_in)}active{/if}">
-  <a href="{$url}" class="label">{$tag}</a>
-</li>
-{/foreach}
-</ul>
-{/if}
-</div>
+{include 'idf/source/mtn/branch_tag_list.html'}
 {/block}
 
