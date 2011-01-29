@@ -71,7 +71,7 @@ class IDF_Diff
                 $current_chunk = 0;
                 $indiff = true;
                 continue;
-            } else if (0 === strpos($line, '=========')) {
+            } else if (!$indiff && 0 === strpos($line, '=========')) {
                 // ignore pseudo stanzas with a hint of a binary file
                 if (preg_match("/^# (.+) is binary/", $this->lines[$i]))
                     continue;
