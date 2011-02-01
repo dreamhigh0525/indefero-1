@@ -19,33 +19,12 @@
 </table>
 {aurl 'url', 'IDF_Views_Source::getFile', array($project.shortname, $commit, $fullpath)}
 <p class="right soft"><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/package-grey.png'}" alt="{trans 'Archive'}" align="bottom" /></a> <a href="{$url}">{trans 'Download this file'}</a></p>
-
-{/block}
-{block context}
-<p><strong>{trans 'Branches:'}</strong><br/>
-{foreach $branches as $selector => $branch}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<span class="label{if in_array($branch, $tree_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$branch}">
-        {$branch|shorten:25}
-    </a>
-</span><br/>
-{/foreach}
-</p>
-{if $tags}
-<p><strong>{trans 'Tags:'}</strong><br/>
-{foreach $tags as $selector => $tag}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $selector)}
-<span class="label{if in_array($tag, $tags_in)} active{/if}">
-    <a href="{$url}" class="label" title="{$tag}">
-        {$tag|shorten:25}
-    </a>
-</span><br/>
-{/foreach}
-</p>
-{/if}
 {/block}
 {block javascript}
 <script type="text/javascript" src="{media '/idf/js/prettify.js'}"></script>
 <script type="text/javascript">prettyPrint();</script>
 {/block}
+{block context}
+{include 'idf/source/mtn/branch_tag_list.html'}
+{/block}
+

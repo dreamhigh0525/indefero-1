@@ -48,7 +48,13 @@ class IDF_Plugin_SyncGit_Cron
         $out = '';
         $keys = Pluf::factory('IDF_Key')->getList(array('view'=>'join_user'));
         foreach ($keys as $key) {
-            if ($key->getType() == 'ssh' and preg_match('/^[a-zA-Z][a-zA-Z0-9_.-]*(@[a-zA-Z][a-zA-Z0-9.-]*)?$/', $key->login)) {
+            try {
+                $key_type = $key->getType();
+            } catch (Exception $e) {
+                // The key is a bad key, skip it
+                continue;
+            }
+            if ($key_type == 'ssh' and preg_match('/^[a-zA-Z][a-zA-Z0-9_.-]*(@[a-zA-Z][a-zA-Z0-9.-]*)?$/', $key->login)) {
                 $content = trim(str_replace(array("\n", "\r"), '', $key->content));
                 $out .= sprintf($template, $cmd, $key->login, $content)."\n";
             }
