@@ -84,7 +84,7 @@ class IDF_Key extends Pluf_Model
             return array('ssh', $m[2], $m[1]);
         }
 
-        throw new Exception('invalid or unknown key data detected');
+        throw new Exception(__('Invalid or unknown key data detected.'));
     }
 
     /**
