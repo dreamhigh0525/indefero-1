@@ -631,7 +631,12 @@ class IDF_Plugin_SyncMonotone
      */
     public function processKeyDelete($key)
     {
-        if ($key->getType() != 'mtn') {
+        try {
+            if ($key->getType() != 'mtn') {
+                return;
+            }
+        } catch (Exception $e) {
+            // bad key type, skip it.
             return;
         }
 
