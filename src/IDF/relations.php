@@ -44,6 +44,7 @@ $m['IDF_Commit'] = array('relate_to' => array('IDF_Project', 'Pluf_User'));
 $m['IDF_Scm_Cache_Git'] = array('relate_to' => array('IDF_Project'));
 
 $m['IDF_UserData'] = array('relate_to' => array('Pluf_User'));
+$m['IDF_EmailAddress'] = array('relate_to' => array('Pluf_User'));
 
 Pluf_Signal::connect('Pluf_Template_Compiler::construct_template_tags_modifiers',
                      array('IDF_Middleware', 'updateTemplateTagsModifiers'));
