@@ -1553,6 +1553,7 @@ msgid ""
 "not provided and the users must authenticate themselves with their<br />\n"
 "password or SSH key."
 msgstr ""
+"\n"
 "Seuls les administrateurs et membres du projet ont accès au code source.<br /"
 ">\n"
 "Si vous faites la restriction de l'accès au code, l'accès anonyme n'est "
@@ -2053,9 +2054,10 @@ msgid ""
 "registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 msgstr ""
+"\n"
 "<p>Spécifiez chaque personne par son identifiant. Chaque personne doit avoir "
 "préalablement créé son compte.</p><p>Séparez les identifiants par des "
-"virgules ou des sauts de ligne.</p>"
+"virgules ou des sauts de ligne.</p>\n"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:14
 msgid ""
@@ -2086,9 +2088,10 @@ msgid ""
 "with the consequences that <strong>all the data</strong> related to the \n"
 "project <strong>will be deleted</strong>.\n"
 msgstr ""
+"\n"
 "<strong>Attention !</strong> Supprimer un projet est une opération rapide "
 "qui a pour conséquence <strong>la suppression de toutes les données "
-"relatives au projet</strong>."
+"relatives au projet</strong>.\n"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:10
 msgid ""
@@ -2266,7 +2269,7 @@ msgid ""
 msgstr ""
 "Si vous ajoutez un utilisateur au staff, l'utilisateur va avoir la "
 "possibilité de créer de nouveaux projets et d'éditer les informations des "
-"autres utilisateurs."
+"autres utilisateurs.\n"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:9
 msgid "The form contains some errors. Please correct them to update the user."
@@ -2492,7 +2495,7 @@ msgstr ""
 "<p><strong>Tickets ouverts :</strong> <a href=\"%%open_url%%\">%%open%%</a></"
 "p>\n"
 "<p><strong>Tickets fermés :</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>"
+"a></p>\n"
 
 #: /IDF/gettexttemplates/idf/issues/by-label.html.php:7
 msgid "Label:"
@@ -3078,7 +3081,7 @@ msgstr ""
 "cela vous devez être pragmatique quand vous écrivez votre analyse. "
 "Mentionnez bien le numéro des lignes (dans l'ancien et le nouveau fichier) "
 "et essayer de garder un bon équilibre entre sérieux et humour dans vos "
-"remarques."
+"remarques.\n"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:13
 msgid ""
@@ -3089,11 +3092,12 @@ msgid ""
 "coding standards and the structure of the code and <strong>make them want\n"
 "to propose more contributions</strong>.\n"
 msgstr ""
+"\n"
 "<strong>Proposer des changements pour revue est intimidant</strong>, vous "
 "savez que vous allez recevoirdes critiques. Comme participant à la revue, "
 "<strong>gardez une bonne ambiance</strong> et aidez le contributeur à "
 "apprendre la structure de votre code et vos exigences de qualité. "
-"<strong>Donnez-lui envie de proposer de nouvelles contributions</strong>."
+"<strong>Donnez-lui envie de proposer de nouvelles contributions</strong>.\n"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:20
 #, php-format
@@ -4117,13 +4121,13 @@ msgstr ""
 #, php-format
 msgid "Could not write read-permissions for project \"%s\""
 msgstr ""
-"Impossible d'écrire les permissions de lecture pour le projet  \"%s\" : %s"
+"Impossible d'écrire les permissions de lecture pour le projet  \"%s\""
 
 #: /IDF/Plugin/SyncMonotone.php:617 /IDF/Plugin/SyncMonotone.php:717
 #, php-format
 msgid "Could not write write-permissions file for project \"%s\""
 msgstr ""
-"Impossible d'écrire les permissions d'écriture pour le projet  \"%s\" : %s"
+"Impossible d'écrire les permissions d'écriture pour le projet  \"%s\""
 
 #: /IDF/Plugin/SyncMonotone.php:790
 #, php-format
