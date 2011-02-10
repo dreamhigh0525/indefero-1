@@ -1948,60 +1948,55 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:10
-#, fuzzy
 msgid ""
 "The form contains some errors. Please correct them to delete the project."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Datei "
-"zu aktualisieren."
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um das "
+"Projekt zu löschen."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:11
-#, fuzzy
 msgid "Project Statistics"
-msgstr "Projektliste"
+msgstr "Projektstatistiken"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:12
 msgid "Tab"
-msgstr ""
+msgstr "Bereich"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:13
 msgid "Number"
-msgstr ""
+msgstr "Zahl"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:15
-#, fuzzy
 msgid "Code reviews"
-msgstr "Code-Besprechnung"
+msgstr "Code-Besprechnungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:16
 #: /IDF/Views/Project.php:73
 msgid "Commits"
-msgstr ""
+msgstr "Revisionen"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:18
-#, fuzzy
 msgid "Documentation pages"
-msgstr "Dokumentation"
+msgstr "Dokumentationsseiten"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:19
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:20
-#, fuzzy
 msgid "Delete Project"
-msgstr "Lösche %s Projekt"
+msgstr "Projekt löschen"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:22
 msgid ""
 "For large projects, the suppression can take a while, please be patient."
 msgstr ""
+"Das Löschen großer Projekte kann etwas dauern, bitte habe Geduld."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:3
 msgid "Space Usage Statistics"
-msgstr ""
+msgstr "Speicherplatz-Statistiken"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:4
-#, fuzzy
 msgid "Repositories:"
-msgstr "Größe des Repositories"
+msgstr "Depots:"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:5
 #: /IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:11
@@ -2011,69 +2006,61 @@ msgstr "Anhänge:"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:7
 msgid "Database:"
-msgstr ""
+msgstr "Datenbank:"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:8
 msgid "Total Forge:"
-msgstr ""
+msgstr "Forge insgesamt:"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:13
-#, fuzzy
 msgid ""
 "The form contains some errors. Please correct them to update the project."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Datei "
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um das Projekt "
 "zu aktualisieren."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:14
-#, fuzzy
 msgid "Provide at least one owner for the project."
-msgstr "Einzeilige Beschreibung des Projektes."
+msgstr "Bestimme wenigstens einen Projekteigentümer."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:15
-#, fuzzy
 msgid "Update Project"
-msgstr "Projekt"
+msgstr "Projekt aktualisieren"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:17
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:19
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:20
-#, fuzzy
 msgid "Delete this project"
-msgstr "Lösche %s Projekt"
+msgstr "Lösche dieses Projekt"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:21
 msgid "You will be asked to confirm."
-msgstr ""
+msgstr "Es wird eine Bestätigung verlangt."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/base.html.php:3
 #: /IDF/Views/Admin.php:201
 msgid "User List"
-msgstr ""
+msgstr "Nutzerliste"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/base.html.php:4
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:13
-#, fuzzy
 msgid "Update User"
-msgstr "Aktualisiere %s"
+msgstr "Nutzer aktualisieren"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/base.html.php:5
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:4
-#, fuzzy
 msgid "Create User"
-msgstr "Erstellt von:"
+msgstr "Nutzer anlegen"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:3
-#, fuzzy
 msgid "The form contains some errors. Please correct them to create the user."
 msgstr ""
-"Die Eingabe enthält Fehler. Bitte beseitigen Sie die Fehler und senden Sie "
-"das Ticket erneut."
+"Die Eingabe enthält Fehler. Bitte beseitigen Sie die Fehler, um den Nutzer "
+"zu erstellen."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:6
-#, fuzzy
 msgid "The user password will be sent by email to the user."
-msgstr "Beide Passwortangaben müssen identisch sein."
+msgstr "Das Passwort des Nutzers wird an die E-Mail-Adresse des Nutzers versandt."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/createuser-email.txt.php:3
 #, php-format
@@ -2094,18 +2081,17 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/index.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid "See <a href=\"%%url%%\">not validated users</a>."
-msgstr "Zeige <a href=\"%%url%%\">die veralteten Dateien</a>."
+msgstr "Zeige <a href=\"%%url%%\">nicht validierte Nutzer</a>."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/index.html.php:4
 msgid "<p>You have here an overview of the users registered in the forge.</p>"
-msgstr ""
+msgstr "<p>Hier siehst Du eine Übersicht der Nutzer, die sich in der Forge registriert haben."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/index.html.php:5
-#, fuzzy
 msgid "Number of users:"
-msgstr "Anzahl der Dateien:"
+msgstr "Anzahl der Nutzer:"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:3
 msgid ""
@@ -2113,151 +2099,154 @@ msgid ""
 "need to ensure that you are providing a valid email\n"
 "address"
 msgstr ""
+"Wenn Du die E-Mail-Adresse eines Nutzers änderst,\n"
+"musst Du sicherstellen, eine gültige, neue E-Mail-Adresse\n"
+"als Ersatz bereitzustellen."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:6
 msgid ""
 "If you give the user staff rights, the user will be\n"
 "able to create new projects and update other non staff users.\n"
 msgstr ""
+"Wenn Du dem Benutzer Stab-Rechte erteilst, kann er\n"
+"neue Projekte anlegen und andere Nutzer, die nicht zum Stab\n"
+"gehören, aktualisieren.\n"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:9
-#, fuzzy
 msgid "The form contains some errors. Please correct them to update the user."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Datei "
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um den Nutzer "
 "zu aktualisieren."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:10
 #: /IDF/gettexttemplates/idf/register/confirmation.html.php:4
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:4
 #: /IDF/gettexttemplates/idf/user/passrecovery.html.php:4
-#, fuzzy
 msgid "Login:"
-msgstr "Letzter Login."
+msgstr "Login:"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:11
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:5
 msgid "Public Profile"
-msgstr ""
+msgstr "Öffentliches Profil"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:12
-#, fuzzy
 msgid "Administrative"
-msgstr "Administratoren"
+msgstr "Administratives"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/base.html.php:3
 msgid "Configured servers"
-msgstr ""
+msgstr "Konfigurierte Server"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/base.html.php:4
 #: /IDF/Views/Admin.php:358
 msgid "Usher control"
-msgstr ""
+msgstr "Usher-Kontrolle"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:3
 msgid "address"
-msgstr ""
+msgstr "Adresse"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:4
 msgid "port"
-msgstr ""
+msgstr "Port"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:3
 msgid "current server status:"
-msgstr ""
+msgstr "Derzeitiger Serverstatus:"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:4
 msgid "startup"
-msgstr ""
+msgstr "hochfahren"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:5
 msgid "shutdown"
-msgstr ""
+msgstr "herunterfahren"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:6
-#, fuzzy
 msgid "reload server configuration:"
-msgstr "%s Downloadeinstellungen"
+msgstr "Serverkonfiguration einlesen:"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:7
 msgid "reload"
-msgstr ""
+msgstr "neu laden"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:8
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:10
 msgid "Status explanation"
-msgstr ""
+msgstr "Statuserklärung"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:9
 msgid "active with n total open connections"
-msgstr ""
+msgstr "aktiv mit n offenen Verbindungen insgesamt"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:10
 msgid "waiting for new connections"
-msgstr ""
+msgstr "warte auf neue Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:11
 msgid "usher is being shut down, not accepting connections"
-msgstr ""
+msgstr "Usher wird heruntergefahren und akzeptiert keine Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:12
 msgid ""
 "usher is shut down, all local servers are stopped and not accepting "
 "connections"
 msgstr ""
+"Usher ist heruntergefahren, alle lokalen Server sind gestoppt und keine "
+"Verbindungen werden akzeptiert"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:3
-#, fuzzy
 msgid "server name"
-msgstr "Kurzname"
+msgstr "Servername"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:5
 msgid "action"
-msgstr ""
+msgstr "Aktion"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:6
 msgid "stop"
-msgstr ""
+msgstr "stoppen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:7
 msgid "start"
-msgstr ""
+msgstr "starten"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:8
 msgid "kill"
-msgstr ""
+msgstr "töten"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:9
 msgid "active connections"
-msgstr ""
+msgstr "aktive Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:11
 msgid "remote server without open connections"
-msgstr ""
+msgstr "entfernter Server ohne offene Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:12
 msgid "server with n open connections"
-msgstr ""
+msgstr "Server mit n offenen Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:13
 msgid "local server running, without open connections"
-msgstr ""
+msgstr "lokaler Server läuft ohne offene Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:14
 msgid "local server not running, waiting for connections"
-msgstr ""
+msgstr "lokaler Server läuft nicht und wartet auf Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:15
 msgid "local server is about to stop, n connections still open"
-msgstr ""
+msgstr "lokaler Server stoppt gerade, n Verbindungen sind noch offen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:16
 msgid "local server not running, not accepting connections"
-msgstr ""
+msgstr "lokaler Server läuft nicht und akzeptiert keine Verbindungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:17
 msgid "usher is shut down, not running and not accepting connections"
-msgstr ""
+msgstr "Usher ist heruntergefahren, läuft nicht und akzeptiert keine Verbindungen"
 
 #: /IDF/gettexttemplates/idf/index.atom.php:3
 #, php-format
@@ -2830,7 +2819,7 @@ msgstr ""
 "<p>Wenn Du eine Code-Besprechnung erstellst, musst Du folgende Angaben "
 "machen:</p>\n"
 "<ul>\n"
-"<li>Eine Revision Deines derzeitigen Codes im Repository, von der aus Du "
+"<li>Eine Revision Deines derzeitigen Codes im Depot, von der aus Du "
 "Deine Arbeit begonnen hast.</li>\n"
 "<li>Ein Patch, welches die Änderungen ausgehend von der Referenz-Revision "
 "beschreibt.</li>\n"
@@ -2909,7 +2898,7 @@ msgid ""
 "new file) and try to keep a good balance between seriousness and fun.\n"
 msgstr ""
 "Eine Code-Besprechnung ist ein Prozess, in welchem bevor oder nachdem\n"
-"Änderungen in das Quellcode-Repository eingepflegt wurden, verschiedene\n"
+"Änderungen in das Quellcode-Depot eingepflegt wurden, verschiedene\n"
 "Personen über diese Änderungen diskutieren. Das Ziel ist die\n"
 "<strong>Qualität des Codes und des Beitrages zu verbessern</strong>,\n"
 "und deshalb solltest Du beim Schreiben Deiner Code-Besprechnung pragmatisch\n"
@@ -3075,27 +3064,24 @@ msgid "Content:"
 msgstr "Inhalt:"
 
 #: /IDF/gettexttemplates/idf/source/commit-created-email.txt.php:10
-#, fuzzy
 msgid "Commit details:"
-msgstr "Revision"
+msgstr "Revision-Details:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:4
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:6
-#, fuzzy
 msgid "Branch:"
-msgstr "Zweige:"
+msgstr "Zweig:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:9
-#, fuzzy
 msgid "Parents:"
-msgstr "Anhänge:"
+msgstr "Eltern:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:11
 msgid "Message:"
-msgstr ""
+msgstr "Logmeldung:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:12
 #: /IDF/gettexttemplates/idf/wiki/feedfragment.xml.php:3
@@ -3106,37 +3092,36 @@ msgstr "Änderungen"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:13
 msgid "deleted"
-msgstr ""
+msgstr "gelöscht"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:14
 #: /IDF/gettexttemplates/idf/source/commit.html.php:17
 msgid "full"
-msgstr ""
+msgstr "voll"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:15
-#, fuzzy
 msgid "renamed"
-msgstr "Name"
+msgstr "umbenannt"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:16
 msgid "added"
-msgstr ""
+msgstr "hinzugefügt"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:18
 msgid "modified"
-msgstr ""
+msgstr "verändert"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:19
 msgid "properies changed"
-msgstr ""
+msgstr "Eigenschaften geändert"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:20
 msgid "removed"
-msgstr ""
+msgstr "entfernt"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:21
 msgid "File differences"
-msgstr ""
+msgstr "Dateiunterschiede"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:3
 #, php-format
@@ -3144,60 +3129,57 @@ msgid ""
 "The revision identifier <b>%%commit%%</b> is ambiguous and can be\n"
 "expanded to multiple valid revisions - please choose one:"
 msgstr ""
+"Die Revisionskennung <b>%%commit%%</b> ist mehrdeutig und kann\n"
+"zu mehreren gültigen Revisionen erweitert werden - bitte wähle eine:"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:5
-#, fuzzy
 msgid "Title"
 msgstr "Titel"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:6
-#, fuzzy
 msgid "Author"
-msgstr "Autor:"
+msgstr "Autor"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:7
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:8
-#, fuzzy
 msgid "Branch"
-msgstr "Zweige:"
+msgstr "Zweig"
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:9
 msgid "Revision"
-msgstr ""
+msgstr "Revision"
 
 #: /IDF/gettexttemplates/idf/source/feedfragment.xml.php:3
 #, php-format
 msgid "%%cproject.name%%: Commit %%c.scm_id%%"
-msgstr ""
+msgstr "%%cproject.name%%: Revision %%c.scm_id%%"
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:3
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:3
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:3
-#, fuzzy
 msgid "Branches"
-msgstr "Zweige:"
+msgstr "Zweige"
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:4
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:4
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:4
 msgid "filter branches"
-msgstr ""
+msgstr "Zweige filtern"
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:5
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:5
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:5
-#, fuzzy
 msgid "Tags"
-msgstr "Marken:"
+msgstr "Marken"
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:6
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:6
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:6
 msgid "filter tags"
-msgstr ""
+msgstr "Marken filtern"
 
 #: /IDF/gettexttemplates/idf/source/git/file.html.php:3
 #: /IDF/gettexttemplates/idf/source/git/tree.html.php:3
@@ -3225,7 +3207,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:4
 #, php-format
 msgid "By %%cobject.author%%, %%cobject.title%%"
-msgstr ""
+msgstr "Von %%cobject.author%%, %%cobject.title%%"
 
 #: /IDF/gettexttemplates/idf/source/git/file.html.php:5
 #: /IDF/gettexttemplates/idf/source/git/tree.html.php:5
@@ -3236,7 +3218,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/svn/file.html.php:5
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:5
 msgid "Root"
-msgstr ""
+msgstr "Wurzel"
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:3
 #, php-format
@@ -3245,6 +3227,8 @@ msgid ""
 "the <strong>git</strong> software to manage the source\n"
 "code."
 msgstr ""
+"Das Team von %%project%% nutzt <strong>git</strong>\n"
+"als Software zur Versionsverwaltung."
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:6
 #, php-format
@@ -3258,7 +3242,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:7
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:6
 msgid "To make a first commit in the repository, perform the following steps:"
-msgstr ""
+msgstr "Um eine erste Revision ins Depot einzupflegen, führe die folgenden Schritte aus:"
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:8
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:7
@@ -3341,7 +3325,7 @@ msgid ""
 "To get write access to the repository, you need to use your username and "
 "your <a href=\"%%url%%\">extra password</a>."
 msgstr ""
-"Um Schreibberechtigungen auf das Repository zu erhalten, benötigst Du Deinen "
+"Um Schreibberechtigungen auf das Depot zu erhalten, benötigst Du Deinen "
 "Benutzernamen und Dein <a href=\"%%url%%\">zusätzliches Passwort</a>."
 
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:9
@@ -3772,168 +3756,169 @@ msgstr "Inhalt"
 #: /IDF/Plugin/SyncMercurial.php:78 /IDF/Plugin/SyncSvn.php:81
 #, php-format
 msgid "The repository %s already exists."
-msgstr ""
+msgstr "Das Depot %s existiert bereits."
 
 #: /IDF/Plugin/SyncMercurial.php:142
 #, php-format
 msgid "%s does not exist or is not writable."
-msgstr ""
+msgstr "%s existiert nicht oder ist nicht schreibbar."
 
 #: /IDF/Plugin/SyncMonotone.php:86 /IDF/Plugin/SyncMonotone.php:457
 #: /IDF/Plugin/SyncMonotone.php:783
 msgid "\"mtn_repositories\" must be defined in your configuration file."
-msgstr ""
+msgstr "Die Variable \"mtn_repositories\" muss in der Konfigurationsdatei definiert sein."
 
 #: /IDF/Plugin/SyncMonotone.php:93 /IDF/Plugin/SyncMonotone.php:447
 msgid "\"mtn_usher_conf\" does not exist or is not writable."
-msgstr ""
+msgstr "\"mtn_usher_conf\" existiert nicht oder ist nicht schreibbar."
 
 #: /IDF/Plugin/SyncMonotone.php:100
 #, php-format
 msgid "Could not find mtn-post-push script \"%s\"."
-msgstr ""
+msgstr "Konnte das mtn-post-push-Skript \"%s\" nicht finden."
 
 #: /IDF/Plugin/SyncMonotone.php:135
 #, php-format
 msgid "The configuration file %s is missing."
-msgstr ""
+msgstr "Die Konfigurationsdatei %s fehlt."
 
 #: /IDF/Plugin/SyncMonotone.php:144
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s already exists."
-msgstr "Eine Seite mit diesem Titel existiert bereits."
+msgstr "Der Projektpfad %s existiert bereits."
 
 #: /IDF/Plugin/SyncMonotone.php:150
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s could not be created."
-msgstr "Das Projekt wurde neu angelegt."
+msgstr "Der Projektpfad %s konnte nicht angelegt werden."
 
 #: /IDF/Plugin/SyncMonotone.php:187 /IDF/Scm/Monotone/Stdio.php:87
-#, fuzzy, php-format
+#, php-format
 msgid "The key directory %s could not be created."
-msgstr "Der Benutzer %s wurde erstellt."
+msgstr "Das Schlüsselverzeichnis %s konnte nicht erstellt werden."
 
 #: /IDF/Plugin/SyncMonotone.php:205
 #, php-format
 msgid "Could not parse key information: %s"
-msgstr ""
+msgstr "Konnte die Schlüsselinformationen nicht analysieren: %s"
 
 #: /IDF/Plugin/SyncMonotone.php:243
 #, php-format
 msgid "Could not create configuration directory \"%s\""
-msgstr ""
+msgstr "Konnte Konfigurationsverzeichnis \"%s\" nicht erstellen."
 
 #: /IDF/Plugin/SyncMonotone.php:252 /IDF/Plugin/SyncMonotone.php:414
 #, php-format
 msgid "Could not create symlink \"%s\""
-msgstr ""
+msgstr "Konnte symbolischen Link \"%s\" nicht erstellen."
 
 #: /IDF/Plugin/SyncMonotone.php:269
 #, php-format
 msgid "Could not write configuration file \"%s\""
-msgstr ""
+msgstr "Konnte die Konfigurationsdatei \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:284 /IDF/Plugin/SyncMonotone.php:489
 #, php-format
 msgid "Could not parse usher configuration in \"%s\": %s"
-msgstr ""
+msgstr "Konnte die usher-Konfiguration in \"%s\" nicht analysieren: %s"
 
 #: /IDF/Plugin/SyncMonotone.php:295
 #, php-format
 msgid "usher configuration already contains a server entry named \"%s\""
-msgstr ""
+msgstr "Die usher-Konfiguration enthält bereits einen Servereintrag mit dem Namen \"%s\"."
 
 #: /IDF/Plugin/SyncMonotone.php:320 /IDF/Plugin/SyncMonotone.php:510
 #, php-format
 msgid "Could not write usher configuration file \"%s\""
-msgstr ""
+msgstr "Konnte die usher-Konfigurationsdatei \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:366
 #, php-format
 msgid "Could not write write-permissions file \"%s\""
-msgstr ""
+msgstr "Konnte die write-permissions-Datei \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:389
 #, php-format
 msgid "Could not write read-permissions file \"%s\""
-msgstr ""
+msgstr "Konnte die read-permissions-Datei \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:406
 #, php-format
 msgid "Could not remove symlink \"%s\""
-msgstr ""
+msgstr "Konnte symbolischen Link \"%s\" nicht entfernen."
 
 #: /IDF/Plugin/SyncMonotone.php:465
 #, php-format
 msgid "One or more paths underknees %s could not be deleted."
-msgstr ""
+msgstr "Ein oder mehrere Pfade unterhalb %s konnten nicht gelöscht werden."
 
 #: /IDF/Plugin/SyncMonotone.php:477
 #, php-format
 msgid "Could not delete client private key %s"
-msgstr ""
+msgstr "Konnte privaten Schlüssel %s des Clients nicht löschen."
 
 #: /IDF/Plugin/SyncMonotone.php:560 /IDF/Plugin/SyncMonotone.php:676
 #, php-format
 msgid "Could not parse read-permissions for project \"%s\": %s"
-msgstr ""
+msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht analysieren: %s"
 
 #: /IDF/Plugin/SyncMonotone.php:604 /IDF/Plugin/SyncMonotone.php:699
 #, php-format
 msgid "Could not write read-permissions for project \"%s\""
-msgstr ""
+msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:617 /IDF/Plugin/SyncMonotone.php:717
 #, php-format
 msgid "Could not write write-permissions file for project \"%s\""
-msgstr ""
+msgstr "Konnte write-permissions-Datei für Projekt \"%s\" nicht schreiben."
 
 #: /IDF/Plugin/SyncMonotone.php:790
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s does not exists."
-msgstr "Das Projekt wurde neu angelegt."
+msgstr "Der Projektpfad %s existiert nicht."
 
 #: /IDF/Plugin/SyncMonotone.php:808
 #, php-format
 msgid "The command \"%s\" could not be executed."
-msgstr ""
+msgstr "Das Kommando \"%s\" konnte nicht ausgeführt werden."
 
 #: /IDF/Review/Comment.php:55 /IDF/Review/Patch.php:80
 msgid "patch"
-msgstr ""
+msgstr "Patch"
 
 #: /IDF/Review/Comment.php:83
 msgid "vote"
-msgstr ""
+msgstr "abstimmen"
 
 #: /IDF/Review/Comment.php:139 /IDF/Review/Patch.php:151
 #, php-format
 msgid ""
 "<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
 msgstr ""
+"<a href=\"%1$s\" class=\"%2$s\" title=\"Code-Besprechnung anzeigenw\">Code-Besprechung %3$d</a>, %4$s"
 
 #: /IDF/Review/Comment.php:141
 #, php-format
 msgid "Update of <a href=\"%s\" class=\"%s\">review&nbsp;%d</a>, by %s"
-msgstr ""
+msgstr "Aktualisierung von <a href=\"%s\" class=\"%s\">Code-Besprechnung&nbsp;%d</a>, von %s"
 
 #: /IDF/Review/Comment.php:151
 #, php-format
 msgid "%s: Updated review %d - %s"
-msgstr ""
+msgstr "%s: Aktualisierte Code-Besprechung %d - %s"
 
 #: /IDF/Review/Comment.php:216
 #, php-format
 msgid "Updated Code Review %s - %s (%s)"
-msgstr ""
+msgstr "Aktualisierte Code-Besprechung %s - %s (%s)"
 
 #: /IDF/Review/Patch.php:52
 msgid "review"
-msgstr ""
+msgstr "Code-Besprechung"
 
 #: /IDF/Review/Patch.php:67
 msgid "commit"
-msgstr ""
+msgstr "Revision"
 
 #: /IDF/Review/Patch.php:153
 #, php-format
@@ -3943,52 +3928,52 @@ msgstr ""
 #: /IDF/Review/Patch.php:163
 #, php-format
 msgid "%s: Creation of Review %d - %s"
-msgstr ""
+msgstr "%s: Erstellung von Code-Besprechnung %d -%s"
 
 #: /IDF/Review/Patch.php:204
 #, php-format
 msgid "New Code Review %s - %s (%s)"
-msgstr ""
+msgstr "Neue Code-Besprechnung %s - %s (%s)"
 
 #: /IDF/Scm/Git.php:183
 #, php-format
 msgid "Invalid value for the parameter %1$s: %2$s. Use %3$s."
-msgstr ""
+msgstr "Ungültiger Wert für Parameter %1$s: %2$s. Nutze %3$s."
 
 #: /IDF/Scm/Git.php:234 /IDF/Scm/Mercurial.php:140
 #, php-format
 msgid "Folder %1$s not found in commit %2$s."
-msgstr ""
+msgstr "Verzeichnis %1$s in Revision %2$s nicht gefunden."
 
 #: /IDF/Scm/Git.php:352 /IDF/Scm/Mercurial.php:157
 #, php-format
 msgid "Not a valid tree: %s."
-msgstr ""
+msgstr "Kein gültiger Quellcode-Baum: %s."
 
 #: /IDF/Scm/Monotone/Stdio.php:79
 msgid "Monotone client key name or hash not in project conf."
-msgstr ""
+msgstr "Kein monotone-Client-Schlüsselname oder -prüfsumme in Projektkonfiguration gefunden."
 
 #: /IDF/Scm/Monotone/Stdio.php:98
 #, php-format
 msgid "Could not write client key \"%s\""
-msgstr ""
+msgstr "Konnte Client-Schlüssel \"%s\" nicht schreiben."
 
 #: /IDF/Search/Occ.php:33
 msgid "occurence"
-msgstr ""
+msgstr "Vorkommen"
 
 #: /IDF/Search/Occ.php:49
 msgid "word"
-msgstr ""
+msgstr "Wort"
 
 #: /IDF/Search/Occ.php:75
 msgid "occurences"
-msgstr ""
+msgstr "Vorkommen"
 
 #: /IDF/Search/Occ.php:81
 msgid "ponderated occurence"
-msgstr ""
+msgstr "gewichtete Vorkommen"
 
 #: /IDF/Template/Markdown.php:74
 msgid "Create this documentation page"
@@ -4004,20 +3989,19 @@ msgstr "Ich"
 
 #: /IDF/Timeline/Paginator.php:49
 msgid "Today"
-msgstr ""
+msgstr "Heute"
 
 #: /IDF/Views/Admin.php:60
-#, fuzzy
 msgid "This table shows the projects in the forge."
-msgstr "Diese Tabelle enthält die Projekte dieses Forges."
+msgstr "Diese Tabelle zeigt die Projekte dieser Forge."
 
 #: /IDF/Views/Admin.php:65
 msgid "Short Name"
-msgstr "Kurzer Name"
+msgstr "Kurzname"
 
 #: /IDF/Views/Admin.php:67
 msgid "Repository Size"
-msgstr "Größe des Repositories"
+msgstr "Größe des Depots"
 
 #: /IDF/Views/Admin.php:73
 msgid "No projects were found."
@@ -4034,12 +4018,12 @@ msgstr "Das Projekt wurde aktualisiert."
 
 #: /IDF/Views/Admin.php:134
 msgid "The project has been created."
-msgstr "Das Projekt wurde neu angelegt."
+msgstr "Das Projekt wurde angelegt."
 
 #: /IDF/Views/Admin.php:160
 #, php-format
 msgid "Delete %s Project"
-msgstr "Lösche %s Projekt"
+msgstr "Lösche Projekt %s"
 
 #: /IDF/Views/Admin.php:167
 msgid "The project has been deleted."
@@ -4047,12 +4031,11 @@ msgstr "Das Projekt wurde gelöscht."
 
 #: /IDF/Views/Admin.php:197
 msgid "Not Validated User List"
-msgstr "nicht validierte Benutzer"
+msgstr "Liste nicht validierter Benutzer"
 
 #: /IDF/Views/Admin.php:205
-#, fuzzy
 msgid "This table shows the users in the forge."
-msgstr "Diese Tabelle enthält die Benutzer dieses Forges."
+msgstr "Diese Tabelle zeigt die Benutzer dieser Forge."
 
 #: /IDF/Views/Admin.php:209
 msgid "login"
@@ -4060,11 +4043,11 @@ msgstr "Benutzername"
 
 #: /IDF/Views/Admin.php:212
 msgid "Admin"
-msgstr "Admin"
+msgstr "Administrator"
 
 #: /IDF/Views/Admin.php:214
 msgid "Last Login"
-msgstr "Letzter Login."
+msgstr "Letzter Login"
 
 #: /IDF/Views/Admin.php:221
 msgid "No users were found."
@@ -4072,7 +4055,7 @@ msgstr "Es wurden keine Benutzer gefunden."
 
 #: /IDF/Views/Admin.php:258
 msgid "You do not have the rights to update this user."
-msgstr "Du hast nicht die Berechtigung diesen Benutzer zu aktualisieren."
+msgstr "Du hast nicht die Berechtigung, um diesen Benutzer zu aktualisieren."
 
 #: /IDF/Views/Admin.php:276
 msgid "The user has been updated."
@@ -4088,9 +4071,8 @@ msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
 #: /IDF/Views/Admin.php:332
-#, fuzzy
 msgid "Usher management"
-msgstr "Administration"
+msgstr "Usher-Verwaltung"
 
 #: /IDF/Views/Admin.php:369
 #, fuzzy
