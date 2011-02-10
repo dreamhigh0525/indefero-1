@@ -2,21 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
 "POT-Creation-Date: 2011-02-09 01:07+0100\n"
-"PO-Revision-Date: 2011-02-08 22:25+0000\n"
-"Last-Translator: Delkia <wysman@gmail.com>\n"
+"PO-Revision-Date: 2011-02-10 00:39+0000\n"
+"Last-Translator: Denis <denis.kot@gmail.com>\n"
 "Language-Team: Russian <>\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: IDF/Commit.php:55 IDF/Conf.php:54 IDF/Issue.php:52 IDF/Review.php:65
 #: IDF/Tag.php:52 IDF/Upload.php:49 IDF/WikiPage.php:54 /IDF/Commit.php:55
@@ -33,7 +32,7 @@ msgstr "проект"
 #: /IDF/Review/Comment.php:69 /IDF/Review.php:80 /IDF/Upload.php:85
 #: /IDF/WikiPage.php:78 /IDF/WikiRevision.php:79
 msgid "submitter"
-msgstr ""
+msgstr "отправлен"
 
 #: IDF/Commit.php:87 IDF/Issue.php:60 IDF/Review.php:73 IDF/Upload.php:57
 #: IDF/WikiPage.php:70 IDF/WikiRevision.php:65 /IDF/Commit.php:87
@@ -59,16 +58,16 @@ msgstr "дата создания"
 #: IDF/Commit.php:238 /IDF/Commit.php:238
 #, php-format
 msgid "Commit&nbsp;%s, by %s"
-msgstr ""
+msgstr "Комит&nbsp;%s, %s"
 
 #: IDF/Commit.php:329 /IDF/Commit.php:329
 #, php-format
 msgid "New Commit %s - %s (%s)"
-msgstr ""
+msgstr "Новый комит %s - %s (%s)"
 
 #: IDF/Conf.php:61 IDF/Gconf.php:73 /IDF/Conf.php:61 /IDF/Gconf.php:73
 msgid "key"
-msgstr "ключь"
+msgstr "ключ"
 
 #: IDF/Conf.php:67 IDF/Gconf.php:79 /IDF/Conf.php:67 /IDF/Gconf.php:79
 msgid "value"
@@ -91,10 +90,8 @@ msgid "interested users"
 msgstr "наблюдающие пользователи"
 
 #: IDF/Issue.php:85 /IDF/Issue.php:85
-msgid ""
-"Interested users will get an email notification when the issue is changed."
-msgstr ""
-"Наблюдающие пользователи получат сообщение, когда проблема будем изменена."
+msgid "Interested users will get an email notification when the issue is changed."
+msgstr "Наблюдающие пользователи получат сообщение, когда проблема будем изменена."
 
 #: IDF/Issue.php:92 IDF/Review.php:95 IDF/Upload.php:93 IDF/WikiPage.php:94
 #: /IDF/Issue.php:92 /IDF/Review.php:95 /IDF/Upload.php:93
@@ -118,14 +115,13 @@ msgstr "дата модификации"
 #: IDF/Issue.php:194 IDF/IssueComment.php:143 /IDF/Issue.php:194
 #: /IDF/IssueComment.php:143
 #, php-format
-msgid ""
-"<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
-msgstr ""
+msgid "<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
+msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"Просмотр проблемы\">Проблема %3$d</a>, %4$s"
 
 #: IDF/Issue.php:196 /IDF/Issue.php:196
 #, php-format
 msgid "Creation of <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
-msgstr ""
+msgstr "Создание <a href=\"%s\" class=\"%s\">проблемы&nbsp;%d</a>, %s"
 
 #: IDF/Issue.php:206 /IDF/Issue.php:206
 #, php-format
@@ -160,7 +156,7 @@ msgstr "изменения"
 
 #: IDF/IssueComment.php:73 /IDF/IssueComment.php:73
 msgid "Serialized array of the changes in the issue."
-msgstr ""
+msgstr "Сериализованный массив изменений в этой проблеме."
 
 #: IDF/IssueComment.php:151
 #: /IDF/gettexttemplates/idf/issues/feedfragment.xml.php:3
@@ -276,9 +272,7 @@ msgid "short name"
 msgstr "краткое имя"
 
 #: IDF/Project.php:70 /IDF/Project.php:70
-msgid ""
-"Used in the url to access the project, must be short with only letters and "
-"numbers."
+msgid "Used in the url to access the project, must be short with only letters and numbers."
 msgstr "Используется в адресе для доступа к проекту. Только буквы и цифры."
 
 #: IDF/Project.php:78 /IDF/Project.php:78
@@ -317,7 +311,7 @@ msgstr "Класс метки."
 
 #: IDF/Tag.php:73 /IDF/Tag.php:73
 msgid "lcname"
-msgstr ""
+msgstr "lcname"
 
 #: IDF/Tag.php:74 /IDF/Tag.php:74
 msgid "Lower case version of the name for fast searching."
@@ -342,12 +336,12 @@ msgstr "количество файлов"
 #: IDF/Upload.php:189 /IDF/Upload.php:189
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View download\">Download %2$d</a>, %3$s"
-msgstr ""
+msgstr "<a href=\"%1$s\" title=\"Просмотр загрузки\">Загрузка %2$d</a>, %3$s"
 
 #: IDF/Upload.php:192 /IDF/Upload.php:192
 #, php-format
 msgid "Addition of <a href=\"%s\">download&nbsp;%d</a>, by %s"
-msgstr ""
+msgstr "Добавление <a href=\"%s\">загрузки&nbsp;%d</a>, %s"
 
 #: IDF/Upload.php:202 /IDF/Upload.php:202
 #, php-format
@@ -378,21 +372,16 @@ msgstr "Подтвердите создание аккаунта"
 
 #: IDF/Views.php:168 /IDF/Views.php:168
 msgid "Welcome! You can now participate in the life of your project of choice."
-msgstr ""
-"Добро пожаловать! Теперь Вы можете учавствовать в жизни выбранного проекта."
+msgstr "Добро пожаловать! Теперь Вы можете учавствовать в жизни выбранного проекта."
 
 #: IDF/Views.php:194 IDF/Views.php:218 IDF/Views.php:259 /IDF/Views.php:194
 #: /IDF/Views.php:218 /IDF/Views.php:259
 msgid "Password Recovery"
-msgstr "Восттановление пароля"
+msgstr "Восстановление пароля"
 
 #: IDF/Views.php:238 /IDF/Views.php:238
-msgid ""
-"Welcome back! Next time, you can use your broswer options to remember the "
-"password."
-msgstr ""
-"Рады Вас снова видеть! Следющий раз Вы можете использовать функцию "
-"сохранения пароля в Вашем браузере."
+msgid "Welcome back! Next time, you can use your broswer options to remember the password."
+msgstr "Рады Вас снова видеть! Следющий раз Вы можете использовать функцию сохранения пароля в Вашем браузере."
 
 #: IDF/Views.php:280 /IDF/Views.php:280
 msgid "Here to Help You!"
@@ -407,12 +396,8 @@ msgid "title"
 msgstr "заголовок"
 
 #: IDF/WikiPage.php:63 /IDF/WikiPage.php:63
-msgid ""
-"The title of the page must only contain letters, digits or the dash "
-"character. For example: My-new-Wiki-Page."
-msgstr ""
-"Заголовок страницы должен содержать только буквы, цифры или прочерк. "
-"Например: Моя-новая-вики-страница."
+msgid "The title of the page must only contain letters, digits or the dash character. For example: My-new-Wiki-Page."
+msgstr "Заголовок страницы должен содержать только буквы, цифры или прочерк. Например: Моя-новая-вики-страница."
 
 #: IDF/WikiPage.php:71 /IDF/WikiPage.php:71
 msgid "A one line description of the page content."
@@ -427,12 +412,12 @@ msgstr "<a href=\"%1$s\" title=\"Просмотреть страницу\">%2$s<
 #: IDF/WikiPage.php:198 /IDF/WikiPage.php:198
 #, php-format
 msgid "Creation of <a href=\"%s\">page&nbsp;%s</a>, by %s"
-msgstr ""
+msgstr "Создание <a href=\"%s\">страницы&nbsp;%s</a>, %s"
 
 #: IDF/WikiPage.php:208 /IDF/WikiPage.php:208
 #, php-format
 msgid "%s: Documentation page %s added - %s"
-msgstr ""
+msgstr "%s: Страницы документации %s добавлена - %s"
 
 #: IDF/WikiRevision.php:48 /IDF/WikiRevision.php:48
 msgid "page"
@@ -449,12 +434,12 @@ msgstr "содержание"
 #: IDF/WikiRevision.php:189 /IDF/WikiRevision.php:189
 #, php-format
 msgid "Change of <a href=\"%s\">%s</a>, by %s"
-msgstr ""
+msgstr "Изменение <a href=\"%s\">%s</a>, %s"
 
 #: IDF/WikiRevision.php:208 /IDF/WikiRevision.php:208
 #, php-format
 msgid "%s: Documentation page %s updated - %s"
-msgstr ""
+msgstr "%s: Страница документации %s обновлена - %s"
 
 #: IDF/WikiRevision.php:262 /IDF/WikiRevision.php:262
 #, php-format
@@ -498,15 +483,12 @@ msgid "Shortname"
 msgstr "Краткое имя"
 
 #: /IDF/Form/Admin/ProjectCreate.php:64
-msgid ""
-"It must be unique for each project and composed only of letters, digits and "
-"dash (-) like \"my-project\"."
+msgid "It must be unique for each project and composed only of letters, digits and dash (-) like \"my-project\"."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:69 /IDF/Form/Admin/ProjectUpdate.php:50
-#, fuzzy
 msgid "Short description"
-msgstr "краткое описания"
+msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:77
 msgid "Repository type"
@@ -529,9 +511,7 @@ msgid "Master branch"
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:109 /IDF/Form/Admin/ProjectUpdate.php:62
-msgid ""
-"This should be a world-wide unique identifier for your project. A reverse "
-"DNS notation like \"com.my-domain.my-project\" is a good idea."
+msgid "This should be a world-wide unique identifier for your project. A reverse DNS notation like \"com.my-domain.my-project\" is a good idea."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:114 /IDF/Form/Admin/ProjectUpdate.php:68
@@ -545,37 +525,27 @@ msgid "Project members"
 msgstr "Участники проекта"
 
 #: /IDF/Form/Admin/ProjectCreate.php:136
-#, fuzzy
 msgid "Project template"
-msgstr "Проект"
+msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:138
-msgid ""
-"Use the given project to initialize the new project. Access rights and "
-"general configuration will be taken from the template project."
+msgid "Use the given project to initialize the new project. Access rights and general configuration will be taken from the template project."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:185
-msgid ""
-"Only a remote repository available throught http or https are allowed. For "
-"example \"http://somewhere.com/svn/trunk\"."
+msgid "Only a remote repository available throught http or https are allowed. For example \"http://somewhere.com/svn/trunk\"."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:201 /IDF/Form/Admin/ProjectUpdate.php:90
-msgid ""
-"The master branch is empty or contains illegal characters, please use only "
-"letters, digits, dashs and dots as separators."
+msgid "The master branch is empty or contains illegal characters, please use only letters, digits, dashs and dots as separators."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:211 /IDF/Form/Admin/ProjectUpdate.php:101
-#, fuzzy
 msgid "This master branch is already used. Please select another one."
-msgstr "Краткое имя уже используется. Пожалуйста, выберите другое."
+msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:222
-msgid ""
-"This shortname contains illegal characters, please use only letters, digits "
-"and dash (-)."
+msgid "This shortname contains illegal characters, please use only letters, digits and dash (-)."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:225
@@ -604,16 +574,12 @@ msgid "Cannot save the model from an invalid form."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:295
-msgid ""
-"Click on the Project Management tab to set the description of your project."
-msgstr ""
-"Кликните на закладку Управление проектом, чтобы задать описание Вашего "
-"проекта."
+msgid "Click on the Project Management tab to set the description of your project."
+msgstr "Кликните на закладку Управление проектом, чтобы задать описание Вашего проекта."
 
 #: /IDF/Form/Admin/ProjectCreate.php:362
-#, fuzzy
 msgid "This project is not available."
-msgstr "Проект был обновлен."
+msgstr ""
 
 #: /IDF/Form/Admin/ProjectDelete.php:41
 msgid "Confirmation code"
@@ -624,9 +590,7 @@ msgid "I have made a backup of all the important data of this project."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectDelete.php:55
-msgid ""
-"The confirmation code does not match. Please provide a valid confirmation "
-"code to delete the project."
+msgid "The confirmation code does not match. Please provide a valid confirmation code to delete the project."
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectDelete.php:63
@@ -648,9 +612,7 @@ msgid "Login"
 msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:60 /IDF/Form/Register.php:45
-msgid ""
-"The login must be between 3 and 15 characters long and contains only letters "
-"and digits."
+msgid "The login must be between 3 and 15 characters long and contains only letters and digits."
 msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:69 /IDF/Form/Admin/UserUpdate.php:57
@@ -658,8 +620,7 @@ msgid "Email"
 msgstr "Эл. адрес"
 
 #: /IDF/Form/Admin/UserCreate.php:71
-msgid ""
-"Double check the email address as the password is directly sent to the user."
+msgid "Double check the email address as the password is directly sent to the user."
 msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:76 /IDF/Form/Admin/UserUpdate.php:67
@@ -672,9 +633,7 @@ msgid "Add a public key"
 msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:92 /IDF/Form/UserAccount.php:164
-msgid ""
-"Paste a SSH or monotone public key. Be careful to not provide your private "
-"key here!"
+msgid "Paste a SSH or monotone public key. Be careful to not provide your private key here!"
 msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:157
@@ -705,9 +664,7 @@ msgid "Leave blank if you do not want to change the password."
 msgstr "Оставьте пустым если Вы не хотите менять пароль."
 
 #: /IDF/Form/Admin/UserUpdate.php:81
-msgid ""
-"The password must be hard for other people to find it, but easy for the user "
-"to remember."
+msgid "The password must be hard for other people to find it, but easy for the user to remember."
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:89
@@ -722,9 +679,8 @@ msgid "Description"
 msgstr "Описания"
 
 #: /IDF/Form/Admin/UserUpdate.php:109 /IDF/Form/UserAccount.php:108
-#, fuzzy
 msgid "Twitter username"
-msgstr "Логин репозитории"
+msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:119 /IDF/Form/UserAccount.php:118
 msgid "Public email address"
@@ -739,9 +695,7 @@ msgid "Upload custom avatar"
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:146 /IDF/Form/UserAccount.php:145
-msgid ""
-"An image file with a width and height not larger than 60 pixels (bigger "
-"images are scaled down)."
+msgid "An image file with a width and height not larger than 60 pixels (bigger images are scaled down)."
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:151 /IDF/Form/UserAccount.php:150
@@ -765,9 +719,7 @@ msgid "Active"
 msgstr "Активный"
 
 #: /IDF/Form/Admin/UserUpdate.php:176
-msgid ""
-"If the user is not getting the confirmation email or is abusing the system, "
-"you can directly enable or disable his account here."
+msgid "If the user is not getting the confirmation email or is abusing the system, you can directly enable or disable his account here."
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:274
@@ -775,8 +727,7 @@ msgid "--- is not a valid first name."
 msgstr "--- неправильное имя."
 
 #: /IDF/Form/Admin/UserUpdate.php:290
-msgid ""
-"A user with this email already exists, please provide another email address."
+msgid "A user with this email already exists, please provide another email address."
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:301 /IDF/Form/Upload.php:86
@@ -855,8 +806,7 @@ msgid "You provided an invalid status."
 msgstr ""
 
 #: /IDF/Form/IssueTrackingConf.php:80
-msgid ""
-"Define an issue template to hint the reporter to provide certain information"
+msgid "Define an issue template to hint the reporter to provide certain information"
 msgstr ""
 
 #: /IDF/Form/IssueTrackingConf.php:89
@@ -872,9 +822,7 @@ msgid "Predefined issue labels"
 msgstr "Предопределенные ярлыки для проблемы"
 
 #: /IDF/Form/IssueTrackingConf.php:108
-msgid ""
-"The first \"Type:\" and \"Priority:\" entries found in this list are "
-"automatically chosen as defaults for new issues."
+msgid "The first \"Type:\" and \"Priority:\" entries found in this list are automatically chosen as defaults for new issues."
 msgstr ""
 
 #: /IDF/Form/IssueTrackingConf.php:116
@@ -908,9 +856,7 @@ msgid "Provide either your login or your email to recover your password."
 msgstr ""
 
 #: /IDF/Form/Password.php:49 /IDF/Form/Password.php:64
-msgid ""
-"Sorry, we cannot find a user with this email address or login. Feel free to "
-"try again."
+msgid "Sorry, we cannot find a user with this email address or login. Feel free to try again."
 msgstr ""
 
 #: /IDF/Form/Password.php:100
@@ -923,16 +869,11 @@ msgid "Your verification key"
 msgstr "Код подтверждения"
 
 #: /IDF/Form/PasswordInputKey.php:50 /IDF/Form/PasswordReset.php:89
-msgid ""
-"We are sorry but this validation key is not valid. Maybe you should directly "
-"copy/paste it from your validation email."
+msgid "We are sorry but this validation key is not valid. Maybe you should directly copy/paste it from your validation email."
 msgstr ""
 
 #: /IDF/Form/PasswordInputKey.php:61 /IDF/Form/PasswordReset.php:100
-msgid ""
-"Sorry, but this verification key has expired, please restart the password "
-"recovery sequence. For security reasons, the verification key is only valid "
-"24h."
+msgid "Sorry, but this verification key has expired, please restart the password recovery sequence. For security reasons, the verification key is only valid 24h."
 msgstr ""
 
 #: /IDF/Form/PasswordInputKey.php:76 /IDF/Form/PasswordReset.php:108
@@ -947,12 +888,8 @@ msgstr "Пароль"
 
 #: /IDF/Form/PasswordReset.php:48 /IDF/Form/RegisterConfirmation.php:72
 #: /IDF/Form/UserAccount.php:80
-msgid ""
-"Your password must be hard for other people to find it, but easy for you to "
-"remember."
-msgstr ""
-"Ваш пароль должен быть сложен для угадывания другими, но легок для "
-"запоминания Вами."
+msgid "Your password must be hard for other people to find it, but easy for you to remember."
+msgstr "Ваш пароль должен быть сложен для угадывания другими, но легок для запоминания Вами."
 
 #: /IDF/Form/PasswordReset.php:56 /IDF/Form/RegisterConfirmation.php:80
 #: /IDF/Form/UserAccount.php:88
@@ -964,9 +901,7 @@ msgid "The two passwords must be the same."
 msgstr "Пароли должны совпадать."
 
 #: /IDF/Form/PasswordReset.php:77
-msgid ""
-"This account is not active. Please contact the forge administrator to "
-"activate it."
+msgid "This account is not active. Please contact the forge administrator to activate it."
 msgstr ""
 
 #: /IDF/Form/Register.php:41
@@ -986,15 +921,12 @@ msgid "I agree to the terms and conditions."
 msgstr ""
 
 #: /IDF/Form/Register.php:88
-msgid ""
-"We know, this is boring, but you need to agree with the terms and conditions."
+msgid "We know, this is boring, but you need to agree with the terms and conditions."
 msgstr ""
 
 #: /IDF/Form/Register.php:99
 #, php-format
-msgid ""
-"The email \"%s\" is already used. If you need, click on the help link to "
-"recover your password."
+msgid "The email \"%s\" is already used. If you need, click on the help link to recover your password."
 msgstr ""
 
 #: /IDF/Form/Register.php:150
@@ -1006,22 +938,18 @@ msgid "Your confirmation key"
 msgstr "Ваш код подтверждения"
 
 #: /IDF/Form/RegisterConfirmation.php:99 /IDF/Form/RegisterInputKey.php:50
-msgid ""
-"We are sorry but this confirmation key is not valid. Maybe you should "
-"directly copy/paste it from your confirmation email."
+msgid "We are sorry but this confirmation key is not valid. Maybe you should directly copy/paste it from your confirmation email."
 msgstr ""
 
 #: /IDF/Form/RegisterConfirmation.php:110
-msgid ""
-"This account has already been confirmed. Maybe should you try to recover "
-"your password using the help link."
+msgid "This account has already been confirmed. Maybe should you try to recover your password using the help link."
 msgstr ""
 
 #: /IDF/Form/ReviewCreate.php:74
 #: /IDF/gettexttemplates/idf/source/base.html.php:5
 #: /IDF/gettexttemplates/idf/source/changelog.html.php:7
 msgid "Commit"
-msgstr ""
+msgstr "Комит"
 
 #: /IDF/Form/ReviewCreate.php:92
 msgid "Patch"
@@ -1142,12 +1070,8 @@ msgid "Your mail"
 msgstr "Ваша почта"
 
 #: /IDF/Form/UserAccount.php:61
-msgid ""
-"If you change your email address, an email will be sent to the new address "
-"to confirm it."
-msgstr ""
-"Если Вы измените адрес эл. почты, то на него будет выслано письмо для "
-"подтверждения адреса."
+msgid "If you change your email address, an email will be sent to the new address to confirm it."
+msgstr "Если Вы измените адрес эл. почты, то на него будет выслано письмо для подтверждения адреса."
 
 #: /IDF/Form/UserAccount.php:80
 msgid "Leave blank if you do not want to change your password."
@@ -1159,19 +1083,15 @@ msgstr ""
 
 #: /IDF/Form/UserAccount.php:210
 #, php-format
-msgid ""
-"A validation email has been sent to \"%s\" to validate the email address "
-"change."
+msgid "A validation email has been sent to \"%s\" to validate the email address change."
 msgstr ""
 
 #: /IDF/Form/UserAccount.php:312
-msgid ""
-"Please check the key as it does not appear to be a valid SSH public key."
+msgid "Please check the key as it does not appear to be a valid SSH public key."
 msgstr ""
 
 #: /IDF/Form/UserAccount.php:332
-msgid ""
-"Please check the key as it does not appear to be a valid monotone public key."
+msgid "Please check the key as it does not appear to be a valid monotone public key."
 msgstr ""
 
 #: /IDF/Form/UserAccount.php:340
@@ -1183,9 +1103,7 @@ msgid "You already have uploaded this key."
 msgstr ""
 
 #: /IDF/Form/UserChangeEmail.php:63
-msgid ""
-"The validation key is not valid. Please copy/paste it from your confirmation "
-"email."
+msgid "The validation key is not valid. Please copy/paste it from your confirmation email."
 msgstr ""
 
 #: /IDF/Form/WikiConf.php:49
@@ -1193,8 +1111,7 @@ msgid "Predefined documentation page labels"
 msgstr ""
 
 #: /IDF/Form/WikiConf.php:58
-msgid ""
-"Each documentation page may have at most one label with each of these classes"
+msgid "Each documentation page may have at most one label with each of these classes"
 msgstr ""
 
 #: /IDF/Form/WikiCreate.php:38
@@ -1222,8 +1139,7 @@ msgid "Page title"
 msgstr "Заголовок страницы"
 
 #: /IDF/Form/WikiCreate.php:66 /IDF/Form/WikiUpdate.php:56
-msgid ""
-"The page name must contains only letters, digits and the dash (-) character."
+msgid "The page name must contains only letters, digits and the dash (-) character."
 msgstr "Имя страницы должно содержать только буквы, цифры и прочерк (-)."
 
 #: /IDF/Form/WikiCreate.php:71 /IDF/Form/WikiUpdate.php:61
@@ -1277,7 +1193,7 @@ msgstr "Участники проекта"
 
 #: /IDF/gettexttemplates/idf/admin/base.html.php:9
 msgid "Tabs Access and Notifications"
-msgstr ""
+msgstr "Вкладки доступа и уведомления"
 
 #: /IDF/gettexttemplates/idf/admin/downloads.html.php:3
 #: /IDF/gettexttemplates/idf/admin/issue-tracking.html.php:3
@@ -1286,9 +1202,12 @@ msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
 "<p>List one status value per line in desired sort-order.</p>\n"
-"<p>Optionally, use an equals-sign to document the meaning of each status "
-"value.</p>\n"
+"<p>Optionally, use an equals-sign to document the meaning of each status value.</p>\n"
 msgstr ""
+"\n"
+"<p><strong>Инструкции:</strong> </p>\n"
+"<p>Указывайте значение статуса по одному на строку в нужном порядке.</p>\n"
+"<p> При необходимости, используйте знак равенства для описания значение каждого статуса.</p>\n"
 
 #: /IDF/gettexttemplates/idf/admin/downloads.html.php:8
 #: /IDF/gettexttemplates/idf/admin/issue-tracking.html.php:8
@@ -1305,8 +1224,7 @@ msgstr "Сохранить изменения"
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>Specify each person by its login. Each person must have already "
-"registered with the given login.</p>\n"
+"<p>Specify each person by its login. Each person must have already registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 msgstr ""
 
@@ -1316,16 +1234,13 @@ msgstr ""
 msgid ""
 "\n"
 "<p><strong>Notes:</strong></p>\n"
-"<p>A project owner may make any change to this project, including removing "
-"other project owners. You need to be carefull when you give owner rights.</"
-"p>\n"
-"<p>A project member will not have access to the administration area but will "
-"have more options available in the use of the project.</p>\n"
+"<p>A project owner may make any change to this project, including removing other project owners. You need to be carefull when you give owner rights.</p>\n"
+"<p>A project member will not have access to the administration area but will have more options available in the use of the project.</p>\n"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/source.html.php:3
 msgid "You can find here the current repository configuration of your project."
-msgstr ""
+msgstr "Вы можете найти здесь текущую конфигурацию репозитория вашего проекта."
 
 #: /IDF/gettexttemplates/idf/admin/source.html.php:4
 msgid ""
@@ -1333,8 +1248,7 @@ msgid ""
 "request is sent after each repository commit. If this field is empty,\n"
 "notifications are disabled.</p>\n"
 "\n"
-"<p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for "
-"example:</p>\n"
+"<p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for example:</p>\n"
 "\n"
 "<ul>\n"
 "<li>http://domain.com/commit</li>\n"
@@ -1355,12 +1269,8 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/source.html.php:26
-msgid ""
-"The form contains some errors. Please correct them to update the source "
-"configuration."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы обновить настройки "
-"исходного кода."
+msgid "The form contains some errors. Please correct them to update the source configuration."
+msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы обновить настройки исходного кода."
 
 #: /IDF/gettexttemplates/idf/admin/source.html.php:27
 msgid "Repository type:"
@@ -1383,20 +1293,15 @@ msgstr ""
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The description of the project can be improved using the <a href=\"%%url%%"
-"\">Markdown syntax</a>.</p>\n"
+"<p>The description of the project can be improved using the <a href=\"%%url%%\">Markdown syntax</a>.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>Инструкции:</strong></p>\n"
-"<p>Описание проекта может быть оформлено с использованием <a href=\"%%url%%"
-"\">Markdown синтаксиса</a>.</p>\n"
+"<p>Описание проекта может быть оформлено с использованием <a href=\"%%url%%\">Markdown синтаксиса</a>.</p>\n"
 
 #: /IDF/gettexttemplates/idf/admin/summary.html.php:7
-msgid ""
-"The form contains some errors. Please correct them to update the summary."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы обновить краткое "
-"описание."
+msgid "The form contains some errors. Please correct them to update the summary."
+msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы обновить краткое описание."
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:3
 msgid ""
@@ -1408,51 +1313,33 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:8
-msgid ""
-"You can configure here the project tabs access rights and notification "
-"emails."
-msgstr ""
+msgid "You can configure here the project tabs access rights and notification emails."
+msgstr "Вы можете настроить здесь права доступа к вкладкам проекта и уведомлений."
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:9
 #, php-format
-msgid ""
-"Notification emails will be sent from the <strong>%%from_email%%</strong> "
-"address, if you send the email to a mailing list, you may need to register "
-"this email address. Multiple email addresses must be separated through "
-"commas (','). If you do not want to send emails for a given type of changes, "
-"simply leave the corresponding field empty."
+msgid "Notification emails will be sent from the <strong>%%from_email%%</strong> address, if you send the email to a mailing list, you may need to register this email address. Multiple email addresses must be separated through commas (','). If you do not want to send emails for a given type of changes, simply leave the corresponding field empty."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:10
-msgid ""
-"If you mark a project as private, only the project members and "
-"administrators, together with the extra authorized users you provide will "
-"have access to the project. You will still be able to define further access "
-"rights for the different tabs but the \"Open to all\" and \"Signed in users"
-"\" will default to authorized users only."
+msgid "If you mark a project as private, only the project members and administrators, together with the extra authorized users you provide will have access to the project. You will still be able to define further access rights for the different tabs but the \"Open to all\" and \"Signed in users\" will default to authorized users only."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:11
-msgid ""
-"Specify each person by its login. Each person must have already registered "
-"with the given login. Separate the logins with commas and/or new lines."
+msgid "Specify each person by its login. Each person must have already registered with the given login. Separate the logins with commas and/or new lines."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:12
-msgid ""
-"The form contains some errors. Please correct them to update the access "
-"rights."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы обновить права доступа."
+msgid "The form contains some errors. Please correct them to update the access rights."
+msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы обновить права доступа."
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:13
 msgid "Access Rights"
 msgstr "Права доступа"
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:14
-#, fuzzy
 msgid "Notification Email"
-msgstr "дата модификации"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/admin/tabs.html.php:16
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:17
@@ -1464,19 +1351,16 @@ msgstr "Инструкции:"
 #: /IDF/gettexttemplates/idf/base-full.html.php:3
 #: /IDF/gettexttemplates/idf/base.html.orig.php:3
 #: /IDF/gettexttemplates/idf/base.html.php:3
-#, fuzzy, php-format
-msgid ""
-"<a href=\"%%url%%\">Sign in or create your account</a> to create issues or "
-"add comments"
-msgstr "<a href=\"%%url%%\">Войдите</a>, чтобы ответить на комментарий."
+#, php-format
+msgid "<a href=\"%%url%%\">Sign in or create your account</a> to create issues or add comments"
+msgstr "<a href=\"%%url%%\">Войдите или зарегистрируйтесь</a> что бы добавить проблему или комментарий"
 
 #: /IDF/gettexttemplates/idf/base-full.html.orig.php:4
 #: /IDF/gettexttemplates/idf/base-full.html.php:4
 #: /IDF/gettexttemplates/idf/base.html.orig.php:4
 #: /IDF/gettexttemplates/idf/base.html.php:4
-#, fuzzy
 msgid "Project Home"
-msgstr "Владельцы проекта"
+msgstr "Проект"
 
 #: /IDF/gettexttemplates/idf/base-full.html.orig.php:10
 #: /IDF/gettexttemplates/idf/base-full.html.php:10
@@ -1492,18 +1376,13 @@ msgid "New Download"
 msgstr "Добавить файл"
 
 #: /IDF/gettexttemplates/idf/downloads/delete.html.php:3
-msgid ""
-"<strong>Attention!</strong> If you want to delete a specific version of your "
-"software, maybe, someone is depending on this specific version to run his "
-"systems. Are you sure, you will not affect anybody when removing this file?"
-msgstr ""
+msgid "<strong>Attention!</strong> If you want to delete a specific version of your software, maybe, someone is depending on this specific version to run his systems. Are you sure, you will not affect anybody when removing this file?"
+msgstr "<strong>Внимание!</strong> Если вы хотите удалить определенную версию программного обеспечения, имейте ввиду, что может быть работоспособность чей-то системы зависит от этой определенной версии. Вы уверены, что удаление этого файла не повлияет на чью-то систему?"
 
 #: /IDF/gettexttemplates/idf/downloads/delete.html.php:4
 #, php-format
-msgid ""
-"Instead of deleting the file, you could <a href=\"%%url%%\">mark it as "
-"deprecated</a>."
-msgstr ""
+msgid "Instead of deleting the file, you could <a href=\"%%url%%\">mark it as deprecated</a>."
+msgstr "Вместо удаление файла, вы можете <a href=\"%%url%%\">пометь его как устаревший</a>."
 
 #: /IDF/gettexttemplates/idf/downloads/delete.html.php:5
 #: /IDF/gettexttemplates/idf/downloads/view.html.php:4
@@ -1616,9 +1495,9 @@ msgid "Details"
 msgstr "Детали"
 
 #: /IDF/gettexttemplates/idf/downloads/index.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid "See <a href=\"%%url%%\">the deprecated files</a>."
-msgstr "<a href=\"%%url%%\">Посмотреть Ваш публичный профиль</a>."
+msgstr "Смотреть <a href=\"%%url%%\">устаревшие файлы</a>."
 
 #: /IDF/gettexttemplates/idf/downloads/index.html.php:5
 msgid "Number of files:"
@@ -1629,13 +1508,12 @@ msgid ""
 "Each file must have a distinct name and file contents\n"
 "cannot be changed, so be sure to include release numbers in each file\n"
 "name."
-msgstr ""
+msgstr "Каждый файл должен иметь уникальное имя и содержимое файла не может быть изменено, так что не забудьте включить номер релиза в каждом имени файла."
 
 #: /IDF/gettexttemplates/idf/downloads/submit.html.php:6
 #, php-format
-msgid ""
-"You can use the <a href=\"%%url%%\">Markdown syntax</a> for the description."
-msgstr ""
+msgid "You can use the <a href=\"%%url%%\">Markdown syntax</a> for the description."
+msgstr "Вы можете использовать <a href=\"%%url%%\">Markdown синтаксис</a> для описания."
 
 #: /IDF/gettexttemplates/idf/downloads/submit.html.php:7
 msgid "The form contains some errors. Please correct them to submit the file."
@@ -1653,10 +1531,8 @@ msgid "Instructions"
 msgstr "Инструкции"
 
 #: /IDF/gettexttemplates/idf/downloads/view.html.php:3
-msgid ""
-"<strong>Attention!</strong> This file is marked as deprecated, download it "
-"only if you are sure you need this specific version."
-msgstr ""
+msgid "<strong>Attention!</strong> This file is marked as deprecated, download it only if you are sure you need this specific version."
+msgstr "<strong>Внимание!</strong> Этот файл помечен как устаревший. Скачивайте его, только если вы уверены, что вам необходима именно эта конкретная версия."
 
 #: /IDF/gettexttemplates/idf/downloads/view.html.php:5
 msgid "Changes"
@@ -1664,7 +1540,7 @@ msgstr "Изменения"
 
 #: /IDF/gettexttemplates/idf/downloads/view.html.php:6
 msgid "The form contains some errors. Please correct them to update the file."
-msgstr "Форма содержит ошибки. Пожалуйста исправте их для обновления файла."
+msgstr "Форма содержит ошибки. Пожалуйста исправьте их для обновления файла."
 
 #: /IDF/gettexttemplates/idf/downloads/view.html.php:7
 msgid "Update File"
@@ -1695,25 +1571,23 @@ msgstr "Мы здесь, чтобы помогать Вам."
 msgid ""
 "<p>This is simple:</p>\n"
 "<ol>\n"
-"<li>Write in the comments \"This is a duplicate of issue 123\", change 123 "
-"with the corresponding issue number.</li>\n"
+"<li>Write in the comments \"This is a duplicate of issue 123\", change 123 with the corresponding issue number.</li>\n"
 "<li>Change the status of the current issue to <em>Duplicate</em>.</li>\n"
 "<li>Submit the changes.</li>\n"
 "</ol>"
 msgstr ""
+"<p> Это просто: </p>\n"
+"<ol><li> Напишите в комментарии \"Это дубликат проблемы 123\", измените 123 с соответствующим номером проблемы. </li>\n"
+"<li> Измените статус текущей проблемы на <em>Дубликат.</em> </li>\n"
+"<li> Отправьте изменения.</li></ol>"
 
 #: /IDF/gettexttemplates/idf/faq.html.php:9
-msgid ""
-"You need to create an account on <a href=\"http://en.gravatar.com/"
-"\">Gravatar</a>, this takes about 5 minutes and is free."
-msgstr ""
+msgid "You need to create an account on <a href=\"http://en.gravatar.com/\">Gravatar</a>, this takes about 5 minutes and is free."
+msgstr "Вам необходимо создать учетную запись на <a href=\"http://en.gravatar.com/\">Gravatar</a>, это займет около 5 минут и бесплатно."
 
 #: /IDF/gettexttemplates/idf/faq.html.php:10
-msgid ""
-"The API (Application Programming Interface) is used to interact with "
-"InDefero with another program. For example, this can be used to create a "
-"desktop program to submit new tickets easily."
-msgstr ""
+msgid "The API (Application Programming Interface) is used to interact with InDefero with another program. For example, this can be used to create a desktop program to submit new tickets easily."
+msgstr "API (Application Programming Interface) используется для взаимодействия InDefero с другой программой. Например, это может быть использовано для создания пользовательских программ для легкого добавления проблем в трекер."
 
 #: /IDF/gettexttemplates/idf/faq.html.php:11
 #, php-format
@@ -1723,7 +1597,7 @@ msgstr "<a href=\"%%url%%\">Узнать больше об API</a>."
 #: /IDF/gettexttemplates/idf/faq.html.php:12
 #: /IDF/gettexttemplates/idf/faq.html.php:16
 msgid "What are the keyboard shortcuts?"
-msgstr ""
+msgstr "Какие сочетания клавиш?"
 
 #: /IDF/gettexttemplates/idf/faq.html.php:13
 #: /IDF/gettexttemplates/idf/faq.html.php:31
@@ -1733,7 +1607,7 @@ msgstr "Как пометить проблему как дублирующую?"
 #: /IDF/gettexttemplates/idf/faq.html.php:14
 #: /IDF/gettexttemplates/idf/faq.html.php:32
 msgid "How can I display my head next to my comments?"
-msgstr ""
+msgstr "Как я могу вставить мое лицо рядом с моим комментариями?"
 
 #: /IDF/gettexttemplates/idf/faq.html.php:15
 #: /IDF/gettexttemplates/idf/faq.html.php:33
@@ -1746,7 +1620,7 @@ msgstr "<kbd>Shift+h</kbd>: Эта помощь."
 
 #: /IDF/gettexttemplates/idf/faq.html.php:18
 msgid "If you are in a project, you have the following shortcuts:"
-msgstr ""
+msgstr "Если вы в проекте, у вас есть следующие ссылки:"
 
 #: /IDF/gettexttemplates/idf/faq.html.php:19
 msgid "<kbd>Shift+u</kbd>: Project updates."
@@ -1782,7 +1656,7 @@ msgstr "<kbd>Shift+s</kbd>: Исходный код."
 
 #: /IDF/gettexttemplates/idf/faq.html.php:27
 msgid "You also have the standard access keys:"
-msgstr ""
+msgstr "У вас также есть стандартные клавиши:"
 
 #: /IDF/gettexttemplates/idf/faq.html.php:28
 msgid "<kbd>Alt+1</kbd>: Home."
@@ -1830,28 +1704,22 @@ msgid "Change Project Details"
 msgstr "Изменить данные о проекте"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:3
-msgid ""
-"You can select the type of repository you want. In the case of subversion, "
-"you can use optionally a remote repository instead of the local one."
+msgid "You can select the type of repository you want. In the case of subversion, you can use optionally a remote repository instead of the local one."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:4
-msgid ""
-"<strong>Once you have defined the repository type, you cannot change it</"
-"strong>."
+msgid "<strong>Once you have defined the repository type, you cannot change it</strong>."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:5
 msgid ""
 "\n"
-"<p>Specify each person by its login. Each person must have already "
-"registered with the given login.</p>\n"
+"<p>Specify each person by its login. Each person must have already registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:14
-msgid ""
-"The form contains some errors. Please correct them to create the project."
+msgid "The form contains some errors. Please correct them to create the project."
 msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы создать проект."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:15
@@ -1874,8 +1742,7 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:10
-msgid ""
-"The form contains some errors. Please correct them to delete the project."
+msgid "The form contains some errors. Please correct them to delete the project."
 msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы удалить проект."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:11
@@ -1900,9 +1767,8 @@ msgid "Commits"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:18
-#, fuzzy
 msgid "Documentation pages"
-msgstr "Страница документации:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:19
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:20
@@ -1910,8 +1776,7 @@ msgid "Delete Project"
 msgstr "Удалить проект"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:22
-msgid ""
-"For large projects, the suppression can take a while, please be patient."
+msgid "For large projects, the suppression can take a while, please be patient."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/index.html.php:3
@@ -1937,14 +1802,12 @@ msgid "Total Forge:"
 msgstr "Всего на сервере:"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:13
-msgid ""
-"The form contains some errors. Please correct them to update the project."
+msgid "The form contains some errors. Please correct them to update the project."
 msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы обновить проект."
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:14
-#, fuzzy
 msgid "Provide at least one owner for the project."
-msgstr "Краткое описание проекта."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/update.html.php:15
 msgid "Update Project"
@@ -1972,19 +1835,16 @@ msgstr "Обновить пользователя"
 
 #: /IDF/gettexttemplates/idf/gadmin/users/base.html.php:5
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:4
-#, fuzzy
 msgid "Create User"
-msgstr "Обновить пользователя"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:3
-#, fuzzy
 msgid "The form contains some errors. Please correct them to create the user."
-msgstr "Форма содержит ошибки. Пожалуйста исправтье их чтобы создать страницу."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/create.html.php:6
-#, fuzzy
 msgid "The user password will be sent by email to the user."
-msgstr "Пароли должны совпадать."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/createuser-email.txt.php:3
 #, php-format
@@ -2005,9 +1865,9 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/index.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid "See <a href=\"%%url%%\">not validated users</a>."
-msgstr "<a href=\"%%url%%\">Изменить Ваш аккаунт</a>."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/index.html.php:4
 msgid "<p>You have here an overview of the users registered in the forge.</p>"
@@ -2032,8 +1892,7 @@ msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:9
 msgid "The form contains some errors. Please correct them to update the user."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы обновить пользователя."
+msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы обновить пользователя."
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:10
 #: /IDF/gettexttemplates/idf/register/confirmation.html.php:4
@@ -2048,9 +1907,8 @@ msgid "Public Profile"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/users/update.html.php:12
-#, fuzzy
 msgid "Administrative"
-msgstr "Админы"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/base.html.php:3
 msgid "Configured servers"
@@ -2107,15 +1965,12 @@ msgid "usher is being shut down, not accepting connections"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/control.html.php:12
-msgid ""
-"usher is shut down, all local servers are stopped and not accepting "
-"connections"
+msgid "usher is shut down, all local servers are stopped and not accepting connections"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:3
-#, fuzzy
 msgid "server name"
-msgstr "краткое имя"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/gadmin/usher/index.html.php:5
 msgid "action"
@@ -2171,9 +2026,8 @@ msgid "Personal project feed for %%user%%."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/index.html.php:4
-#, fuzzy
 msgid "No projects managed with InDefero were found."
-msgstr "Проектов не найдено."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/index.html.php:7
 msgid "Managed Projects:"
@@ -2232,9 +2086,8 @@ msgid "My Issues"
 msgstr "Мои проблемы"
 
 #: /IDF/gettexttemplates/idf/issues/base.html.php:6
-#, fuzzy
 msgid "My watch list"
-msgstr "В Вашем списке наблюдения."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/base.html.php:7
 #: /IDF/gettexttemplates/idf/wiki/base.html.php:6
@@ -2249,13 +2102,10 @@ msgstr "Назад к проблеме"
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>\n"
+"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 msgstr ""
-"<p><strong>Открытых проблем:</strong> <a href=\"%%open_url%%\">%%open%%</a></"
-"p>\n"
-"<p><strong>Закрытых проблем:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>\n"
+"<p><strong>Открытых проблем:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Закрытых проблем:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 
 #: /IDF/gettexttemplates/idf/issues/by-label.html.php:7
 msgid "Label:"
@@ -2267,16 +2117,20 @@ msgstr "Завершение:"
 
 #: /IDF/gettexttemplates/idf/issues/create.html.php:3
 msgid ""
-"<p>When you submit the issue do not forget to provide the following "
-"information:</p>\n"
+"<p>When you submit the issue do not forget to provide the following information:</p>\n"
 "<ul>\n"
 "<li>The steps to reproduce the problem.</li>\n"
 "<li>The version of the software and your operating system.</li>\n"
 "<li>Any information that can help the developers to solve the issue.</li>\n"
-"<li><strong>Do not provide any password or confidential information!</"
-"strong></li>\n"
+"<li><strong>Do not provide any password or confidential information!</strong></li>\n"
 "</ul>"
 msgstr ""
+"<p> Когда вы отправляете проблему не забудьте указать следующую информацию: </p>\n"
+"<ul><li> Шаги по воспроизведению проблемы. </li>\n"
+"<li> Версии программного обеспечения и операционной системы. </li>\n"
+"<li> Любая информация, которая поможет разработчикам решить проблему. </li>\n"
+"<li> <strong>Не добавляйте никаких паролей или конфиденциальной информации!</strong> </li>\n"
+"</ul>"
 
 #: /IDF/gettexttemplates/idf/issues/create.html.php:10
 msgid "The form contains some errors. Please correct them to submit the issue."
@@ -2313,13 +2167,10 @@ msgstr "Приложить еще один файл"
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>"
+"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
 msgstr ""
-"<p><strong>Открытых проблем:</strong> <a href=\"%%open_url%%\">%%open%%</a></"
-"p>\n"
-"<p><strong>Закрытых проблем:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>"
+"<p><strong>Открытых проблем:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Закрытых проблем:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
 
 #: /IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:3
 msgid ""
@@ -2363,10 +2214,8 @@ msgstr "Комментарии (последние первыми):"
 
 #: /IDF/gettexttemplates/idf/issues/my-issues.html.php:3
 #, php-format
-msgid ""
-"See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
-msgid_plural ""
-"See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
+msgid "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
+msgid_plural "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -2374,10 +2223,8 @@ msgstr[3] ""
 
 #: /IDF/gettexttemplates/idf/issues/my-issues.html.php:4
 #, php-format
-msgid ""
-"See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
-msgid_plural ""
-"See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
+msgid "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
+msgid_plural "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -2405,11 +2252,8 @@ msgstr "Сообщено %%submitter%%, %%c.creation_dtime%%"
 #: /IDF/gettexttemplates/idf/issues/view.html.php:4
 #: /IDF/gettexttemplates/idf/review/view.html.php:22
 #, php-format
-msgid ""
-"Comment <a href=\"%%url%%\">%%i%%</a> by %%submitter%%, %%c.creation_dtime%%"
-msgstr ""
-"Комментированно <a href=\"%%url%%\">%%i%%</a> %%submitter%%, %%c."
-"creation_dtime%%"
+msgid "Comment <a href=\"%%url%%\">%%i%%</a> by %%submitter%%, %%c.creation_dtime%%"
+msgstr "Комментированно <a href=\"%%url%%\">%%i%%</a> %%submitter%%, %%c.creation_dtime%%"
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:5
 #, php-format
@@ -2417,29 +2261,25 @@ msgid "<a href=\"%%url%%\">Sign in</a> to reply to this comment."
 msgstr "<a href=\"%%url%%\">Войдите</a>, чтобы ответить на комментарий."
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:6
-msgid ""
-"This issue is marked as closed, add a comment only if you think this issue "
-"is still valid and more work is needed to fully fix it."
-msgstr ""
+msgid "This issue is marked as closed, add a comment only if you think this issue is still valid and more work is needed to fully fix it."
+msgstr "Эта проблема отмечена как закрытая. Добавляйте комментарий, только если вы думаете, что этот вопрос остается в силе и многое еще предстоит сделать, чтобы полностью исправить ее."
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:8
-#, fuzzy, php-format
+#, php-format
 msgid "%%interested%% person"
 msgid_plural "%%interested%% persons"
-msgstr[0] "наблюдающие пользователи"
-msgstr[1] "наблюдающие пользователи"
-msgstr[2] "наблюдающие пользователи"
-msgstr[3] "наблюдающие пользователи"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:9
-#, fuzzy
 msgid "Remove this issue from your watch list"
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:10
-#, fuzzy
 msgid "Add this issue to your watch list"
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:11
 msgid "Click here to view the previous closed issue"
@@ -2458,14 +2298,12 @@ msgid "Click here to view the next open issue"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:15
-#, fuzzy
 msgid "download"
-msgstr "Файлы"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:16
-#, fuzzy
 msgid "view"
-msgstr "аудит"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/issues/view.html.php:21
 msgid "The form contains some errors. Please correct them to change the issue."
@@ -2513,10 +2351,8 @@ msgstr "Я забыл пароль!"
 
 #: /IDF/gettexttemplates/idf/main-menu.html.php:3
 #, php-format
-msgid ""
-"Welcome, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
-msgstr ""
-"Привет, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
+msgid "Welcome, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
+msgstr "Привет, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
 
 #: /IDF/gettexttemplates/idf/main-menu.html.php:4
 msgid "Sign Out"
@@ -2532,7 +2368,7 @@ msgstr "Управление сервером"
 
 #: /IDF/gettexttemplates/idf/main-menu.html.php:9
 msgid "Help and accessibility features"
-msgstr ""
+msgstr "Справка и специальные возможности"
 
 #: /IDF/gettexttemplates/idf/main-menu.html.php:10
 #: /IDF/gettexttemplates/idf/source/git/tree.html.php:14
@@ -2577,9 +2413,8 @@ msgid "Latest updates"
 msgstr "Последние изменения"
 
 #: /IDF/gettexttemplates/idf/project/timeline.html.php:6
-#, fuzzy
 msgid "Filter by type"
-msgstr "Тип репозитория"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/confirmation-email.txt.php:3
 #, php-format
@@ -2615,7 +2450,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:3
 #: /IDF/gettexttemplates/idf/user/passrecovery.html.php:3
 msgid "Oups, please check the form for errors."
-msgstr ""
+msgstr "Упс, пожалуйста, проверьте форму на наличие ошибок."
 
 #: /IDF/gettexttemplates/idf/register/confirmation.html.php:5
 #: /IDF/gettexttemplates/idf/user/passrecovery.html.php:5
@@ -2623,30 +2458,21 @@ msgid "Email:"
 msgstr "Эл. почта:"
 
 #: /IDF/gettexttemplates/idf/register/confirmation.html.php:6
-#, fuzzy
 msgid "Enable Your Account"
-msgstr "Создайте Ваш аккаунт"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/confirmation.html.php:8
 #: /IDF/gettexttemplates/idf/user/passrecovery.html.php:8
-msgid ""
-"This is the last step, but just <strong>be sure to have the cookies enabled</"
-"strong> to log in afterwards."
+msgid "This is the last step, but just <strong>be sure to have the cookies enabled</strong> to log in afterwards."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/index.html.php:3
-msgid ""
-"Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> "
-"&ndash; basically <em>\"Please be nice, we respect you\"</em>."
+msgid "Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> &ndash; basically <em>\"Please be nice, we respect you\"</em>."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/index.html.php:4
 #, php-format
-msgid ""
-"With your account, you will able to participate in the life of all the "
-"projects hosted here. Participating in a software project must be fun, so if "
-"you have troubles, you can <a href=\"%%url%%\">let us know about your issues "
-"at anytime</a>!"
+msgid "With your account, you will able to participate in the life of all the projects hosted here. Participating in a software project must be fun, so if you have troubles, you can <a href=\"%%url%%\">let us know about your issues at anytime</a>!"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/index.html.php:5
@@ -2654,9 +2480,7 @@ msgid "Oups, please check the provided login and email address to register."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/index.html.php:8
-msgid ""
-"Be sure to provide a valid email address, as we are sending a validation "
-"link by email."
+msgid "Be sure to provide a valid email address, as we are sending a validation link by email."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/index.html.php:9
@@ -2667,90 +2491,78 @@ msgstr "Знаете ли Вы?"
 #: /IDF/gettexttemplates/idf/user/changeemail.html.php:3
 #: /IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:3
 msgid "Oups, we found an error in the form."
-msgstr ""
+msgstr "Упс, мы обнаружили ошибку в форме."
 
 #: /IDF/gettexttemplates/idf/register/inputkey.html.php:4
 msgid "Confirm Your Account"
 msgstr "Подтвердить ваш аккаунт"
 
 #: /IDF/gettexttemplates/idf/register/inputkey.html.php:7
-msgid ""
-"Use your email software to read your emails and open your confirmation "
-"email. Either click directly on the confirmation link or copy/paste the "
-"confirmation key in the box and submit the form."
+msgid "Use your email software to read your emails and open your confirmation email. Either click directly on the confirmation link or copy/paste the confirmation key in the box and submit the form."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/register/inputkey.html.php:8
-msgid ""
-"Just after providing the confirmation key, you will be able to set your "
-"password and start using this website fully."
+msgid "Just after providing the confirmation key, you will be able to set your password and start using this website fully."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/review/base-full.html.php:3
 #: /IDF/gettexttemplates/idf/review/base.html.php:3
 msgid "Open Reviews"
-msgstr "Открытые аудиты"
+msgstr "Открытые рецензии"
 
 #: /IDF/gettexttemplates/idf/review/base.html.php:4
 #: /IDF/gettexttemplates/idf/review/create.html.php:11
 #: /IDF/gettexttemplates/idf/review/index.html.php:3 /IDF/Views/Review.php:83
 msgid "Start Code Review"
-msgstr "Начать аудит кода"
+msgstr "Начать рецензирование кода"
 
 #: /IDF/gettexttemplates/idf/review/create.html.php:3
 msgid ""
 "<p>To start a code review, you need to provide:</p>\n"
 "<ul>\n"
-"<li>A commit or revision of the current code in the repository from which "
-"you started your work.</li>\n"
-"<li>A patch describing your changes with respect to the reference commit.</"
-"li>\n"
-"<li><strong>Ensure your patch does not contain any passwords or confidential "
-"information!</strong></li>\n"
+"<li>A commit or revision of the current code in the repository from which you started your work.</li>\n"
+"<li>A patch describing your changes with respect to the reference commit.</li>\n"
+"<li><strong>Ensure your patch does not contain any passwords or confidential information!</strong></li>\n"
 "</ul>"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/review/create.html.php:9
-msgid ""
-"The form contains some errors. Please correct them to submit the code review."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы отправить Ваш аудит."
+msgid "The form contains some errors. Please correct them to submit the code review."
+msgstr "Форма содержит ошибки. Пожалуйста исправте их чтобы отправить вашу рецензию."
 
 #: /IDF/gettexttemplates/idf/review/create.html.php:10
-msgid ""
-"Select the commit against which you created your patch to be sure it applies "
-"correctly."
-msgstr ""
+msgid "Select the commit against which you created your patch to be sure it applies correctly."
+msgstr "Выберите комит для которого вы создали свой патч, чтобы убедиться, что он применяется правильно."
 
 #: /IDF/gettexttemplates/idf/review/review-created-email.txt.php:3
-#, fuzzy
 msgid "The following review has been created:"
-msgstr "Следющий аудит был обновлен:"
+msgstr "Следующая рецензия была создана:"
 
 #: /IDF/gettexttemplates/idf/review/review-created-email.txt.php:10
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:16
 msgid "Review:"
-msgstr "Аудиты:"
+msgstr "Рецензия:"
 
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:3
 msgid "The following review has been updated:"
-msgstr "Следющий аудит был обновлен:"
+msgstr "Следющая рецензия была обновлена:"
 
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:5
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "By %%who%%, %%c.creation_dtime%%, on file:\n"
 "%%c.cfile%%\n"
-msgstr "%%who%%, %%c.creation_dtime%%:"
+msgstr ""
+"By %%who%%, %%c.creation_dtime%%, on file:\n"
+"%%c.cfile%%\n"
 
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:14
 msgid "General comments (last first):"
 msgstr "Общие комментарии (последние в начале):"
 
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:15
-#, fuzzy
 msgid "Detailed file comments (last first):"
-msgstr "Общие комментарии (последние в начале):"
+msgstr "Подробные комментарии файла (новые в начале):"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:3
 #: /IDF/gettexttemplates/idf/source/commit.html.php:3
@@ -2763,13 +2575,13 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:4
-#, fuzzy, php-format
+#, php-format
 msgid "%%nc%% comment"
 msgid_plural "%%nc%% comments"
-msgstr[0] "комментарий"
-msgstr[1] "комментарий"
-msgstr[2] "комментарий"
-msgstr[3] "комментарий"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:5
 msgid ""
@@ -2780,7 +2592,7 @@ msgid ""
 "contributions</strong>, as such, you must be pragmatic when writing\n"
 "your review. Correctly mention the line numbers (in the old or in the\n"
 "new file) and try to keep a good balance between seriousness and fun.\n"
-msgstr ""
+msgstr "Рецензирование кода - это процесс, при котором до или после комитов отправленых в репозиторий, разные люди обсуждают изменения в коде. Целью является <strong>улучшение качества кода и участия, </strong> таким образом, вы должны быть прагматичными при написании обзора. Правильно отметить номера строк (в старом или в новом файле) и попытаться сохранить хороший баланс между серьезностью и шуткой.\n"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:13
 msgid ""
@@ -2791,31 +2603,27 @@ msgid ""
 "coding standards and the structure of the code and <strong>make them want\n"
 "to propose more contributions</strong>.\n"
 msgstr ""
+"\n"
+"<strong>Предложение кода для рецензирования пугает.</strong> Знайте, вы будете получать критику, поэтому, пожалуйста, как рецензент, <strong>воспринимать этот процесс с улыбкой,</strong> использовать его, чтобы помочь вашей команде узнать ваши стандарты кодирования и структуры кода и <strong>сделать так, что бы они продолжили участие в проекте</strong> .\n"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:20
-#, fuzzy, php-format
-msgid ""
-"Comment <a href=\"%%url%%\">%%i%%</a> by <a href=\"%%whourl%%\">%%who%%</a>, "
-"%%c.creation_dtime%%"
-msgstr ""
-"Комментированно <a href=\"%%url%%\">%%i%%</a> %%submitter%%, %%c."
-"creation_dtime%%"
+#, php-format
+msgid "Comment <a href=\"%%url%%\">%%i%%</a> by <a href=\"%%whourl%%\">%%who%%</a>, %%c.creation_dtime%%"
+msgstr "Комментарий <a href=\"%%url%%\">%%i%%</a> <a href=\"%%whourl%%\">%%who%%</a>, %%c.creation_dtime%%"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:21
 #, php-format
 msgid "Your comments on the changes in file <em>%%file%%</em>:"
-msgstr ""
+msgstr "Ваши комментарии на изменения в файле <em>%%file%%</em>:"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:23
-#, fuzzy, php-format
+#, php-format
 msgid "<a href=\"%%url%%\">Sign in</a> to participate in the review."
-msgstr "<a href=\"%%url%%\">Войдите</a>, чтобы ответить на комментарий."
+msgstr "<a href=\"%%url%%\">Войдите</a> что бы учавствовать в рецензировании."
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:24
-msgid ""
-"The form contains some errors. Please correct them to submit your review."
-msgstr ""
-"Форма содержит ошибки. Пожалуйста исправте их чтобы отправить Ваш обзор."
+msgid "The form contains some errors. Please correct them to submit your review."
+msgstr "Форма содержит ошибки. Пожалуйста исправьте их чтобы отправить вашу рецензию."
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:27
 #: /IDF/gettexttemplates/idf/source/commit.html.php:5
@@ -2825,22 +2633,21 @@ msgstr "Автор:"
 #: /IDF/gettexttemplates/idf/review/view.html.php:28
 #: /IDF/gettexttemplates/idf/source/commit-created-email.txt.php:5
 #: /IDF/gettexttemplates/idf/source/commit.html.php:7
-#, fuzzy
 msgid "Commit:"
-msgstr "Комментарий"
+msgstr "Комит:"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:29
 #: /IDF/gettexttemplates/idf/source/commit.html.php:8
 msgid "View corresponding source tree"
-msgstr ""
+msgstr "Просмотреть соответствующие дерево исходных текстов"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:31
 msgid "Reviewers:"
-msgstr "Аудитор:"
+msgstr "Рецензенты:"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:32
 msgid "No reviewers at the moment."
-msgstr "Нет аудиторов в данный момент."
+msgstr "Нет рецензентов в данный момент."
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:33
 msgid "Files:"
@@ -2848,14 +2655,12 @@ msgstr "Файлы:"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:35
 #: /IDF/gettexttemplates/idf/source/commit.html.php:23
-#, fuzzy
 msgid "Download the corresponding diff file"
-msgstr "Скачать этот файл"
+msgstr "Скачать соответствующий diff файл."
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:36
-#, fuzzy
 msgid "How to Participate in a Code Review"
-msgstr "Начать аудит кода"
+msgstr "Как принять участие в рецензировании кода"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:37
 msgid "Old"
@@ -2866,13 +2671,12 @@ msgid "New"
 msgstr "Новый"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:39
-#, fuzzy
 msgid "General Comments"
-msgstr "Общий комментарий"
+msgstr "Общие комментарии"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:42
 msgid "Submit Code Review"
-msgstr "Отправить аудит"
+msgstr "Отправить рецензию на код"
 
 #: /IDF/gettexttemplates/idf/source/base.html.php:3
 msgid "Source Tree"
@@ -2914,12 +2718,11 @@ msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/changelog.html.php:8
 msgid "by"
-msgstr " "
+msgstr "  "
 
 #: /IDF/gettexttemplates/idf/source/commit-created-email.txt.php:3
-#, fuzzy
 msgid "A new commit has been created:"
-msgstr "Проект был создан."
+msgstr "Новые комит был создан:"
 
 #: /IDF/gettexttemplates/idf/source/commit-created-email.txt.php:7
 #: /IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:6
@@ -2938,21 +2741,19 @@ msgstr "Содежимое:"
 
 #: /IDF/gettexttemplates/idf/source/commit-created-email.txt.php:10
 msgid "Commit details:"
-msgstr ""
+msgstr "Детали комита:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:4
 msgid "Date:"
 msgstr "Дата:"
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:6
-#, fuzzy
 msgid "Branch:"
-msgstr "Бранчи:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:9
-#, fuzzy
 msgid "Parents:"
-msgstr "Вложения:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:11
 msgid "Message:"
@@ -2974,9 +2775,8 @@ msgid "full"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:15
-#, fuzzy
 msgid "renamed"
-msgstr "имя"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/commit.html.php:16
 msgid "added"
@@ -3006,29 +2806,24 @@ msgid ""
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:5
-#, fuzzy
 msgid "Title"
-msgstr "заголовок"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:6
-#, fuzzy
 msgid "Author"
-msgstr "Автор:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:7
-#, fuzzy
 msgid "Date"
-msgstr "Дата:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:8
-#, fuzzy
 msgid "Branch"
-msgstr "Бранчи:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:9
-#, fuzzy
 msgid "Revision"
-msgstr "Ревизия:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/feedfragment.xml.php:3
 #, php-format
@@ -3038,9 +2833,8 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:3
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:3
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:3
-#, fuzzy
 msgid "Branches"
-msgstr "Бранчи:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:4
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:4
@@ -3051,9 +2845,8 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:5
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:5
 #: /IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:5
-#, fuzzy
 msgid "Tags"
-msgstr "Теги:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:6
 #: /IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:6
@@ -3070,9 +2863,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/svn/file.html.php:3
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:3
 #, php-format
-msgid ""
-"Source at commit <a class=\"mono\" href=\"%%url%%\">%%commit%%</a> created "
-"%%cobject.date%%."
+msgid "Source at commit <a class=\"mono\" href=\"%%url%%\">%%commit%%</a> created %%cobject.date%%."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/git/file.html.php:4
@@ -3096,7 +2887,7 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/svn/file.html.php:5
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:5
 msgid "Root"
-msgstr ""
+msgstr "Корень"
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:3
 #, php-format
@@ -3108,17 +2899,13 @@ msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:6
 #, php-format
-msgid ""
-"You may need to <a href=\"%%url%%\">provide your SSH key</a>. The "
-"synchronization of your SSH key can take a couple of minutes. You can learn "
-"more about <a href=\"http://www.google.com/search?q=public+ssh+key"
-"+authentication\">SSH key authentification</a>."
+msgid "You may need to <a href=\"%%url%%\">provide your SSH key</a>. The synchronization of your SSH key can take a couple of minutes. You can learn more about <a href=\"http://www.google.com/search?q=public+ssh+key+authentication\">SSH key authentification</a>."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:7
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:6
 msgid "To make a first commit in the repository, perform the following steps:"
-msgstr ""
+msgstr "Чтобы сделать первый комит в репозиторий, выполните следующие действия:"
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:8
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:7
@@ -3133,13 +2920,12 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:8
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:8
 msgid "Command-Line Access"
-msgstr ""
+msgstr "Доступ к командной строке"
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:10
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:9
-#, fuzzy
 msgid "First Commit"
-msgstr "Имя"
+msgstr "Первый комит"
 
 #: /IDF/gettexttemplates/idf/source/git/tree.html.php:9
 #: /IDF/gettexttemplates/idf/source/mercurial/tree.html.php:9
@@ -3195,15 +2981,13 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:6
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:6
 #, php-format
-msgid ""
-"To get write access to the repository, you need to use your username and "
-"your <a href=\"%%url%%\">extra password</a>."
+msgid "To get write access to the repository, you need to use your username and your <a href=\"%%url%%\">extra password</a>."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:9
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:9
 msgid "Write Access Authentication"
-msgstr ""
+msgstr "Аутентификация для возможности записи"
 
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:3
 #, php-format
@@ -3235,7 +3019,7 @@ msgstr "Собственность"
 #: /IDF/gettexttemplates/idf/source/svn/file.html.php:7
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:12
 msgid "set to:"
-msgstr ""
+msgstr "установить в:"
 
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:3
 #, php-format
@@ -3288,11 +3072,8 @@ msgstr "Подтвердите Ваш новый эл. адрес"
 
 #: /IDF/gettexttemplates/idf/user/changeemail.html.php:7
 #: /IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:7
-msgid ""
-"Use your email software to read your emails and open your verification "
-"email. Either click directly on the verification link or copy/paste the "
-"verification key in the box and submit the form."
-msgstr ""
+msgid "Use your email software to read your emails and open your verification email. Either click directly on the verification link or copy/paste the verification key in the box and submit the form."
+msgstr "Запустите ваше ПО для чтения электронной почты и откройте письмо с подтверждением. Либо нажмите непосредственно на ссылку подтверждения или скопируйте и вставьте проверочный ключ в форму и нажмите Отправить."
 
 #: /IDF/gettexttemplates/idf/user/dashboard.html.php:3
 #, php-format
@@ -3305,34 +3086,28 @@ msgid "<a href=\"%%url%%\">See your public profile</a>."
 msgstr "<a href=\"%%url%%\">Посмотреть Ваш публичный профиль</a>."
 
 #: /IDF/gettexttemplates/idf/user/dashboard.html.php:5
-#, fuzzy, php-format
+#, php-format
 msgid "<a href=\"%%url%%\">See your forge issue watch list</a>."
-msgstr "<a href=\"%%url%%\">Посмотреть Ваш публичный профиль</a>."
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:6
-#, fuzzy
 msgid "Key Management"
-msgstr "Управление сервером"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:7
 msgid "Extra password"
 msgstr "Дополнительный пароль"
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:8
-msgid ""
-"This password is used to access some of the external systems managed by our "
-"infrastructure. It will be regenerated if you change your password."
-msgstr ""
-"Этот пароль служит для доступа с внешних систем, управляемых нашей "
-"инфраструктурой. Он будет сгенерирован при смене Вашего пароля."
+msgid "This password is used to access some of the external systems managed by our infrastructure. It will be regenerated if you change your password."
+msgstr "Этот пароль служит для доступа с внешних систем, управляемых нашей инфраструктурой. Он будет сгенерирован при смене Вашего пароля."
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:9
 msgid "API key"
 msgstr "API ключ"
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:10
-msgid ""
-"Your API key will be regenerated automatically if you change your password."
+msgid "Your API key will be regenerated automatically if you change your password."
 msgstr "API ключ будет сгенерирован автоматически при смене Вашего пароль."
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:11
@@ -3344,45 +3119,32 @@ msgid "Your Current Public Keys"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:14
-#, fuzzy
 msgid "Delete this key"
-msgstr "Удалить этот файл"
+msgstr "Удалить этот ключ"
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:15
-msgid ""
-"If possible, use your real name. By using your real name, people will have "
-"more trust in your comments and remarks."
-msgstr ""
+msgid "If possible, use your real name. By using your real name, people will have more trust in your comments and remarks."
+msgstr "Если возможно, используйте свое настоящее имя. При использовании свое настоящего имени, люди будут больше доверять вашим комментариям и замечаниям."
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:16
-#, fuzzy
-msgid ""
-"The extra password is used to access some of the external systems and the "
-"API key is used to interact with this website using a program."
-msgstr ""
-"Этот пароль служит для доступа с внешних систем, управляемых нашей "
-"инфраструктурой. Он будет сгенерирован при смене Вашего пароля."
+msgid "The extra password is used to access some of the external systems and the API key is used to interact with this website using a program."
+msgstr "Дополнительный пароль используется для доступа с некоторых внешних систем и ключ API используется для взаимодействия с этим веб-сайтом из внешней программы."
 
 #: /IDF/gettexttemplates/idf/user/myaccount.html.php:17
 msgid "Show API key and extra password"
 msgstr "Показать ключ API и дополнительный пароль"
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:3
-msgid ""
-"Oups, please check the provided login or email address to recover your "
-"password."
-msgstr ""
+msgid "Oups, please check the provided login or email address to recover your password."
+msgstr "Упс, пожалуйста, проверьте предоставленный логин или электронный адрес для восстановления пароля."
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:4
 msgid "Recover My Password"
-msgstr "Воостановить мой пароль"
+msgstr "Восстановить мой пароль"
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:6
-msgid ""
-"Provide either your login or email address, if a corresponding user is found "
-"in the database, we will send you an email with the details on how to reset "
-"your password."
-msgstr ""
+msgid "Provide either your login or email address, if a corresponding user is found in the database, we will send you an email with the details on how to reset your password."
+msgstr "Введите ваш Логин или адрес электронной почты. Если соответствующий пользователь найден в базе данных, мы вышлем Вам письмо с информацией о том, как сменить пароль."
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-email.txt.php:3
 #, php-format
@@ -3417,10 +3179,8 @@ msgid "Recover Your Password"
 msgstr "Восстановить пароль"
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:8
-msgid ""
-"Just after providing the confirmation key, you will be able to reset your "
-"password and use again this website fully."
-msgstr ""
+msgid "Just after providing the confirmation key, you will be able to reset your password and use again this website fully."
+msgstr "Сразу после предоставления подтверждающего ключа, вы сможете изменить пароль и снова использовать этот веб-сайт полностью."
 
 #: /IDF/gettexttemplates/idf/user/passrecovery.html.php:6
 msgid "Reset Your Password"
@@ -3429,16 +3189,15 @@ msgstr "Сбросить пароль"
 #: /IDF/gettexttemplates/idf/user/public.html.php:3
 #, php-format
 msgid "You are looking at the public profile of %%member%%."
-msgstr ""
+msgstr "Вы просматриваете публичный профиль %%member%%."
 
 #: /IDF/gettexttemplates/idf/user/public.html.php:5
 msgid "Twitter:"
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/user/public.html.php:6
-#, fuzzy
 msgid "Public Email:"
-msgstr "Эл. почта:"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/user/public.html.php:7
 msgid "Website:"
@@ -3482,17 +3241,14 @@ msgstr "Создать страницу"
 #: /IDF/gettexttemplates/idf/wiki/delete.html.php:3
 #, php-format
 msgid ""
-"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the "
-"page \n"
+"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the page \n"
 "<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
 "by %%submitter%%."
 msgstr ""
 
 #: /IDF/gettexttemplates/idf/wiki/delete.html.php:6
-msgid ""
-"If you delete this old revision, it will be removed from the database and "
-"<strong>you will not be able to recover it</strong>."
-msgstr ""
+msgid "If you delete this old revision, it will be removed from the database and <strong>you will not be able to recover it</strong>."
+msgstr "Если вы удалите эту старую версию, она будет удалена из базы данных, и <strong>вы не сможете ее восстановить.</strong>"
 
 #: /IDF/gettexttemplates/idf/wiki/delete.html.php:9
 msgid "Delete Revision"
@@ -3501,47 +3257,31 @@ msgstr "Удалить ревизию"
 #: /IDF/gettexttemplates/idf/wiki/delete.html.php:14
 #: /IDF/gettexttemplates/idf/wiki/deletepage.html.php:11
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:17
-#, fuzzy
 msgid "Old Revisions"
-msgstr "Ревизия:"
+msgstr "Старые ревизии"
 
 #: /IDF/gettexttemplates/idf/wiki/deletepage.html.php:3
-msgid ""
-"If you delete this documentation page, it will be removed from the database "
-"with all the associated revisions and <strong>you will not be able to "
-"recover it</strong>."
-msgstr ""
+msgid "If you delete this documentation page, it will be removed from the database with all the associated revisions and <strong>you will not be able to recover it</strong>."
+msgstr "Если вы удалите эту страницу документации, она будет удалена из базы данных со всеми сопутствующими изменениями и <strong>вы не сможете ее восстановить.</strong>"
 
 #: /IDF/gettexttemplates/idf/wiki/deletepage.html.php:6
-#, fuzzy
 msgid "Delete Page"
-msgstr "Удалить файл"
+msgstr "Удалить страницу"
 
 #: /IDF/gettexttemplates/idf/wiki/edit-info.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</"
-"a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
-"<p>Website addresses are automatically linked and you can link to another "
-"page in the documentation using double square brackets like that "
-"[[AnotherPage]].</p>\n"
-"<p>To directly include a file content from the repository, embrace its path "
-"with triple square brackets: [[[path/to/file.txt]]].</p>\n"
+"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
+"<p>Website addresses are automatically linked and you can link to another page in the documentation using double square brackets like that [[AnotherPage]].</p>\n"
+"<p>To directly include a file content from the repository, embrace its path with triple square brackets: [[[path/to/file.txt]]].</p>\n"
 msgstr ""
-"\n"
-"<p><strong>Инструкции:</strong></p>\n"
-"<p>Содержимое страницы может быть оформлено с использованием <a href=\"%%url"
-"%%\">Markdown синтаксиса</a>.</p>\n"
-"<p>Адреса вебсайтов будут автоматически преобразованны в ссылки. Вы можете "
-"дать ссылку на другую страницу документации используя квадратные скобки. "
-"Например [[ДругаяСтраница]].</p>\n"
 
 #: /IDF/gettexttemplates/idf/wiki/index.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid "See <a href=\"%%url%%\">the deprecated pages</a>."
-msgstr "<a href=\"%%url%%\">Узнать больше об API</a>."
+msgstr "Смотреть <a href=\"%%url%%\">устаревшие страницы</a>."
 
 #: /IDF/gettexttemplates/idf/wiki/index.html.php:5
 msgid "Number of pages:"
@@ -3562,15 +3302,14 @@ msgstr "Обновить страницу"
 #: /IDF/gettexttemplates/idf/wiki/update.html.php:8
 #: /IDF/gettexttemplates/idf/wiki/update.html.php:10
 #: /IDF/gettexttemplates/idf/wiki/update.html.php:11
-#, fuzzy
 msgid "Delete this page"
-msgstr "Удалить этот файл"
+msgstr "Удалить эту страницу"
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:3
 msgid ""
 "<strong>Attention!</strong> This page is marked as deprecated, \n"
 "use it as reference only if you are sure you need these specific information."
-msgstr ""
+msgstr "<strong>Внимание!</strong> Эта страница помечена как устаревшая. Ссылайтесь на нее, только если вы уверены, что нужна именно она."
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:5
 #, php-format
@@ -3579,11 +3318,13 @@ msgid ""
 "<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
 "by %%submitter%%."
 msgstr ""
+"Вы смотрите на старую версию страницы \n"
+"<a href=\"%%url%%\">%%page.title%%</a>. Эта версия была создана\n"
+"%%submitter%%."
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:10
-#, fuzzy
 msgid "Table of Content"
-msgstr "Содержание"
+msgstr ""
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:11
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:13
@@ -3591,9 +3332,8 @@ msgid "Delete this revision"
 msgstr "Удалить эту ревизию"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:3
-#, fuzzy
 msgid "A new documentation page has been created:"
-msgstr "Проект был создан."
+msgstr "Новая страница документации была создана:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:9
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:14
@@ -3601,13 +3341,12 @@ msgid "Documentation page:"
 msgstr "Страница документации:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:3
-#, fuzzy
 msgid "The following documentation page has been updated:"
-msgstr "Следющий аудит был обновлен:"
+msgstr "Следующая страница документации была обновлена:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:7
 msgid "Updated by:"
-msgstr "Обновлен:"
+msgstr "Обновлена:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:13
 msgid "New content:"
@@ -3643,19 +3382,19 @@ msgid "The configuration file %s is missing."
 msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:144
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s already exists."
-msgstr "Страница с таким заголовком уже существует."
+msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:150
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s could not be created."
-msgstr "Проект был создан."
+msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:187 /IDF/Scm/Monotone/Stdio.php:87
-#, fuzzy, php-format
+#, php-format
 msgid "The key directory %s could not be created."
-msgstr "Проект был создан."
+msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:205
 #, php-format
@@ -3733,9 +3472,9 @@ msgid "Could not write write-permissions file for project \"%s\""
 msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:790
-#, fuzzy, php-format
+#, php-format
 msgid "The project path %s does not exists."
-msgstr "Проект был создан."
+msgstr ""
 
 #: /IDF/Plugin/SyncMonotone.php:808
 #, php-format
@@ -3752,8 +3491,7 @@ msgstr "голос"
 
 #: /IDF/Review/Comment.php:139 /IDF/Review/Patch.php:151
 #, php-format
-msgid ""
-"<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
+msgid "<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
 msgstr ""
 
 #: /IDF/Review/Comment.php:141
@@ -3930,39 +3668,35 @@ msgid "Add User"
 msgstr ""
 
 #: /IDF/Views/Admin.php:332
-#, fuzzy
 msgid "Usher management"
-msgstr "Управление сервером"
+msgstr ""
 
 #: /IDF/Views/Admin.php:369
-#, fuzzy
 msgid "Usher configuration has been reloaded"
-msgstr "Следующий аудит был создан:"
+msgstr ""
 
 #: /IDF/Views/Admin.php:373
-#, fuzzy
 msgid "Usher has been shut down"
-msgstr "Пользователь был обновлен."
+msgstr ""
 
 #: /IDF/Views/Admin.php:378
-#, fuzzy
 msgid "Usher has been started up"
-msgstr "Пользователь был обновлен."
+msgstr ""
 
 #: /IDF/Views/Admin.php:416
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been started"
-msgstr "Пользователь был обновлен."
+msgstr ""
 
 #: /IDF/Views/Admin.php:420
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been stopped"
-msgstr "Пользователь был обновлен."
+msgstr ""
 
 #: /IDF/Views/Admin.php:425
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been killed"
-msgstr "Пользователь был обновлен."
+msgstr ""
 
 #: /IDF/Views/Admin.php:445
 #, php-format
@@ -4057,14 +3791,14 @@ msgid "No issues were found."
 msgstr "Проблем на найдено."
 
 #: /IDF/Views/Issue.php:113
-#, fuzzy, php-format
+#, php-format
 msgid "Watch List: Closed Issues for %s"
-msgstr "%s закрытых проблем"
+msgstr ""
 
 #: /IDF/Views/Issue.php:114
-#, fuzzy, php-format
+#, php-format
 msgid "This table shows the closed issues in your watch list for %s project."
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/Views/Issue.php:119
 #, php-format
@@ -4072,29 +3806,25 @@ msgid "Watch List: Open Issues for %s"
 msgstr ""
 
 #: /IDF/Views/Issue.php:120
-#, fuzzy, php-format
+#, php-format
 msgid "This table shows the open issues in your watch list for %s project."
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/Views/Issue.php:196
-#, fuzzy
 msgid "Watch List: Closed Issues"
-msgstr "%s закрытых проблем"
+msgstr ""
 
 #: /IDF/Views/Issue.php:197
-#, fuzzy
 msgid "This table shows the closed issues in your watch list."
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/Views/Issue.php:202
-#, fuzzy
 msgid "Watch List: Open Issues"
-msgstr "Открытые проблемы для %s"
+msgstr ""
 
 #: /IDF/Views/Issue.php:203
-#, fuzzy
 msgid "This table shows the open issues in your watch list."
-msgstr "Эта таблица показывает найденные проблемы."
+msgstr ""
 
 #: /IDF/Views/Issue.php:222 /IDF/Views/User.php:82
 msgid "Project"
@@ -4190,19 +3920,16 @@ msgid "On your watch list."
 msgstr "В Вашем списке наблюдения."
 
 #: /IDF/Views/Project.php:72
-#, fuzzy
 msgid "All Updates"
-msgstr "Обновления"
+msgstr ""
 
 #: /IDF/Views/Project.php:74
-#, fuzzy
 msgid "Issues and Comments"
-msgstr "Общие комментарии"
+msgstr ""
 
 #: /IDF/Views/Project.php:76
-#, fuzzy
 msgid "Documents"
-msgstr "Документация"
+msgstr ""
 
 #: /IDF/Views/Project.php:77
 msgid "Reviews and Patches"
@@ -4313,9 +4040,9 @@ msgid "%s Source Help"
 msgstr "Помощь по исходному коду для %s"
 
 #: /IDF/Views/Source.php:58
-#, fuzzy, php-format
+#, php-format
 msgid "%s Invalid Revision"
-msgstr "Старые ревизии"
+msgstr ""
 
 #: /IDF/Views/Source.php:77
 #, php-format
@@ -4368,9 +4095,8 @@ msgid "Your Account"
 msgstr "Ваш аккаунт"
 
 #: /IDF/Views/User.php:155
-#, fuzzy
 msgid "The public key has been deleted."
-msgstr "Файл был удален."
+msgstr ""
 
 #: /IDF/Views/User.php:178
 msgid "Confirm The Email Change"
@@ -4452,12 +4178,3 @@ msgstr ""
 #, php-format
 msgid "Delete Page %s"
 msgstr ""
-
-#~ msgid "ssh key"
-#~ msgstr "ssh ключ"
-
-#~ msgid "Be careful to provide your public key and not your private key!"
-#~ msgstr "Будьте осторожны! Нужен публичный ключь, а не личный!"
-
-#~ msgid "%s Updates"
-#~ msgstr "Изменения в %s"
