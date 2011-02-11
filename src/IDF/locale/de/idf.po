@@ -481,21 +481,20 @@ msgstr "mercurial"
 
 #: /IDF/Form/Admin/ProjectCreate.php:41 /IDF/Views/Project.php:543
 msgid "monotone"
-msgstr ""
+msgstr "monotone"
 
 #: /IDF/Form/Admin/ProjectCreate.php:49 /IDF/Form/Admin/ProjectUpdate.php:44
 #: /IDF/Views/Admin.php:66 /IDF/Views/Admin.php:210
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: /IDF/Form/Admin/ProjectCreate.php:55 /IDF/Form/TabsConf.php:77
 #: /IDF/gettexttemplates/idf/index.html.php:6
 #: /IDF/gettexttemplates/idf/main-menu.html.php:7
 msgid "Private project"
-msgstr ""
+msgstr "Privates Projekt"
 
 #: /IDF/Form/Admin/ProjectCreate.php:62
-#, fuzzy
 msgid "Shortname"
 msgstr "Kurzname"
 
@@ -509,94 +508,94 @@ msgstr ""
 "\"mein-projekt\""
 
 #: /IDF/Form/Admin/ProjectCreate.php:69 /IDF/Form/Admin/ProjectUpdate.php:50
-#, fuzzy
 msgid "Short description"
 msgstr "Kurzbeschreibung"
 
 #: /IDF/Form/Admin/ProjectCreate.php:77
 msgid "Repository type"
-msgstr ""
+msgstr "Depot-Typ"
 
 #: /IDF/Form/Admin/ProjectCreate.php:85
 msgid "Remote Subversion repository"
-msgstr ""
+msgstr "Entferntes Subversion-Depot"
 
 #: /IDF/Form/Admin/ProjectCreate.php:92 /IDF/Form/SourceConf.php:40
 msgid "Repository username"
-msgstr ""
+msgstr "Depot-Nutzername"
 
 #: /IDF/Form/Admin/ProjectCreate.php:99 /IDF/Form/SourceConf.php:47
 msgid "Repository password"
-msgstr ""
+msgstr "Depot-Passwort"
 
 #: /IDF/Form/Admin/ProjectCreate.php:106 /IDF/Form/Admin/ProjectUpdate.php:59
 msgid "Master branch"
-msgstr ""
+msgstr "Hauptzweig"
 
 #: /IDF/Form/Admin/ProjectCreate.php:109 /IDF/Form/Admin/ProjectUpdate.php:62
 msgid ""
 "This should be a world-wide unique identifier for your project. A reverse "
 "DNS notation like \"com.my-domain.my-project\" is a good idea."
 msgstr ""
+"Dies sollte ein weltweit eindeutiger Bezeichner für Dein Projekt sein. Eine "
+"umgekehrte DNS-Notation wie \"com.my-domain.my-projekt\" ist eine gute Idee."
 
 #: /IDF/Form/Admin/ProjectCreate.php:114 /IDF/Form/Admin/ProjectUpdate.php:68
 #: /IDF/Form/MembersConf.php:46 /IDF/Form/TabsConf.php:53
 msgid "Project owners"
-msgstr ""
+msgstr "Projekt-Eigentümer"
 
 #: /IDF/Form/Admin/ProjectCreate.php:123 /IDF/Form/Admin/ProjectUpdate.php:76
 #: /IDF/Form/MembersConf.php:54 /IDF/Form/TabsConf.php:52
 msgid "Project members"
-msgstr ""
+msgstr "Projekt-Mitglieder"
 
 #: /IDF/Form/Admin/ProjectCreate.php:136
-#, fuzzy
 msgid "Project template"
-msgstr "Projekt-Startseite"
+msgstr "Projekt-Vorlage"
 
 #: /IDF/Form/Admin/ProjectCreate.php:138
 msgid ""
 "Use the given project to initialize the new project. Access rights and "
 "general configuration will be taken from the template project."
 msgstr ""
+"Benutze das vorgegebene Projekt, um ein neues zu initialisieren. "
+"Zugriffsrechte und allgemeine Konfiguration werden von der Projekt-Vorlage "
+"übernommen."
 
 #: /IDF/Form/Admin/ProjectCreate.php:185
 msgid ""
 "Only a remote repository available throught http or https are allowed. For "
 "example \"http://somewhere.com/svn/trunk\"."
 msgstr ""
+"Nur ein entferntes Depot, welches durch http or https verfügbar ist, ist "
+"erlaubt. Beispiel: \"http://somewhere.com/svn/trunk\"."
 
 #: /IDF/Form/Admin/ProjectCreate.php:201 /IDF/Form/Admin/ProjectUpdate.php:90
-#, fuzzy
 msgid ""
 "The master branch is empty or contains illegal characters, please use only "
 "letters, digits, dashs and dots as separators."
 msgstr ""
-"Der gewünschte Kurzname enthält ungültige Zeichen. Bitte verwenden Sie nur "
-"Buchstaben (ohne Umlaute), Ziffern und den Bindestrich (-)"
+"Der Hauptzweig ist leer oder enthält ungültige Zeichen. Bitte verwenden Sie nur "
+"Buchstaben, Ziffern, Bindestriche und Punkte als Trenner."
 
 #: /IDF/Form/Admin/ProjectCreate.php:211 /IDF/Form/Admin/ProjectUpdate.php:101
-#, fuzzy
 msgid "This master branch is already used. Please select another one."
 msgstr ""
-"Der gewählte Kurzname wird bereits verwendet. Bitte wählen Sie einen anderen."
+"Der Hauptzweig wird bereits verwendet. Bitte wählen Sie einen anderen."
 
 #: /IDF/Form/Admin/ProjectCreate.php:222
-#, fuzzy
 msgid ""
 "This shortname contains illegal characters, please use only letters, digits "
 "and dash (-)."
 msgstr ""
-"Der gewünschte Kurzname enthält ungültige Zeichen. Bitte verwenden Sie nur "
-"Buchstaben (ohne Umlaute), Ziffern und den Bindestrich (-)"
+"Der Kurzname enthält ungültige Zeichen. Bitte verwenden Sie nur "
+"Buchstaben (ohne Umlaute), Ziffern und den Bindestrich."
 
 #: /IDF/Form/Admin/ProjectCreate.php:225
-#, fuzzy
 msgid "The shortname cannot start with the dash (-) character."
 msgstr "Der Kurzname darf nicht mit einem Bindestrich (-) beginnen."
 
 #: /IDF/Form/Admin/ProjectCreate.php:228
-#, fuzzy
 msgid "The shortname cannot end with the dash (-) character."
 msgstr "Der Kurzname darf nicht mit einem Bindestrich (-) enden."
 
@@ -616,7 +615,7 @@ msgstr ""
 #: /IDF/Form/UserChangeEmail.php:80 /IDF/Form/WikiCreate.php:167
 #: /IDF/Form/WikiDelete.php:59 /IDF/Form/WikiUpdate.php:178
 msgid "Cannot save the model from an invalid form."
-msgstr ""
+msgstr "Kann kein Modell von einer ungültigen Maske speichern."
 
 #: /IDF/Form/Admin/ProjectCreate.php:295
 msgid ""
@@ -624,23 +623,24 @@ msgid ""
 msgstr ""
 
 #: /IDF/Form/Admin/ProjectCreate.php:362
-#, fuzzy
 msgid "This project is not available."
-msgstr "Das Projekt wurde aktualisiert."
+msgstr "Das Projekt ist nicht verfügbar."
 
 #: /IDF/Form/Admin/ProjectDelete.php:41
 msgid "Confirmation code"
-msgstr ""
+msgstr "Bestätigungs-Code"
 
 #: /IDF/Form/Admin/ProjectDelete.php:46
 msgid "I have made a backup of all the important data of this project."
-msgstr ""
+msgstr "Ich habe ein Backup aller wichtiger Informationen dieses Projektes gemacht."
 
 #: /IDF/Form/Admin/ProjectDelete.php:55
 msgid ""
 "The confirmation code does not match. Please provide a valid confirmation "
 "code to delete the project."
 msgstr ""
+"Der Bestätigungscode stimmt nicht. Bitte gib einen gültigen Bestätigungscode "
+"ein, um das Projekt zu löschen."
 
 #: /IDF/Form/Admin/ProjectDelete.php:63
 msgid "Sorry, you really need to backup your data before deletion."
@@ -649,17 +649,16 @@ msgstr ""
 #: /IDF/Form/Admin/UserCreate.php:37 /IDF/Form/Admin/UserUpdate.php:38
 #: /IDF/Form/RegisterConfirmation.php:50 /IDF/Form/UserAccount.php:40
 msgid "First name"
-msgstr ""
+msgstr "Vorname"
 
 #: /IDF/Form/Admin/UserCreate.php:46 /IDF/Form/Admin/UserUpdate.php:47
 #: /IDF/Form/RegisterConfirmation.php:59 /IDF/Form/UserAccount.php:49
 msgid "Last name"
-msgstr ""
+msgstr "Nachname"
 
 #: /IDF/Form/Admin/UserCreate.php:56
-#, fuzzy
 msgid "Login"
-msgstr "Letzter Login."
+msgstr "Anmelde-Name"
 
 #: /IDF/Form/Admin/UserCreate.php:60 /IDF/Form/Register.php:45
 msgid ""
@@ -669,36 +668,39 @@ msgstr ""
 
 #: /IDF/Form/Admin/UserCreate.php:69 /IDF/Form/Admin/UserUpdate.php:57
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 #: /IDF/Form/Admin/UserCreate.php:71
 msgid ""
 "Double check the email address as the password is directly sent to the user."
 msgstr ""
+"Überprüfe nochmals die E-Mail-Adresse, da das Passwort direkt an den Benutzer gesendet wird."
 
 #: /IDF/Form/Admin/UserCreate.php:76 /IDF/Form/Admin/UserUpdate.php:67
 #: /IDF/Form/UserAccount.php:66
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: /IDF/Form/Admin/UserCreate.php:87 /IDF/Form/UserAccount.php:159
 msgid "Add a public key"
-msgstr ""
+msgstr "Einen öffentlichen Schlüssel hinzufügen"
 
 #: /IDF/Form/Admin/UserCreate.php:92 /IDF/Form/UserAccount.php:164
 msgid ""
 "Paste a SSH or monotone public key. Be careful to not provide your private "
 "key here!"
 msgstr ""
+"Füge einen öffentlichen SSH- oder monotone-Schlüssel hier ein. Pass auf, "
+"dass Du nicht versehentlich Deinen privaten Schlüssel hier hineinkopierst!"
 
 #: /IDF/Form/Admin/UserCreate.php:157
 msgid "Your details to access your forge."
-msgstr ""
+msgstr "Die Informationen, um auf Deine Forge zuzugreifen."
 
 #: /IDF/Form/Admin/UserCreate.php:189 /IDF/Form/UserAccount.php:400
 #, php-format
 msgid "The email \"%s\" is already used."
-msgstr ""
+msgstr "Die E-Mail \"%s\" wird bereits genutzt."
 
 #: /IDF/Form/Admin/UserCreate.php:198 /IDF/Form/Register.php:72
 #, php-format
@@ -711,72 +713,75 @@ msgid "The login \"%s\" is already used, please find another one."
 msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:78
-#, fuzzy
 msgid "Password"
 msgstr "Passwort"
 
 #: /IDF/Form/Admin/UserUpdate.php:81
 msgid "Leave blank if you do not want to change the password."
-msgstr ""
+msgstr "Lass das Feld leer, wenn Du das Passwort nicht ändern möchtest."
 
 #: /IDF/Form/Admin/UserUpdate.php:81
 msgid ""
 "The password must be hard for other people to find it, but easy for the user "
 "to remember."
 msgstr ""
+"Das Passwort sollte für andere Leute schwer zu finden, aber für den Nutzer "
+"einfach zu erinnern sein."
 
 #: /IDF/Form/Admin/UserUpdate.php:89
 msgid "Confirm password"
-msgstr ""
+msgstr "Passwort bestätigen"
 
 #: /IDF/Form/Admin/UserUpdate.php:100 /IDF/Form/IssueCreate.php:62
 #: /IDF/Form/ReviewCreate.php:54 /IDF/Form/UpdateUpload.php:51
 #: /IDF/Form/Upload.php:49 /IDF/Form/UserAccount.php:99
 #: /IDF/Form/WikiCreate.php:70 /IDF/Form/WikiUpdate.php:60
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: /IDF/Form/Admin/UserUpdate.php:109 /IDF/Form/UserAccount.php:108
 msgid "Twitter username"
-msgstr ""
+msgstr "Twitter-Nutzername"
 
 #: /IDF/Form/Admin/UserUpdate.php:119 /IDF/Form/UserAccount.php:118
 msgid "Public email address"
-msgstr ""
+msgstr "Öffentlichen E-Mail-Adresse"
 
 #: /IDF/Form/Admin/UserUpdate.php:129 /IDF/Form/UserAccount.php:128
 msgid "Website URL"
-msgstr ""
+msgstr "Website-Adresse"
 
 #: /IDF/Form/Admin/UserUpdate.php:139 /IDF/Form/UserAccount.php:138
 msgid "Upload custom avatar"
-msgstr ""
+msgstr "Eigenes Benutzerbild hochladen"
 
 #: /IDF/Form/Admin/UserUpdate.php:146 /IDF/Form/UserAccount.php:145
 msgid ""
 "An image file with a width and height not larger than 60 pixels (bigger "
 "images are scaled down)."
 msgstr ""
+"Eine Bilddatei mit einer Breit und einer Höhe von maximal 60 Pixeln "
+"(größere Bilder werden kleiner skaliert)."
 
 #: /IDF/Form/Admin/UserUpdate.php:151 /IDF/Form/UserAccount.php:150
 msgid "Remove custom avatar"
-msgstr ""
+msgstr "Eigenes Benutzerbild entfernen"
 
 #: /IDF/Form/Admin/UserUpdate.php:155 /IDF/Form/UserAccount.php:154
 msgid "Tick this to delete the custom avatar."
-msgstr ""
+msgstr "Markieren, um das eigene Benutzerbild zu löschen."
 
 #: /IDF/Form/Admin/UserUpdate.php:161 /IDF/Views/Admin.php:211
 msgid "Staff"
-msgstr ""
+msgstr "Stab"
 
 #: /IDF/Form/Admin/UserUpdate.php:164
 msgid "If you give staff rights to a user, you really need to trust him."
-msgstr ""
+msgstr "Wenn Du diesen Nutzer zum Stab hinzufügst, solltest Du ihm wirklich trauen."
 
 #: /IDF/Form/Admin/UserUpdate.php:172 /IDF/Views/Admin.php:213
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #: /IDF/Form/Admin/UserUpdate.php:176
 msgid ""
@@ -786,12 +791,14 @@ msgstr ""
 
 #: /IDF/Form/Admin/UserUpdate.php:274
 msgid "--- is not a valid first name."
-msgstr ""
+msgstr "--- ist kein gültiger Vorname"
 
 #: /IDF/Form/Admin/UserUpdate.php:290
 msgid ""
 "A user with this email already exists, please provide another email address."
 msgstr ""
+"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits, bitte gib eine andere "
+"E-Mail-Adresse an."
 
 #: /IDF/Form/Admin/UserUpdate.php:301 /IDF/Form/Upload.php:86
 #: /IDF/Form/UserAccount.php:367
@@ -3719,39 +3726,33 @@ msgstr ""
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:10
 msgid "Table of Content"
-msgstr ""
+msgstr "Inhaltsverzeichnis"
 
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:11
 #: /IDF/gettexttemplates/idf/wiki/view.html.php:13
-#, fuzzy
 msgid "Delete this revision"
-msgstr "Lösche diese Datei"
+msgstr "Lösche diese Version"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:3
-#, fuzzy
 msgid "A new documentation page has been created:"
-msgstr "Die Seite wurde gelöscht."
+msgstr "Eine neue Dokumentations-Seite wurde angelegt:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:9
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:14
-#, fuzzy
 msgid "Documentation page:"
-msgstr "Dokumentation"
+msgstr "Dokumentations-Seite:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:3
-#, fuzzy
 msgid "The following documentation page has been updated:"
-msgstr "Die Seite wurde gelöscht."
+msgstr "Die folgende Dokumentations-Seite wurde aktualisiert:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:7
-#, fuzzy
 msgid "Updated by:"
-msgstr "Aktualisiert:"
+msgstr "Aktualisiert von:"
 
 #: /IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:13
-#, fuzzy
 msgid "New content:"
-msgstr "Inhalt"
+msgstr "Neuer Inhalt:"
 
 #: /IDF/Plugin/SyncMercurial.php:78 /IDF/Plugin/SyncSvn.php:81
 #, php-format
@@ -4075,44 +4076,41 @@ msgid "Usher management"
 msgstr "Usher-Verwaltung"
 
 #: /IDF/Views/Admin.php:369
-#, fuzzy
 msgid "Usher configuration has been reloaded"
-msgstr "DIe Downloadeinstellungen wurden gespeichert."
+msgstr "Usher-Konfiguration neu geladen"
 
 #: /IDF/Views/Admin.php:373
-#, fuzzy
 msgid "Usher has been shut down"
-msgstr "Der Benutzer wurde aktualisiert."
+msgstr "Usher wurde heruntergefahren."
 
 #: /IDF/Views/Admin.php:378
-#, fuzzy
 msgid "Usher has been started up"
-msgstr "Der Benutzer wurde aktualisiert."
+msgstr "Usher wurde hochgefahren."
 
 #: /IDF/Views/Admin.php:416
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been started"
-msgstr "Der Benutzer %s wurde erstellt."
+msgstr "Der Server \"%s\" wurde gestartet."
 
 #: /IDF/Views/Admin.php:420
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been stopped"
-msgstr "Der Benutzer %s wurde erstellt."
+msgstr "Der Server \"%s\" wurde gestoppt."
 
 #: /IDF/Views/Admin.php:425
-#, fuzzy, php-format
+#, php-format
 msgid "The server \"%s\" has been killed"
-msgstr "Der Benutzer %s wurde erstellt."
+msgstr "Der Server \"%s\" wurde getötet."
 
 #: /IDF/Views/Admin.php:445
 #, php-format
 msgid "Open connections for \"%s\""
-msgstr ""
+msgstr "Offene Verbindungen für \"%s\""
 
 #: /IDF/Views/Admin.php:450
 #, php-format
 msgid "no connections for server \"%s\""
-msgstr ""
+msgstr "keine Verbindungen für Server \"%s\""
 
 #: /IDF/Views/Admin.php:471
 msgid "No"
@@ -4129,16 +4127,16 @@ msgstr "Diese Tabelle zeigt die herunterladbaren Dateien."
 
 #: /IDF/Views/Download.php:67 /IDF/Views/Download.php:297
 msgid "Uploaded"
-msgstr "Daten wurden hochgeladen"
+msgstr "Hochgeladen"
 
 #: /IDF/Views/Download.php:71 /IDF/Views/Download.php:301
 msgid "No downloads were found."
-msgstr "Keine passenden Downloads gefunden."
+msgstr "Keine Downloads gefunden."
 
 #: /IDF/Views/Download.php:96
 #, php-format
 msgid "Download %s"
-msgstr "Lade %s"
+msgstr "Lade %s herunter"
 
 #: /IDF/Views/Download.php:113
 #, php-format
@@ -4162,12 +4160,12 @@ msgstr "Die <a href=\"%s\">Datei</a> wurde hochgeladen."
 #: /IDF/Views/Download.php:279
 #, php-format
 msgid "%1$s Downloads with Label %2$s"
-msgstr "%1$s Downloads mit der Bezeichnung %2$s"
+msgstr "%1$s Downloads mit der Marke %2$s"
 
 #: /IDF/Views/Download.php:289
 #, php-format
 msgid "This table shows the downloads with label %s."
-msgstr "Diese Tabelle zeigt die downloads mit der Bezeichnung %s."
+msgstr "Diese Tabelle zeigt die Downloads mit der Marke %s."
 
 #: /IDF/Views/Issue.php:41
 #, php-format
@@ -4197,44 +4195,40 @@ msgid "No issues were found."
 msgstr "Es wurden keine Tickets gefunden."
 
 #: /IDF/Views/Issue.php:113
-#, fuzzy, php-format
+#, php-format
 msgid "Watch List: Closed Issues for %s"
-msgstr "%s geschlossene Tickets"
+msgstr "Beobachtungsliste: Geschlossene Tickets für %s"
 
 #: /IDF/Views/Issue.php:114
-#, fuzzy, php-format
+#, php-format
 msgid "This table shows the closed issues in your watch list for %s project."
-msgstr "Diese Tabelle zeigt die geschlossenen Tickets"
+msgstr "Diese Tabelle zeigt die geschlossenen Tickets auf Deiner Beobachtungsliste für das Projekt %s."
 
 #: /IDF/Views/Issue.php:119
 #, php-format
 msgid "Watch List: Open Issues for %s"
-msgstr ""
+msgstr "Beobachtungsliste: Offene Tickets für %s"
 
 #: /IDF/Views/Issue.php:120
-#, fuzzy, php-format
+#, php-format
 msgid "This table shows the open issues in your watch list for %s project."
-msgstr "Diese Tabelle zeigt das Ticket mit der Bezeichnung %s."
+msgstr "Diese Tabelle zeigt die offenen Tickets auf Deiner Beobachtungsliste für das Projekt %s."
 
 #: /IDF/Views/Issue.php:196
-#, fuzzy
 msgid "Watch List: Closed Issues"
-msgstr "%s geschlossene Tickets"
+msgstr "Beobachtungsliste: Geschlossene Tickets"
 
 #: /IDF/Views/Issue.php:197
-#, fuzzy
 msgid "This table shows the closed issues in your watch list."
-msgstr "Diese Tabelle zeigt die geschlossenen Tickets"
+msgstr "Diese Tabelle zeigt die geschlossenen Tickets auf Deiner Beobachtungsliste."
 
 #: /IDF/Views/Issue.php:202
-#, fuzzy
 msgid "Watch List: Open Issues"
-msgstr "%s Offene Tickets"
+msgstr "Beobachtungsliste: Offene Tickets"
 
 #: /IDF/Views/Issue.php:203
-#, fuzzy
 msgid "This table shows the open issues in your watch list."
-msgstr "Diese Tabelle zeigt die offenen Tickets."
+msgstr "Diese Tabelle zeigt die offenen Tickets auf Deiner Beobachtungsliste."
 
 #: /IDF/Views/Issue.php:222 /IDF/Views/User.php:82
 msgid "Project"
@@ -4243,22 +4237,22 @@ msgstr "Projekt"
 #: /IDF/Views/Issue.php:255
 #, php-format
 msgid "My Submitted %s Issues"
-msgstr "Meine erstellten %s Tickets"
+msgstr "Meine erstellten Tickets für %s"
 
 #: /IDF/Views/Issue.php:259
 #, php-format
 msgid "My Closed Submitted %s Issues"
-msgstr "Von mir erstellte, geschlossene  %s Tickets"
+msgstr "Meine eingesandten, geschlossenen Tickets für %s"
 
 #: /IDF/Views/Issue.php:263
 #, php-format
 msgid "My Closed Working %s Issues"
-msgstr ""
+msgstr "Meine bearbeiteten, geschlossenen Tickets für %s"
 
 #: /IDF/Views/Issue.php:267
 #, php-format
 msgid "My Working %s Issues"
-msgstr ""
+msgstr "Meine bearbeiteten Tickets für %s"
 
 #: /IDF/Views/Issue.php:322
 msgid "Submit a new issue"
@@ -4296,61 +4290,58 @@ msgstr "Zeige %s"
 #: /IDF/Views/Issue.php:542
 #, php-format
 msgid "%s Closed Issues"
-msgstr "%s geschlossene Tickets"
+msgstr "%s Geschlossene Tickets"
 
 #: /IDF/Views/Issue.php:552
 msgid "This table shows the closed issues."
-msgstr "Diese Tabelle zeigt die geschlossenen Tickets"
+msgstr "Diese Tabelle zeigt die geschlossenen Tickets."
 
 #: /IDF/Views/Issue.php:595
 #, php-format
 msgid "%1$s Issues with Label %2$s"
-msgstr "%1$s Ticket mit Bezeichnung %2$s"
+msgstr "%1$s Tickets mit Markierung %2$s"
 
 #: /IDF/Views/Issue.php:598
 #, php-format
 msgid "%1$s Closed Issues with Label %2$s"
-msgstr "%1$s geschlossenes Ticket mit Bezeichnung %2$s"
+msgstr "%1$s geschlossene Tickets mit Markierung %2$s"
 
 #: /IDF/Views/Issue.php:611
 #, php-format
 msgid "This table shows the issues with label %s."
-msgstr "Diese Tabelle zeigt das Ticket mit der Bezeichnung %s."
+msgstr "Diese Tabelle zeigt die Tickets mit der Markierung %s."
 
 #: /IDF/Views/Issue.php:661
 msgid "The issue has been removed from your watch list."
-msgstr "Das Ticket wurde von deiner Beobachtungsliste entfernt."
+msgstr "Das Ticket wurde von Deiner Beobachtungsliste entfernt."
 
 #: /IDF/Views/Issue.php:664
 msgid "The issue has been added to your watch list."
-msgstr "Das Ticket wurde zu deiner Beobachtungsliste hinzugefügt."
+msgstr "Das Ticket wurde zu Deiner Beobachtungsliste hinzugefügt."
 
 #: /IDF/Views/Issue.php:753
 msgid "On your watch list."
-msgstr "In deiner Beobachtungsliste."
+msgstr "Auf Deiner Beobachtungsliste."
 
 #: /IDF/Views/Project.php:72
-#, fuzzy
 msgid "All Updates"
-msgstr "Aktualisierungen"
+msgstr "Alle Aktualisierungen"
 
 #: /IDF/Views/Project.php:74
-#, fuzzy
 msgid "Issues and Comments"
-msgstr "Allgemeine Kommentare"
+msgstr "Tickets und Kommentare"
 
 #: /IDF/Views/Project.php:76
-#, fuzzy
 msgid "Documents"
 msgstr "Dokumentation"
 
 #: /IDF/Views/Project.php:77
 msgid "Reviews and Patches"
-msgstr ""
+msgstr "Besprechungen und Patches"
 
 #: /IDF/Views/Project.php:142
 msgid "This table shows the project updates."
-msgstr "Diese Tabelle zeigt die Aktualisierungen des Projektes."
+msgstr "Diese Tabelle zeigt Projekt-Aktualisierungen."
 
 #: /IDF/Views/Project.php:153
 msgid "Change"
@@ -4363,34 +4354,34 @@ msgstr "Es wurden keine Änderungen gefunden."
 #: /IDF/Views/Project.php:248
 #, php-format
 msgid "%s Project Summary"
-msgstr "%s Zusammenfassung des Projektes"
+msgstr "%s Projektzusammenfassung"
 
 #: /IDF/Views/Project.php:283
 #, php-format
 msgid "%s Issue Tracking Configuration"
-msgstr ""
+msgstr "%s Ticket-Einstellungen"
 
 #: /IDF/Views/Project.php:292
 msgid "The issue tracking configuration has been saved."
-msgstr ""
+msgstr "Die Ticket-Einstellungen wurden gespeichert."
 
 #: /IDF/Views/Project.php:328
 #, php-format
 msgid "%s Downloads Configuration"
-msgstr "%s Downloadeinstellungen"
+msgstr "%s Download-Einstellungen"
 
 #: /IDF/Views/Project.php:337
 msgid "The downloads configuration has been saved."
-msgstr "DIe Downloadeinstellungen wurden gespeichert."
+msgstr "Die Download-Einstellungen wurden gespeichert."
 
 #: /IDF/Views/Project.php:371
 #, php-format
 msgid "%s Documentation Configuration"
-msgstr "%s Dokumentationseinstellungen"
+msgstr "%s Dokumentations-Einstellungen"
 
 #: /IDF/Views/Project.php:380
 msgid "The documentation configuration has been saved."
-msgstr "Die Dokumentationseinstellungen wurden gespeichert."
+msgstr "Die Dokumentations-Einstellungen wurden gespeichert."
 
 #: /IDF/Views/Project.php:414
 #, php-format
@@ -4408,7 +4399,7 @@ msgstr "%s Registerkarten Zugriffsrechte"
 
 #: /IDF/Views/Project.php:460
 msgid "The project tabs access rights have been saved."
-msgstr "Die Zugriffsrechte der Projekt-Register wurde gespeichert."
+msgstr "Die Zugriffsrechte für die Projekt-Registerkarten wurden gespeichert."
 
 #: /IDF/Views/Project.php:506
 #, php-format
@@ -4417,87 +4408,87 @@ msgstr "%s Quellcode"
 
 #: /IDF/Views/Project.php:520
 msgid "The project source configuration  has been saved."
-msgstr "Die Konfiguration des Projekt Quellcodes wurde gespeichert. "
+msgstr "Die Konfiguration des Projekt-Quellcodes wurde gespeichert."
 
 #: /IDF/Views/Review.php:41
-#, fuzzy, php-format
+#, php-format
 msgid "%s Code Reviews"
-msgstr "%s Code Reviews"
+msgstr "%s Code-Besprechungen"
 
 #: /IDF/Views/Review.php:48
 msgid "This table shows the latest reviews."
-msgstr "Diese Tabelle zeigt ide letzten reviews."
+msgstr "Diese Tabelle zeigt die letzten Besprechungen."
 
 #: /IDF/Views/Review.php:64
 msgid "No reviews were found."
-msgstr "Es wurden keine reviews gefunden."
+msgstr "Es wurden keine Besprechungen gefunden."
 
 #: /IDF/Views/Review.php:94
 #, php-format
 msgid "The <a href=\"%s\">code review %d</a> has been created."
-msgstr "Der <a href=\"%s\">code review %d</a> wurde erstellt."
+msgstr "Die <a href=\"%s\">Code-Besprechung %d</a> wurde erstellt."
 
 #: /IDF/Views/Review.php:140
 #, php-format
 msgid "Review <a href=\"%s\">%d</a>: %s"
-msgstr ""
+msgstr "Besprechung <a href=\"%s\">%d</a>: %s"
 
 #: /IDF/Views/Review.php:160
 #, php-format
 msgid "Your <a href=\"%s\">code review %d</a> has been published."
-msgstr "Dein <a href=\"%s\">code review %d</a> wurde veröffentlicht."
+msgstr "Deine <a href=\"%s\">Code-Besprechung %d</a> wurde veröffentlicht."
 
 #: /IDF/Views/Source.php:40
 #, php-format
 msgid "%s Source Help"
-msgstr "%s Quellcode Hilfe"
+msgstr "%s Quellcode-Hilfe"
 
 #: /IDF/Views/Source.php:58
 #, php-format
 msgid "%s Invalid Revision"
-msgstr ""
+msgstr "%s Ungültige Revision"
 
 #: /IDF/Views/Source.php:77
 #, php-format
 msgid "%s Ambiguous Revision"
-msgstr ""
+msgstr "%s Mehrdeutige Revision"
 
 #: /IDF/Views/Source.php:102
 #, php-format
 msgid "%1$s %2$s Change Log"
-msgstr ""
+msgstr "%1$s %2$s Logmeldung"
 
 #: /IDF/Views/Source.php:142 /IDF/Views/Source.php:223
 #: /IDF/Views/Source.php:355
 #, php-format
 msgid "%1$s %2$s Source Tree"
-msgstr ""
+msgstr "%1$s %2$s Quellcode-Baum"
 
 #: /IDF/Views/Source.php:299
 #, php-format
 msgid "%s Commit Details"
-msgstr ""
+msgstr "%s Revisions-Details"
 
 #: /IDF/Views/Source.php:300
 #, php-format
 msgid "%s Commit Details - %s"
-msgstr ""
+msgstr "%s Revisions-Details - %s"
 
 #: /IDF/Views/User.php:59
 msgid "Your Dashboard - Working Issues"
-msgstr ""
+msgstr "Dein Dashboard - Bearbeitete Tickets"
 
 #: /IDF/Views/User.php:62
 msgid "Your Dashboard - Submitted Issues"
-msgstr ""
+msgstr "Dein Dashboard - Eingesandte Tickets"
 
 #: /IDF/Views/User.php:89
 msgid "No issues are assigned to you, yeah!"
-msgstr "Es liegt kein Ticket für dich vor. Super!"
+msgstr "Es liegt keine Tickets für Dich vor. Super!"
 
 #: /IDF/Views/User.php:89
 msgid "All the issues you submitted are fixed, yeah!"
-msgstr "Alle Tickets die du angelegt hast sind gelöst! Super!"
+msgstr "Alle Tickets, die Du eingesandt hast, sind gelöst! Super!"
 
 #: /IDF/Views/User.php:121
 msgid "Your personal information has been updated."
@@ -4505,7 +4496,7 @@ msgstr "Ihre persönlichen Daten wurden aktualisiert."
 
 #: /IDF/Views/User.php:132
 msgid "Your Account"
-msgstr "Dein Account"
+msgstr "Dein Konto"
 
 #: /IDF/Views/User.php:155
 #, fuzzy
@@ -4514,12 +4505,12 @@ msgstr "Der SSH-Schlüssel wurde gelöscht."
 
 #: /IDF/Views/User.php:178
 msgid "Confirm The Email Change"
-msgstr "Bestätige die Änderung der Email-Adresse."
+msgstr "Bestätige die Änderung der E-Mail-Adresse"
 
 #: /IDF/Views/User.php:203
 #, php-format
 msgid "Your new email address \"%s\" has been validated. Thank you!"
-msgstr "Deine neue Email-Adresse \"%s\" wurde validiert. Danke!"
+msgstr "Deine neue E-Mail-Adresse \"%s\" wurde validiert. Danke!"
 
 #: /IDF/Views/Wiki.php:41
 #, php-format
@@ -4528,7 +4519,7 @@ msgstr "%s Dokumentation"
 
 #: /IDF/Views/Wiki.php:48
 msgid "This table shows the documentation pages."
-msgstr ""
+msgstr "Diese Tabelle zeigt Dokumentations-Seiten."
 
 #: /IDF/Views/Wiki.php:61 /IDF/Views/Wiki.php:108 /IDF/Views/Wiki.php:149
 msgid "Page Title"
@@ -4540,12 +4531,12 @@ msgstr "Aktualisiert"
 
 #: /IDF/Views/Wiki.php:67 /IDF/Views/Wiki.php:155
 msgid "No documentation pages were found."
-msgstr ""
+msgstr "Keine Dokumentations-Seiten gefunden."
 
 #: /IDF/Views/Wiki.php:92
 #, php-format
 msgid "Documentation Search - %s"
-msgstr ""
+msgstr "Dokumentations-Suche - %s"
 
 #: /IDF/Views/Wiki.php:103
 msgid "This table shows the pages found."
@@ -4558,12 +4549,12 @@ msgstr "Es wurden keine Seiten gefunden."
 #: /IDF/Views/Wiki.php:133
 #, php-format
 msgid "%1$s Documentation Pages with Label %2$s"
-msgstr ""
+msgstr "%1$s Dokumentations-Seiten mit der Marke %2$s"
 
 #: /IDF/Views/Wiki.php:143
 #, php-format
 msgid "This table shows the documentation pages with label %s."
-msgstr "Diese Tabelle zeigt die Dokumentationsseiten mit der Bezeichnung %s."
+msgstr "Diese Tabelle zeigt die Dokumentations-Seiten mit der Bezeichnung %s."
 
 #: /IDF/Views/Wiki.php:188
 #, php-format
@@ -4586,7 +4577,7 @@ msgstr "Die Seite <a href=\"%s\">%s</a> wurde aktualisiert."
 
 #: /IDF/Views/Wiki.php:364
 msgid "The documentation page has been deleted."
-msgstr "Die Seite wurde gelöscht."
+msgstr "Die Dokumentations-Seite wurde gelöscht."
 
 #: /IDF/Views/Wiki.php:372
 #, php-format
