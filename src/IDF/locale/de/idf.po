@@ -879,7 +879,7 @@ msgstr "Du hast einen ungültigen Status angegeben."
 msgid ""
 "Define an issue template to hint the reporter to provide certain information"
 msgstr ""
-"Definiere eine Ticket-Vorlage, um den Ersteller Hinweise auf benötigte Informationen zu geben."
+"Definiere eine Ticket-Vorlage, um dem Ersteller Hinweise auf benötigte Informationen zu geben"
 
 #: /IDF/Form/IssueTrackingConf.php:89
 msgid "Open issue status values"
@@ -904,7 +904,7 @@ msgstr ""
 
 #: /IDF/Form/IssueTrackingConf.php:116
 msgid "Each issue may have at most one label with each of these classes"
-msgstr "Jedes Ticket darf maximal eine Marke von jeder dieser Klassen haben."
+msgstr "Jedes Ticket darf maximal eine Marke von jeder dieser Klassen haben"
 
 #: /IDF/Form/IssueUpdate.php:55 /IDF/Form/ReviewFileComment.php:45
 #: /IDF/Form/WikiUpdate.php:82
@@ -1144,7 +1144,7 @@ msgstr "Geschlossen"
 
 #: /IDF/Form/TabsConf.php:83
 msgid "Extra authorized users"
-msgstr "Weitere, autorisierte Benutzer"
+msgstr "Weitere autorisierte Benutzer"
 
 #: /IDF/Form/Upload.php:59
 #: /IDF/gettexttemplates/idf/source/git/tree.html.php:6
@@ -1161,7 +1161,7 @@ msgstr "Vordefinierte Marken für Downloads"
 
 #: /IDF/Form/UploadConf.php:62
 msgid "Each download may have at most one label with each of these classes"
-msgstr "Jeder Download darf maximal eine Marke von jeder dieser Klassen haben."
+msgstr "Jeder Download darf maximal eine Marke von jeder dieser Klassen haben"
 
 #: /IDF/Form/UserAccount.php:59
 msgid "Your mail"
@@ -1229,7 +1229,7 @@ msgstr "Vordefinierte Marken für Dokumentations-Seiten"
 msgid ""
 "Each documentation page may have at most one label with each of these classes"
 msgstr ""
-"Jede Dokumentations-Seite darf maximal eine Marke von jeder dieser Klassen haben."
+"Jede Dokumentations-Seite darf maximal eine Marke von jeder dieser Klassen haben"
 
 #: /IDF/Form/WikiCreate.php:38
 msgid ""
@@ -1313,7 +1313,7 @@ msgstr "Projektmitglieder"
 
 #: /IDF/gettexttemplates/idf/admin/base.html.php:9
 msgid "Tabs Access and Notifications"
-msgstr "Berechtigungen und Benachrichtigungen"
+msgstr "Zugriffsrechte und Benachrichtigungen"
 
 #: /IDF/gettexttemplates/idf/admin/downloads.html.php:3
 #: /IDF/gettexttemplates/idf/admin/issue-tracking.html.php:3
@@ -4402,7 +4402,7 @@ msgstr "Die Projektmitgliedschaft wurde gespeichert."
 #: /IDF/Views/Project.php:446
 #, php-format
 msgid "%s Tabs Access Rights"
-msgstr "%s Registerkarten Zugriffsrechte"
+msgstr "%s Zugriffsrechte auf Registerkarten"
 
 #: /IDF/Views/Project.php:460
 msgid "The project tabs access rights have been saved."
