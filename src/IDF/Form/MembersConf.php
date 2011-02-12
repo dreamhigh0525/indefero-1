@@ -101,7 +101,7 @@ class IDF_Form_MembersConf extends Pluf_Form
         $n = count($bad);
         if ($n) {
             $badlogins = Pluf_esc(implode(', ', $bad));
-            throw new Pluf_Form_Invalid(sprintf(_n('The following login is invalid: %s.', 'The following login are invalids: %s.', $n), $badlogins));
+            throw new Pluf_Form_Invalid(sprintf(_n('The following login is invalid: %s.', 'The following logins are invalid: %s.', $n), $badlogins));
         }
         return $logins;
     }
