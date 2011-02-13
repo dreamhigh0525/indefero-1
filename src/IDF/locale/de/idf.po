@@ -1139,7 +1139,7 @@ msgstr "Downloads"
 #: /IDF/gettexttemplates/idf/base-full.html.php:9
 #: /IDF/gettexttemplates/idf/base.html.php:9
 msgid "Code Review"
-msgstr "Code-Besprechnung"
+msgstr "Code-Besprechung"
 
 #: /IDF/Form/TabsConf.php:40 /IDF/gettexttemplates/idf/admin/base.html.php:5
 #: /IDF/gettexttemplates/idf/base-full.html.php:6
@@ -2077,7 +2077,7 @@ msgstr "Zahl"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:15
 msgid "Code reviews"
-msgstr "Code-Besprechnungen"
+msgstr "Code-Besprechungen"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:16
 #: /IDF/Views/Project.php:73
@@ -2949,13 +2949,13 @@ msgstr ""
 #: /IDF/gettexttemplates/idf/review/base-full.html.php:3
 #: /IDF/gettexttemplates/idf/review/base.html.php:3
 msgid "Open Reviews"
-msgstr "Offene Code-Besprechnungen"
+msgstr "Offene Code-Besprechungen"
 
 #: /IDF/gettexttemplates/idf/review/base.html.php:4
 #: /IDF/gettexttemplates/idf/review/create.html.php:11
 #: /IDF/gettexttemplates/idf/review/index.html.php:3 /IDF/Views/Review.php:83
 msgid "Start Code Review"
-msgstr "Neue Code-Besprechnung starten"
+msgstr "Neue Code-Besprechung starten"
 
 #: /IDF/gettexttemplates/idf/review/create.html.php:3
 msgid ""
@@ -2969,7 +2969,7 @@ msgid ""
 "information!</strong></li>\n"
 "</ul>"
 msgstr ""
-"<p>Wenn Du eine Code-Besprechnung erstellst, musst Du folgende Angaben "
+"<p>Wenn Du eine Code-Besprechung erstellst, musst Du folgende Angaben "
 "machen:</p>\n"
 "<ul>\n"
 "<li>Eine Revision Deines derzeitigen Codes im Depot, von der aus Du "
@@ -2997,12 +2997,12 @@ msgstr ""
 
 #: /IDF/gettexttemplates/idf/review/review-created-email.txt.php:3
 msgid "The following review has been created:"
-msgstr "Die folgende Code-Besprechnung wurde erstellt:"
+msgstr "Die folgende Code-Besprechung wurde erstellt:"
 
 #: /IDF/gettexttemplates/idf/review/review-created-email.txt.php:10
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:16
 msgid "Review:"
-msgstr "Code-Besprechnung:"
+msgstr "Code-Besprechung:"
 
 #: /IDF/gettexttemplates/idf/review/review-updated-email.txt.php:3
 msgid "The following review has been updated:"
@@ -3050,11 +3050,11 @@ msgid ""
 "your review. Correctly mention the line numbers (in the old or in the\n"
 "new file) and try to keep a good balance between seriousness and fun.\n"
 msgstr ""
-"Eine Code-Besprechnung ist ein Prozess, in welchem bevor oder nachdem\n"
+"Eine Code-Besprechung ist ein Prozess, in welchem bevor oder nachdem\n"
 "Änderungen in das Quellcode-Depot eingepflegt wurden, verschiedene\n"
 "Personen über diese Änderungen diskutieren. Das Ziel ist die\n"
 "<strong>Qualität des Codes und des Beitrages zu verbessern</strong>,\n"
-"und deshalb solltest Du beim Schreiben Deiner Code-Besprechnung pragmatisch\n"
+"und deshalb solltest Du beim Schreiben Deiner Code-Besprechung pragmatisch\n"
 "sein. Benenne die korrekten Zeilennummern für Deine Kommentare (in der\n"
 "alten oder der neuen Datei) und versuche, eine gute Balance zwischen\n"
 "Ernsthaftigkeit und Spass zu bewahren.\n"
@@ -4055,12 +4055,12 @@ msgstr "abstimmen"
 msgid ""
 "<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
 msgstr ""
-"<a href=\"%1$s\" class=\"%2$s\" title=\"Code-Besprechnung anzeigenw\">Code-Besprechung %3$d</a>, %4$s"
+"<a href=\"%1$s\" class=\"%2$s\" title=\"Code-Besprechung anzeigenw\">Code-Besprechung %3$d</a>, %4$s"
 
 #: /IDF/Review/Comment.php:141
 #, php-format
 msgid "Update of <a href=\"%s\" class=\"%s\">review&nbsp;%d</a>, by %s"
-msgstr "Aktualisierung von <a href=\"%s\" class=\"%s\">Code-Besprechnung&nbsp;%d</a>, von %s"
+msgstr "Aktualisierung von <a href=\"%s\" class=\"%s\">Code-Besprechung&nbsp;%d</a>, von %s"
 
 #: /IDF/Review/Comment.php:151
 #, php-format
@@ -4088,12 +4088,12 @@ msgstr ""
 #: /IDF/Review/Patch.php:163
 #, php-format
 msgid "%s: Creation of Review %d - %s"
-msgstr "%s: Erstellung von Code-Besprechnung %d -%s"
+msgstr "%s: Erstellung von Code-Besprechung %d -%s"
 
 #: /IDF/Review/Patch.php:204
 #, php-format
 msgid "New Code Review %s - %s (%s)"
-msgstr "Neue Code-Besprechnung %s - %s (%s)"
+msgstr "Neue Code-Besprechung %s - %s (%s)"
 
 #: /IDF/Scm/Git.php:183
 #, php-format
