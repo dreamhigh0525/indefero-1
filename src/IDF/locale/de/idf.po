@@ -453,7 +453,7 @@ msgstr "Erstellung von <a href=\"%s\">Seite&nbsp;%s</a>, von %s"
 #: IDF/WikiPage.php:208 /IDF/WikiPage.php:208
 #, php-format
 msgid "%s: Documentation page %s added - %s"
-msgstr "%s: Dokumentationsseite %s hinzugefügt - %s"
+msgstr "%s: Dokumentations-Seite %s hinzugefügt - %s"
 
 #: IDF/WikiRevision.php:48 /IDF/WikiRevision.php:48
 msgid "page"
@@ -475,17 +475,17 @@ msgstr "Änderung von <a href=\"%s\">%s</a>, von %s"
 #: IDF/WikiRevision.php:208 /IDF/WikiRevision.php:208
 #, php-format
 msgid "%s: Documentation page %s updated - %s"
-msgstr "%s: Dokumentationsseite %s aktualisiert - %s"
+msgstr "%s: Dokumentations-Seite %s aktualisiert - %s"
 
 #: IDF/WikiRevision.php:262 /IDF/WikiRevision.php:262
 #, php-format
 msgid "New Documentation Page %s - %s (%s)"
-msgstr "Neue Dokumentationsseite %s - %s (%s)"
+msgstr "Neue Dokumentations-Seite %s - %s (%s)"
 
 #: IDF/WikiRevision.php:268 /IDF/WikiRevision.php:268
 #, php-format
 msgid "Documentation Page Changed %s - %s (%s)"
-msgstr "Dokumentationsseite geändert %s - %s (%s)"
+msgstr "Dokumentations-Seite geändert %s - %s (%s)"
 
 #: /IDF/Form/Admin/ProjectCreate.php:38 /IDF/Views/Project.php:540
 msgid "git"
@@ -2021,7 +2021,7 @@ msgstr ""
 "\n"
 "<p>Gib den Anmeldenamen jeder Person an. Jede Person muss sich "
 "vorher bereits mit diesen Namen angemeldet haben.</p>\n"
-"<p>Trenne die Benutzernamen durch Kommas und / oder neue Zeilen.</p>\n"
+"<p>Trenne die Anmeldenamen durch Kommas und / oder neue Zeilen.</p>\n"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/create.html.php:14
 msgid ""
@@ -2086,7 +2086,7 @@ msgstr "Revisionen"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:18
 msgid "Documentation pages"
-msgstr "Dokumentationsseiten"
+msgstr "Dokumentations-Seiten"
 
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:19
 #: /IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:20
@@ -2842,7 +2842,7 @@ msgstr ""
 "\n"
 "%%urlik%%\n"
 "\n"
-"und gib den folgenden Bestätigungs-Schlüssel ein:\n"
+"und gib den folgenden Validierungs-Schlüssel ein:\n"
 "\n"
 "%%key%%\n"
 "\n"
@@ -3068,6 +3068,12 @@ msgid ""
 "coding standards and the structure of the code and <strong>make them want\n"
 "to propose more contributions</strong>.\n"
 msgstr ""
+"\n"
+"<strong>Eine Code-Besprechung kann einschüchternd wirken</strong>.\n"
+"Du als Rezensent weißt, dass Du Kritik erhalten wirst, deshalb\n"
+"<strong>versuche, dem Prozess nicht den Spass zu nehmen</strong>, sondern\n"
+"nutze ihn, um Deinen Aspiranten Deine Coding-Standards und die Struktur\n"
+"Deines Codes zu lehren und <strong>bring sie dazu, mehr beizutragen</strong>.\n"
 
 #: /IDF/gettexttemplates/idf/review/view.html.php:20
 #, php-format
@@ -3385,6 +3391,10 @@ msgid ""
 "more about <a href=\"http://www.google.com/search?q=public+ssh+key"
 "+authentication\">SSH key authentification</a>."
 msgstr ""
+"Eventuell musst Du <a href=\"%%url%%\">Deinen SSH-Schlüssel hochladen</a>. "
+"Die Synchronizierung Deines SSH-Schlüssels kann einige Minuten dauern. "
+"Du kannst <a href=\"http://www.google.com/search?q=public+ssh+key"
+"+authentication\">hier mehr über SSH-Schlüssel-Authentifizierung erfahren</a>."
 
 #: /IDF/gettexttemplates/idf/source/git/help.html.php:7
 #: /IDF/gettexttemplates/idf/source/mtn/help.html.php:6
@@ -3446,6 +3456,8 @@ msgid ""
 "The revision <b>%%commit%%</b> is not valid or does not exist\n"
 "in this repository."
 msgstr ""
+"Die Revision <b>%%commit%%</b> ist ungültig oder existiert nicht\n"
+"in diesem Depot."
 
 #: /IDF/gettexttemplates/idf/source/invalid_revision.html.php:5
 #, php-format
@@ -3455,6 +3467,10 @@ msgid ""
 "In this case please take a look at the <a href=\"%%url%%\">Help</a> page\n"
 "how to access your repository."
 msgstr ""
+"Falls dies ein neues Depot ist, könnte der Grund für diesen Fehler sein,\n"
+"dass Du bislang noch keine Änderungen eingepflegt oder zum Server übertragen\n"
+"hast. In diesem Fall sieh bitte auf der <a href=\"%%url%%\">Hilfe</a>-Seite\n"
+"nach, wie Du auf Dein Depot zugreifen kannst."
 
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:3
 #, php-format
@@ -3463,6 +3479,8 @@ msgid ""
 "the <strong>Mercurial</strong> software to manage the source\n"
 "code."
 msgstr ""
+"Das Team von %%project%% nutzt <strong>Mercurial</strong>\n"
+"als Software zur Versionsverwaltung."
 
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:6
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:6
@@ -3472,7 +3490,7 @@ msgid ""
 "your <a href=\"%%url%%\">extra password</a>."
 msgstr ""
 "Um Schreibberechtigungen auf das Depot zu erhalten, benötigst Du Deinen "
-"Benutzernamen und Dein <a href=\"%%url%%\">zusätzliches Passwort</a>."
+"Anmeldenamen und Dein <a href=\"%%url%%\">zusätzliches Passwort</a>."
 
 #: /IDF/gettexttemplates/idf/source/mercurial/help.html.php:9
 #: /IDF/gettexttemplates/idf/source/svn/help.html.php:9
@@ -3486,6 +3504,8 @@ msgid ""
 "the <strong>monotone</strong> software to manage the source\n"
 "code."
 msgstr ""
+"Das Team von %%project%% nutzt <strong>monotone</strong>\n"
+"als Software zur Versionsverwaltung."
 
 #: /IDF/gettexttemplates/idf/source/svn/changelog.html.php:3
 #: /IDF/gettexttemplates/idf/source/svn/commit.html.php:3
@@ -3518,6 +3538,8 @@ msgid ""
 "the <strong>subversion</strong> software to manage the source\n"
 "code."
 msgstr ""
+"Das Team von %%project%% nutzt <strong>subversion</strong>\n"
+"als Software zur Versionsverwaltung."
 
 #: /IDF/gettexttemplates/idf/source/svn/tree.html.php:8
 msgid "Rev"
@@ -3555,6 +3577,26 @@ msgid ""
 "Yours faithfully,\n"
 "The development team.\n"
 msgstr ""
+"Hallo %%user%%,\n"
+"\n"
+"Um zu bestätigen, dass %%email%% Deine neue E-Mail-Adresse\n"
+"sein soll, folge bitte einfach diesem Link:\n"
+"\n"
+"%%url%%\n"
+"\n"
+"Alternativ gehe zu dieser Seite:\n"
+"\n"
+"%%urlik%%\n"
+"\n"
+"und gib den folgenden Validierungs-Schlüssel ein:\n"
+"\n"
+"%%key%%\n"
+"\n"
+"Wenn Du Deine E-Mail-Adresse nicht ändern möchtest,\n"
+"ignoriere diese E-Mail einfach.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"Das Entwickler-Team.\n"
 
 #: /IDF/gettexttemplates/idf/user/changeemail.html.php:4
 msgid "Confirm Your New Email Address"
@@ -3567,6 +3609,10 @@ msgid ""
 "email. Either click directly on the verification link or copy/paste the "
 "verification key in the box and submit the form."
 msgstr ""
+"Benutze Deine E-Mail-Software um Deine E-Mails zu lesen und Deine "
+"Validierungs-E-Mail zu öffnen. Klicke dann entweder direkt auf den "
+"Validierungs-Link oder kopiere den Validierungsschlüssel aus der E-Mail "
+"in das Eingabefeld und sende das Formular ab."
 
 #: /IDF/gettexttemplates/idf/user/dashboard.html.php:3
 #, php-format
@@ -3661,6 +3707,9 @@ msgid ""
 "in the database, we will send you an email with the details on how to reset "
 "your password."
 msgstr ""
+"Gib entweder Deinen Anmeldenamen oder Deine E-Mail-Adresse an. Wenn ein "
+"entsprechender Benutzer in der Datenbank gefunden wird, schicken wir Dir eine "
+"E-Mail mit Informationen, wie Du Dein Passwort zurücksetzen kannst."
 
 #: /IDF/gettexttemplates/idf/user/passrecovery-email.txt.php:3
 #, php-format
@@ -3698,11 +3747,11 @@ msgstr ""
 "\n"
 "%%url%%\n"
 "\n"
-"Alternativ kannst Du zu dieser Seite gehen:\n"
+"Alternativ gehe zu dieser Seite:\n"
 "\n"
 "%%urlik%%\n"
 "\n"
-"und den folgenden Validierungsschlüssel eingeben:\n"
+"und gib den folgenden Validierungs-Schlüssel ein:\n"
 "\n"
 "%%key%%\n"
 "\n"
@@ -3791,6 +3840,11 @@ msgid ""
 "<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
 "by %%submitter%%."
 msgstr ""
+"Du schaust Dir gerade eine alte Version (<em>%%oldrev.summary%%</em>) der "
+"Seite \n"
+"<a href=\"%%url%%\">%%page.title%%</a> an. Diese Version wurde von\n"
+"%%submitter%% angelegt."
+
 
 #: /IDF/gettexttemplates/idf/wiki/delete.html.php:6
 msgid ""
@@ -3816,6 +3870,9 @@ msgid ""
 "with all the associated revisions and <strong>you will not be able to "
 "recover it</strong>."
 msgstr ""
+"Wenn Du diese Dokumentations-Seite löscht, wird sie mit all ihren Versionen "
+"aus der Datenbank gelöscht und <strong>Du wirst nicht in der Lage sein, "
+"sie wiederherzustellen</strong>."
 
 #: /IDF/gettexttemplates/idf/wiki/deletepage.html.php:6
 msgid "Delete Page"
@@ -3834,6 +3891,15 @@ msgid ""
 "<p>To directly include a file content from the repository, embrace its path "
 "with triple square brackets: [[[path/to/file.txt]]].</p>\n"
 msgstr ""
+"\n"
+"<p><strong>Anleitung:</strong></p>\n"
+"<p>Für den Inhalt der Seite kann die <a href=\"%%burl%%\">Markdown-Syntax</"
+"a> mit der <a href=\"%%eurl%%\"><em>Extra</em>-Erweiterung</a> verwendet werden.</p>\n"
+"<p>Website-Adresses werden automatisch verlinkt und Du kannst außerdem zu "
+"anderen Dokumentations-Seiten durch die Benutzung von doppelten, eckige Klammern "
+"verlinken, etwa so: [[AndereSeite]].</p>\n"
+"<p>Um direkt die Inhalte einer Datei aus dem Depot einzubinden, umklammere den "
+"Pfad zur Datei mit dreifachen, eckigen Klammern: [[[Pfad/zu/Datei.txt]]].</p>\n"
 
 #: /IDF/gettexttemplates/idf/wiki/index.html.php:3
 #, php-format
@@ -4083,7 +4149,7 @@ msgstr "Revision"
 #: /IDF/Review/Patch.php:153
 #, php-format
 msgid "Creation of <a href=\"%s\" class=\"%s\">review&nbsp;%d</a>, by %s"
-msgstr ""
+msgstr "Erzeugung von <a href=\"%s\" class=\"%s\">Code-Besprechung&nbsp;%d</a>, von %s"
 
 #: /IDF/Review/Patch.php:163
 #, php-format
@@ -4137,7 +4203,7 @@ msgstr "gewichtete Vorkommen"
 
 #: /IDF/Template/Markdown.php:74
 msgid "Create this documentation page"
-msgstr "Erstelle diese Dokumentationsseite"
+msgstr "Erstelle diese Dokumentations-Seite"
 
 #: /IDF/Template/ShowUser.php:51
 msgid "Anonymous"
