@@ -393,10 +393,8 @@ class IDF_Form_UserAccount  extends Pluf_Form
     function clean_email()
     {
         $this->cleaned_data['email'] = mb_strtolower(trim($this->cleaned_data['email']));
-        $guser = new Pluf_User();
-        $sql = new Pluf_SQL('email=%s AND id!=%s',
-                            array($this->cleaned_data['email'], $this->user->id));
-        if ($guser->getCount(array('filter' => $sql->gen())) > 0) {
+        $user = Pluf::factory('IDF_EmailAddress')->get_user_for_email_address($this->cleaned_data['email']);
+        if ($user != null and $user->id != $this->user->id) {
             throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used.'), $this->cleaned_data['email']));
         }
         return $this->cleaned_data['email'];
