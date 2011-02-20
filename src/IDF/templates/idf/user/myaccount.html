@@ -100,6 +100,14 @@
 <span class="helptext">{$form.f.public_key.help_text}</span>
 </td>
 </tr>
+<tr><td colspan="2" class="separator">{trans "Secondary Emails"}</td></tr>
+<tr>
+<th>{$form.f.secondary_mail.labelTag}:</th>
+<td>{if $form.f.secondary_mail.errors}{$form.f.secondary_mail.fieldErrors}{/if}
+{$form.f.secondary_mail|unsafe}<br />
+<span class="helptext">{$form.f.secondary_mail.help_text}</span>
+</td>
+</tr>
 <tr class="pass-info" id="extra-password">
 <th>{trans 'Extra password'}:</th>
 <td><span class="mono">{$ext_pass}</span><br />

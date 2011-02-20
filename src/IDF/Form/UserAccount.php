@@ -163,6 +163,13 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
                                             'help_text' => __('Paste a SSH or monotone public key. Be careful to not provide your private key here!')
                                             ));
+
+        $this->fields['secondary_mail'] = new Pluf_Form_Field_Email(
+                                      array('required' => false,
+                                            'label' => __('Add a secondary mail address'),
+                                            'initial' => '',
+                                            'help_text' => __('You will get a mail to confirm that you own the address you specify.'),
+                                            ));
     }
 
     /**
@@ -398,6 +405,15 @@ class IDF_Form_UserAccount  extends Pluf_Form
             throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used.'), $this->cleaned_data['email']));
         }
         return $this->cleaned_data['email'];
+    }
+
+    function clean_secondary_mail()
+    {
+        $this->cleaned_data['secondary_mail'] = mb_strtolower(trim($this->cleaned_data['secondary_mail']));
+        if (Pluf::factory('IDF_EmailAddress')->get_user_for_email_address($this->cleaned_data['secondary_mail']) != null) {
+            throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used.'), $this->cleaned_data['secondary_mail']));
+        }
+        return $this->cleaned_data['secondary_mail'];
     }
 
     function clean_public_key()
