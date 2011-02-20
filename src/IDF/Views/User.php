@@ -127,12 +127,14 @@ class IDF_Views_User
             $form = new IDF_Form_UserAccount(null, $params);
         }
         $keys = $request->user->get_idf_key_list();
+        $mailaddrs = Pluf::factory('IDF_EmailAddress')->get_email_addresses_for_user($request->user);
 
         return Pluf_Shortcuts_RenderToResponse('idf/user/myaccount.html',
                                                array('page_title' => __('Your Account'),
                                                      'api_key' => $api_key,
                                                      'ext_pass' => $ext_pass,
                                                      'keys' => $keys,
+                                                     'mailaddrs' => $mailaddrs,
                                                      'form' => $form),
                                                $request);
     }
@@ -153,6 +155,26 @@ class IDF_Views_User
             }
             $key->delete();
             $request->user->setMessage(__('The public key has been deleted.'));
+        }
+        return new Pluf_HTTP_Response_Redirect($url);
+    }
+
+    /**
+     * Delete a mail address.
+     *
+     * This is redirecting to the preferences
+     */
+    public $deleteMail_precond = array('Pluf_Precondition::loginRequired');
+    public function deleteMail($request, $match)
+    {
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::myAccount');
+        if ($request->method == 'POST') {
+            $address = Pluf_Shortcuts_GetObjectOr404('IDF_EmailAddress', $match[1]);
+            if ($address->user != $request->user->id) {
+                return new Pluf_HTTP_Response_Forbidden($request);
+            }
+            $address->delete();
+            $request->user->setMessage(__('The address has been deleted.'));
         }
         return new Pluf_HTTP_Response_Redirect($url);
     }

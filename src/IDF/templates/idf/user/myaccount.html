@@ -129,6 +129,15 @@
 </tr>{/foreach}
 </table>
 {/if}
+{if count($mailaddrs)>1}
+<table summary=" " class="recent-issues">
+<tr><th colspan="2">{trans 'Your additional email addresses'}</th></tr>
+{foreach $mailaddrs as $mail}{if $mail.id != -1}<tr><td>
+{$mail.address}</td><td> <form class="star" method="post" action="{url 'IDF_Views_User::deleteMail', array($mail.id)}"><input type="image" src="{media '/idf/img/trash.png'}" name="submit" value="{trans 'Delete this address'}" /></form>
+</td>
+</tr>{/if}{/foreach}
+</table>
+{/if}
 {/block}
 {block context}
 <div class="issue-submit-info">
