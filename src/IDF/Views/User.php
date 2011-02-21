@@ -212,7 +212,7 @@ class IDF_Views_User
         $key = $match[1];
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailInputKey');
         try {
-            list($email, $id, $time) = IDF_Form_UserChangeEmail::validateKey($key);
+            list($email, $id, $time, $type) = IDF_Form_UserChangeEmail::validateKey($key);
         } catch (Pluf_Form_Invalid $e) {
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -220,8 +220,15 @@ class IDF_Views_User
             return new Pluf_HTTP_Response_Redirect($url);
         }
         // Now we have a change link coming from the right user.
-        $request->user->email = $email;
-        $request->user->update();
+        if ($type == "primary") {
+            $request->user->email = $email;
+            $request->user->update();
+        } else {
+            $mailaddress = new IDF_EmailAddress();
+            $mailaddress->user = $request->user;
+            $mailaddress->address = $email;
+            $mailaddress->create();
+        }
         $request->user->setMessage(sprintf(__('Your new email address "%s" has been validated. Thank you!'), Pluf_esc($email)));
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::myAccount');
         return new Pluf_HTTP_Response_Redirect($url);

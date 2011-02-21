@@ -172,6 +172,35 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             ));
     }
 
+    private function send_validation_mail($new_email, $secondary_mail=false)
+    {
+        if ($secondary_mail) {
+            $type = "secondary";
+        } else {
+            $type = "primary";
+        }
+        $cr = new Pluf_Crypt(md5(Pluf::f('secret_key')));
+        $encrypted = trim($cr->encrypt($new_email.':'.$this->user->id.':'.time().':'.$type), '~');
+        $key = substr(md5(Pluf::f('secret_key').$encrypted), 0, 2).$encrypted;
+        $url = Pluf::f('url_base').Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailDo', array($key), array(), false);
+        $urlik = Pluf::f('url_base').Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailInputKey', array(), array(), false);
+        $context = new Pluf_Template_Context(
+             array('key' => Pluf_Template::markSafe($key),
+                   'url' => Pluf_Template::markSafe($url),
+                   'urlik' => Pluf_Template::markSafe($urlik),
+                   'email' => $new_email,
+                   'user'=> $this->user,
+                   )
+        );
+        $tmpl = new Pluf_Template('idf/user/changeemail-email.txt');
+        $text_email = $tmpl->render($context);
+        $email = new Pluf_Mail(Pluf::f('from_email'), $new_email,
+                               __('Confirm your new email address.'));
+        $email->addTextMessage($text_email);
+        $email->sendMail();
+        $this->user->setMessage(sprintf(__('A validation email has been sent to "%s" to validate the email address change.'), Pluf_esc($new_email)));
+    }
+
     /**
      * Save the model in the database.
      *
@@ -195,26 +224,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
         $new_email = $this->cleaned_data['email'];
         unset($this->cleaned_data['email']);
         if ($old_email != $new_email) {
-            $cr = new Pluf_Crypt(md5(Pluf::f('secret_key')));
-            $encrypted = trim($cr->encrypt($new_email.':'.$this->user->id.':'.time()), '~');
-            $key = substr(md5(Pluf::f('secret_key').$encrypted), 0, 2).$encrypted;
-            $url = Pluf::f('url_base').Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailDo', array($key), array(), false);
-            $urlik = Pluf::f('url_base').Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailInputKey', array(), array(), false);
-            $context = new Pluf_Template_Context(
-                 array('key' => Pluf_Template::markSafe($key),
-                       'url' => Pluf_Template::markSafe($url),
-                       'urlik' => Pluf_Template::markSafe($urlik),
-                       'email' => $new_email,
-                       'user'=> $this->user,
-                       )
-            );
-            $tmpl = new Pluf_Template('idf/user/changeemail-email.txt');
-            $text_email = $tmpl->render($context);
-            $email = new Pluf_Mail(Pluf::f('from_email'), $new_email,
-                                   __('Confirm your new email address.'));
-            $email->addTextMessage($text_email);
-            $email->sendMail();
-            $this->user->setMessage(sprintf(__('A validation email has been sent to "%s" to validate the email address change.'), Pluf_esc($new_email)));
+            $this->send_validation_mail($new_email);
         }
         $this->user->setFromFormData($this->cleaned_data);
         // Add key as needed.
@@ -225,6 +235,9 @@ class IDF_Form_UserAccount  extends Pluf_Form
             if ($commit) {
                 $key->create();
             }
+        }
+        if ('' !== $this->cleaned_data['secondary_mail']) {
+            $this->send_validation_mail($this->cleaned_data['secondary_mail'], true);
         }
 
         if ($commit) {
