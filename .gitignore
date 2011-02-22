@@ -8,3 +8,4 @@ src/IDF/gettexttemplates
 indefero-*.zip
 src/IDF/conf/path.php
 .tx/config
+src/IDF/locale/idf.pot.bak

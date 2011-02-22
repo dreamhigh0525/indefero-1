@@ -42,7 +42,10 @@ all help:
 .PHONY: pot-update po-update
 pot-update:
 	# Backup pot file
-	cd src; cp -f IDF/locale/idf.pot IDF/locale/idf.pot.bak
+	@if [ -e src/IDF/locale/idf.pot ]; then                     \
+	mv -f src/IDF/locale/idf.pot src/IDF/locale/idf.pot.bak;    \
+	fi
+	touch src/IDF/locale/idf.pot;
 	# Extract string
 	@cd src; php $(PLUF_PATH)/extracttemplates.php IDF/conf/idf.php IDF/gettexttemplates
 	@cd src; for phpfile in `find . -iname "*.php"`; do \
