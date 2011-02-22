@@ -60,7 +60,7 @@ pot-update:
 po-update:
 	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
 		echo "Updating file : "$$pofile; \
-		msgmerge -v --width=10 -U $$pofile src/IDF/locale/idf.pot; \
+		msgmerge -v -U $$pofile src/IDF/locale/idf.pot; \
 		echo ; \
 	done
 
