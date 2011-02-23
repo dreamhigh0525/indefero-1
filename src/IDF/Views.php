@@ -40,9 +40,11 @@ class IDF_Views
     public function index($request, $match)
     {
         $projects = self::getProjects($request->user);
+        $stats = self::getProjectsStatistics ($projects);
         return Pluf_Shortcuts_RenderToResponse('idf/index.html', 
                                                array('page_title' => __('Projects'),
-                                                     'projects' => $projects),
+                                                     'projects' => $projects,
+                                                     'stats' => new Pluf_Template_ContextVars($stats)),
                                                $request);
     }
 
@@ -342,5 +344,42 @@ class IDF_Views
         }
         return Pluf::factory('IDF_Project')->getList(array('filter' => $sql,
                                                            'order' => 'name ASC'));
+    }
+    
+    /**
+     * Returns statistics on a list of projects.
+     *
+     * @param ArrayObject IDF_Project
+     * @return Associative array of statistics
+     */
+    public static function getProjectsStatistics($projects)
+    {
+        // Init the return var
+        $forgestats = array('downloads' => 0,
+                            'reviews' => 0,
+                            'issues' => 0,
+                            'docpages' => 0,
+                            'commits' => 0);
+        
+        // Count for each projects
+        foreach ($projects as $p) {
+            $pstats = $p->getStats ();
+            $forgestats['downloads'] += $pstats['downloads'];
+            $forgestats['reviews'] += $pstats['reviews'];
+            $forgestats['issues'] += $pstats['issues'];
+            $forgestats['docpages'] += $pstats['docpages'];
+            $forgestats['commits'] += $pstats['commits'];
+        }
+    
+        // Count projects
+        $forgestats['projects'] = count($projects);
+
+        // Count members
+        $db =& Pluf::db();
+        $sql = "SELECT count(id) as `nb` FROM indefero_users WHERE first_name != '---'";
+        $ret = $db->select ($sql);
+        $forgestats['members'] = $ret[0]['nb'];
+        
+        return $forgestats;
     }
 }

@@ -994,3 +994,18 @@ span.scm-action.renamed {
 span.scm-action.property-changed {
   background-color: blue;
 }
+
+/*
+ *  Stats on index
+ */
+#stats > h3 {
+    text-decoration : underline;
+}
+
+#stats table tr td {
+    border-style: none;
+}
+
+#stats td {
+    padding: .2em;
+}

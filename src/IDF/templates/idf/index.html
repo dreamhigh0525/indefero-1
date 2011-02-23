@@ -1,5 +1,5 @@
 {extends "idf/base-simple.html"}
-{block docclass}yui-t1{/block}
+{block docclass}yui-t2{/block}
 {block tabhome} class="active"{/block}
 {block subtabs}<a href="{url 'IDF_Views::index'}" class="active">{trans 'Projects'}</a>{/block}
 {block body}
@@ -15,6 +15,17 @@
 {/if}
 {/block}
 {block context}
-<p><strong>{trans 'Managed Projects:'}</strong> {$projects.count()}</p>
+<div id="stats" class="issue-submit-info">
+<h3 class="a-c">Forge statistics</h3>
+<table>
+<tr><td class="right">{trans 'Projects:'}</td><td>{$stats.projects}</td></tr>
+<tr><td class="right">{trans 'Members:'}</td><td>{$stats.members}</td></tr>
+<tr><td class="right">{trans 'Issues:'}</td><td>{$stats.issues}</td></tr>
+<tr><td class="right">{trans 'Commits:'}</td><td>{$stats.commits}</td></tr>
+<tr><td class="right">{trans 'Documentations:'}</td><td>{$stats.docpages}</td></tr>
+<tr><td class="right">{trans 'Downloads:'}</td><td>{$stats.downloads}</td></tr>
+<tr><td class="right">{trans 'Code reviews:'}</td><td>{$stats.reviews}</td></tr>
+</table>
+</div>
 {/block}
 {block foot}<div id="branding">Powered by <a href="http://www.indefero.net" title="InDefero, bug tracking and more">InDefero</a>,<br />a <a href="http://www.ceondo.com">Céondo Ltd</a> initiative.</div>{/block}
