@@ -29,7 +29,7 @@ document.getElementById('id_login').focus()
 {block context}
 <div class="issue-submit-info">
 <h3>{trans 'Welcome.'}</h3>
-<p>{trans 'If you don\'t have an account yet, you can create one'} <a href="{url 'IDF_Views::register', array()}">{trans 'here'}</a></p>
-<p>{trans 'It takes less than a minute to create your account'}</p>
-</div>
+{aurl 'url', 'IDF_Views::register', array()}
+<p>{blocktrans}If you don't have an account yet, you can create one <a href="{$url}">here</a>.{/blocktrans}</a></p>
+<p>{trans 'It takes less than a minute to create your account.'}</p></div>
 {/block}
