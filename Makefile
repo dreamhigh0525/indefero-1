@@ -27,14 +27,14 @@ PLUF_PATH=$(shell php -r "require_once('src/IDF/conf/path.php'); echo PLUF_PATH;
 all help:
 	@echo "Rules for generate tarball :"
 	@for b in `git branch | sed "s/^. //g"`; do \
-		echo "\t"$$b"_tarball - Generate a zip archive of the "$$b" branch."; \
+		echo -e "\t"$$b"_tarball - Generate a zip archive of the "$$b" branch."; \
 	done
-	@echo "\nRules for internationnalization :";
-	@echo "\tpot-update - Update the POT file from HTML template and PHP source, then merge it with PO file"
-	@echo "\tpot-push - Send the POT file on transifex server"
-	@echo "\tpo-update - Merge POT file into PO file. POT is not regenerated."
-	@echo "\tpo-push - Send the all PO file on transifex server"
-	@echo "\tpo-pull - Get all PO file from transifex server"
+	@echo -e "\nRules for internationnalization :";
+	@echo -e "\tpot-update - Update the POT file from HTML template and PHP source, then merge it with PO file"
+	@echo -e "\tpot-push - Send the POT file on transifex server"
+	@echo -e "\tpo-update - Merge POT file into PO file. POT is not regenerated."
+	@echo -e "\tpo-push - Send the all PO file on transifex server"
+	@echo -e "\tpo-pull - Get all PO file from transifex server"
 
 #
 #   Internationnalization rule, POT & PO file manipulation
