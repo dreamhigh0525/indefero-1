@@ -56,11 +56,15 @@ class IDF_Views_Source
     public function invalidRevision($request, $match)
     {
         $title = sprintf(__('%s Invalid Revision'), (string) $request->project);
+        $scm = IDF_Scm::get($request->project);
+        $branches = $scm->getBranches();
+        
         $commit = $match[2];
         $params = array(
                         'page_title' => $title,
                         'title' => $title,
                         'commit' => $commit,
+                        'branches' => $branches,
                         );
         return Pluf_Shortcuts_RenderToResponse('idf/source/invalid_revision.html',
                                                $params, $request);
