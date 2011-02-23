@@ -22,25 +22,35 @@
 #   sudo apt-get install python-setuptools
 #   sudo easy_install -U transifex-client
 
-PLUF_PATH=$(shell php -r "require_once('src/IDF/conf/path.php'); echo PLUF_PATH;")
 
-all help:
-	@echo "Rules for generate tarball :"
+
+.PHONY: help
+help:
+	@printf "Rules for generate tarball :\n"
 	@for b in `git branch | sed "s/^. //g"`; do \
-		echo -e "\t"$$b"_tarball - Generate a zip archive of the "$$b" branch."; \
+		printf "\t"$$b"_tarball - Generate a zip archive of the "$$b" branch.\n"; \
 	done
-	@echo -e "\nRules for internationnalization :";
-	@echo -e "\tpot-update - Update the POT file from HTML template and PHP source, then merge it with PO file"
-	@echo -e "\tpot-push - Send the POT file on transifex server"
-	@echo -e "\tpo-update - Merge POT file into PO file. POT is not regenerated."
-	@echo -e "\tpo-push - Send the all PO file on transifex server"
-	@echo -e "\tpo-pull - Get all PO file from transifex server"
+	@printf "\nRules for internationnalization :\n";
+	@printf "\tpot-update - Update the POT file from HTML template and PHP source, then merge it with PO file.\n"
+	@printf "\tpot-push - Send the POT file on transifex server.\n"
+	@printf "\tpo-update - Merge POT file into PO file. POT is not regenerated.\n"
+	@printf "\tpo-push - Send the all PO file on transifex server.\n"
+	@printf "\tpo-pull - Get all PO file from transifex server.\n"
 
 #
 #   Internationnalization rule, POT & PO file manipulation
-#   
+#
+.PHONY: pluf_path
+pluf_path:
+ifeq (src/IDF/conf/path.php, $(wildcard src/IDF/conf/path.php))
+PLUF_PATH=$(shell php -r "require_once('src/IDF/conf/path.php'); echo PLUF_PATH;")
+else
+	@printf "File 'src/IDF/conf/path.php' don't exist. Please configure it !\n"
+	@exit 1
+endif
+ 
 .PHONY: pot-update po-update
-pot-update:
+pot-update: pluf_path
 	# Backup pot file
 	@if [ -e src/IDF/locale/idf.pot ]; then                     \
 	mv -f src/IDF/locale/idf.pot src/IDF/locale/idf.pot.bak;    \
@@ -49,7 +59,7 @@ pot-update:
 	# Extract string
 	@cd src; php $(PLUF_PATH)/extracttemplates.php IDF/conf/idf.php IDF/gettexttemplates
 	@cd src; for phpfile in `find . -iname "*.php"`; do \
-		echo "Parsing file : "$$phpfile; \
+		printf "Parsing file : "$$phpfile"\n"; \
 		xgettext -o idf.pot -p ./IDF/locale/ --from-code=UTF-8 -j --keyword --keyword=__ --keyword=_n:1,2 -L PHP $$phpfile ; \
 		done
 	#	Remove tmp folder
@@ -57,11 +67,11 @@ pot-update:
 	# Update PO
 	@make po-update
 
-po-update:
+po-update: pluf_path
 	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
-		echo "Updating file : "$$pofile; \
+		printf "Updating file : "$$pofile"\n"; \
 		msgmerge -v -U $$pofile src/IDF/locale/idf.pot; \
-		echo ; \
+		printf "\n"; \
 	done
 
 #
@@ -72,22 +82,22 @@ check-tx-config:
 	@if [ ! -e .tx/config ]; then                                       \
 	mkdir -p .tx;                                                       \
 	touch .tx/config;                                                   \
-	echo "[main]" >> .tx/config;                                        \
-	echo "host = http://www.transifex.net" >> .tx/config;               \
-	echo "" >> .tx/config;                                              \
-	echo "[indefero.idfpot]" >> .tx/config;                             \
-	echo "file_filter = src/IDF/locale/<lang>/idf.po" >> .tx/config;    \
-	echo "source_file = src/IDF/locale/idf.pot" >> .tx/config;          \
-	echo "source_lang = en" >> .tx/config;                              \
+	printf "[main]\n" >> .tx/config;                                        \
+	printf "host = http://www.transifex.net\n" >> .tx/config;               \
+	printf "\n" >> .tx/config;                                              \
+	printf "[indefero.idfpot]\n" >> .tx/config;                             \
+	printf "file_filter = src/IDF/locale/<lang>/idf.po\n" >> .tx/config;    \
+	printf "source_file = src/IDF/locale/idf.pot\n" >> .tx/config;          \
+	printf "source_lang = en\n" >> .tx/config;                              \
 	fi
 	@if [ ! -e $(HOME)/.transifexrc ]; then								\
 	touch $(HOME)/.transifexrc;												\
-	echo "[http://www.transifex.net]" >> $(HOME)/.transifexrc;				\
-	echo "username = " >> $(HOME)/.transifexrc;								\
-	echo "token = " >> $(HOME)/.transifexrc;									\
-	echo "password = " >> $(HOME)/.transifexrc;								\
-	echo "hostname = http://www.transifex.net" >> $(HOME)/.transifexrc;		\
-	echo "You must edit the file ~/.transifexrc to setup your transifex account (login & password) !";		\
+	printf "[http://www.transifex.net]\n" >> $(HOME)/.transifexrc;				\
+	printf "username = \n" >> $(HOME)/.transifexrc;								\
+	printf "token = \n" >> $(HOME)/.transifexrc;									\
+	printf "password = \n" >> $(HOME)/.transifexrc;								\
+	printf "hostname = http://www.transifex.net\n" >> $(HOME)/.transifexrc;		\
+	printf "You must edit the file ~/.transifexrc to setup your transifex account (login & password) !\n";		\
 	exit 1;																\
 	fi
 
