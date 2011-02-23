@@ -71,8 +71,7 @@ class IDF_Views_Issue
                         'page_title' => $title,
                         'open' => $open,
                         'closed' => $closed,
-                        'issues' => $pag,
-                        'cloud' => 'issues');
+                        'issues' => $pag);
         if ($api) return $params;
         return Pluf_Shortcuts_RenderToResponse('idf/issues/index.html',
                                                $params, $request);

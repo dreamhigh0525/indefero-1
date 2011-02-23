@@ -203,16 +203,16 @@ span.px-header-title a, span.px-header-title a:link, span.px-header-title a:visi
 /**
  * Issue
  */
-#issue-tags dl {
+#tagscloud dl {
     margin: 0;
 }
 
-#issue-tags dt {
+#tagscloud dt {
     margin-top: .5em;
     font-weight: bold;
 }
 
-#issue-tags dd {
+#tagscloud dd {
     margin: 0;
     display: inline;
 }
