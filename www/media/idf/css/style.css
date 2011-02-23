@@ -203,6 +203,20 @@ span.px-header-title a, span.px-header-title a:link, span.px-header-title a:visi
 /**
  * Issue
  */
+#issue-tags dl {
+    margin: 0;
+}
+
+#issue-tags dt {
+    margin-top: .5em;
+    font-weight: bold;
+}
+
+#issue-tags dd {
+    margin: 0;
+    display: inline;
+}
+ 
 a.issue-c {
   text-decoration: line-through;
 }
