@@ -41,6 +41,57 @@ class IDF_Scm_Git extends IDF_Scm
         $this->project = $project;
     }
 
+    /**
+     * @see IDF_Scm::getChanges()
+     *
+     * Git command output is like :
+     * M       doc/Guide utilisateur/Manuel_distrib.tex
+     * M       doc/Guide utilisateur/Manuel_intro.tex
+     * M       doc/Guide utilisateur/Manuel_libpegase_exemples.tex
+     * M       doc/Guide utilisateur/Manuel_page1_version.tex
+     * A       doc/Guide utilisateur/images/ftp-nautilus.png
+     * M       doc/Guide utilisateur/textes/log_boot_PEGASE.txt
+     *
+     * Status letters mean : Added (A), Deleted (D), Modified (M), Renamed (R)
+     */
+    public function getChanges($commit)
+    {
+        $cmd = sprintf('GIT_DIR=%s '.Pluf::f('git_path', 'git').' show %s --name-status --pretty="format:" --diff-filter="[A|D|M|R]"',
+                   escapeshellarg($this->repo),
+                   escapeshellarg($commit));
+        $out = array();
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        self::exec('IDF_Scm_Git::getChanges', $cmd, $out);
+        
+        $return = (object) array(
+            'additions'  => array(),
+            'deletions'  => array(),
+            'renames'    => array(),
+            'patches'    => array(),
+            'properties' => array(),
+        );  
+        
+        foreach ($out as $line) {
+            $line = trim($line);
+            if ($line != '') {
+                $action = $line[0];
+                $filename = trim(substr($line, 1));
+                
+                if ($action == 'A') {
+                    $return->additions[] = $filename;
+                } else if ($action == 'D') {
+                    $return->deletions[] = $filename;
+                } else if ($action == 'M') {
+                    $return->patches[] = $filename;
+                } else if ($action == 'R') {
+                    $return->renames[] = $filename;
+                }           
+            }
+        }
+
+        return $return;
+    }
+
     public function getRepositorySize()
     {
         if (!file_exists($this->repo)) {
