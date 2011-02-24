@@ -67,12 +67,10 @@ class IDF_Views_Wiki
         $pag->no_results_text = __('No documentation pages were found.');
         $pag->sort_order = array('title', 'ASC');
         $pag->setFromRequest($request);
-        $tags = $prj->getTagCloud('wiki');
         return Pluf_Shortcuts_RenderToResponse('idf/wiki/index.html',
                                                array(
                                                      'page_title' => $title,
                                                      'pages' => $pag,
-                                                     'tags' => $tags,
                                                      'deprecated' => count($ids),
                                                      'dlabel' => $dtag,
                                                      ),

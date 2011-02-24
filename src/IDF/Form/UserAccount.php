@@ -79,6 +79,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             'widget' => 'Pluf_Form_Widget_PasswordInput',
                                             'help_text' => Pluf_Template::markSafe(__('Leave blank if you do not want to change your password.').'<br />'.__('Your password must be hard for other people to find it, but easy for you to remember.')),
                                             'widget_attrs' => array(
+                                                       'autocomplete' => 'off',
                                                        'maxlength' => 50,
                                                        'size' => 15,
                                                                     ),
@@ -89,6 +90,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             'initial' => '',
                                             'widget' => 'Pluf_Form_Widget_PasswordInput',
                                             'widget_attrs' => array(
+                                                       'autocomplete' => 'off',
                                                        'maxlength' => 50,
                                                        'size' => 15,
                                                                     ),

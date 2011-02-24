@@ -37,6 +37,7 @@ docroot.
     $ sudo pear upgrade-all
     $ sudo pear install --alldeps Mail
     $ sudo pear install --alldeps Mail_mime
+    $ sudo pear install --alldeps Console_Getopt
 
 If you already have some of the PEAR packages installed with your
 distribution, the `Mail` package is often not up-to-date, 
