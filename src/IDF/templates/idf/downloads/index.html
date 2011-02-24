@@ -9,6 +9,7 @@
 {/block}
 {block context}
 <p><strong>{trans 'Number of files:'}</strong> {$downloads.nb_items}</p>
+{assign $cloud_url = 'IDF_Views_Download::listLabel'}
 {assign $cloud = 'downloads'}
 {include 'idf/tags-cloud.html'}
 {if $deprecated > 0}

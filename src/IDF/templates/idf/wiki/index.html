@@ -9,6 +9,7 @@
 {/block}
 {block context}
 <p><strong>{trans 'Number of pages:'}</strong> {$pages.nb_items}</p>
+{assign $cloud_url = 'IDF_Views_Wiki::listLabel'}
 {assign $cloud = 'wiki'}
 {include 'idf/tags-cloud.html'}
 {if $deprecated > 0}
