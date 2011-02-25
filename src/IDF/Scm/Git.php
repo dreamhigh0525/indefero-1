@@ -56,7 +56,7 @@ class IDF_Scm_Git extends IDF_Scm
      */
     public function getChanges($commit)
     {
-        $cmd = sprintf('GIT_DIR=%s '.Pluf::f('git_path', 'git').' show %s --name-status --pretty="format:" --diff-filter="[A|D|M|R]"',
+        $cmd = sprintf('GIT_DIR=%s '.Pluf::f('git_path', 'git').' show %s --name-status --pretty="format:" --diff-filter="[A|D|M|R]" -M',
                    escapeshellarg($this->repo),
                    escapeshellarg($commit));
         $out = array();
@@ -75,20 +75,23 @@ class IDF_Scm_Git extends IDF_Scm
             $line = trim($line);
             if ($line != '') {
                 $action = $line[0];
-                $filename = trim(substr($line, 1));
                 
                 if ($action == 'A') {
+                    $filename = trim(substr($line, 1));
                     $return->additions[] = $filename;
                 } else if ($action == 'D') {
+                    $filename = trim(substr($line, 1));
                     $return->deletions[] = $filename;
                 } else if ($action == 'M') {
+                    $filename = trim(substr($line, 1));
                     $return->patches[] = $filename;
                 } else if ($action == 'R') {
-                    $return->renames[] = $filename;
+                    $matches = split ("\t", $line);
+                    $return->renames[$matches[1]] = $matches[2];
                 }           
             }
         }
-
+        
         return $return;
     }
 
