@@ -23,7 +23,7 @@
 </tr>{/if}
 <tr>
 <th><strong>{trans 'Message:'}</strong></th><td>{issuetext $cobject.title, $request}{if isset($cobject.full_message)}<br/><br/>{issuetext $cobject.full_message, $request, true, false, true, true, true}{/if}</td>
-</tr>{if count($changes)}
+</tr>{if count($cobject.parents) < 2 and count($changes)}
 <tr>
 <th><strong>{trans 'Changes:'}</strong></th>
 <td>
@@ -61,11 +61,13 @@
 </tr>{/if} {* End of the if count($changes) *}
 </table>
 
-{if count($diff.files)}
+{if count($cobject.parents) < 2 and count($diff.files)}
 <h2>{trans 'File differences'}</h2>
 
 {$diff.as_html()}
-{/if}{if count($diff.files) or $large_commit}
+{/if}
+
+{if count($cobject.parents) < 2 and (count($diff.files) or $large_commit)}
 {aurl 'url', 'IDF_Views_Source::downloadDiff', array($project.shortname, $commit)}
 <p class="right soft"><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/package-grey.png'}" alt="{trans 'Archive'}" align="bottom"/></a> <a href="{$url}">{trans 'Download the corresponding diff file'}</a></p>
 {/if}
