@@ -763,19 +763,27 @@ ol > li {
 #wiki-toc {
     float: right;
     margin-left: 10px;
+    margin-bottom: 10px;
+    max-width: 33%;
 }
 
 #wiki-toc-content {
     border:  1px solid #999999;
     border-width: 1px 0;
     padding: 10px 0;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     background-color: #ffffff;
     display: block;
 }
 
 #wiki-toc-content a {
     display: block;
+    margin-top: 0.5em;
+    font-size: 90%;
+}
+
+#wiki-toc-content a:first-child {
+    margin-top: 0;
 }
 
 #wiki-toc-content a.wiki-h2 {
