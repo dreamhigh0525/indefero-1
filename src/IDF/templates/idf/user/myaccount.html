@@ -100,6 +100,14 @@
 <span class="helptext">{$form.f.public_key.help_text}</span>
 </td>
 </tr>
+<tr><td colspan="2" class="separator">{trans "Secondary Emails"}</td></tr>
+<tr>
+<th>{$form.f.secondary_mail.labelTag}:</th>
+<td>{if $form.f.secondary_mail.errors}{$form.f.secondary_mail.fieldErrors}{/if}
+{$form.f.secondary_mail|unsafe}<br />
+<span class="helptext">{$form.f.secondary_mail.help_text}</span>
+</td>
+</tr>
 <tr class="pass-info" id="extra-password">
 <th>{trans 'Extra password'}:</th>
 <td><span class="mono">{$ext_pass}</span><br />
@@ -127,6 +135,15 @@
 <span class="mono">{$key.showCompact()}</span></td><td> <form class="star" method="post" action="{url 'IDF_Views_User::deleteKey', array($key.id)}"><input type="image" src="{media '/idf/img/trash.png'}" name="submit" value="{trans 'Delete this key'}" /></form>
 </td>
 </tr>{/foreach}
+</table>
+{/if}
+{if count($mailaddrs)>1}
+<table summary=" " class="recent-issues">
+<tr><th colspan="2">{trans 'Your additional email addresses'}</th></tr>
+{foreach $mailaddrs as $mail}{if $mail.id != -1}<tr><td>
+{$mail.address}</td><td> <form class="star" method="post" action="{url 'IDF_Views_User::deleteMail', array($mail.id)}"><input type="image" src="{media '/idf/img/trash.png'}" name="submit" value="{trans 'Delete this address'}" /></form>
+</td>
+</tr>{/if}{/foreach}
 </table>
 {/if}
 {/block}
