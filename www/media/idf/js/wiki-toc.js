@@ -5,7 +5,7 @@ $(document).ready(function() {
             .addClass("wiki-" + this.tagName.toLowerCase())
             .appendTo('#wiki-toc-content');
     });
-    if ($('#wiki-toc-content').size() < 2)
+    if ($('#wiki-toc-content *').size() < 2)
         $('#wiki-toc').hide();
 });
 
