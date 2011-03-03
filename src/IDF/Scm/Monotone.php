@@ -400,14 +400,12 @@ class IDF_Scm_Monotone extends IDF_Scm
         if (!preg_match('/([^ ]+@[^ ]+)/', $author, $match)) {
             return null;
         }
-        foreach (array('email', 'login') as $what) {
-            $sql = new Pluf_SQL($what.'=%s', array($match[1]));
-            $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
-            if ($users->count() > 0) {
-                return $users[0];
-            }
+        $sql = new Pluf_SQL('login=%s', array($match[1]));
+        $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
+        if ($users->count() > 0) {
+            return $users[0];
         }
-        return null;
+        return Pluf::factory('IDF_EmailAddress')->get_user_for_email_address($match[1]);
     }
 
     /**

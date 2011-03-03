@@ -127,12 +127,14 @@ class IDF_Views_User
             $form = new IDF_Form_UserAccount(null, $params);
         }
         $keys = $request->user->get_idf_key_list();
+        $mailaddrs = Pluf::factory('IDF_EmailAddress')->get_email_addresses_for_user($request->user);
 
         return Pluf_Shortcuts_RenderToResponse('idf/user/myaccount.html',
                                                array('page_title' => __('Your Account'),
                                                      'api_key' => $api_key,
                                                      'ext_pass' => $ext_pass,
                                                      'keys' => $keys,
+                                                     'mailaddrs' => $mailaddrs,
                                                      'form' => $form),
                                                $request);
     }
@@ -153,6 +155,26 @@ class IDF_Views_User
             }
             $key->delete();
             $request->user->setMessage(__('The public key has been deleted.'));
+        }
+        return new Pluf_HTTP_Response_Redirect($url);
+    }
+
+    /**
+     * Delete a mail address.
+     *
+     * This is redirecting to the preferences
+     */
+    public $deleteMail_precond = array('Pluf_Precondition::loginRequired');
+    public function deleteMail($request, $match)
+    {
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::myAccount');
+        if ($request->method == 'POST') {
+            $address = Pluf_Shortcuts_GetObjectOr404('IDF_EmailAddress', $match[1]);
+            if ($address->user != $request->user->id) {
+                return new Pluf_HTTP_Response_Forbidden($request);
+            }
+            $address->delete();
+            $request->user->setMessage(__('The address has been deleted.'));
         }
         return new Pluf_HTTP_Response_Redirect($url);
     }
@@ -190,7 +212,7 @@ class IDF_Views_User
         $key = $match[1];
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::changeEmailInputKey');
         try {
-            list($email, $id, $time) = IDF_Form_UserChangeEmail::validateKey($key);
+            list($email, $id, $time, $type) = IDF_Form_UserChangeEmail::validateKey($key);
         } catch (Pluf_Form_Invalid $e) {
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -198,8 +220,15 @@ class IDF_Views_User
             return new Pluf_HTTP_Response_Redirect($url);
         }
         // Now we have a change link coming from the right user.
-        $request->user->email = $email;
-        $request->user->update();
+        if ($type == "primary") {
+            $request->user->email = $email;
+            $request->user->update();
+        } else {
+            $mailaddress = new IDF_EmailAddress();
+            $mailaddress->user = $request->user;
+            $mailaddress->address = $email;
+            $mailaddress->create();
+        }
         $request->user->setMessage(sprintf(__('Your new email address "%s" has been validated. Thank you!'), Pluf_esc($email)));
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_User::myAccount');
         return new Pluf_HTTP_Response_Redirect($url);
