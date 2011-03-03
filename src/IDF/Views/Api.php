@@ -55,6 +55,7 @@ class IDF_Views_Api
      * Create a new issue.
      */
     public $issueCreate_precond = array('IDF_Precondition::apiSetUser',
+                                        'Pluf_Precondition::loginRequired',
                                         'IDF_Precondition::accessIssues');
     public function issueCreate($request, $match)
     {

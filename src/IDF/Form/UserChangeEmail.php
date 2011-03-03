@@ -53,7 +53,7 @@ class IDF_Form_UserChangeEmail extends Pluf_Form
      * Throw a Pluf_Form_Invalid exception if the key is not valid.
      *
      * @param string Key
-     * @return array array($new_email, $user_id, time())
+     * @return array array($new_email, $user_id, time(), [primary|secondary])
      */
     public static function validateKey($key)
     {
@@ -63,7 +63,7 @@ class IDF_Form_UserChangeEmail extends Pluf_Form
             throw new Pluf_Form_Invalid(__('The validation key is not valid. Please copy/paste it from your confirmation email.'));
         }
         $cr = new Pluf_Crypt(md5(Pluf::f('secret_key')));
-        return explode(':', $cr->decrypt($encrypted), 3);
+        return explode(':', $cr->decrypt($encrypted), 4);
         
     }
 

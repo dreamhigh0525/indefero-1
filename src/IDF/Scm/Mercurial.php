@@ -67,9 +67,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
         if (!preg_match('/<(.*)>/', $author, $match)) {
             return null;
         }
-        $sql = new Pluf_SQL('email=%s', array($match[1]));
-        $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
-        return ($users->count() > 0) ? $users[0] : null;
+        return Pluf::factory('IDF_EmailAddress')->get_user_for_email_address($match[1]);
     }
 
     public function getMainBranch()
