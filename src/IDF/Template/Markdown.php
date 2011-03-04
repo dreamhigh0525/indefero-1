@@ -34,6 +34,11 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
 
     function start($text, $request)
     {
+        // PHP sets the backtrack limit quite low, so some regexes may
+        // fail unexpectedly on large inputs or weird cornercases (see issue 618)
+        $pcre_backtrack_limit = ini_get('pcre.backtrack_limit');
+        ini_set('pcre.backtrack_limit', 10000000);
+
         $this->project = $request->project;
         $this->request = $request;
         // Replace like in the issue text
@@ -43,7 +48,7 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
         // the content of the file into the wki page
         if ($this->request->rights['hasSourceAccess']) {
             $text = preg_replace_callback('#\[\[\[([^\,]+)(?:, ([^/]+))?\]\]\]#im',
-                                          array($this, 'callbackEmbeddedDoc'), 
+                                          array($this, 'callbackEmbeddedDoc'),
                                           $text);
         }
         // Replace [Page]([[PageName]]) with corresponding link to the page, with link text being Page.
@@ -56,6 +61,8 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
                                       $text);
         $filter = new IDF_Template_MarkdownPrefilter();
         echo $filter->go(Pluf_Text_MarkDown_parse($text));
+
+        ini_set('pcre.backtrack_limit', $pcre_backtrack_limit);
     }
 
     function callbackWikiPageNoName($m)
@@ -66,7 +73,7 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
 
     function callbackWikiPage($m)
     {
-        $sql = new Pluf_SQL('project=%s AND title=%s', 
+        $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($this->project->id, $m[2]));
         $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() != 1 and $this->request->rights['hasWikiAccess']
@@ -78,7 +85,7 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
         }
         return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', array($this->project->shortname, $pages[0]->title)).'" title="'.Pluf_esc($pages[0]->summary).'">'.$m[1].'</a>';
     }
-    
+
     function callbackEmbeddedDoc($m)
     {
         $scm = IDF_Scm::get($this->request->project);
@@ -94,7 +101,7 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
             return $m[0];
         }
         $info = pathinfo($m[1]);
-        $fileinfo = array($res->headers['Content-Type'], $m[1], 
+        $fileinfo = array($res->headers['Content-Type'], $m[1],
                           isset($info['extension']) ? $info['extension'] : 'bin');
         if (!IDF_FileUtil::isText($fileinfo)) {
             return $m[0];

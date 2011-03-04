@@ -34,6 +34,11 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
 
     function start($text, $request, $echo=true, $wordwrap=true, $esc=true, $autolink=true, $nl2br=false)
     {
+        // PHP sets the backtrack limit quite low, so some regexes may
+        // fail unexpectedly on large inputs or weird cornercases (see issue 618)
+        $pcre_backtrack_limit = ini_get('pcre.backtrack_limit');
+        ini_set('pcre.backtrack_limit', 10000000);
+
         $this->project = $request->project;
         $this->request = $request;
         $this->scm = IDF_Scm::get($request->project);
@@ -67,6 +72,8 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
         } else {
             return $text;
         }
+
+        ini_set('pcre.backtrack_limit', $pcre_backtrack_limit);
     }
 
     /**
@@ -234,7 +241,7 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
     public function linkIssue($issue, $title, $anchor='')
     {
         $ic = (in_array($issue->status, $this->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
-        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view', 
+        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                                     array($this->project->shortname, $issue->id)).$anchor.'" class="'.$ic.'" title="'.Pluf_esc($issue->summary).'">'.Pluf_esc($title).'</a>';
     }
 
@@ -248,7 +255,7 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
     public function linkReview($review, $title, $anchor='')
     {
         $ic = (in_array($review->status, $this->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
-        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                                     array($this->project->shortname, $review->id)).$anchor.'" class="'.$ic.'" title="'.Pluf_esc($review->summary).'">'.Pluf_esc($title).'</a>';
     }
 }
