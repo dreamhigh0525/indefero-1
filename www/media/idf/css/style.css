@@ -577,6 +577,10 @@ td.diff-a {
   background-color: #dfd;
 }
 
+td.diff-a > span {
+  float: left;
+}
+
 td.diff-r {
   background-color: #fdd;
 }
