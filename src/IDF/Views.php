@@ -37,10 +37,12 @@ class IDF_Views
      * Only the public projects are listed or the private with correct
      * rights.
      */
-    public function index($request, $match)
+    public function index($request, $match, $api=false)
     {
         $projects = self::getProjects($request->user);
         $stats = self::getProjectsStatistics ($projects);
+        
+        if ($api == true) return $projects;
         return Pluf_Shortcuts_RenderToResponse('idf/index.html', 
                                                array('page_title' => __('Projects'),
                                                      'projects' => $projects,

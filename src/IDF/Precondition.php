@@ -190,7 +190,12 @@ class IDF_Precondition
             return true; // Again need authentication error
         }
         $request->user = $users[0];
-        IDF_Middleware::setRights($request);
+        
+        // Don't try to load projects rights access if we are not in one
+        if ($request->query !== "/api/") {
+            IDF_Middleware::setRights($request);
+        }
+            
         return true;
     }
 
