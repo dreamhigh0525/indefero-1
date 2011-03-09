@@ -378,7 +378,7 @@ class IDF_Views
 
         // Count members
         $db =& Pluf::db();
-        $sql = "SELECT count(id) as `nb` FROM indefero_users WHERE first_name != '---'";
+        $sql = "SELECT count(id) as nb FROM indefero_users WHERE first_name != '---'";
         $ret = $db->select ($sql);
         $forgestats['members'] = $ret[0]['nb'];
         
