@@ -284,7 +284,6 @@ msgid "user"
 msgstr "Benutzer"
 
 #: IDF/EmailAddress.php:55
-#, fuzzy
 msgid "email"
 msgstr "E-Mail"
 
@@ -346,9 +345,8 @@ msgstr "Wie kann ich meinen Kommentaren ein Foto von mir hinzufügen?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:15
 #: IDF/gettexttemplates/idf/faq.html.php:33
-#, fuzzy
 msgid "What is the API and how is it used?"
-msgstr "Was ist die API und wie kann ich sie verwenden?"
+msgstr "Was ist die API und wie wird sie verwendet?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:17
 msgid "<kbd>Shift+h</kbd>: This help page."
@@ -470,7 +468,6 @@ msgstr ""
 #: IDF/gettexttemplates/idf/register/inputkey.html.php:3
 #: IDF/gettexttemplates/idf/user/changeemail.html.php:3
 #: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:3
-#, fuzzy
 msgid "Oops, we found an error in the form."
 msgstr "Wir haben einen Fehler in der Maske gefunden."
 
@@ -553,7 +550,6 @@ msgstr ""
 "jederzeit von Deinen Problemen wissen</a>, solltest Du welche haben."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
-#, fuzzy
 msgid "Oops, please check the provided login and email address to register."
 msgstr ""
 "Bitte überprüfe den angegebenen Anmeldenamen und die E-Mail-Adresse zum "
@@ -574,7 +570,6 @@ msgstr "Wusstest Du?"
 #: IDF/gettexttemplates/idf/register/confirmation.html.php:3
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:3
 #: IDF/gettexttemplates/idf/user/passrecovery.html.php:3
-#, fuzzy
 msgid "Oops, please check the form for errors."
 msgstr "Bitte überprüfe die Maske auf Fehler."
 
@@ -1260,7 +1255,7 @@ msgstr "Schlüsselverwaltung"
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:7
 msgid "Secondary Emails"
-msgstr ""
+msgstr "Sekundäre E-Mails"
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:8
 msgid "Extra password"
@@ -1299,14 +1294,12 @@ msgid "Delete this key"
 msgstr "Lösche diesen Schlüssel"
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:16
-#, fuzzy
 msgid "Your additional email addresses"
-msgstr "Öffentlichen E-Mail-Adresse"
+msgstr "Deine zusätzlichen E-Mail-Adressen"
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:17
-#, fuzzy
 msgid "Delete this address"
-msgstr "Lösche diese Seite"
+msgstr "Lösche diese Adresse"
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:18
 msgid ""
@@ -1376,20 +1369,18 @@ msgid "Recover Your Password"
 msgstr "Passwort wiederherstellen"
 
 #: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:8
-#, fuzzy
 msgid ""
 "Just after providing the confirmation key, you will be able to reset your "
 "password and use this website fully."
 msgstr ""
 "Kurz nachdem Du den Bestätigungscode eingegeben hast, wirst Du Dein Passwort "
-"zurücksetzen und diese Webseite wieder voll nutzen können."
+"zurücksetzen und diese Webseite voll nutzen können."
 
 #: IDF/gettexttemplates/idf/user/passrecovery.html.php:6
 msgid "Reset Your Password"
 msgstr "Passwort zurücksetzen"
 
 #: IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:3
-#, fuzzy
 msgid ""
 "Oops, please check the provided login or email address to recover your "
 "password."
@@ -2145,7 +2136,7 @@ msgstr ""
 "als Software zur Versionsverwaltung."
 
 #: IDF/gettexttemplates/idf/source/git/help.html.php:6
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "You may need to <a href=\"%%url%%\">provide your SSH key</a>. The "
 "synchronization of your SSH key can take a couple of minutes. You can learn "
@@ -2192,9 +2183,8 @@ msgid "No projects managed with InDefero were found."
 msgstr "Es wurden keine verwalteten Projekte gefunden."
 
 #: IDF/gettexttemplates/idf/index.html.php:7
-#, fuzzy
 msgid "Forge statistics"
-msgstr "Projektstatistiken"
+msgstr "Forge-Statistiken"
 
 #: IDF/gettexttemplates/idf/index.html.php:8
 msgid "Projects:"
@@ -2258,7 +2248,6 @@ msgid "Project Management"
 msgstr "Projekt-Management"
 
 #: IDF/gettexttemplates/idf/review/create.html.php:3
-#, fuzzy
 msgid ""
 "<p>To start a code review, you need to provide:</p>\n"
 "<ul>\n"
@@ -2277,7 +2266,7 @@ msgstr ""
 "Arbeit begonnen hast.</li>\n"
 "<li>Ein Patch, welches die Änderungen ausgehend von der Referenz-Revision "
 "beschreibt.</li>\n"
-"<li><strong>Füge dem Patch keine Passwörter oder vertraulichen Angaben hinzu!"
+"<li><strong>Überprüfe, dass Dein Patch keine Passwörter oder vertraulichen Angaben enthält!"
 "</strong></li>\n"
 "</ul>"
 
@@ -3680,9 +3669,8 @@ msgid "The public key has been deleted."
 msgstr "Der öffentliche Schlüssel wurde gelöscht."
 
 #: IDF/Views/User.php:177
-#, fuzzy
 msgid "The address has been deleted."
-msgstr "Die Datei wurde gelöscht."
+msgstr "Die Adresse wurde gelöscht."
 
 #: IDF/Views/User.php:200
 msgid "Confirm The Email Change"
@@ -4463,11 +4451,11 @@ msgstr "Leer lassen, falls Du Dein Passwort nicht ändern willst."
 
 #: IDF/Form/UserAccount.php:171
 msgid "Add a secondary mail address"
-msgstr ""
+msgstr "Füge eine sekundäre E-Mail-Adresse hinzu"
 
 #: IDF/Form/UserAccount.php:173
 msgid "You will get a mail to confirm that you own the address you specify."
-msgstr ""
+msgstr "Du erhälst eine E-Mail, um zu bestätigen, die angegebene Adresse Dir gehört."
 
 #: IDF/Form/UserAccount.php:200
 msgid "Confirm your new email address."
