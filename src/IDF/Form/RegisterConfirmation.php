@@ -69,7 +69,7 @@ class IDF_Form_RegisterConfirmation extends Pluf_Form
                                             'label' => __('Your password'),
                                             'initial' => '',
                                             'widget' => 'Pluf_Form_Widget_PasswordInput',
-                                            'help_text' => __('Your password must be hard for other people to find it, but easy for you to remember.'),
+                                            'help_text' => __('Your password must be hard for other people to guess, but easy for you to remember.'),
                                             'widget_attrs' => array(
                                                        'maxlength' => 50,
                                                        'size' => 15,

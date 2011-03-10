@@ -83,7 +83,7 @@ class IDF_Form_Upload extends Pluf_Form
         if (strlen($extra)) $extra .= '|';
         if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $this->cleaned_data['file'])) {
             @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
-            throw new Pluf_Form_Invalid(__('For security reason, you cannot upload a file with this extension.'));
+            throw new Pluf_Form_Invalid(__('For security reasons, you cannot upload a file with this extension.'));
         }
         return $this->cleaned_data['file'];
     }

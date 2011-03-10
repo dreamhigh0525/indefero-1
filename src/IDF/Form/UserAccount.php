@@ -163,7 +163,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
                                             'widget_attrs' => array('rows' => 3,
                                                                     'cols' => 40),
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
-                                            'help_text' => __('Paste a SSH or monotone public key. Be careful to not provide your private key here!')
+                                            'help_text' => __('Paste an SSH or monotone public key. Be careful to not provide your private key here!')
                                             ));
 
         $this->fields['secondary_mail'] = new Pluf_Form_Field_Email(
@@ -359,7 +359,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
         }
         else {
             throw new Pluf_Form_Invalid(
-                __('Public key looks neither like a SSH '.
+                __('Public key looks like neither an SSH '.
                    'nor monotone public key.'));
         }
 
