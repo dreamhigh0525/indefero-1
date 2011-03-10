@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-09 13:56+0100\n"
+"POT-Creation-Date: 2011-03-10 10:02+0100\n"
 "PO-Revision-Date: 2011-03-04 18:20+0000\n"
 "Last-Translator: tommyd <me@thomaskeller.biz>\n"
 "Language-Team: German <>\n"
@@ -2266,8 +2266,8 @@ msgstr ""
 "Arbeit begonnen hast.</li>\n"
 "<li>Ein Patch, welches die Änderungen ausgehend von der Referenz-Revision "
 "beschreibt.</li>\n"
-"<li><strong>Überprüfe, dass Dein Patch keine Passwörter oder vertraulichen Angaben enthält!"
-"</strong></li>\n"
+"<li><strong>Überprüfe, dass Dein Patch keine Passwörter oder vertraulichen "
+"Angaben enthält!</strong></li>\n"
 "</ul>"
 
 #: IDF/gettexttemplates/idf/review/create.html.php:9
@@ -3942,9 +3942,8 @@ msgstr "Kann kein Modell von einer ungültigen Maske speichern."
 msgid "Initial page creation"
 msgstr "Initiale Seiten-Erzeugung"
 
-#: IDF/Form/Upload.php:86 IDF/Form/Admin/UserUpdate.php:301
-#: IDF/Form/UserAccount.php:389
-msgid "For security reason, you cannot upload a file with this extension."
+#: IDF/Form/Upload.php:86
+msgid "For security reasons, you cannot upload a file with this extension."
 msgstr ""
 "Aus Sicherheitsgründen kannst Du keine Dateien mit dieser Erweiterung "
 "hochladen."
@@ -3971,7 +3970,7 @@ msgstr "Nachname"
 msgid "Login"
 msgstr "Anmelde-Name"
 
-#: IDF/Form/Admin/UserCreate.php:60 IDF/Form/Register.php:45
+#: IDF/Form/Admin/UserCreate.php:60
 msgid ""
 "The login must be between 3 and 15 characters long and contains only letters "
 "and digits."
@@ -3985,7 +3984,7 @@ msgstr "E-Mail"
 
 #: IDF/Form/Admin/UserCreate.php:71
 msgid ""
-"Double check the email address as the password is directly sent to the user."
+"Double check the email address as the password is sent directly to the user."
 msgstr ""
 "Überprüfe nochmals die E-Mail-Adresse, da das Passwort direkt an den "
 "Benutzer gesendet wird."
@@ -3999,7 +3998,7 @@ msgstr "Sprache"
 msgid "Add a public key"
 msgstr "Öffentlichen Schlüssel hinzufügen"
 
-#: IDF/Form/Admin/UserCreate.php:92 IDF/Form/UserAccount.php:166
+#: IDF/Form/Admin/UserCreate.php:92
 msgid ""
 "Paste a SSH or monotone public key. Be careful to not provide your private "
 "key here!"
@@ -4098,13 +4097,13 @@ msgstr ""
 
 #: IDF/Form/Admin/ProjectCreate.php:185
 msgid ""
-"Only a remote repository available throught http or https are allowed. For "
+"Only a remote repository available through HTTP or HTTPS is allowed. For "
 "example \"http://somewhere.com/svn/trunk\"."
 msgstr ""
-"Nur ein entferntes Depot, welches durch http or https verfügbar ist, ist "
+"Nur ein entferntes Depot, welches durch HTTP oder HTTPS verfügbar ist, ist "
 "erlaubt. Beispiel: \"http://somewhere.com/svn/trunk\"."
 
-#: IDF/Form/Admin/ProjectCreate.php:201 IDF/Form/Admin/ProjectUpdate.php:90
+#: IDF/Form/Admin/ProjectCreate.php:201
 msgid ""
 "The master branch is empty or contains illegal characters, please use only "
 "letters, digits, dashs and dots as separators."
@@ -4180,10 +4179,10 @@ msgstr "Lass das Feld leer, wenn Du das Passwort nicht ändern möchtest."
 
 #: IDF/Form/Admin/UserUpdate.php:81
 msgid ""
-"The password must be hard for other people to find it, but easy for the user "
+"The password must be hard for other people to guess, but easy for the user "
 "to remember."
 msgstr ""
-"Das Passwort sollte für andere Leute schwer zu finden, aber für den Nutzer "
+"Das Passwort sollte für andere Leute schwer zu erraten, aber für den Nutzer "
 "einfach zu erinnern sein."
 
 #: IDF/Form/Admin/UserUpdate.php:89
@@ -4223,14 +4222,14 @@ msgid "Tick this to delete the custom avatar."
 msgstr "Markieren, um das eigene Benutzerbild zu löschen."
 
 #: IDF/Form/Admin/UserUpdate.php:164
-msgid "If you give staff rights to a user, you really need to trust him."
+msgid "If you give staff rights to a user, you really need to trust them."
 msgstr ""
-"Wenn Du diesen Nutzer zum Stab hinzufügst, solltest Du ihm wirklich trauen."
+"Wenn Du einen Nutzer zum Stab hinzufügst, solltest Du ihm wirklich trauen."
 
 #: IDF/Form/Admin/UserUpdate.php:176
 msgid ""
 "If the user is not getting the confirmation email or is abusing the system, "
-"you can directly enable or disable his account here."
+"you can directly enable or disable their account here."
 msgstr ""
 "Wenn der Nutzer keine Bestätigungs-E-Mail erhält oder das System "
 "missbraucht, kannst Du sein Konto hier direkt aktivieren oder deaktivieren."
@@ -4246,9 +4245,23 @@ msgstr ""
 "Ein Nutzer mit dieser E-Mail-Adresse existiert bereits, bitte gib eine "
 "andere E-Mail-Adresse an."
 
+#: IDF/Form/Admin/UserUpdate.php:301 IDF/Form/UserAccount.php:389
+msgid "For security reason, you cannot upload a file with this extension."
+msgstr ""
+"Aus Sicherheitsgründen kannst Du keine Dateien mit dieser Erweiterung "
+"hochladen."
+
 #: IDF/Form/Admin/UserUpdate.php:316 IDF/Form/UserAccount.php:452
 msgid "The passwords do not match. Please give them again."
 msgstr "Die Passwörter stimmen nicht überein. Bitte gib sie erneut ein."
+
+#: IDF/Form/Admin/ProjectUpdate.php:90
+msgid ""
+"The master branch is empty or contains illegal characters, please use only "
+"letters, digits, dashes and dots as separators."
+msgstr ""
+"Der Hauptzweig ist leer oder enthält ungültige Zeichen. Bitte verwende nur "
+"Buchstaben, Ziffern, Bindestriche und Punkte als Trenner."
 
 #: IDF/Form/Password.php:34
 msgid "Your login or email"
@@ -4283,7 +4296,6 @@ msgid "Your password"
 msgstr "Dein Passwort"
 
 #: IDF/Form/PasswordReset.php:48 IDF/Form/UserAccount.php:80
-#: IDF/Form/RegisterConfirmation.php:72
 msgid ""
 "Your password must be hard for other people to find it, but easy for you to "
 "remember."
@@ -4361,12 +4373,20 @@ msgstr "Initiales, zu begutachtendes Patch."
 msgid "Your login"
 msgstr "Dein Anmeldename"
 
+#: IDF/Form/Register.php:45
+msgid ""
+"The login must be between 3 and 15 characters long and contain only letters "
+"and digits."
+msgstr ""
+"Der Anmeldename muss zwischen 3 und 15 Zeichen lang sein und darf nur "
+"Buchstaben und Zahlen beinhalten."
+
 #: IDF/Form/Register.php:53
 msgid "Your email"
 msgstr "Deine E-Mail-Adresse"
 
 #: IDF/Form/Register.php:55
-msgid "We will never send you any unsolicited emails. We hate spams too!"
+msgid "We will never send you any unsolicited emails. We hate spam too!"
 msgstr ""
 "Wir werden Ihnen nie unangeforderte E-Mails zusenden. Wir hassen Spam "
 "ebenfalls."
@@ -4383,11 +4403,11 @@ msgstr "Ja, es ist nervig, aber Du musst den Nutzungsbedingungen zustimmen."
 #: IDF/Form/Register.php:97
 #, php-format
 msgid ""
-"The email \"%s\" is already used. If you need, click on the help link to "
+"The email \"%s\" is already used. If you need to, click on the help link to "
 "recover your password."
 msgstr ""
-"Die E-Mailadresse \"%s\" ist bereits registriert. Die Hilfefunktion "
-"ermöglicht, das Passwort zurückzusetzen."
+"Die E-Mail-Adresse \"%s\" wird bereits genutzt. Die Hilfefunktion "
+"ermöglicht es, das Passwort zurückzusetzen."
 
 #: IDF/Form/Register.php:148
 msgid "Confirm the creation of your account."
@@ -4449,13 +4469,22 @@ msgstr ""
 msgid "Leave blank if you do not want to change your password."
 msgstr "Leer lassen, falls Du Dein Passwort nicht ändern willst."
 
+#: IDF/Form/UserAccount.php:166
+msgid ""
+"Paste an SSH or monotone public key. Be careful to not provide your private "
+"key here!"
+msgstr ""
+"Füge einen öffentlichen SSH- oder monotone-Schlüssel hier ein. Pass auf, "
+"dass Du nicht versehentlich Deinen privaten Schlüssel hier hineinkopierst!"
+
 #: IDF/Form/UserAccount.php:171
 msgid "Add a secondary mail address"
 msgstr "Füge eine sekundäre E-Mail-Adresse hinzu"
 
 #: IDF/Form/UserAccount.php:173
 msgid "You will get a mail to confirm that you own the address you specify."
-msgstr "Du erhälst eine E-Mail, um zu bestätigen, die angegebene Adresse Dir gehört."
+msgstr ""
+"Du erhälst eine E-Mail, um zu bestätigen, die angegebene Adresse Dir gehört."
 
 #: IDF/Form/UserAccount.php:200
 msgid "Confirm your new email address."
@@ -4485,10 +4514,10 @@ msgstr ""
 "monotone-Schlüssel zu sein."
 
 #: IDF/Form/UserAccount.php:362
-msgid "Public key looks neither like a SSH nor monotone public key."
+msgid "Public key looks like neither an SSH nor monotone public key."
 msgstr ""
 "Der öffentliche Schlüssel sieht weder wie ein öffentlicher SSH- noch ein "
-"öffentlichen monotone-Schlüssel aus."
+"öffentlicher monotone-Schlüssel aus."
 
 #: IDF/Form/UserAccount.php:374
 msgid "You already have uploaded this key."
@@ -4513,7 +4542,8 @@ msgstr ""
 
 #: IDF/Form/IssueTrackingConf.php:80
 msgid ""
-"Define an issue template to hint the reporter to provide certain information"
+"Define an issue template to hint to the reporter to provide certain "
+"information"
 msgstr ""
 "Definiere eine Ticket-Vorlage, um dem Ersteller Hinweise auf benötigte "
 "Informationen zu geben"
@@ -4608,6 +4638,14 @@ msgstr "Du musst Kommentare zu mindestens einer Datei angeben."
 #: IDF/Form/ReviewFileComment.php:109
 msgid "You need to provide your general comment about the proposal."
 msgstr "Du musst einen allgemeinen Kommentar zu Deinem Vorschlag angeben."
+
+#: IDF/Form/RegisterConfirmation.php:72
+msgid ""
+"Your password must be hard for other people to guess, but easy for you to "
+"remember."
+msgstr ""
+"Dein Passwort muss für andere Leute schwer zu erraten, aber für Dich leicht "
+"zu merken sein."
 
 #: IDF/Form/RegisterConfirmation.php:110
 msgid ""

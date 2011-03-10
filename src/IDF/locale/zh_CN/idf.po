@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-09 13:56+0100\n"
+"POT-Creation-Date: 2011-03-10 10:02+0100\n"
 "PO-Revision-Date: 2011-03-04 18:20+0000\n"
 "Last-Translator: tommyd <me@thomaskeller.biz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3547,9 +3547,8 @@ msgstr ""
 msgid "Initial page creation"
 msgstr ""
 
-#: IDF/Form/Upload.php:86 IDF/Form/Admin/UserUpdate.php:301
-#: IDF/Form/UserAccount.php:389
-msgid "For security reason, you cannot upload a file with this extension."
+#: IDF/Form/Upload.php:86
+msgid "For security reasons, you cannot upload a file with this extension."
 msgstr ""
 
 #: IDF/Form/Upload.php:119 IDF/Form/IssueCreate.php:199
@@ -3572,7 +3571,7 @@ msgstr "姓"
 msgid "Login"
 msgstr ""
 
-#: IDF/Form/Admin/UserCreate.php:60 IDF/Form/Register.php:45
+#: IDF/Form/Admin/UserCreate.php:60
 msgid ""
 "The login must be between 3 and 15 characters long and contains only letters "
 "and digits."
@@ -3584,7 +3583,7 @@ msgstr "Email"
 
 #: IDF/Form/Admin/UserCreate.php:71
 msgid ""
-"Double check the email address as the password is directly sent to the user."
+"Double check the email address as the password is sent directly to the user."
 msgstr ""
 
 #: IDF/Form/Admin/UserCreate.php:76 IDF/Form/Admin/UserUpdate.php:67
@@ -3596,7 +3595,7 @@ msgstr "语言"
 msgid "Add a public key"
 msgstr ""
 
-#: IDF/Form/Admin/UserCreate.php:92 IDF/Form/UserAccount.php:166
+#: IDF/Form/Admin/UserCreate.php:92
 msgid ""
 "Paste a SSH or monotone public key. Be careful to not provide your private "
 "key here!"
@@ -3684,11 +3683,11 @@ msgstr ""
 
 #: IDF/Form/Admin/ProjectCreate.php:185
 msgid ""
-"Only a remote repository available throught http or https are allowed. For "
+"Only a remote repository available through HTTP or HTTPS is allowed. For "
 "example \"http://somewhere.com/svn/trunk\"."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:201 IDF/Form/Admin/ProjectUpdate.php:90
+#: IDF/Form/Admin/ProjectCreate.php:201
 msgid ""
 "The master branch is empty or contains illegal characters, please use only "
 "letters, digits, dashs and dots as separators."
@@ -3752,8 +3751,9 @@ msgid "Leave blank if you do not want to change the password."
 msgstr "不修改密码请留空"
 
 #: IDF/Form/Admin/UserUpdate.php:81
+#, fuzzy
 msgid ""
-"The password must be hard for other people to find it, but easy for the user "
+"The password must be hard for other people to guess, but easy for the user "
 "to remember."
 msgstr "密码需要别人很难猜到并且方便用户自己记忆"
 
@@ -3792,13 +3792,15 @@ msgid "Tick this to delete the custom avatar."
 msgstr ""
 
 #: IDF/Form/Admin/UserUpdate.php:164
-msgid "If you give staff rights to a user, you really need to trust him."
+#, fuzzy
+msgid "If you give staff rights to a user, you really need to trust them."
 msgstr "如果你给一个用户工作人员权限，你需要绝对信任他。"
 
 #: IDF/Form/Admin/UserUpdate.php:176
+#, fuzzy
 msgid ""
 "If the user is not getting the confirmation email or is abusing the system, "
-"you can directly enable or disable his account here."
+"you can directly enable or disable their account here."
 msgstr "如果用户不能收到确认邮件或滥用系统，你可以在此开启或禁用他的账户"
 
 #: IDF/Form/Admin/UserUpdate.php:274
@@ -3810,8 +3812,18 @@ msgid ""
 "A user with this email already exists, please provide another email address."
 msgstr ""
 
+#: IDF/Form/Admin/UserUpdate.php:301 IDF/Form/UserAccount.php:389
+msgid "For security reason, you cannot upload a file with this extension."
+msgstr ""
+
 #: IDF/Form/Admin/UserUpdate.php:316 IDF/Form/UserAccount.php:452
 msgid "The passwords do not match. Please give them again."
+msgstr ""
+
+#: IDF/Form/Admin/ProjectUpdate.php:90
+msgid ""
+"The master branch is empty or contains illegal characters, please use only "
+"letters, digits, dashes and dots as separators."
 msgstr ""
 
 #: IDF/Form/Password.php:34
@@ -3843,7 +3855,6 @@ msgid "Your password"
 msgstr "密码"
 
 #: IDF/Form/PasswordReset.php:48 IDF/Form/UserAccount.php:80
-#: IDF/Form/RegisterConfirmation.php:72
 msgid ""
 "Your password must be hard for other people to find it, but easy for you to "
 "remember."
@@ -3911,12 +3922,20 @@ msgstr ""
 msgid "Your login"
 msgstr "账号"
 
+#: IDF/Form/Register.php:45
+#, fuzzy
+msgid ""
+"The login must be between 3 and 15 characters long and contain only letters "
+"and digits."
+msgstr "账号必须是3至15位的字母或数字组成的字符串"
+
 #: IDF/Form/Register.php:53
 msgid "Your email"
 msgstr "你的Email"
 
 #: IDF/Form/Register.php:55
-msgid "We will never send you any unsolicited emails. We hate spams too!"
+#, fuzzy
+msgid "We will never send you any unsolicited emails. We hate spam too!"
 msgstr "我们永远不会给你发送垃圾邮件，我们也讨厌垃圾邮件！"
 
 #: IDF/Form/Register.php:60
@@ -3931,7 +3950,7 @@ msgstr ""
 #: IDF/Form/Register.php:97
 #, php-format
 msgid ""
-"The email \"%s\" is already used. If you need, click on the help link to "
+"The email \"%s\" is already used. If you need to, click on the help link to "
 "recover your password."
 msgstr ""
 
@@ -3991,6 +4010,12 @@ msgstr "如果你改变你的电子邮件地址，系统将发送一份邮件到
 msgid "Leave blank if you do not want to change your password."
 msgstr "如果不修改密码请留空"
 
+#: IDF/Form/UserAccount.php:166
+msgid ""
+"Paste an SSH or monotone public key. Be careful to not provide your private "
+"key here!"
+msgstr ""
+
 #: IDF/Form/UserAccount.php:171
 msgid "Add a secondary mail address"
 msgstr ""
@@ -4021,7 +4046,7 @@ msgid ""
 msgstr ""
 
 #: IDF/Form/UserAccount.php:362
-msgid "Public key looks neither like a SSH nor monotone public key."
+msgid "Public key looks like neither an SSH nor monotone public key."
 msgstr ""
 
 #: IDF/Form/UserAccount.php:374
@@ -4044,7 +4069,8 @@ msgstr ""
 
 #: IDF/Form/IssueTrackingConf.php:80
 msgid ""
-"Define an issue template to hint the reporter to provide certain information"
+"Define an issue template to hint to the reporter to provide certain "
+"information"
 msgstr ""
 
 #: IDF/Form/IssueTrackingConf.php:89
@@ -4129,6 +4155,13 @@ msgstr ""
 #: IDF/Form/ReviewFileComment.php:109
 msgid "You need to provide your general comment about the proposal."
 msgstr ""
+
+#: IDF/Form/RegisterConfirmation.php:72
+#, fuzzy
+msgid ""
+"Your password must be hard for other people to guess, but easy for you to "
+"remember."
+msgstr " "
 
 #: IDF/Form/RegisterConfirmation.php:110
 msgid ""
