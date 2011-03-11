@@ -167,7 +167,29 @@ class IDF_Scm_Git extends IDF_Scm
      */
     public function inBranches($commit, $path)
     {
-        return $this->_inObject($commit, 'branch');
+        if (isset($this->cache['inBranches'][$commit])) {
+            return $this->cache['inBranches'][$commit];
+        }
+        
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '')
+            .sprintf('GIT_DIR=%s %s branch --contains %s',
+                     escapeshellarg($this->repo),
+                     Pluf::f('git_path', 'git'),
+                     escapeshellarg($commit));
+        self::exec('IDF_Scm_Git::inBranches', $cmd, $out, $return);
+        if (0 != $return) {
+            throw new IDF_Scm_Exception(sprintf($this->error_tpl,
+                                                $cmd, $return,
+                                                implode("\n", $out)));
+        }
+
+        $res = array();
+        foreach ($out as $line) {
+            $res[] = substr($line, 2);
+        }
+        
+        $this->cache['inBranches'][$commit] = $res;
+        return $res;        
     }
 
     /**
