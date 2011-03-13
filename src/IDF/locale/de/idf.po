@@ -3370,7 +3370,7 @@ msgstr "Alle Aktualisierungen"
 
 #: IDF/Views/Project.php:74
 msgid "Issues and Comments"
-msgstr "Tickets und Kommentare"
+msgstr "Tickets u. Kommentare"
 
 #: IDF/Views/Project.php:76
 msgid "Documents"
@@ -3378,7 +3378,7 @@ msgstr "Dokumentation"
 
 #: IDF/Views/Project.php:77
 msgid "Reviews and Patches"
-msgstr "Besprechungen und Patches"
+msgstr "Besprechungen u. Patches"
 
 #: IDF/Views/Project.php:142
 msgid "This table shows the project updates."
