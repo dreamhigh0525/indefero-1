@@ -104,12 +104,13 @@ without first talking to us.
 
 ## I am a translator
 
-We currently use (transifex)[http://trac.transifex.org] to help our
-users to translate indefero. You don't have to use it, but it's an
-easy way to do the job. You can visit the indefero page at transifex
-here : http://www.transifex.net/projects/p/indefero/c/indefero/
+We currently use [transifex](http://trac.transifex.org) to help our
+users translate indefero. You don't have to use it, but it's an easy
+way to do the job. You can visit the indefero page at transifex here:
+
+    http://www.transifex.net/projects/p/indefero/
 
 Please understand that your changes will not be commited instantly,
 but are sent to the maintainers e-mails before. Then, your changes
-will not be in the main repository until da-loic push the changes. In
-that way, try to do big changes with less submissions.
+will not be in the main repository until the maintainer pushs the
+changes. In that way, try to do big changes with less submissions.
