@@ -3386,7 +3386,7 @@ msgstr "Diese Tabelle zeigt Projekt-Aktualisierungen."
 
 #: IDF/Views/Project.php:153
 msgid "Change"
-msgstr "Ändern"
+msgstr "Änderung"
 
 #: IDF/Views/Project.php:157
 msgid "No changes were found."
