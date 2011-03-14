@@ -36,6 +36,7 @@ help:
 	@printf "\tpo-update - Merge POT file into PO file. POT is not regenerated.\n"
 	@printf "\tpo-push - Send the all PO file on transifex server.\n"
 	@printf "\tpo-pull - Get all PO file from transifex server.\n"
+	@printf "\tpo-stats - Show statistics about translation on each PO file .\n"
 
 #
 #   Internationnalization rule, POT & PO file manipulation
@@ -108,7 +109,24 @@ po-push: check-tx-config
 	@tx push -t
 
 po-pull: check-tx-config
+	# Save PO
+	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
+	    cp $$pofile $$pofile".save"; \
+	done
+	# Get new one
 	@tx pull -a
+	# Merge Transifex PO into local PO (so fuzzy entry is correctly saved)
+	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
+	    msgmerge -U $$pofile".save" $$pofile; \
+	    rm -f $$pofile; \
+	    mv $$pofile".save" $$pofile; \
+	done
+
+po-stats:
+	@msgfmt --statistics -v src/IDF/locale/idf.pot
+	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
+	    msgfmt --statistics -v $$pofile; \
+	done
 
 #
 #   Generic rule to build a tarball of indefero for a specified branch

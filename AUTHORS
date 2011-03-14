@@ -1,33 +1,33 @@
-InDefero was originally created during summer 2008 
+InDefero was originally created during summer 2008
 by Loïc d'Anterroches with the support of Céondo Ltd.
 
-Much appreciated contributors:
+Much appreciated contributors (in alphabetical order):
 
-    Nicolas Lassalle <http://www.beroot.org/> - Subversion support
-    bohwaz <http://bohwaz.net/>
-    Benjamin Jorand <benjamin.jorand@gmail.com> - Mercurial support
-    Baptiste Michaud <bactisme@gmail.com> - Subversion synchronization
-    Julien Issler 
-    Manuel Eidenberger <eidenberger@gmail.com>
-    Ciaran Gultnieks
-    Mehdi Kabab <http://pioupioum.fr/>
-    Sindre R. Myren
-    Patrick Georgi <patrick.georgi@coresystems.de>
-    Adrien Bustany
-    Charles Melbye
-    Baptiste Durand-Bret
-    Andrew Nguyen
-    David Feeney
-    Denis Kot <denis.kot@gmail.com>
-    Samuel Suther
-    Ludovic Bellière
     Brian Armstrong
+    Ludovic Bellière
+    bohwaz <http://bohwaz.net/>
+    Adrien Bustany
+    Baptiste Durand-Bret
+    Manuel Eidenberger <eidenberger@gmail.com>
     Raphaël Emourgeon
-    Jakub Viták
-    Vladimir Solomatin
+    David Feeney
+    Patrick Georgi <patrick.georgi@coresystems.de>
+    Ciaran Gultnieks
+    Julien Issler
+    Benjamin Jorand <benjamin.jorand@gmail.com> - Mercurial support
+    Mehdi Kabab <http://pioupioum.fr/>
+    Thomas Keller <me@thomaskeller.biz> - Monotone support, German translation
+    Denis Kot <denis.kot@gmail.com>
+    Nicolas Lassalle <http://www.beroot.org/> - Subversion support
     William Martin <wysman@gmail.com>
-    Thomas Keller <me@thomaskeller.biz>
-    Fernando Sayago Gil <mikados.mikados@gmail.com> - Spain translation
+    Charles Melbye
+    Baptiste Michaud <bactisme@gmail.com> - Subversion synchronization
+    Sindre R. Myren
+    Andrew Nguyen
+    Fernando Sayago Gil <mikados.mikados@gmail.com> - Spanish translation
+    Vladimir Solomatin
+    Samuel Suther - German translation
+    Jakub Viták
 
 And all the nice users who spent time reporting issues and promoting
 the project. The project could not live without them.
