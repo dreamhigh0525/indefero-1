@@ -14,10 +14,11 @@ Much appreciated contributors (in alphabetical order):
     Patrick Georgi <patrick.georgi@coresystems.de>
     Ciaran Gultnieks
     Julien Issler
+    Jerry <lxb429@gmail.com> - Chinese translation
     Benjamin Jorand <benjamin.jorand@gmail.com> - Mercurial support
     Mehdi Kabab <http://pioupioum.fr/>
     Thomas Keller <me@thomaskeller.biz> - Monotone support, German translation
-    Denis Kot <denis.kot@gmail.com>
+    Denis Kot <denis.kot@gmail.com> - Russian translation
     Nicolas Lassalle <http://www.beroot.org/> - Subversion support
     William Martin <wysman@gmail.com>
     Charles Melbye
@@ -27,7 +28,8 @@ Much appreciated contributors (in alphabetical order):
     Fernando Sayago Gil <mikados.mikados@gmail.com> - Spanish translation
     Vladimir Solomatin
     Samuel Suther - German translation
-    Jakub Viták
+    Janez Troha <http://www.dz0ny.info> - Slovenian translation
+    Jakub Viták <mainiak@gmail.com> - Czech translation
 
 And all the nice users who spent time reporting issues and promoting
 the project. The project could not live without them.
