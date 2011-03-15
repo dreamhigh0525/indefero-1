@@ -91,6 +91,23 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/(\w+)/token/(.*)/$#',
                'method' => 'timelineFeed',
                'name' => 'idf_project_timeline_feed_auth');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/timeline/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Project',
+               'method' => 'timelineCompat');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Project',
+               'method' => 'timelineFeedCompat',
+               'name' => 'idf_project_timeline_feed');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/feed/timeline/token/(.*)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Project',
+               'method' => 'timelineFeedCompat',
+               'name' => 'idf_project_timeline_feed_auth');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
@@ -145,12 +162,12 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/watchlist/(\w+)$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'watchList');
-               
+
 $ctl[] = array('regex' => '#^/watchlist/(\w+)$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'forgeWatchList');
-         
+
 // ---------- SCM ----------------------------------------
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/help/$#',
