@@ -464,4 +464,12 @@ class IDF_Scm_Mercurial extends IDF_Scm
                        escapeshellarg($commit));
         return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
     }
+
+    /**
+     * @see IDF_Scm::getDiffPathStripLevel()
+     */
+    public function getDiffPathStripLevel()
+    {
+        return 1;
+    }
 }

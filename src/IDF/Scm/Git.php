@@ -649,6 +649,14 @@ class IDF_Scm_Git extends IDF_Scm
         return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
     }
 
+    /**
+     * @see IDF_Scm::getDiffPathStripLevel()
+     */ 
+    public function getDiffPathStripLevel()
+    {
+        return 1;
+    }
+
     /*
      * =====================================================
      *             Specific Git Commands

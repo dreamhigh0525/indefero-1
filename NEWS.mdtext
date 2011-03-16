@@ -52,6 +52,7 @@
 - Disable browser autocomplete of password fields in the account settings (issue 616)
 - Improvements in the automatic linker parser (issue 618)
 - The `createIssue` API method did not check the API authentication (issue 619)
+- Reduce the memory footprint and compatibility of the internal diff parser (issue 627)
 - Print active git branch heads and tags in bold 
 
 ## Documentation

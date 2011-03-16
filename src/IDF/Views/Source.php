@@ -303,7 +303,8 @@ class IDF_Views_Source
         $title = sprintf(__('%s Commit Details'), (string) $request->project);
         $page_title = sprintf(__('%s Commit Details - %s'), (string) $request->project, $commit);
         $rcommit = IDF_Commit::getOrAdd($cobject, $request->project);
-        $diff = new IDF_Diff($cobject->diff);
+        $diff = new IDF_Diff($cobject->diff, $scm->getDiffPathStripLevel());
+        $cobject->diff = null;
         $diff->parse();
         $scmConf = $request->conf->getVal('scm', 'git');
         try {

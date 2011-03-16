@@ -32,29 +32,6 @@ class IDF_Tests_TestDiff extends UnitTestCase
         parent::__construct('Test the diff parser.');
     }
 
-    public function testGetFile()
-    {
-        $lines = array(
-                       'diff --git a/src/IDF/Form/Register.php b/src/IDF/Form/Register.php',
-                       'diff --git a/src/IDF/Form/RegisterConfirmation.php b/src/IDF/Form/RegisterConfirmation.php',
-                       'diff --git a/src/IDF/Form/RegisterInputKey.php b/src/IDF/Form/RegisterInputKey.php',
-                       'diff --git a/src/IDF/Views.php b/src/IDF/Views.php',
-                       'diff --git a/src/IDF/conf/views.php b/src/IDF/conf/views.php',
-                       );
-        $files = array(
-                       'src/IDF/Form/Register.php',
-                       'src/IDF/Form/RegisterConfirmation.php',
-                       'src/IDF/Form/RegisterInputKey.php',
-                       'src/IDF/Views.php',
-                       'src/IDF/conf/views.php',
-                       );
-        $i = 0;
-        foreach ($lines as $line) {
-            $this->assertEqual($files[$i], IDF_Diff::getFile($line));
-            $i++;
-        }
-    }
-
     public function testBinaryDiff()
     {
         $diff_content = file_get_contents(dirname(__FILE__).'/test-diff.diff');
