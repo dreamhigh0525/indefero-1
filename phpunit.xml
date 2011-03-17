@@ -1,0 +1,15 @@
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         bootstrap="test/bootstrap.php"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         strict="false"
+         verbose="true">
+
+    <testsuites>
+        <testsuite name="Everything">
+            <directory>test/IDF/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

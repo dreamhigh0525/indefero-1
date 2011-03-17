@@ -1,0 +1,13 @@
+#
+# old_revision [1f31865f7c91525e96aa7615e660303ca04c708f]
+#
+# patch "a"
+#  from [9decd90bc2eedb78c74d5059a6bb6244dd2d0562]
+#    to [03cfd743661f07975fa2f1220c5194cbaff48451]
+#
+============================================================
+--- a	9decd90bc2eedb78c74d5059a6bb6244dd2d0562
++++ a	03cfd743661f07975fa2f1220c5194cbaff48451
+@@ -1,2 +1 @@ abc
+ abc
+-abc

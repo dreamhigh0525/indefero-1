@@ -1,0 +1,18 @@
+#
+# old_revision [9b51b47c6fdd4918f970b81a8672503b8bb30402]
+#
+# patch "a"
+#  from [b3d40c241ccfd6ff1a06047a9f6d609227d2893f]
+#    to [4ba8cb789fc34bd4557b5bbf7cb9f4b68b3a9f5e]
+# 
+#   set "a"
+#  attr "foo"
+# value "bar"
+#
+============================================================
+--- a	b3d40c241ccfd6ff1a06047a9f6d609227d2893f
++++ a	4ba8cb789fc34bd4557b5bbf7cb9f4b68b3a9f5e
+@@ -1,2 +1,3 @@ ls
+ ls
+ ls
++l
