@@ -73,7 +73,8 @@ class IDF_Diff
                 $current_file = $m[1];
             }
             if ($this->path_strip_level > 0) {
-                $current_file = array_pop(explode('/', $current_file, $this->path_strip_level+1));
+                $fileparts = explode('/', $current_file, $this->path_strip_level+1);
+                $current_file = array_pop($fileparts);
             }
             $current_chunk = 0;
             $files[$current_file] = array();
