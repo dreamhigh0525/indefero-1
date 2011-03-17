@@ -248,10 +248,14 @@ class IDF_Scm_Git extends IDF_Scm
                      Pluf::f('git_path', 'git'),
                      escapeshellarg($commit));
         self::exec('IDF_Scm_Git::inTags', $cmd, $out, $return);
-        if (0 != $return) {
-            $this->cache['tags'] = array();
+        // `git tag` gained the `--contains` option in 1.6.2, earlier
+        // versions report a bad usage error (129) which we ignore here
+        if (129 == $return) {
+            $this->cache['inTags'][$commit] = array();
             return array();
-            // Ugly emergency fix, needs to be cleaned.
+        }
+        // any other error should of course get noted
+        if (0 != $return) {
             throw new IDF_Scm_Exception(sprintf($this->error_tpl,
                                                 $cmd, $return,
                                                 implode("\n", $out)));
@@ -654,7 +658,7 @@ class IDF_Scm_Git extends IDF_Scm
 
     /**
      * @see IDF_Scm::getDiffPathStripLevel()
-     */ 
+     */
     public function getDiffPathStripLevel()
     {
         return 1;
