@@ -1,0 +1,7 @@
+diff --git a/test_file b/test_file
+index 2134e75..2eaf9ea 100644
+--- a/test_file
++++ b/test_file
+@@ -1 +1 @@
+-Steddy is awesome
++Steddy is very awesome
