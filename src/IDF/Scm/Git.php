@@ -214,9 +214,6 @@ class IDF_Scm_Git extends IDF_Scm
                      Pluf::f('git_path', 'git'));
         self::exec('IDF_Scm_Git::getTags', $cmd, $out, $return);
         if (0 != $return) {
-            $this->cache['tags'] = array();
-            return array();
-            // Ugly emergency fix, needs to be cleaned.
             throw new IDF_Scm_Exception(sprintf($this->error_tpl,
                                                 $cmd, $return,
                                                 implode("\n", $out)));
@@ -252,6 +249,9 @@ class IDF_Scm_Git extends IDF_Scm
                      escapeshellarg($commit));
         self::exec('IDF_Scm_Git::inTags', $cmd, $out, $return);
         if (0 != $return) {
+            $this->cache['tags'] = array();
+            return array();
+            // Ugly emergency fix, needs to be cleaned.
             throw new IDF_Scm_Exception(sprintf($this->error_tpl,
                                                 $cmd, $return,
                                                 implode("\n", $out)));
