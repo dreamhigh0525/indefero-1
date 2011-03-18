@@ -3,35 +3,38 @@ by Loïc d'Anterroches with the support of Céondo Ltd.
 
 Much appreciated contributors (in alphabetical order):
 
-    Brian Armstrong
-    Ludovic Bellière
-    bohwaz <http://bohwaz.net/>
-    Adrien Bustany
-    Dmitry Dulepov
-    Baptiste Durand-Bret
-    Manuel Eidenberger <eidenberger@gmail.com>
-    Raphaël Emourgeon
-    David Feeney
-    Patrick Georgi <patrick.georgi@coresystems.de>
-    Ciaran Gultnieks
-    Matías Halles <matias@halles.cl>
-    Julien Issler
-    Jerry <lxb429@gmail.com> - Chinese translation
-    Benjamin Jorand <benjamin.jorand@gmail.com> - Mercurial support
-    Mehdi Kabab <http://pioupioum.fr/>
-    Thomas Keller <me@thomaskeller.biz> - Monotone support, German translation
-    Denis Kot <denis.kot@gmail.com> - Russian translation
-    Nicolas Lassalle <http://www.beroot.org/> - Subversion support
-    William Martin <wysman@gmail.com>
-    Charles Melbye
-    Baptiste Michaud <bactisme@gmail.com> - Subversion synchronization
-    Sindre R. Myren
-    Andrew Nguyen
+    Adrien Bustany <madcat@mymadcat.com>
+    Andrew Nguyen <andrew-git-indefero@na-consulting.net>
+    Baptiste Durand-Bret <bathizte@ozazar.org>
+    Baptiste Michaud <bactisme@gmail.com>           - Subversion sync
+    Benjamin Jorand <benjamin.jorand@gmail.com>     - Mercurial support
+    Brenda Wallace <shiny@cpan.org>
+    Brian Armstrong <brianar>
+    Charles Melbye <charlie@yourwiki.net>
+    Ciaran Gultnieks <ciaran@ciarang.com>
+    David Feeney <davidf>
+    Denis Kot <denis.kot@gmail.com>                 - Russian translation
+    Dmitry Dulepov <dmitryd>
     Fernando Sayago Gil <mikados.mikados@gmail.com> - Spanish translation
-    Vladimir Solomatin
-    Samuel Suther - German translation
-    Janez Troha <http://www.dz0ny.info> - Slovenian translation
-    Jakub Viták <mainiak@gmail.com> - Czech translation
+    Jakub Viták <mainiak@gmail.com>                 - Czech translation
+    Janez Troha <http://www.dz0ny.info>             - Slovenian translation
+    Jerry <lxb429@gmail.com>                        - Chinese translation
+    Julien Issler <julien@issler.net>
+    Ludovic Bellière <xrogaan>
+    Manuel Eidenberger <eidenberger@gmail.com>
+    Matthew Dawson <mjd>
+    Matías Halles <matias@halles.cl>
+    Mehdi Kabab <http://pioupioum.fr/>
+    Nicolas Lassalle <nicolas@beroot.org>           - Subversion support
+    Patrick Georgi <patrick.georgi@coresystems.de>
+    Raphaël Emourgeon <raphael>
+    Samuel Suther <info@suther.de>                  - German translation
+    Sindre R. Myren <sindrero@stud.ntnu.no>
+    Thomas Keller <me@thomaskeller.biz>             - Monotone support
+    Vladimir Solomatin <slash>
+    William Martin <william.martin@lcpc.fr>
+    Xavier Brochard <xavier@alternatif.org>
+    bohwaz <http://bohwaz.net/>
 
 And all the nice users who spent time reporting issues and promoting
 the project. The project could not live without them.
