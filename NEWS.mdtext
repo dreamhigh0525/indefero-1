@@ -35,6 +35,7 @@
 - Sort the project list by the display name of the project (issue 477)
 - Project creation form now has a short description field as well (issue 479)
 - Add more file extensions supported by our in-tree prettify version (issues 490 and 567)
+- Improve the parsing of hg's log output (issues 507 and 508)
 - Do not clean `<ins>` and `<del>` HTML markup from user input (issue 509)
 - Improve HTML validation by switching from `strict` to `transitional` DOCTYPE (issue 511)
 - Ignore XML parsing problems when trying to retrieve commit messages for svn (issue 518)
