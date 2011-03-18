@@ -37,6 +37,7 @@
 - Add more file extensions supported by our in-tree prettify version (issues 490 and 567)
 - Do not clean `<ins>` and `<del>` HTML markup from user input (issue 509)
 - Improve HTML validation by switching from `strict` to `transitional` DOCTYPE (issue 511)
+- Ignore XML parsing problems when trying to retrieve commit messages for svn (issue 518)
 - Properly handle git commits without a changelog title (issue 520)
 - Improve BSD compatibility in shell scripts (issue 526)
 - Properly render inner whitespaces in viewed issue attachments (issue 528)
