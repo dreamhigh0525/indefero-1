@@ -12,6 +12,7 @@
  - Forge-wide and per-project watch lists of starred issues (issue 589)
  - Configure a default issue template for each project (issues 212 and 540)
  - Pick default issue labels from the configured project settings (issue 556)
+ - Navigate to a preceding / following issue in the issue detail view 
  - Many new text syntaxes to auto-link revisions (see [[AutomaticLinks]], issue 569)
 
 * _Documentation wiki_:

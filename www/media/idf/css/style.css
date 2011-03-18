@@ -273,6 +273,11 @@ div.issue-changes-timeline {
   color: #888a85;
 }
 
+div.issue-prev-next {
+  float: right;
+  margin-top: -25px;
+}
+
 div.issue-submit-info {
   background-color: #d3d7cf;
   -moz-border-radius: 3px;
