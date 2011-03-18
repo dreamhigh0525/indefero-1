@@ -53,7 +53,7 @@
 - Improvements in the automatic linker parser (issue 618)
 - The `createIssue` API method did not check the API authentication (issue 619)
 - Reduce the memory footprint and compatibility of the internal diff parser (issues 627 and 633)
-- Print active git branch heads and tags in bold 
+- Print the git branches and tags in bold which contain the currently displayed revision
 
 ## Documentation
 
