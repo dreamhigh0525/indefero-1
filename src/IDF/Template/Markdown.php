@@ -22,6 +22,7 @@
 # ***** END LICENSE BLOCK ***** */
 
 Pluf::loadFunction('Pluf_Text_MarkDown_parse');
+Pluf::loadFunction('IDF_Template_safePregReplace');
 
 /**
  * Make the links to issues and commits.
@@ -34,11 +35,6 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
 
     function start($text, $request)
     {
-        // PHP sets the backtrack limit quite low, so some regexes may
-        // fail unexpectedly on large inputs or weird cornercases (see issue 618)
-        $pcre_backtrack_limit = ini_get('pcre.backtrack_limit');
-        ini_set('pcre.backtrack_limit', 10000000);
-
         $this->project = $request->project;
         $this->request = $request;
         // Replace like in the issue text
@@ -47,22 +43,20 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
         // Replace [[[path/to/file.mdtext, commit]]] with embedding
         // the content of the file into the wki page
         if ($this->request->rights['hasSourceAccess']) {
-            $text = preg_replace_callback('#\[\[\[([^\,]+)(?:, ([^/]+))?\]\]\]#im',
-                                          array($this, 'callbackEmbeddedDoc'),
-                                          $text);
+            $text = IDF_Template_safePregReplace('#\[\[\[([^\,]+)(?:, ([^/]+))?\]\]\]#im',
+                                                 array($this, 'callbackEmbeddedDoc'),
+                                                 $text);
         }
         // Replace [Page]([[PageName]]) with corresponding link to the page, with link text being Page.
-        $text = preg_replace_callback('#\[([^\]]+)\]\(\[\[([A-Za-z0-9\-]+)\]\]\)#im',
-                                      array($this, 'callbackWikiPage'),
-                                      $text);
+        $text = IDF_Template_safePregReplace('#\[([^\]]+)\]\(\[\[([A-Za-z0-9\-]+)\]\]\)#im',
+                                             array($this, 'callbackWikiPage'),
+                                             $text);
         // Replace [[PageName]] with corresponding link to the page.
-        $text = preg_replace_callback('#\[\[([A-Za-z0-9\-]+)\]\]#im',
-                                      array($this, 'callbackWikiPageNoName'),
-                                      $text);
+        $text = IDF_Template_safePregReplace('#\[\[([A-Za-z0-9\-]+)\]\]#im',
+					     array($this, 'callbackWikiPageNoName'),
+					     $text);
         $filter = new IDF_Template_MarkdownPrefilter();
         echo $filter->go(Pluf_Text_MarkDown_parse($text));
-
-        ini_set('pcre.backtrack_limit', $pcre_backtrack_limit);
     }
 
     function callbackWikiPageNoName($m)
