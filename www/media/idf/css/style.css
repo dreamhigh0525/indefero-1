@@ -216,7 +216,7 @@ span.px-header-title a, span.px-header-title a:link, span.px-header-title a:visi
     margin: 0;
     display: inline;
 }
- 
+
 a.issue-c {
   text-decoration: line-through;
 }
@@ -271,6 +271,11 @@ div.issue-changes-timeline {
   padding: 4px;
   width: 60%;
   color: #888a85;
+}
+
+div.issue-prev-next {
+  float: right;
+  margin-top: -25px;
 }
 
 div.issue-submit-info {
@@ -577,10 +582,6 @@ td.diff-a {
   background-color: #dfd;
 }
 
-td.diff-a > span {
-  float: left;
-}
-
 td.diff-r {
   background-color: #fdd;
 }
@@ -588,6 +589,13 @@ td.diff-r {
 td.diff-a, td.diff-r, td.diff-c  {
   border-bottom: none;
   border-top: none;
+  white-space: pre;
+}
+
+td.diff-a > span,
+td.diff-r > span,
+td.diff-c > span {
+  float: left;
 }
 
 table.diff tr.diff-next {

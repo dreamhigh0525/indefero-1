@@ -12,6 +12,7 @@
  - Forge-wide and per-project watch lists of starred issues (issue 589)
  - Configure a default issue template for each project (issues 212 and 540)
  - Pick default issue labels from the configured project settings (issue 556)
+ - Navigate to a preceding / following issue in the issue detail view
  - Many new text syntaxes to auto-link revisions (see [[AutomaticLinks]], issue 569)
 
 * _Documentation wiki_:
@@ -31,9 +32,11 @@
 - Fix `Need SSH_ORIGINAL_COMMAND in environment` error for git sync (issue 198)
 - Added an option to disable lengthy project size calculation in the forge (issue 403)
 - Fix a problem when deleting an orphaned git repository (issue 467)
+- Ignore XML parsing problems when trying to retrieve commit messages for svn (issues 469 and 518)
 - Sort the project list by the display name of the project (issue 477)
 - Project creation form now has a short description field as well (issue 479)
 - Add more file extensions supported by our in-tree prettify version (issues 490 and 567)
+- Improve the parsing of hg's log output (issues 507 and 508)
 - Do not clean `<ins>` and `<del>` HTML markup from user input (issue 509)
 - Improve HTML validation by switching from `strict` to `transitional` DOCTYPE (issue 511)
 - Properly handle git commits without a changelog title (issue 520)
@@ -52,8 +55,8 @@
 - Disable browser autocomplete of password fields in the account settings (issue 616)
 - Improvements in the automatic linker parser (issue 618)
 - The `createIssue` API method did not check the API authentication (issue 619)
-- Reduce the memory footprint and compatibility of the internal diff parser (issue 627)
-- Print active git branch heads and tags in bold 
+- Reduce the memory footprint and compatibility of the internal diff parser (issues 627 and 633)
+- Print the git branches and tags in bold which contain the currently displayed revision
 
 ## Documentation
 

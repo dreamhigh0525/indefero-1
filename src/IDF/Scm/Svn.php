@@ -266,8 +266,13 @@ class IDF_Scm_Svn extends IDF_Scm
                        escapeshellarg($this->repo),
                        escapeshellarg($rev));
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        $xml = simplexml_load_string(self::shell_exec('IDF_Scm_Svn::getCommitMessage', $cmd));
-        $this->cache['commitmess'][$rev] = (string) $xml->logentry->msg;
+        try {
+            $xml = simplexml_load_string(self::shell_exec('IDF_Scm_Svn::getCommitMessage', $cmd));
+            $this->cache['commitmess'][$rev] = (string) $xml->logentry->msg;
+        }
+        catch (Exception $e) {
+            $this->cache['commitmess'][$rev] = '';
+        }
         return $this->cache['commitmess'][$rev];
     }
 

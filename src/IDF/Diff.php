@@ -35,7 +35,9 @@ class IDF_Diff
     public function __construct($diff, $path_strip_level = 0)
     {
         $this->path_strip_level = $path_strip_level;
-        $this->lines = preg_split("/\015\012|\015|\012/", $diff);
+        // this works because in unified diff format even empty lines are
+        // either prefixed with a '+', '-' or ' '
+        $this->lines = preg_split("/\015\012|\015|\012/", $diff, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     public function parse()
@@ -92,13 +94,13 @@ class IDF_Diff
                 $dellines = $results[2] === '' ? 1 : $results[2];
                 $addstart = $results[3];
                 $addlines = $results[4] === '' ? 1 : $results[4];
-                $chunks_def = array(array($delstart), array($addstart));
-                if ($results[2] != '') $chunks_def[0][] = $dellines;
-                if ($results[4] != '') $chunks_def[1][] = $addlines;
-                $files[$current_file]['chunks_def'][] = $chunks_def;
+
+                $files[$current_file]['chunks_def'][] = array(
+                    array($delstart, $dellines), array($addstart, $addlines)
+                );
                 $files[$current_file]['chunks'][] = array();
 
-                while ($addlines >= 0 || $dellines >= 0) {
+                while ($i < $diffsize && ($addlines >= 0 || $dellines >= 0)) {
                     $linetype = $this->lines[$i] != '' ? $this->lines[$i][0] : ' ';
                     switch ($linetype) {
                         case ' ':
@@ -121,6 +123,10 @@ class IDF_Diff
                             $dellines--;
                             $delstart++;
                             break;
+                        case '\\':
+                            // ignore newline handling for now, see issue 636
+                            $i++;
+                            continue;
                         default:
                             break 2;
                     }
