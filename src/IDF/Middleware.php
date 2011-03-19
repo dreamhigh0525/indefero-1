@@ -87,6 +87,7 @@ class IDF_Middleware
                               'markdown' => 'IDF_Template_Markdown',
                               'showuser' => 'IDF_Template_ShowUser',
                               'ashowuser' => 'IDF_Template_AssignShowUser',
+                              'appversion' => 'IDF_Template_AppVersion',
                                             ));
         $params['modifiers'] = array_merge($params['modifiers'],
                                            array(
