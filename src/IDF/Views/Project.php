@@ -122,6 +122,17 @@ class IDF_Views_Project
     }
 
     /**
+     * This action serves as URI compatibility layer for v1.0.
+     *
+     * @deprecated
+     */
+    public function timelineCompat($request, $match)
+    {
+        $match[2] = 'all';
+        return $this->timeline($request, $match);
+    }
+
+    /**
      * Timeline of the project.
      */
     public $timeline_precond = array('IDF_Precondition::baseAccess');
@@ -179,6 +190,17 @@ class IDF_Views_Project
     }
 
     /**
+     * This action serves as URI compatibility layer for v1.0.
+     *
+     * @deprecated
+     */
+    public function timelineFeedCompat($request, $match)
+    {
+        $match[2] = 'all';
+        return $this->timelineFeed($request, $match);
+    }
+
+    /**
      * Timeline feed.
      *
      * A custom view to have a bit more control on the way to handle
@@ -192,7 +214,6 @@ class IDF_Views_Project
         $prj = $request->project;
         $model_filter = @$match[2];
 
-        $model_filter = @$match[2];
         $all_model_filters = self::getAvailableModelFilters();
         if (!array_key_exists($model_filter, $all_model_filters)) {
             $model_filter = 'all';

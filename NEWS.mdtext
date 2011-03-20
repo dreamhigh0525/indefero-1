@@ -1,0 +1,80 @@
+# InDefero 1.1 - Sun Mar 20 11:44 2011 UTC
+
+## New Features
+
+* _Version control_:
+ - Support for the monotone Version Control system (see [[InstallationScmMonotone]])
+ - Display detailed changeset information in the commit details (git, mtn) (issue 544)
+ - Show branch in the commit details (git, mtn, hg) (issue 450)
+ - Render branch and tag names in a popup and make them filterable (git, hg, mtn) (issue 601)
+
+* _Issue tracking_:
+ - Forge-wide and per-project watch lists of starred issues (issue 589)
+ - Configure a default issue template for each project (issues 212 and 540)
+ - Pick default issue labels from the configured project settings (issue 556)
+ - Navigate to a preceding / following issue in the issue detail view
+ - Many new text syntaxes to auto-link revisions (see [[AutomaticLinks]], issue 569)
+
+* _Documentation wiki_:
+ - Automatically create a table of contents on wiki pages (issue 350)
+ - Allow the usage of text labels for Wiki text links (issue 456)
+
+* _Other_:
+ - Enhanced user profile page (issue 510)
+ - Manage multiple (commit) emails in the account settings (issues 136 and 500)
+ - Filter the timeline and its feed by item type (issue 543)
+ - Add multiple email addresses for project notifications (issue 372)
+ - Direct links to other projects via the new `Project List` dropdown
+ - InDefero gained a favicon (issue 594)
+
+## Bugfixes
+
+- Fix `Need SSH_ORIGINAL_COMMAND in environment` error for git sync (issue 198)
+- Added an option to disable lengthy project size calculation in the forge (issue 403)
+- Fix a problem when deleting an orphaned git repository (issue 467)
+- Ignore XML parsing problems when trying to retrieve commit messages for svn (issues 469 and 518)
+- Sort the project list by the display name of the project (issue 477)
+- Project creation form now has a short description field as well (issue 479)
+- Add more file extensions supported by our in-tree prettify version (issues 490 and 567)
+- Improve the parsing of hg's log output (issues 507 and 508)
+- Do not clean `<ins>` and `<del>` HTML markup from user input (issue 509)
+- Improve HTML validation by switching from `strict` to `transitional` DOCTYPE (issue 511)
+- Properly handle git commits without a changelog title (issue 520)
+- Improve BSD compatibility in shell scripts (issue 526)
+- Properly render inner whitespaces in viewed issue attachments (issue 528)
+- Support for uploading SSH keys without optional comment (issue 531)
+- Recognize irc: and git: protocols in Markdown renderer (issue 546)
+- New config option `git_core_quotepath` to handle non-ASCII git file names (issue 553)
+- Ensured that active views are rendered in the menu as such (issue 555)
+- Add CSS for nested and mixed ordered and unordered lists (issue 557)
+- Directories are now sorted before files in source tree views (issue 573)
+- File attachments now have explicit view and download links in issue views (issue 575)
+- Display anonymous access URL when user has no SSH key registered (issue 588)
+- Improve the rendering of tag lists in issue views (issue 591)
+- Improved error page when a commit or branch was not found (issue 609)
+- Disable browser autocomplete of password fields in the account settings (issue 616)
+- Improvements in the automatic linker parser (issue 618)
+- The `createIssue` API method did not check the API authentication (issue 619)
+- Reduce the memory footprint and compatibility of the internal diff parser (issues 627 and 633)
+- Print the git branches and tags in bold which contain the currently displayed revision
+
+## Documentation
+
+- Document how to contribute to Indefero in `CONTRIBUTE.mdtext` (issue 486)
+- Note possible problems with mbstring.func_overload in `INSTALL.mdtext` (issue 481)
+- Improve links to Markdown documentation (issue 489)
+- Explain purpose of `idf_strong_key_check` in `idf.php-dist` (issue 516)
+
+## Translations
+
+- Spanish translation added
+- Started with a Simplified Chinese translation (issue 521)
+- Started with a Russian translation
+- Updates and fixes to the French translation (issue 574)
+- Updates and fixes to the German translation
+- English source language has been improved (issues 441, 478, and 631)
+
+# InDefero 1.0 - Tue Apr 20 07:00 2010 UTC
+
+First stable release.
+

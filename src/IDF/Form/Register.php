@@ -42,7 +42,7 @@ class IDF_Form_Register extends Pluf_Form
                                             'max_length' => 15,
                                             'min_length' => 3,
                                             'initial' => $login,
-                                            'help_text' => __('The login must be between 3 and 15 characters long and contains only letters and digits.'),
+                                            'help_text' => __('The login must be between 3 and 15 characters long and contain only letters and digits.'),
                                             'widget_attrs' => array(
                                                        'maxlength' => 15,
                                                        'size' => 10,
@@ -52,7 +52,7 @@ class IDF_Form_Register extends Pluf_Form
                                       array('required' => true,
                                             'label' => __('Your email'),
                                             'initial' => '',
-                                            'help_text' => __('We will never send you any unsolicited emails. We hate spams too!'),
+                                            'help_text' => __('We will never send you any unsolicited emails. We hate spam too!'),
                                             ));
 
         $this->fields['terms'] = new Pluf_Form_Field_Boolean(
@@ -94,7 +94,7 @@ class IDF_Form_Register extends Pluf_Form
     {
         $this->cleaned_data['email'] = mb_strtolower(trim($this->cleaned_data['email']));
         if (Pluf::factory('IDF_EmailAddress')->get_user_for_email_address($this->cleaned_data['email']) != null) {
-            throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used. If you need, click on the help link to recover your password.'), $this->cleaned_data['email']));
+            throw new Pluf_Form_Invalid(sprintf(__('The email "%s" is already used. If you need to, click on the help link to recover your password.'), $this->cleaned_data['email']));
         }
         return $this->cleaned_data['email'];
     }

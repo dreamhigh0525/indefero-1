@@ -27,10 +27,13 @@
  */
 class IDF_Scm_Mercurial extends IDF_Scm
 {
+    protected $hg_log_template;
+
     public function __construct($repo, $project=null)
     {
         $this->repo = $repo;
         $this->project = $project;
+        $this->hg_log_template = "'".'changeset: {rev}:{node|short}\nauthor: {author}\ndate: {date|isodate}\nfiles: {files}\n{desc}\n'."'";
     }
 
     public function getRepositorySize()
@@ -336,10 +339,14 @@ class IDF_Scm_Mercurial extends IDF_Scm
         if (!$this->isValidRevision($commit)) {
             return false;
         }
-        $tmpl = ($getdiff) ?
-            Pluf::f('hg_path', 'hg').' log -p -r %s -R %s' : Pluf::f('hg_path', 'hg').' log -r %s -R %s';
+        $tmpl = ($getdiff)
+            ? Pluf::f('hg_path', 'hg').' log -p -r %s -R %s --template %s'
+            : Pluf::f('hg_path', 'hg').' log -r %s -R %s --template %s';
         $cmd = sprintf($tmpl,
-                       escapeshellarg($commit), escapeshellarg($this->repo));
+                       escapeshellarg($commit),
+                       escapeshellarg($this->repo),
+                       $this->hg_log_template);
+
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::getCommit', $cmd, $out);
@@ -356,7 +363,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
                 $log[] = $line;
             }
         }
-        $out = self::parseLog($log, 6);
+        $out = self::parseLog($log, 4);
         $out[0]->diff = implode("\n", $change);
         return $out[0];
     }
@@ -381,11 +388,11 @@ class IDF_Scm_Mercurial extends IDF_Scm
      */
     public function getChangeLog($commit='tip', $n=10)
     {
-        $cmd = sprintf(Pluf::f('hg_path', 'hg').' log -R %s -l%s ', escapeshellarg($this->repo), $n, $commit);
+        $cmd = sprintf(Pluf::f('hg_path', 'hg').' log -R %s -l%s --template %s', escapeshellarg($this->repo), $n, $this->hg_log_template, $commit);
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::getChangeLog', $cmd, $out);
-        return self::parseLog($out, 6);
+        return self::parseLog($out, 4);
     }
 
     /**
@@ -421,7 +428,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
                 continue;
             }
             $match = array();
-            if (preg_match('/(\S+)\s*:\s*(.*)/', $line, $match)) {
+            if (preg_match('/^(\S+):\s*(.*)/', $line, $match)) {
                 $match[1] = strtolower($match[1]);
                 if ($match[1] == 'user') {
                     $c['author'] = $match[2];
@@ -463,5 +470,13 @@ class IDF_Scm_Mercurial extends IDF_Scm
                        escapeshellarg($this->repo),
                        escapeshellarg($commit));
         return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
+    }
+
+    /**
+     * @see IDF_Scm::getDiffPathStripLevel()
+     */
+    public function getDiffPathStripLevel()
+    {
+        return 1;
     }
 }

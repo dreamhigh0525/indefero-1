@@ -64,6 +64,8 @@ class IDF_Form_ReviewFileComment extends Pluf_Form
         if ($this->user->hasPerm('IDF.project-owner', $this->project)
             or $this->user->hasPerm('IDF.project-member', $this->project)) {
             $this->show_full = true;
+        } else {
+            $this->show_full = false;
         }
         if ($this->show_full) {
             $this->fields['summary'] = new Pluf_Form_Field_Varchar(

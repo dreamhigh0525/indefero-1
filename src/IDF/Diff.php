@@ -27,17 +27,17 @@
  */
 class IDF_Diff
 {
-    public $repo = '';
-    public $diff = '';
+    public $path_strip_level = 0;
     protected $lines = array();
 
     public $files = array();
 
-    public function __construct($diff, $repo='')
+    public function __construct($diff, $path_strip_level = 0)
     {
-        $this->repo = $repo;
-        $this->diff = $diff;
-        $this->lines = preg_split("/\015\012|\015|\012/", $diff);
+        $this->path_strip_level = $path_strip_level;
+        // this works because in unified diff format even empty lines are
+        // either prefixed with a '+', '-' or ' '
+        $this->lines = preg_split("/\015\012|\015|\012/", $diff, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     public function parse()
@@ -49,116 +49,93 @@ class IDF_Diff
         $files = array();
         $indiff = false; // Used to skip the headers in the git patches
         $i = 0; // Used to skip the end of a git patch with --\nversion number
-        foreach ($this->lines as $line) {
-            $i++;
-            if (0 === strpos($line, '--') and isset($this->lines[$i])
-                and preg_match('/^\d+\.\d+\.\d+\.\d+$/', $this->lines[$i])) {
-                break;
+        $diffsize = count($this->lines);
+        while ($i < $diffsize) {
+            // look for the potential beginning of a diff
+            if (substr($this->lines[$i], 0, 4) !== '--- ') {
+                $i++;
+                continue;
             }
-            if (0 === strpos($line, 'diff --git a')) {
-                $current_file = self::getFile($line);
-                $files[$current_file] = array();
-                $files[$current_file]['chunks'] = array();
-                $files[$current_file]['chunks_def'] = array();
-                $current_chunk = 0;
-                $indiff = true;
+
+            // we're inside a diff candiate
+            $oldfileline = $this->lines[$i++];
+            $newfileline = $this->lines[$i++];
+            if (substr($newfileline, 0, 4) !== '+++ ') {
+                // not a valid diff here, move on
                 continue;
-            } else if (preg_match('#^diff -r [^\s]+ -r [^\s]+ (.+)$#', $line, $matches)) {
-                $current_file = $matches[1];
-                $files[$current_file] = array();
-                $files[$current_file]['chunks'] = array();
-                $files[$current_file]['chunks_def'] = array();
-                $current_chunk = 0;
-                $indiff = true;
-                continue;
-            } else if (!$indiff && 0 === strpos($line, '=========')) {
-                // ignore pseudo stanzas with a hint of a binary file
-                if (preg_match("/^# (.+) is binary/", $this->lines[$i]))
-                    continue;
-                // by default always use the new name of a possibly renamed file
-                $current_file = self::getMtnFile($this->lines[$i+1]);
-                // mtn 0.48 and newer set /dev/null as file path for dropped files
-                // so we display the old name here
-                if ($current_file == "/dev/null") {
-                    $current_file = self::getMtnFile($this->lines[$i]);
+            }
+
+            // use new file name by default
+            preg_match("/^\+\+\+ ([^\t]+)/", $newfileline, $m);
+            $current_file = $m[1];
+            if ($current_file === '/dev/null') {
+                // except if it's /dev/null, use the old one instead
+                // eg. mtn 0.48 and newer
+                preg_match("/^--- ([^\t]+)/", $oldfileline, $m);
+                $current_file = $m[1];
+            }
+            if ($this->path_strip_level > 0) {
+                $fileparts = explode('/', $current_file, $this->path_strip_level+1);
+                $current_file = array_pop($fileparts);
+            }
+            $current_chunk = 0;
+            $files[$current_file] = array();
+            $files[$current_file]['chunks'] = array();
+            $files[$current_file]['chunks_def'] = array();
+
+            while ($i < $diffsize && substr($this->lines[$i], 0, 3) === '@@ ') {
+                $elems = preg_match('/@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@.*/',
+                                    $this->lines[$i++], $results);
+                if ($elems != 1) {
+                    // hunk is badly formatted
+                    break;
                 }
-                if ($current_file == "/dev/null") {
-                    throw new Exception(
-                        "could not determine path from diff"
-                    );
-                }
-                $files[$current_file] = array();
-                $files[$current_file]['chunks'] = array();
-                $files[$current_file]['chunks_def'] = array();
-                $current_chunk = 0;
-                $indiff = true;
-                continue;
-            } else if (0 === strpos($line, 'Index: ')) {
-                $current_file = self::getSvnFile($line);
-                $files[$current_file] = array();
-                $files[$current_file]['chunks'] = array();
-                $files[$current_file]['chunks_def'] = array();
-                $current_chunk = 0;
-                $indiff = true;
-                continue;
-            }
-            if (!$indiff) {
-                continue;
-            }
-            if (0 === strpos($line, '@@ ')) {
-                $files[$current_file]['chunks_def'][] = self::getChunk($line);
+                $delstart = $results[1];
+                $dellines = $results[2] === '' ? 1 : $results[2];
+                $addstart = $results[3];
+                $addlines = $results[4] === '' ? 1 : $results[4];
+
+                $files[$current_file]['chunks_def'][] = array(
+                    array($delstart, $dellines), array($addstart, $addlines)
+                );
                 $files[$current_file]['chunks'][] = array();
+
+                while ($i < $diffsize && ($addlines >= 0 || $dellines >= 0)) {
+                    $linetype = $this->lines[$i] != '' ? $this->lines[$i][0] : ' ';
+                    switch ($linetype) {
+                        case ' ':
+                            $files[$current_file]['chunks'][$current_chunk][] =
+                                array($delstart, $addstart, substr($this->lines[$i++], 1));
+                            $dellines--;
+                            $addlines--;
+                            $delstart++;
+                            $addstart++;
+                            break;
+                        case '+':
+                            $files[$current_file]['chunks'][$current_chunk][] =
+                                array('', $addstart, substr($this->lines[$i++], 1));
+                            $addlines--;
+                            $addstart++;
+                            break;
+                        case '-':
+                            $files[$current_file]['chunks'][$current_chunk][] =
+                                array($delstart, '', substr($this->lines[$i++], 1));
+                            $dellines--;
+                            $delstart++;
+                            break;
+                        case '\\':
+                            // ignore newline handling for now, see issue 636
+                            $i++;
+                            continue;
+                        default:
+                            break 2;
+                    }
+                }
                 $current_chunk++;
-                $lline = $files[$current_file]['chunks_def'][$current_chunk-1][0][0];
-                $rline = $files[$current_file]['chunks_def'][$current_chunk-1][1][0];
-                continue;
-            }
-            if (0 === strpos($line, '---') or 0 === strpos($line, '+++')) {
-                continue;
-            }
-            if (0 === strpos($line, '-')) {
-                $files[$current_file]['chunks'][$current_chunk-1][] = array($lline, '', substr($line, 1));
-                $lline++;
-                continue;
-            }
-            if (0 === strpos($line, '+')) {
-                $files[$current_file]['chunks'][$current_chunk-1][] = array('', $rline, substr($line, 1));
-                $rline++;
-                continue;
-            }
-            if (0 === strpos($line, ' ')) {
-                $files[$current_file]['chunks'][$current_chunk-1][] = array($lline, $rline, substr($line, 1));
-                $rline++;
-                $lline++;
-                continue;
-            }
-            if ($line == '') {
-                $files[$current_file]['chunks'][$current_chunk-1][] = array($lline, $rline, $line);
-                $rline++;
-                $lline++;
-                continue;
             }
         }
         $this->files = $files;
         return $files;
-    }
-
-    public static function getFile($line)
-    {
-        $line = substr(trim($line), 10);
-        $n = (int) strlen($line)/2;
-        return trim(substr($line, 3, $n-3));
-    }
-
-    public static function getSvnFile($line)
-    {
-        return substr(trim($line), 7);
-    }
-
-    public static function getMtnFile($line)
-    {
-        preg_match("/^[+-]{3} ([^\t]+)/", $line, $m);
-        return $m[1];
     }
 
     /**
@@ -197,7 +174,6 @@ class IDF_Diff
         return Pluf_Template::markSafe($out);
     }
 
-
     public static function padLine($line)
     {
         $line = str_replace("\t", '    ', $line);
@@ -208,19 +184,6 @@ class IDF_Diff
             }
         }
         return str_repeat('&nbsp;', $i).substr($line, $i);
-    }
-
-    /**
-     * @return array array(array(start, n), array(start, n))
-     */
-    public static function getChunk($line)
-    {
-        $elts = explode(' ', $line);
-        $res = array();
-        for ($i=1;$i<3;$i++) {
-            $res[] = explode(',', trim(substr($elts[$i], 1)));
-        }
-        return $res;
     }
 
     /**
@@ -347,7 +310,6 @@ class IDF_Diff
         return $nnew_chunks;
     }
 
-
     public function renderCompared($chunks, $filename)
     {
         $fileinfo = IDF_FileUtil::getMimeType($filename);
@@ -381,6 +343,5 @@ class IDF_Diff
             $i++;
         }
         return Pluf_Template::markSafe($out);
-
     }
 }

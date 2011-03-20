@@ -1,32 +1,40 @@
-InDefero was originally created during summer 2008 
+InDefero was originally created during summer 2008
 by Loïc d'Anterroches with the support of Céondo Ltd.
 
-Much appreciated contributors:
+Much appreciated contributors (in alphabetical order):
 
-    Nicolas Lassalle <http://www.beroot.org/> - Subversion support
-    bohwaz <http://bohwaz.net/>
-    Benjamin Jorand <benjamin.jorand@gmail.com> - Mercurial support
-    Baptiste Michaud <bactisme@gmail.com> - Subversion synchronization
-    Julien Issler 
+    Adrien Bustany <madcat@mymadcat.com>
+    Andrew Nguyen <andrew-git-indefero@na-consulting.net>
+    Baptiste Durand-Bret <bathizte@ozazar.org>
+    Baptiste Michaud <bactisme@gmail.com>           - Subversion sync
+    Benjamin Jorand <benjamin.jorand@gmail.com>     - Mercurial support
+    Brenda Wallace <shiny@cpan.org>
+    Brian Armstrong <brianar>
+    Charles Melbye <charlie@yourwiki.net>
+    Ciaran Gultnieks <ciaran@ciarang.com>
+    David Feeney <davidf>
+    Denis Kot <denis.kot@gmail.com>                 - Russian translation
+    Dmitry Dulepov <dmitryd>
+    Fernando Sayago Gil <mikados.mikados@gmail.com> - Spanish translation
+    Jakub Viták <mainiak@gmail.com>                 - Czech translation
+    Janez Troha <http://www.dz0ny.info>             - Slovenian translation
+    Jerry <lxb429@gmail.com>                        - Chinese translation
+    Julien Issler <julien@issler.net>
+    Ludovic Bellière <xrogaan>
     Manuel Eidenberger <eidenberger@gmail.com>
-    Ciaran Gultnieks
+    Matthew Dawson <mjd>
+    Matías Halles <matias@halles.cl>
     Mehdi Kabab <http://pioupioum.fr/>
-    Sindre R. Myren
+    Nicolas Lassalle <nicolas@beroot.org>           - Subversion support
     Patrick Georgi <patrick.georgi@coresystems.de>
-    Adrien Bustany
-    Charles Melbye
-    Baptiste Durand-Bret
-    Andrew Nguyen
-    David Feeney
-    Denis Kot <denis.kot@gmail.com>
-    Samuel Suther
-    Ludovic Bellière
-    Brian Armstrong
-    Raphaël Emourgeon
-    Jakub Viták
-    Vladimir Solomatin
-    William Martin <wysman@gmail.com>
-    Thomas Keller <me@thomaskeller.biz>
+    Raphaël Emourgeon <raphael>
+    Samuel Suther <info@suther.de>                  - German translation
+    Sindre R. Myren <sindrero@stud.ntnu.no>
+    Thomas Keller <me@thomaskeller.biz>             - Monotone support
+    Vladimir Solomatin <slash>
+    William Martin <william.martin@lcpc.fr>
+    Xavier Brochard <xavier@alternatif.org>
+    bohwaz <http://bohwaz.net/>
 
 And all the nice users who spent time reporting issues and promoting
 the project. The project could not live without them.

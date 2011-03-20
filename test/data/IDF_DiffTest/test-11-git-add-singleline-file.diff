@@ -1,0 +1,13 @@
+commit c28f1dd026dd832398d699fa1fee0cce0562f350
+Author: Patrick Georgi <patrick@georgi-clan.de>
+Date:   Wed Mar 16 15:14:41 2011 +0100
+
+    foo
+
+diff --git a/a b/a
+new file mode 100644
+index 0000000..8baef1b
+--- /dev/null
++++ b/a
+@@ -0,0 +1 @@
++abc

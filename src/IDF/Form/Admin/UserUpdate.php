@@ -78,7 +78,7 @@ class IDF_Form_Admin_UserUpdate extends Pluf_Form
                                             'label' => __('Password'),
                                             'initial' => '',
                                             'widget' => 'Pluf_Form_Widget_PasswordInput',
-                                            'help_text' => Pluf_Template::markSafe(__('Leave blank if you do not want to change the password.').'<br />'.__('The password must be hard for other people to find it, but easy for the user to remember.')),
+                                            'help_text' => Pluf_Template::markSafe(__('Leave blank if you do not want to change the password.').'<br />'.__('The password must be hard for other people to guess, but easy for the user to remember.')),
                                             'widget_attrs' => array(
                                                        'maxlength' => 50,
                                                        'size' => 15,
@@ -161,7 +161,7 @@ class IDF_Form_Admin_UserUpdate extends Pluf_Form
                           'label' => __('Staff'),
                           'initial' => $this->user->staff,
                           'widget' => 'Pluf_Form_Widget_CheckboxInput',
-                          'help_text' => __('If you give staff rights to a user, you really need to trust him.'),
+                          'help_text' => __('If you give staff rights to a user, you really need to trust them.'),
                           ));
         }
 
@@ -173,7 +173,7 @@ class IDF_Form_Admin_UserUpdate extends Pluf_Form
                           'initial' => $this->user->active,
                           'widget' => 'Pluf_Form_Widget_CheckboxInput',
                           'widget_attrs' => $attrs,
-                          'help_text' => __('If the user is not getting the confirmation email or is abusing the system, you can directly enable or disable his account here.'),
+                          'help_text' => __('If the user is not getting the confirmation email or is abusing the system, you can directly enable or disable their account here.'),
                           ));
     }
 

@@ -1,0 +1,8 @@
+diff --git a/foo b/foo
+index 71ccdd0..a86c18f 100644
+--- a/foo
++++ b/foo
+@@ -1 +1 @@
+-This is foo
+\ No newline at end of file
++This is foo

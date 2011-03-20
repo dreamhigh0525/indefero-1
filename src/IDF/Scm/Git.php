@@ -62,20 +62,20 @@ class IDF_Scm_Git extends IDF_Scm
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Git::getChanges', $cmd, $out);
-        
+
         $return = (object) array(
             'additions'  => array(),
             'deletions'  => array(),
             'renames'    => array(),
             'patches'    => array(),
             'properties' => array(),
-        );  
-        
+        );
+
         foreach ($out as $line) {
             $line = trim($line);
             if ($line != '') {
                 $action = $line[0];
-                
+
                 if ($action == 'A') {
                     $filename = trim(substr($line, 1));
                     $return->additions[] = $filename;
@@ -88,10 +88,10 @@ class IDF_Scm_Git extends IDF_Scm
                 } else if ($action == 'R') {
                     $matches = split ("\t", $line);
                     $return->renames[$matches[1]] = $matches[2];
-                }           
+                }
             }
         }
-        
+
         return $return;
     }
 
@@ -167,7 +167,29 @@ class IDF_Scm_Git extends IDF_Scm
      */
     public function inBranches($commit, $path)
     {
-        return $this->_inObject($commit, 'branch');
+        if (isset($this->cache['inBranches'][$commit])) {
+            return $this->cache['inBranches'][$commit];
+        }
+
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '')
+            .sprintf('GIT_DIR=%s %s branch --contains %s',
+                     escapeshellarg($this->repo),
+                     Pluf::f('git_path', 'git'),
+                     escapeshellarg($commit));
+        self::exec('IDF_Scm_Git::inBranches', $cmd, $out, $return);
+        if (0 != $return) {
+            throw new IDF_Scm_Exception(sprintf($this->error_tpl,
+                                                $cmd, $return,
+                                                implode("\n", $out)));
+        }
+
+        $res = array();
+        foreach ($out as $line) {
+            $res[] = substr($line, 2);
+        }
+
+        $this->cache['inBranches'][$commit] = $res;
+        return $res;
     }
 
     /**
@@ -216,35 +238,36 @@ class IDF_Scm_Git extends IDF_Scm
      **/
     public function inTags($commit, $path)
     {
-        return $this->_inObject($commit, 'tag');
-    }
+        if (isset($this->cache['inTags'][$commit])) {
+            return $this->cache['inTags'][$commit];
+        }
 
-    /**
-     * Returns in which branches or tags a commit is.
-     *
-     * @param string Commit
-     * @param string Object's type: 'branch' or 'tag'.
-     * @return array
-     */
-    private function _inObject($commit, $object)
-    {
-        $object = strtolower($object);
-        if ('branch' === $object) {
-            $objects = $this->getBranches();
-        } else if ('tag' === $object) {
-            $objects = $this->getTags();
-        } else {
-            throw new InvalidArgumentException(sprintf(__('Invalid value for the parameter %1$s: %2$s. Use %3$s.'),
-                                                       '$object',
-                                                       $object,
-                                                       '\'branch\' or \'tag\''));
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '')
+            .sprintf('GIT_DIR=%s %s tag --contains %s',
+                     escapeshellarg($this->repo),
+                     Pluf::f('git_path', 'git'),
+                     escapeshellarg($commit));
+        self::exec('IDF_Scm_Git::inTags', $cmd, $out, $return);
+        // `git tag` gained the `--contains` option in 1.6.2, earlier
+        // versions report a bad usage error (129) which we ignore here
+        if (129 == $return) {
+            $this->cache['inTags'][$commit] = array();
+            return array();
         }
-        unset($object);
-        $result = array();
-        if (array_key_exists($commit, $objects)) {
-            $result[] = $commit;
+        // any other error should of course get noted
+        if (0 != $return) {
+            throw new IDF_Scm_Exception(sprintf($this->error_tpl,
+                                                $cmd, $return,
+                                                implode("\n", $out)));
         }
-        return $result;
+
+        $res = array();
+        foreach ($out as $line) {
+            $res[] = $line;
+        }
+
+        $this->cache['inTags'][$commit] = $res;
+        return $res;
     }
 
     /**
@@ -346,8 +369,8 @@ class IDF_Scm_Git extends IDF_Scm
             $keys = $user->get_idf_key_list();
             if (count ($keys) == 0)
                 return self::getAnonymousAccessUrl($project);
-        } 
-        
+        }
+
         return sprintf(Pluf::f('git_write_remote_url'), $project->shortname);
     }
 
@@ -505,7 +528,7 @@ class IDF_Scm_Git extends IDF_Scm
             $out[0]->diff = '';
         }
 
-        $out[0]->branch = implode(', ', $this->inBranches($commit, null));
+        $out[0]->branch = implode(', ', $this->inBranches($out[0]->commit, null));
         return $out[0];
     }
 
@@ -631,6 +654,14 @@ class IDF_Scm_Git extends IDF_Scm
                        escapeshellarg($prefix),
                        escapeshellarg($commit));
         return new Pluf_HTTP_Response_CommandPassThru($cmd, 'application/x-zip');
+    }
+
+    /**
+     * @see IDF_Scm::getDiffPathStripLevel()
+     */
+    public function getDiffPathStripLevel()
+    {
+        return 1;
     }
 
     /*

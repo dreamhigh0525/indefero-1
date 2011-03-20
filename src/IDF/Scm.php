@@ -473,5 +473,14 @@ class IDF_Scm
     {
         return str_replace('%2F', '/', rawurlencode($path));
     }
+
+    /**
+     * Returns the number of slashes and preceeding path components
+     * that should be stripped from paths in the SCM's diff output
+     */
+    public function getDiffPathStripLevel()
+    {
+        return 0;
+    }
 }
 

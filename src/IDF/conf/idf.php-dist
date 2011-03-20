@@ -246,7 +246,7 @@ $cfg['template_context_processors'] = array('IDF_Middleware_ContextPreProcessor'
 $cfg['idf_views'] = dirname(__FILE__).'/urls.php';
 
 # available languages
-$cfg['languages'] = array('en', 'fr');
+$cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
 
 # SCM base configuration
 $cfg['allowed_scm'] = array('git' => 'IDF_Scm_Git',
