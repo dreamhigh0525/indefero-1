@@ -26,20 +26,20 @@
 
 .PHONY: help
 help:
-	@printf "Rules for generate tarball :\n"
+	@printf "Rules for generating distributable files :\n"
 	@for b in `git branch | sed "s/^. //g"`; do \
-		printf "\t"$$b"_tarball - Generate a zip archive of the "$$b" branch.\n"; \
+		printf "\t"$$b"-zipfile - Generate a zip archive of the "$$b" branch.\n"; \
 	done
-	@printf "\nRules for internationnalization :\n";
-	@printf "\tpot-update - Update the POT file from HTML template and PHP source, then merge it with PO file.\n"
-	@printf "\tpot-push - Send the POT file on transifex server.\n"
-	@printf "\tpo-update - Merge POT file into PO file. POT is not regenerated.\n"
-	@printf "\tpo-push - Send the all PO file on transifex server.\n"
-	@printf "\tpo-pull - Get all PO file from transifex server.\n"
-	@printf "\tpo-stats - Show statistics about translation on each PO file .\n"
+	@printf "\nRules for internationalization :\n";
+	@printf "\tpot-update - Update the POT file from HTML templates and PHP sources, then merge it with PO file.\n"
+	@printf "\tpot-push   - Send the POT file to the transifex server.\n"
+	@printf "\tpo-update  - Merge the POT file into the PO file. The POT is not regenerated.\n"
+	@printf "\tpo-push    - Send the all PO files to the transifex server.\n"
+	@printf "\tpo-pull    - Get all PO files from the transifex server.\n"
+	@printf "\tpo-stats   - Show translation statistics of all PO files.\n"
 
 #
-#   Internationnalization rule, POT & PO file manipulation
+#   Internationalization rule, POT & PO file manipulation
 #
 .PHONY: pluf_path
 pluf_path:
@@ -61,7 +61,8 @@ pot-update: pluf_path
 	@cd src; php $(PLUF_PATH)/extracttemplates.php IDF/conf/idf.php IDF/gettexttemplates
 	@cd src; for phpfile in `find . -iname "*.php"`; do \
 		printf "Parsing file : "$$phpfile"\n"; \
-		xgettext -o idf.pot -p ./IDF/locale/ --from-code=UTF-8 -j --keyword --keyword=__ --keyword=_n:1,2 -L PHP $$phpfile ; \
+		xgettext -o idf.pot -p ./IDF/locale/ --from-code=UTF-8 -j \
+			--keyword --keyword=__ --keyword=_n:1,2 -L PHP $$phpfile ; \
 		done
 	#	Remove tmp folder
 	rm -Rf src/IDF/gettexttemplates
@@ -91,14 +92,14 @@ check-tx-config:
 	printf "source_file = src/IDF/locale/idf.pot\n" >> .tx/config;          \
 	printf "source_lang = en\n" >> .tx/config;                              \
 	fi
-	@if [ ! -e $(HOME)/.transifexrc ]; then								\
+	@if [ ! -e $(HOME)/.transifexrc ]; then					\
 	touch $(HOME)/.transifexrc;												\
-	printf "[http://www.transifex.net]\n" >> $(HOME)/.transifexrc;				\
+	printf "[http://www.transifex.net]\n" >> $(HOME)/.transifexrc;						\
 	printf "username = \n" >> $(HOME)/.transifexrc;								\
-	printf "token = \n" >> $(HOME)/.transifexrc;									\
+	printf "token = \n" >> $(HOME)/.transifexrc;								\
 	printf "password = \n" >> $(HOME)/.transifexrc;								\
-	printf "hostname = http://www.transifex.net\n" >> $(HOME)/.transifexrc;		\
-	printf "You must edit the file ~/.transifexrc to setup your transifex account (login & password) !\n";		\
+	printf "hostname = http://www.transifex.net\n" >> $(HOME)/.transifexrc;					\
+	printf "You must edit the file ~/.transifexrc to setup your transifex account (login & password) !\n";	\
 	exit 1;																\
 	fi
 
@@ -129,10 +130,12 @@ po-stats:
 	done
 
 #
-#   Generic rule to build a tarball of indefero for a specified branch
-#   ex: make master_tarball
-#       make dev_tarball
+#   Generic rule to build a zipfile of indefero for a specified branch
+#   ex: make master_zipfile
+#       make develop_zipfile
 #
-%_tarball:
-	@git archive --format=zip --prefix="indefero/" $(@:_tarball=) > indefero-$(@:_tarball=)-`git log $(@:_tarball=) -n 1 --pretty=format:%H`.zip
+%-zipfile:
+	@git archive --format=zip --prefix="indefero/" $(@:-zipfile=) \
+		> indefero-$(@:-zipfile=)-`git log $(@:-zipfile=) -n 1 \
+		--pretty=format:%h`.zip
 
