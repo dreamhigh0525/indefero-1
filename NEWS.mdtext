@@ -21,7 +21,7 @@
 
 * _Other_:
  - Enhanced user profile page (issue 510)
- - Manage multiple (commit) emails in the account settings (issue 136)
+ - Manage multiple (commit) emails in the account settings (issues 136 and 500)
  - Filter the timeline and its feed by item type (issue 543)
  - Add multiple email addresses for project notifications (issue 372)
  - Direct links to other projects via the new `Project List` dropdown
