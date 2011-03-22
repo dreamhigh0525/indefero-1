@@ -36,12 +36,12 @@ class IDF_Scm_Monotone extends IDF_Scm
     private static $instances = array();
 
     /**
-     * @see IDF_Scm::__construct()
+     * Constructor
      */
-    public function __construct($project)
+    public function __construct(IDF_Project $project, IDF_Scm_Monotone_IStdio $stdio)
     {
         $this->project = $project;
-        $this->stdio = new IDF_Scm_Monotone_Stdio($project);
+        $this->stdio = $stdio;
     }
 
     /**
@@ -458,8 +458,9 @@ class IDF_Scm_Monotone extends IDF_Scm
     public static function factory($project)
     {
         if (!array_key_exists($project->shortname, self::$instances)) {
+            $stdio = new IDF_Scm_Monotone_Stdio($project);
             self::$instances[$project->shortname] =
-                new IDF_Scm_Monotone($project);
+                new IDF_Scm_Monotone($project, $stdio);
         }
         return self::$instances[$project->shortname];
     }
@@ -676,8 +677,8 @@ class IDF_Scm_Monotone extends IDF_Scm
 
         $parents = $this->stdio->exec(array('parents', $revs[0]));
         $res['parents'] = preg_split("/\n/", $parents, -1, PREG_SPLIT_NO_EMPTY);
-        
-        $certs = $this->_getCerts($revs[0]);        
+
+        $certs = $this->_getCerts($revs[0]);
         // FIXME: this assumes that author, date and changelog are always given
         $res['author'] = implode(', ', $certs['author']);
 

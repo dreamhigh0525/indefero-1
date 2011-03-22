@@ -24,7 +24,7 @@
 require_once(IDF_PATH.'/../contrib/zipstream-php-0.2.2/zipstream.php');
 
 /**
- * Special response object to output 
+ * Special response object to output
  *
  * The Content-Length will not be set as it is not possible to predict it.
  *
@@ -45,7 +45,7 @@ class IDF_Scm_Monotone_ZipRender extends Pluf_HTTP_Response
     private $stdio = null;
     private $revision = null;
 
-    function __construct($stdio, $revision)
+    function __construct(IDF_Scm_Monotone_IStdio $stdio, $revision)
     {
         parent::__construct($revision, 'application/x-zip');
         $this->stdio = $stdio;

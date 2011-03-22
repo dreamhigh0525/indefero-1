@@ -21,6 +21,8 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
+require_once 'IDF/Scm/Monotone/IStdio.php';
+
 /**
  * Monotone stdio class
  *
@@ -29,7 +31,7 @@
  *
  * @author Thomas Keller <me@thomaskeller.biz>
  */
-class IDF_Scm_Monotone_Stdio
+class IDF_Scm_Monotone_Stdio implements IDF_Scm_Monotone_IStdio
 {
     /** this is the most recent STDIO version. The number is output
         at the protocol start. Older versions of monotone (prior 0.47)
@@ -68,7 +70,7 @@ class IDF_Scm_Monotone_Stdio
      *
      * @return string
      */
-    public function _getAuthOptions()
+    private function _getAuthOptions()
     {
         $prjconf = $this->project->getConf();
         $name = $prjconf->getVal('mtn_client_key_name', false);
