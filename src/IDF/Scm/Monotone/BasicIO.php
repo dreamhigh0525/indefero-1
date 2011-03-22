@@ -21,6 +21,8 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
+require_once 'IDF/Scm/Exception.php';
+
 /**
  * Utility class to parse and compile basic_io stanzas
  *
@@ -30,6 +32,11 @@ class IDF_Scm_Monotone_BasicIO
 {
     /**
      * Parses monotone's basic_io format
+     *
+     * Known quirks:
+     * - does not handle multi-values starting with a hash '[]' (no known output)
+     * - does not validate hashes (should be /[0-9a-f]{40}/i)
+     * - does not handle forbidden \0
      *
      * @param string $in
      * @return array of arrays
@@ -54,50 +61,56 @@ class IDF_Scm_Monotone_BasicIO
                     $stanzaLine['key'] .= $ch;
                 }
 
-                // symbol w/o a value list
-                if ($pos >= $length || $in[$pos] == "\n") break;
- 
-                if ($in[$pos] == '[') {
+                // ensure we don't look at a symbol w/o a value list
+                if ($pos >= $length || $in[$pos] == "\n") {
                     unset($stanzaLine['values']);
-                    ++$pos; // opening square bracket
-                    $stanzaLine['hash'] = substr($in, $pos, 40);
-                    $pos += 40;
-                    ++$pos; // closing square bracket
-                }
-                else
-                {
                     unset($stanzaLine['hash']);
-                    $valCount = 0;
-                    // if hashs and plain values are encountered in the same
-                    // value list, we add the hash values as simple values as well
-                    while ($in[$pos] == '"' || $in[$pos] == '[') {
-                        $isHashValue = $in[$pos] == '[';
-                        ++$pos; // opening quote / bracket
-                        $stanzaLine['values'][$valCount] = '';
-                        while ($pos < $length) {
-                            $ch = $in[$pos]; $pr = $in[$pos-1];
-                            if (($isHashValue && $ch == ']')
-                                ||(!$isHashValue && $ch == '"' && $pr != '\\'))
-                                 break;
+                }
+                else {
+                    if ($in[$pos] == '[') {
+                        unset($stanzaLine['values']);
+                        ++$pos; // opening square bracket
+                        while ($pos < $length && $in[$pos] != ']') {
+                            $stanzaLine['hash'] .= $in[$pos];
                             ++$pos;
-                            $stanzaLine['values'][$valCount] .= $ch;
                         }
-                        ++$pos; // closing quote
+                        ++$pos; // closing square bracket
+                    }
+                    else
+                    {
+                        unset($stanzaLine['hash']);
+                        $valCount = 0;
+                        // if hashs and plain values are encountered in the same
+                        // value list, we add the hash values as simple values as well
+                        while ($in[$pos] == '"' || $in[$pos] == '[') {
+                            $isHashValue = $in[$pos] == '[';
+                            ++$pos; // opening quote / bracket
+                            $stanzaLine['values'][$valCount] = '';
+                            while ($pos < $length) {
+                                $ch = $in[$pos]; $pr = $in[$pos-1];
+                                if (($isHashValue && $ch == ']')
+                                    ||(!$isHashValue && $ch == '"' && $pr != '\\'))
+                                     break;
+                                ++$pos;
+                                $stanzaLine['values'][$valCount] .= $ch;
+                            }
+                            ++$pos; // closing quote
 
-                        if (!$isHashValue) {
-                            $stanzaLine['values'][$valCount] = str_replace(
-                                array("\\\\", "\\\""),
-                                array("\\", "\""),
-                                $stanzaLine['values'][$valCount]
-                            );
-                        }
+                            if (!$isHashValue) {
+                                $stanzaLine['values'][$valCount] = str_replace(
+                                    array("\\\\", "\\\""),
+                                    array("\\", "\""),
+                                    $stanzaLine['values'][$valCount]
+                                );
+                            }
 
-                        if ($pos >= $length)
-                            break;
+                            if ($pos >= $length)
+                                break;
 
-                        if ($in[$pos] == ' ') {
-                            ++$pos; // space
-                            ++$valCount;
+                            if ($in[$pos] == ' ') {
+                                ++$pos; // space
+                                ++$valCount;
+                            }
                         }
                     }
                 }
@@ -114,6 +127,12 @@ class IDF_Scm_Monotone_BasicIO
     /**
      * Compiles monotone's basicio format
      *
+     * Known quirks:
+     * - does not validate keys for /[a-z_]+/
+     * - does not validate hashes (should be /[0-9a-f]{40}/i)
+     * - does not support intermixed value / hash formats
+     * - does not handle forbidden \0
+     *
      * @param array $in Array of arrays
      * @return string
      */
@@ -129,7 +148,7 @@ class IDF_Scm_Monotone_BasicIO
 
             $maxkeylength = 0;
             foreach ((array)$stanza as $lx => $line) {
-                if (!array_key_exists('key', $line)) {
+                if (!array_key_exists('key', $line) || empty($line['key'])) {
                     throw new IDF_Scm_Exception(
                         '"key" not found in basicio stanza '.$sx.', line '.$lx
                     );
@@ -156,13 +175,6 @@ class IDF_Scm_Monotone_BasicIO
                              array("\\\\", "\\\""),
                              $value).'"';
                     }
-                }
-                else
-                {
-                    throw new IDF_Scm_Exception(
-                        'neither "hash" nor "values" found in basicio '.
-                        'stanza '.$sx.', line '.$lx
-                    );
                 }
 
                 $out .= "\n";
