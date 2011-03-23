@@ -1,0 +1,95 @@
+<?php
+/**
+ * This is a basic test configuration file for unit tests. It mimics most of
+ * the defaults from IDF/conf/idf.php-dist, but sets up a local sqlite database
+ * which is purged before each test run and uses a different temporary file
+ * directory.
+ *
+ * You can keep most of these settings as is, but ensure that you set up
+ * 'pear_path' at least, otherwise you'll get strange errors.
+ */
+
+require_once dirname(__FILE__).'/../src/IDF/conf/path.php';
+
+$cfg = array();
+$cfg['debug'] = true;
+$cfg['debug_scm'] = true;
+$cfg['git_repositories'] = '/home/git/repositories/%s.git';
+$cfg['git_remote_url'] = 'git://localhost/%s.git';
+$cfg['git_write_remote_url'] = 'git@localhost:%s.git';
+$cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
+$cfg['svn_remote_url'] = 'http://localhost/svn/%s';
+$cfg['mtn_path'] = 'mtn';
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
+$cfg['mtn_repositories'] = '/home/mtn/repositories/%s.mtn';
+$cfg['mtn_remote_url'] = 'mtn://my-host.biz/%s';
+$cfg['mtn_db_access'] = 'local';
+#$cfg['mtn_confdir'] = '/path/to/dir/tree/';
+#$cfg['mtn_confdir_extra'] = array('hooks.d/something.lua')
+#$cfg['mtn_usher_conf'] = '/path/to/usher.conf';
+$cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
+#$cfg['mercurial_remote_url'] = 'http://projects.ceondo.com/hg/%s';
+$cfg['admins'] = array(array('Admin', 'you@example.com'),);
+$cfg['send_emails'] = true;
+$cfg['mail_backend'] = 'smtp';
+$cfg['mail_host'] = 'localhost';
+$cfg['mail_port'] = 25;
+$cfg['idf_base'] = '/index.php';
+$cfg['url_base'] = 'http://localhost';
+$cfg['url_media'] = 'http://localhost/media';
+$cfg['url_upload'] = 'http://localhost/media/upload';
+$cfg['upload_path'] = '/home/www/indefero/www/media/upload';
+$cfg['upload_issue_path'] = '/home/www/indefero/attachments';
+$cfg['secret_key'] = '';
+$cfg['from_email'] = 'sender@example.com';
+$cfg['bounce_email'] = 'no-reply@example.com';
+$cfg['tmp_folder'] = dirname(__FILE__) . '/tmp';
+$cfg['db_login'] = 'www';
+$cfg['db_password'] = '';
+$cfg['db_server'] = '';
+$cfg['db_version'] = '5.1';
+$cfg['db_table_prefix'] = 'indefero_';
+$cfg['db_engine'] = 'SQLite';
+$cfg['db_database'] = dirname(__FILE__).'/test.db';
+# $cfg['idf_extra_upload_ext'] = 'ext1 ext2';
+# $cfg['max_upload_size'] = 2097152;
+# $cfg['time_zone'] = 'Europe/Berlin';
+$cfg['pear_path'] = '/usr/share/php';
+$cfg['login_success_url'] = $cfg['url_base'].$cfg['idf_base'];
+$cfg['after_logout_page'] = $cfg['url_base'].$cfg['idf_base'];
+$cfg['cache_engine'] = 'Pluf_Cache_File';
+$cfg['cache_timeout'] = 300;
+$cfg['cache_file_folder'] = $cfg['tmp_folder'].'/cache';
+$cfg['template_folders'] = array(dirname(__FILE__).'/../src/IDF/templates');
+$cfg['installed_apps'] = array('Pluf', 'IDF');
+$cfg['pluf_use_rowpermission'] = true;
+$cfg['middleware_classes'] = array(
+    'Pluf_Middleware_Csrf',
+    'Pluf_Middleware_Session',
+    'IDF_Middleware',
+    'Pluf_Middleware_Translation',
+);
+$cfg['template_context_processors'] = array('IDF_Middleware_ContextPreProcessor');
+$cfg['idf_views'] = dirname(__FILE__).'/../src/IDF/conf/urls.php';
+
+$cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
+$cfg['allowed_scm'] = array(
+    'git' => 'IDF_Scm_Git',
+    'svn' => 'IDF_Scm_Svn',
+    'mercurial' => 'IDF_Scm_Mercurial',
+    'mtn' => 'IDF_Scm_Monotone',
+);
+# $cfg['git_core_quotepath'] = false;
+# $cfg['idf_strong_key_check'] = false;
+# $cfg['idf_mimetypes_db'] = '/etc/mime.types';
+# $cfg['idf_extra_text_ext'] = 'ext1 ext2 ext3';
+# $cfg['idf_exec_cmd_prefix'] = '/usr/bin/env -i ';
+# $cfg['svn_path'] = 'svn';
+# $cfg['svnlook_path'] = 'svnlook';
+# $cfg['svnadmin_path'] = 'svnadmin';
+# $cfg['hg_path'] = 'hg';
+# $cfg['git_path'] = 'git';
+# $cfg['idf_no_size_check'] = false;
+
+return $cfg;
+
