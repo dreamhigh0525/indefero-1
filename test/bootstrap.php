@@ -22,7 +22,6 @@ passthru('php ' . PLUF_PATH . '/migrate.php --conf=' . TESTDIR . '/config.php -a
 
 echo ">>> setting up web application...\n";
 require 'Pluf.php';
-// for some reason this is nowhere done in Pluf.php
+// for PHPUnit 3.5 and beyond this is needed, since it comes with its own class loader
 spl_autoload_register('__autoload');
 Pluf::start(TESTDIR . '/config.php');
-
