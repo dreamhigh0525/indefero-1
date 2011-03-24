@@ -60,6 +60,26 @@ class IDF_Scm_Monotone_ZipRender extends Pluf_HTTP_Response
         $this->outputHeaders();
 
         if ($output_body) {
+            $certs = $this->stdio->exec(array('certs', $this->revision));
+            $stanzas = IDF_Scm_Monotone_BasicIO::parse($certs);
+
+            // use the revision's date (if there is one) as timestamp
+            // for all file entries
+            $timestamp = time();
+            foreach ($stanzas as $stanza) {
+                $next_is_date = false;
+                foreach ($stanza as $line) {
+                    if ($line['key'] == 'name' && $line['values'][0] == 'date') {
+                        $next_is_date = true;
+                        continue;
+                    }
+                    if ($next_is_date && $line['key'] == 'value') {
+                        $timestamp = strtotime($line['values'][0]);
+                        break;
+                    }
+                }
+            }
+
             $manifest = $this->stdio->exec(array('get_manifest_of', $this->revision));
             $stanzas = IDF_Scm_Monotone_BasicIO::parse($manifest);
 
@@ -69,7 +89,11 @@ class IDF_Scm_Monotone_ZipRender extends Pluf_HTTP_Response
                 if ($stanza[0]['key'] != 'file')
                     continue;
                 $content = $this->stdio->exec(array('get_file', $stanza[1]['hash']));
-                $zip->add_file($stanza[0]['values'][0], $content);
+                $zip->add_file(
+                    $stanza[0]['values'][0],
+                    $content,
+                    array('time' => $timestamp)
+                );
             }
 
             $zip->finish();
