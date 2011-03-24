@@ -463,7 +463,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
      * @param string Prefix ('git-repo-dump')
      * @return Pluf_HTTP_Response The HTTP response containing the zip archive
      */
-    protected function getArchiveStream($commit, $prefix='')
+    public function getArchiveStream($commit, $prefix='')
     {
         $cmd = sprintf(Pluf::f('idf_exec_cmd_prefix', '').
                        Pluf::f('hg_path', 'hg').' archive --type=zip -R %s -r %s -',
