@@ -10,6 +10,14 @@
 
 ## Translations
 
+
+# InDefero 1.1.1 - xxx xxx xx xx:xx 2011 UTC
+
+## Bugfixes
+
+- Fix PHP error when trying to create Mercurial source archives (issue 648)
+
+
 # InDefero 1.1 - Sun Mar 20 11:44 2011 UTC
 
 ## New Features
