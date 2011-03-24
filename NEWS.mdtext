@@ -2,8 +2,8 @@
 
 ## Bugfixes
 
+- Fix PHP error when the commit view shows a commit with changed binary files (issue 643)
 - Fix PHP error when trying to create Mercurial source archives (issue 648)
-
 
 # InDefero 1.1 - Sun Mar 20 11:44 2011 UTC
 
