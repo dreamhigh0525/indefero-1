@@ -372,7 +372,7 @@ msgstr "Nom d'utilisateur twitter"
 
 #: IDF/Form/Admin/UserUpdate.php:119 IDF/Form/UserAccount.php:120
 msgid "Public email address"
-msgstr "Adesse email publique"
+msgstr "Adresse email publique"
 
 #: IDF/Form/Admin/UserUpdate.php:129 IDF/Form/UserAccount.php:130
 msgid "Website URL"
