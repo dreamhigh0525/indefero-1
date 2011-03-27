@@ -4406,8 +4406,8 @@ msgid ""
 "The email \"%s\" is already used. If you need to, click on the help link to "
 "recover your password."
 msgstr ""
-"Die E-Mail-Adresse \"%s\" wird bereits genutzt. Die Hilfefunktion "
-"ermöglicht es, das Passwort zurückzusetzen."
+"Die E-Mail-Adresse \"%s\" wird bereits genutzt. Wenn Du musst, kannst Du über "
+"den Link links in der Hilfe das Passwort zurückzusetzen."
 
 #: IDF/Form/Register.php:148
 msgid "Confirm the creation of your account."
