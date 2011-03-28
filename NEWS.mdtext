@@ -8,6 +8,17 @@
 
 ## Translations
 
+# InDefero 1.1.1 - Mon Mar 28 15:52 2011 UTC
+
+## Bugfixes
+
+- Fix an incompatibility with Python 3.1 in gitserve.py (issue 554)
+- Fix PHP error when the commit view shows a commit with changed binary files (issue 643)
+- A migration problem prevented the preferences page being displayed properly (issues 644 and 653)
+- Fix PHP error when trying to create Mercurial source archives (issue 648)
+- Improve the French translation (issue 651)
+- Registration page missed a link to password recovery that was mentioned in a form error (issue 652)
+
 # InDefero 1.1 - Sun Mar 20 11:44 2011 UTC
 
 ## New Features
