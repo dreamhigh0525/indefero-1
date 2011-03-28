@@ -4,6 +4,8 @@
 
 ## Bugfixes 
 
+- monotone zip archive entries now all carry the revision date as mtime (issue 645)
+
 ## Documentation
 
 ## Translations

@@ -12,4 +12,16 @@
             <directory>test/IDF/</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/IDF</directory>
+            <exclude>
+                <directory suffix=".php">src/IDF/Tests</directory>
+                <directory suffix=".php">src/IDF/conf</directory>
+                <file>src/IDF/version.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
+

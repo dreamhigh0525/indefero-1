@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+$xmlfile = dirname(__FILE__) .'/test/report.xml';
+passthru('phpunit --coverage-clover='.$xmlfile);
+$xml = simplexml_load_string(file_get_contents($xmlfile));
+unlink($xmlfile);
+printf(
+   '>>> code coverage %s/%s (%s%%)'."\n",
+   $xml->project->metrics['coveredstatements'],
+   $xml->project->metrics['statements'],
+   round(($xml->project->metrics['coveredstatements']/(float)$xml->project->metrics['statements']) * 100.0, 2)
+);
+
