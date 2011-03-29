@@ -66,7 +66,7 @@ class IDF_Views_Project
      *
      * @return array
      */
-    private function getAccessibleModelFilters($request)
+    private static function getAccessibleModelFilters($request)
     {
         $filters = array('all' => __('All Updates'));
 
