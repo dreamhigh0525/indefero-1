@@ -62,20 +62,26 @@ class IDF_Views_Project
     }
 
     /**
-     * Returns an associative array with available model filters
+     * Returns an associative array with all accessible model filters
      *
      * @return array
      */
-    private static function getAvailableModelFilters()
+    private function getAccessibleModelFilters($request)
     {
-        return array(
-            'all'       => __('All Updates'),
-            'commits'   => __('Commits'),
-            'issues'    => __('Issues and Comments'),
-            'downloads' => __('Downloads'),
-            'documents' => __('Documents'),
-            'reviews'   => __('Reviews and Patches'),
-        );
+        $filters = array('all' => __('All Updates'));
+
+        if (true === IDF_Precondition::accessSource($request))
+            $filters['commits'] = __('Commits');
+        if (true === IDF_Precondition::accessIssues($request))
+            $filters['issues'] = __('Issues and Comments');
+        if (true === IDF_Precondition::accessDownloads($request))
+            $filters['downloads'] = __('Downloads');
+        if (true === IDF_Precondition::accessWiki($request))
+            $filters['documents'] = __('Documents');
+        if (true === IDF_Precondition::accessReview($request))
+            $filters['reviews'] = __('Reviews and Patches');
+
+        return $filters;
     }
 
     /**
@@ -141,11 +147,11 @@ class IDF_Views_Project
         $prj = $request->project;
 
         $model_filter = @$match[2];
-        $all_model_filters = self::getAvailableModelFilters();
-        if (!array_key_exists($model_filter, $all_model_filters)) {
+        $accessible_model_filters = self::getAccessibleModelFilters($request);
+        if (!array_key_exists($model_filter, $accessible_model_filters)) {
             $model_filter = 'all';
         }
-        $title = (string)$prj . ' ' . $all_model_filters[$model_filter];
+        $title = (string)$prj . ' ' . $accessible_model_filters[$model_filter];
 
         $pag = new IDF_Timeline_Paginator(new IDF_Timeline());
         $pag->class = 'recent-issues';
@@ -183,7 +189,7 @@ class IDF_Views_Project
                                                      'feedurl' => $feedurl,
                                                      'timeline' => $pag,
                                                      'model_filter' => $model_filter,
-                                                     'all_model_filters' => $all_model_filters,
+                                                     'accessible_model_filters' => $accessible_model_filters,
                                                      ),
                                                $request);
 
@@ -214,11 +220,11 @@ class IDF_Views_Project
         $prj = $request->project;
         $model_filter = @$match[2];
 
-        $all_model_filters = self::getAvailableModelFilters();
-        if (!array_key_exists($model_filter, $all_model_filters)) {
+        $accessible_model_filters = self::getAccessibleModelFilters($request);
+        if (!array_key_exists($model_filter, $accessible_model_filters)) {
             $model_filter = 'all';
         }
-        $title = $all_model_filters[$model_filter];
+        $title = $accessible_model_filters[$model_filter];
 
         $classes = self::determineModelClasses($request, $model_filter);
         $sqls = sprintf('model_class IN (%s)', implode(', ', $classes));
