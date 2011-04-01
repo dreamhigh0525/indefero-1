@@ -5,6 +5,7 @@
 ## Bugfixes 
 
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
+- Timeline only displays filter options for items a user has actually access to (issue 655)
 
 ## Documentation
 
