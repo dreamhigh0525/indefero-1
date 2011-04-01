@@ -266,6 +266,33 @@ class IDF_Views_Project
     public function admin($request, $match)
     {
         $prj = $request->project;
+        $title = sprintf(__('%s Project Summary'), (string) $prj);    
+        $extra = array('project' => $prj);  
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_ProjectConf(array_merge($request->POST,
+                                                         $request->FILES),
+                                             $extra);      
+            if ($form->isValid()) {
+                $form->save();
+                $request->user->setMessage(__('The project has been updated.'));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Project::admin',
+                                                array($prj->shortname));
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $form = new IDF_Form_ProjectConf($prj->getData(), $extra);    
+        }
+        
+        return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
+                                               array(
+                                                     'page_title' => $title,
+                                                     'form' => $form,
+                                                     'project' => $prj,
+                                                     'upload_path' => Pluf::f('upload_path'),
+                                                     ),
+                                               $request);        
+/*
+        $prj = $request->project;
         $title = sprintf(__('%s Project Summary'), (string) $prj);
         $form_fields = array('fields'=> array('name', 'shortdesc',
                                               'description'));
@@ -292,6 +319,7 @@ class IDF_Views_Project
                                                      'form' => $form,
                                                      ),
                                                $request);
+*/
     }
 
     /**
