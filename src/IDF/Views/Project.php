@@ -283,12 +283,17 @@ class IDF_Views_Project
             $form = new IDF_Form_ProjectConf($prj->getData(), $extra);    
         }
         
+        $logo = $prj->getConf()->getVal('logo');
+        if (!empty($logo)) {
+            $logo = Pluf::f('upload_path').'/'.$logo;
+            $logo_base64 = IDF_FileUtil::getPictureInline($logo);
+        }
         return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
                                                array(
                                                      'page_title' => $title,
                                                      'form' => $form,
                                                      'project' => $prj,
-                                                     'upload_path' => Pluf::f('upload_path'),
+                                                     'logo' => $logo_base64,
                                                      ),
                                                $request);        
     }

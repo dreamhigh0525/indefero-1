@@ -33,8 +33,8 @@
 <tr>
 <th><strong>{trans 'Actual logo'}:</strong></th>
 <td>
-{if $project.logo}
-<img src="{$upload_path}/{$project.logo}" alt="project logo" />
+{if $logo}
+<img src="{$logo}" alt="project logo" />
 {else}
 {trans 'Your project do not have a logo configured yet.'}
 {/if}
@@ -46,7 +46,7 @@
 {$form.f.logo|unsafe}
 </td>
 </tr>
-{if $project.logo}
+{if $logo}
 <tr>
 <th><strong>{$form.f.logo_remove.labelTag}:</strong></th>
 <td>{if $form.f.logo_remove.errors}{$form.f.logo_remove.fieldErrors}{/if}

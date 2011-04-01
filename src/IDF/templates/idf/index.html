@@ -12,8 +12,8 @@
 {foreach $projects as $p}
 <div class="p-list-img">
     <a href="{url 'IDF_Views_Project::home', array($p.shortname)}">
-    {if $p.logo != 0}
-        <img src="{$p.logo}" alt="{trans 'Project logo'}" />
+    {if $logos[$p->shortname]}
+        <img src="{$logos[$p->shortname]}" alt="{trans 'Project logo'}" />
     {else}
         <img src="{media '/idf/img/no_logo.png'}" alt="{trans 'Project logo'}" />
     {/if}
