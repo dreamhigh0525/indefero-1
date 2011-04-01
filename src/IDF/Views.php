@@ -41,12 +41,24 @@ class IDF_Views
     {
         $projects = self::getProjects($request->user);
         $stats = self::getProjectsStatistics ($projects);
+ 
+        $logos = array();
+        foreach ($projects as $p) {
+            $logo = $p->getConf()->getVal('logo');
+            if (!empty($logo)) {
+                $logo = Pluf::f('upload_path').'/'.$logo;
+                $logos[$p->shortname] = IDF_FileUtil::getPictureInline($logo);
+            } else {
+                $logos[$p->shortname] = "";
+            }      
+        }
         
         if ($api == true) return $projects;
         return Pluf_Shortcuts_RenderToResponse('idf/index.html', 
                                                array('page_title' => __('Projects'),
                                                      'projects' => $projects,
-                                                     'stats' => new Pluf_Template_ContextVars($stats)),
+                                                     'stats' => new Pluf_Template_ContextVars($stats),
+                                                     'logos' => $logos),
                                                $request);
     }
 
