@@ -94,7 +94,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
                        escapeshellarg($this->repo),
                        escapeshellarg($rev));
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        self::exec('IDF_Scm_Mercurial::isValidRevision', $cmd, $out, $ret);
+        self::exec('IDF_Scm_Mercurial::validateRevision', $cmd, $out, $ret);
 
         // FIXME: apparently a given hg revision can also be ambigious -
         //        handle this case here sometime
@@ -336,7 +336,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
      */
     public function getCommit($commit, $getdiff=false)
     {
-        if (!$this->isValidRevision($commit)) {
+        if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
             return false;
         }
         $tmpl = ($getdiff)
