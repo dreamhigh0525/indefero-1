@@ -1043,3 +1043,24 @@ span.scm-action.property-changed {
 #stats td {
     padding: .2em;
 }
+
+/*
+ *  Project list on index
+ */
+div.p-list-img {
+    float: left;
+}
+
+div.p-list-prj {
+    float: left;
+    margin: 0 0 .5em 1em;
+}
+
+div.p-list-prj p {
+    margin: 0px;
+}
+
+.p-list-private {
+    bottom: 10px;
+    position: relative;
+}
