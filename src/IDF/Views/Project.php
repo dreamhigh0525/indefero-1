@@ -291,35 +291,6 @@ class IDF_Views_Project
                                                      'upload_path' => Pluf::f('upload_path'),
                                                      ),
                                                $request);        
-/*
-        $prj = $request->project;
-        $title = sprintf(__('%s Project Summary'), (string) $prj);
-        $form_fields = array('fields'=> array('name', 'shortdesc',
-                                              'description'));
-        if ($request->method == 'POST') {
-            $form = Pluf_Shortcuts_GetFormForModel($prj, $request->POST,
-                                                   $form_fields);
-            if ($form->isValid()) {
-                $prj = $form->save();
-                $request->user->setMessage(__('The project has been updated.'));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Project::admin',
-                                                array($prj->shortname));
-                return new Pluf_HTTP_Response_Redirect($url);
-            }
-        } else {
-            $form = Pluf_Shortcuts_GetFormForModel($prj, $prj->getData(),
-                                                   $form_fields);
-        }
-        $form->fields['description']->widget->attrs['cols'] = 68;
-        $form->fields['description']->widget->attrs['rows'] = 26;
-        $form->fields['shortdesc']->widget->attrs['size'] = 67;
-        return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'form' => $form,
-                                                     ),
-                                               $request);
-*/
     }
 
     /**
