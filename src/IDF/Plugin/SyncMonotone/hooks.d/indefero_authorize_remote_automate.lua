@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- This file is part of InDefero, an open source project management application.
--- Copyright (C) 2011 Céondo Ltd and contributors.
+-- Copyright (C) 2008-2011 Céondo Ltd and contributors.
 -- Copyright (C) 2010 Thomas Keller <me@thomaskeller.biz>
 --                    Richard Levitte <richard@levitte.org>
 --
