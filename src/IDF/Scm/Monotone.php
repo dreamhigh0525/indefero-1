@@ -29,7 +29,7 @@
 class IDF_Scm_Monotone extends IDF_Scm
 {
     /** the minimum supported interface version */
-    public static $MIN_INTERFACE_VERSION = 12.0;
+    public static $MIN_INTERFACE_VERSION = 13.0;
 
     private $stdio;
 
