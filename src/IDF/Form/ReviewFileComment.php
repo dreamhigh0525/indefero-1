@@ -52,7 +52,7 @@ class IDF_Form_ReviewFileComment extends Pluf_Form
                                             ));
         }
         $this->fields['content'] = new Pluf_Form_Field_Varchar(
-                                      array('required' => true,
+                                      array('required' => false,
                                             'label' => __('General comment'),
                                             'initial' => '',
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
@@ -94,23 +94,39 @@ class IDF_Form_ReviewFileComment extends Pluf_Form
      */
     public function clean()
     {
-        foreach ($this->files as $filename => $def) {
-            if (!empty($this->cleaned_data[md5($filename)])) {
-                return $this->cleaned_data;
+        $isOk = false;
+        
+        foreach($this->files as $filename => $def) {
+            $this->cleaned_data[md5($filename)] = trim($this->cleaned_data[md5($filename)]);
+            if(!empty($this->cleaned_data[md5($filename)])) {
+                $isOk = true;
             }
         }
-        throw new Pluf_Form_Invalid(__('You need to provide comments on at least one file.'));
+        
+        if(!empty($this->cleaned_data['content'])) {
+            $isOk = true;
+        }
+        
+        if (!$isOk) {
+            throw new Pluf_Form_Invalid(__('You need to provide your general comment about the proposal, or comments on at least one file.'));
+        }
+        
+        return $this->cleaned_data;
     }
 
     function clean_content()
     {
         $content = trim($this->cleaned_data['content']);
-        if (!$this->show_full and strlen($content) == 0) {
-            throw new Pluf_Form_Invalid(__('You need to provide your general comment about the proposal.'));
+        if(empty($content)) {
+            if ($this->fields['status']->initial != $this->fields['status']->value) {
+                return __('The status have been updated.');
+            }
+        } else {
+            return $content;
         }
-        return $content;
+        
+        throw new Pluf_Form_Invalid(__('This field is required.'));
     }
-
 
     /**
      * Save the model in the database.
