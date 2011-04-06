@@ -3,7 +3,7 @@
 /*
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of InDefero, an open source project management application.
-# Copyright (C) 2010 Céondo Ltd and contributors.
+# Copyright (C) 2008-2011 Céondo Ltd and contributors.
 #
 # InDefero is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -231,9 +231,9 @@ class IDF_Tests_TestMonotone extends UnitTestCase
         $this->assertEqual("second\n", $files[0]->log);
     }
 
-    public function testIsValidRevision()
+    public function testvalidateRevision()
     {
-        $this->assertTrue($this->mtnInstance->isValidRevision("t:release-1.0"));
-        $this->assertFalse($this->mtnInstance->isValidRevision("abcdef12345"));
+        $this->assertEquals(IDF_Scm::REVISION_VALID, $this->mtnInstance->validateRevision("t:release-1.0"));
+        $this->assertEquals(IDF_Scm::REVISION_INVALID, $this->mtnInstance->validateRevision("abcdef12345"));
     }
 }
