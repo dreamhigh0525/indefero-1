@@ -29,7 +29,7 @@
 class IDF_Scm_Monotone extends IDF_Scm
 {
     /** the minimum supported interface version */
-    public static $MIN_INTERFACE_VERSION = 12.0;
+    public static $MIN_INTERFACE_VERSION = 13.0;
 
     private $stdio;
 
@@ -135,13 +135,13 @@ class IDF_Scm_Monotone extends IDF_Scm
     /**
      * @see IDF_Scm::getArchiveStream
      */
-    public function getArchiveStream($commit, $prefix='repository/')
+    public function getArchiveStream($commit, $prefix = null)
     {
         $revs = $this->_resolveSelector($commit);
         // sanity: this should actually not happen, because the
         // revision is validated before already
         if (count($revs) == 0) {
-            return new Pluf_HTTP_Response_NotFound();
+            throw new IDF_Scm_Exception("$commit is not a valid revision");
         }
         return new IDF_Scm_Monotone_ZipRender($this->stdio, $revs[0]);
     }
