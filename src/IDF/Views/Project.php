@@ -34,6 +34,25 @@ class IDF_Views_Project
     /**
      * Home page of a project.
      */
+    public $logo_precond = array('IDF_Precondition::baseAccess');
+    public function logo($request, $match)
+    {
+        $prj = $request->project;
+        
+        $logo = $prj->getConf()->getVal('logo');
+        if(empty($logo)) {
+            $url = Pluf::f('url_media') . '/idf/img/no_logo.png';
+            return new Pluf_HTTP_Response_Redirect($url);
+        }
+        
+        $info = IDF_FileUtil::getMimeType($logo);
+        return new Pluf_HTTP_Response_File(Pluf::f('upload_path') . '/' . $prj->shortname . $logo,
+                                           $info[0]);
+    }
+    
+    /**
+     * Home page of a project.
+     */
     public $home_precond = array('IDF_Precondition::baseAccess');
     public function home($request, $match)
     {
@@ -284,16 +303,12 @@ class IDF_Views_Project
         }
         
         $logo = $prj->getConf()->getVal('logo');
-        if (!empty($logo)) {
-            $logo = Pluf::f('upload_path').'/'.$logo;
-            $logo_base64 = IDF_FileUtil::getPictureInline($logo);
-        }
         return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
                                                array(
                                                      'page_title' => $title,
                                                      'form' => $form,
                                                      'project' => $prj,
-                                                     'logo' => $logo_base64,
+                                                     'logo' => $logo,
                                                      ),
                                                $request);        
     }

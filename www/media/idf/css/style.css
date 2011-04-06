@@ -1049,18 +1049,21 @@ span.scm-action.property-changed {
  */
 div.p-list-img {
     float: left;
+    height: 32px;
+    margin-top: .5em;
 }
 
 div.p-list-prj {
     float: left;
-    margin: 0 0 .5em 1em;
+    margin: .5em 0 .5em 1em;
 }
 
 div.p-list-prj p {
     margin: 0px;
 }
 
-.p-list-private {
+div.p-list-private {
     bottom: 10px;
+    right: -6px;
     position: relative;
 }
