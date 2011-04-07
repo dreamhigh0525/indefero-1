@@ -162,15 +162,4 @@ class IDF_FileUtil
         $ext = array_merge(self::$supportedExtenstions, explode(' ' , $ext));
         return (in_array($fileinfo[2], $ext));
     }
-    
-    /*
-     *
-     */
-    public static function getPictureInline($file)
-    {
-        $info = IDF_FileUtil::getMimeType($file);
-        $content = file_get_contents($file);
-        $base64 = 'data:' . $info[0] . ';base64,' . base64_encode($content);
-        return $base64;
-    }
 }

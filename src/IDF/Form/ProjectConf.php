@@ -54,16 +54,16 @@ class IDF_Form_ProjectConf extends Pluf_Form
                                                                         
         // Logo part
         $upload_path = Pluf::f('upload_path', false);
-        if(false === $upload_path) {
-            throw new Pluf_Exception_SettingError(__('The "upload_issue_path" configuration variable was not set.'));
+        if (false === $upload_path) {
+            throw new Pluf_Exception_SettingError(__('The "upload_path" configuration variable was not set.'));
         }
-        $md5 = md5(rand().microtime().Pluf_Utils::getRandomString());
-        $filename = substr($md5, 0, 2).'/'.substr($md5, 2, 2).'/'.substr($md5, 4).'/%s'; 
+        $upload_path .= '/' . $this->project->shortname;
+        $filename = '/%s'; 
         $this->fields['logo'] = new Pluf_Form_Field_File(array('required' => false,
                                                          'label' => __('Update the logo'),
                                                          'initial' => '',
-                                                         'help_text' => __('The logo must be a picture with a size of 16 by 16.'),
-                                                         'max_size' => Pluf::f('max_upload_size', 2097152),
+                                                         'help_text' => __('The logo must be a picture with a size of 32 by 32.'),
+                                                         'max_size' => Pluf::f('max_upload_size', 100 * 1024),
                                                          'move_function_params' => 
                                                          array('upload_path' => $upload_path,
                                                                'upload_path_create' => true,
@@ -84,15 +84,15 @@ class IDF_Form_ProjectConf extends Pluf_Form
      */
     function failed()
     {
-        if(!empty($this->cleaned_data['logo']) 
-            and file_exists(Pluf::f('upload_path').'/'.$this->cleaned_data['logo'])) {
+        if (!empty($this->cleaned_data['logo']) 
+            && file_exists(Pluf::f('upload_path').'/'.$this->cleaned_data['logo'])) {
             unlink(Pluf::f('upload_path').'/'.$this->cleaned_data['logo']);
         }
     }
     
     public function clean()
     {
-        if(!isset($this->cleaned_data['logo_remove'])) {
+        if (!isset($this->cleaned_data['logo_remove'])) {
             $this->cleaned_data['logo_remove'] = false;
         }
         
@@ -101,19 +101,18 @@ class IDF_Form_ProjectConf extends Pluf_Form
     
     public function clean_logo()
     {
-        if(!isset($this->cleaned_data['logo']) ||
-            $this->cleaned_data['logo'] == "") {
+        if (empty($this->cleaned_data['logo'])) {
             return '';
         }
         
-        $meta = getimagesize(Pluf::f('upload_path').'/'.$this->cleaned_data['logo']);
+        $meta = getimagesize(Pluf::f('upload_path') . '/' . $this->project->shortname . $this->cleaned_data['logo']);
         
-        if($meta === FALSE) {
-            throw new Pluf_Form_Invalid("Error during the determination of the size of the picture");
+        if ($meta === false) {
+            throw new Pluf_Form_Invalid("Could not determine the size of the uploaded picture.");
         }
         
-        if($meta[0] !== 32 || $meta[1] !== 32) {
-            throw new Pluf_Form_Invalid("The picture must have a size of 16 by 16.");
+        if ($meta[0] !== 32 || $meta[1] !== 32) {
+            throw new Pluf_Form_Invalid("The picture must have a size of 32 by 32.");
         }
 
         return $this->cleaned_data['logo'];
@@ -130,11 +129,11 @@ class IDF_Form_ProjectConf extends Pluf_Form
         $this->project->update();
         
         // Logo part
-        if($this->cleaned_data['logo'] !== "") {
+        if ($this->cleaned_data['logo'] !== "") {
             $conf->setVal('logo', $this->cleaned_data['logo']);
         }
-        if($this->cleaned_data['logo_remove'] === true) {
-            @unlink(Pluf::f('upload_path').'/'.$conf->getVal('logo'));
+        if ($this->cleaned_data['logo_remove'] === true) {
+            @unlink(Pluf::f('upload_path') . '/' . $this->project->shortname . $conf->getVal('logo'));
             $conf->delVal('logo');
         }
     }

@@ -31,10 +31,10 @@
 </td>
 </tr>
 <tr>
-<th><strong>{trans 'Actual logo'}:</strong></th>
+<th><strong>{trans 'Current logo'}:</strong></th>
 <td>
 {if $logo}
-<img src="{$logo}" alt="project logo" />
+<img src="{url 'IDF_Views_Project::logo', array($project.shortname)}" alt="{trans 'project logo'}" />
 {else}
 {trans 'Your project do not have a logo configured yet.'}
 {/if}
