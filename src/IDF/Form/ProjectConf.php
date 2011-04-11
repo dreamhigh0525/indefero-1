@@ -3,7 +3,7 @@
 /*
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of InDefero, an open source project management application.
-# Copyright(C) 2008 Céondo Ltd and contributors.
+# Copyright(C) 2008-2011 Céondo Ltd and contributors.
 #
 # InDefero is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ class IDF_Form_ProjectConf extends Pluf_Form
                                                          'label' => __('Update the logo'),
                                                          'initial' => '',
                                                          'help_text' => __('The logo must be a picture with a size of 32 by 32.'),
-                                                         'max_size' => Pluf::f('max_upload_size', 100 * 1024),
+                                                         'max_size' => Pluf::f('max_upload_size', 5 * 1024),
                                                          'move_function_params' => 
                                                          array('upload_path' => $upload_path,
                                                                'upload_path_create' => true,

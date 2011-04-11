@@ -37,7 +37,7 @@
 <body>
 <div id="{block docid}doc3{/block}" class="{block docclass}yui-t3{/block}">
   <div id="hd">
-    {if $project}<h1 class="project-title">{$project}</h1>{/if}
+    {if $project}<h1 class="project-title">{$project} <img src="{url 'IDF_Views_Project::logo', array($project.shortname)}" alt="{trans 'Project logo'}" /></h1>{/if}
     {include 'idf/main-menu.html'}
 <div id="header">
 <div id="main-tabs">
