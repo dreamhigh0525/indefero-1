@@ -536,9 +536,6 @@ class IDF_Scm_Monotone extends IDF_Scm
         $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
 
         foreach ($stanzas as $stanza) {
-            if ($stanza[0]['key'] == 'format_version')
-                continue;
-
             if ($stanza[0]['values'][0] != $file)
                 continue;
 

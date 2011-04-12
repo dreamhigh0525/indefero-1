@@ -140,6 +140,7 @@ class IDF_Scm_Monotone_Test extends PHPUnit_Framework_TestCase
     public function testInBranches()
     {
         // returns the branches the given commit is in
+        $this->markTestIncomplete();
     }
 
     public function testGetTags()
@@ -171,11 +172,13 @@ END;
     public function testInTags()
     {
         // returns the tags that are attached to the given commit
+        $this->markTestIncomplete();
     }
 
     public function testGetTree()
     {
         // test root and sub tree fetching
+        $this->markTestIncomplete();
     }
 
     public function testFindAuthor()
@@ -186,11 +189,13 @@ END;
     public function testGetAnonymousAccessUrl()
     {
         // test the generation of the anonymous remote URL
+        $this->markTestIncomplete();
     }
 
     public function testGetAuthAccessUrl()
     {
         // test the generation of the authenticated remote URL (only really visible for SSH)
+        $this->markTestIncomplete();
     }
 
     public function testFactory()
@@ -200,43 +205,214 @@ END;
 
     public function testValidateRevision()
     {
-        // test valid, invalid and ambigious
+        $stdio = "\n";
+        $instance = $this->createMock(array('select', 't:123'), array(), $stdio);
+        $this->assertEquals(IDF_Scm::REVISION_INVALID, $instance->validateRevision('t:123'));
+
+        $stdio = "1234567890123456789012345678901234567890\n";
+        $instance->getStdio()->setExpectedOutput(array('select', 't:123'), array(), $stdio);
+        $this->assertEquals(IDF_Scm::REVISION_VALID, $instance->validateRevision('t:123'));
+
+        $stdio = "1234567890123456789012345678901234567890\n".
+                 "1234567890123456789012345678901234567891\n";
+        $instance->getStdio()->setExpectedOutput(array('select', 't:123'), array(), $stdio);
+        $this->assertEquals(IDF_Scm::REVISION_AMBIGUOUS, $instance->validateRevision('t:123'));
     }
 
     public function testDisambiguateRevision()
     {
-        // test for array of commit objects
+        $instance = $this->createMock();
+
+        $stdio = "1234567890123456789012345678901234567890\n";
+        $instance->getStdio()->setExpectedOutput(array('select', 't:123'), array(), $stdio);
+
+        $stdio =<<<END
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "author"
+    value "me@thomaskeller.biz"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "branch"
+    value "net.venge.monotone"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "changelog"
+    value "* po/de.po: German translation updated
+"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "date"
+    value "2011-03-19T13:59:47"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', '1234567890123456789012345678901234567890'), array(), $stdio);
+
+        $ret = $instance->disambiguateRevision('t:123');
+        $this->assertTrue(is_array($ret));
+        $this->assertEquals(1, count($ret));
+        $this->assertTrue($ret[0] instanceof stdClass);
+
+        $this->assertEquals('me@thomaskeller.biz', $ret[0]->author);
+        $this->assertEquals('net.venge.monotone', $ret[0]->branch);
+        $this->assertEquals('* po/de.po: German translation updated', $ret[0]->title);
+        $this->assertEquals('1234567890123456789012345678901234567890', $ret[0]->commit);
+        $this->assertEquals('2011-03-19 13:59:47', $ret[0]->date);
     }
 
     public function testGetPathInfo()
     {
-        // return the info (creation date, last commit, et cetera) for a single file and commit
+        $instance = $this->createMock();
+        //
+        // non-existing revision
+        //
+        $this->assertFalse($instance->getPathInfo('AUTHORS', 'foo'));
+
+        $stdio = "1234567890123456789012345678901234567890\n";
+        $instance->getStdio()->setExpectedOutput(array('select', 't:123'), array(), $stdio);
+
+        $stdio =<<<END
+      dir ""
+    birth [276264b0b3f1e70fc1835a700e6e61bdbe4c3f2f]
+path_mark [276264b0b3f1e70fc1835a700e6e61bdbe4c3f2f]
+
+      dir "doc"
+    birth [a10037b1aa8a905018b72e6bd96fb8f8475f0f65]
+path_mark [a10037b1aa8a905018b72e6bd96fb8f8475f0f65]
+
+        file "doc/AUTHORS"
+     content [de9ed2fffe2e8c0094bf51bb66d1c1ff2deeaa03]
+        size "17024"
+       birth [276264b0b3f1e70fc1835a700e6e61bdbe4c3f2f]
+   path_mark [276264b0b3f1e70fc1835a700e6e61bdbe4c3f2f]
+content_mark [fdb579b6682d78fac24912e7a82a8209b9a54099]
+END;
+        $instance->getStdio()->setExpectedOutput(array('get_extended_manifest_of', '1234567890123456789012345678901234567890'), array(), $stdio);
+
+        //
+        // non-existing file
+        //
+        $this->assertFalse($instance->getPathInfo('foo', 't:123'));
+
+        //
+        // existing file file
+        //
+        $stdio =<<<END
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "author"
+    value "me@thomaskeller.biz"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "branch"
+    value "net.venge.monotone.source-tree-cleanup"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "changelog"
+    value "update the source paths
+"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "date"
+    value "2011-01-24T00:00:23"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', 'fdb579b6682d78fac24912e7a82a8209b9a54099'), array(), $stdio);
+
+        $file = $instance->getPathInfo('doc/AUTHORS', 't:123');
+        $this->assertEquals('doc/AUTHORS', $file->fullpath);
+        $this->assertEquals('doc/AUTHORS', $file->efullpath);
+        $this->assertEquals('AUTHORS', $file->file);
+        $this->assertEquals('blob', $file->type);
+        $this->assertEquals(17024, $file->size);
+        $this->assertEquals('fdb579b6682d78fac24912e7a82a8209b9a54099', $file->rev);
+        $this->assertEquals('me@thomaskeller.biz', $file->author);
+        $this->assertEquals('2011-01-24 00:00:23', $file->date);
+        $this->assertEquals('update the source paths', $file->log);
+
+        //
+        // existing directory
+        //
+        $stdio =<<<END
+      key [10b5b36b4aadc46c0a946b6e76e087ccdddf8b86]
+signature "ok"
+     name "author"
+    value "graydon@pobox.com"
+    trust "trusted"
+
+      key [10b5b36b4aadc46c0a946b6e76e087ccdddf8b86]
+signature "ok"
+     name "branch"
+    value "net.venge.monotone.visualc8"
+    trust "trusted"
+
+      key [10b5b36b4aadc46c0a946b6e76e087ccdddf8b86]
+signature "ok"
+     name "changelog"
+    value "initial build working"
+    trust "trusted"
+
+      key [10b5b36b4aadc46c0a946b6e76e087ccdddf8b86]
+signature "ok"
+     name "date"
+    value "2006-03-13T08:06:22"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', 'a10037b1aa8a905018b72e6bd96fb8f8475f0f65'), array(), $stdio);
+
+        $file = $instance->getPathInfo('doc', 't:123');
+        $this->assertEquals('doc', $file->fullpath);
+        $this->assertEquals('doc', $file->efullpath);
+        $this->assertEquals('doc', $file->file);
+        $this->assertEquals('tree', $file->type);
+        $this->assertEquals(0, $file->size);
+        $this->assertEquals('a10037b1aa8a905018b72e6bd96fb8f8475f0f65', $file->rev);
+        $this->assertEquals('graydon@pobox.com', $file->author);
+        $this->assertEquals('2006-03-13 08:06:22', $file->date);
+        $this->assertEquals('initial build working', $file->log);
     }
 
     public function testGetFile()
     {
         // test cmd_only and full file fetching
+        $this->markTestIncomplete();
     }
 
     public function testGetChanges()
     {
         // test retrieving the changes of a specific revision
+        $this->markTestIncomplete();
     }
 
     public function testGetCommit()
     {
         // test get commit information with and without a diff text
         // test multiple branches, dates, authors, aso
+        $this->markTestIncomplete();
     }
 
     public function testGetExtraProperties()
     {
         // test array('parents' => array(rev1, rev2, ...)) or array() if root revision
+        $this->markTestIncomplete();
     }
 
     public function testIsCommitLarge()
     {
         // test for true / false with commits with more than 100 changes
+        $this->markTestIncomplete();
     }
 
     public function testGetChangeLog()
@@ -244,6 +420,7 @@ END;
         // test with no commit, empty $n
         // test logging stops at unknown branches
         // test logging stops at $n
+        $this->markTestIncomplete();
     }
 }
 
