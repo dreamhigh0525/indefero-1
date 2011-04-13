@@ -668,7 +668,7 @@ class IDF_Scm_Monotone extends IDF_Scm
     {
         $revs = $this->_resolveSelector($commit);
         if (count($revs) == 0)
-            return array();
+            return false;
 
         $res = array();
 
@@ -676,6 +676,7 @@ class IDF_Scm_Monotone extends IDF_Scm
         $res['parents'] = preg_split("/\n/", $parents, -1, PREG_SPLIT_NO_EMPTY);
 
         $certs = $this->_getCerts($revs[0]);
+
         // FIXME: this assumes that author, date and changelog are always given
         $res['author'] = implode(', ', $certs['author']);
 

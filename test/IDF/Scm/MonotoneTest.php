@@ -53,7 +53,7 @@ class MonotoneStdioMock implements IDF_Scm_Monotone_IStdio
     public function getLastOutOfBandOutput() {}
 }
 
-class IDF_Scm_Monotone_Test extends PHPUnit_Framework_TestCase
+class IDF_Scm_MonotoneTest extends PHPUnit_Framework_TestCase
 {
     private $proj = null;
 
@@ -61,7 +61,7 @@ class IDF_Scm_Monotone_Test extends PHPUnit_Framework_TestCase
     {
         $this->proj = new IDF_Project();
         $this->proj->id = 1;
-        $this->proj->name = $this->proj->shortname = 'Test';
+        $this->proj->name = $this->proj->shortname = 'test';
         $this->proj->create();
 
         $this->proj->getConf()->setVal('mtn_master_branch', 'master.branch');
@@ -89,7 +89,10 @@ class IDF_Scm_Monotone_Test extends PHPUnit_Framework_TestCase
 
     public function testGetRepositorySize()
     {
-        $this->markTestSkipped('Cannot mock real repository file');
+        $repodir = DATADIR.'/'.__CLASS__.'/%s.mtn';
+        $GLOBALS['_PX_config']['mtn_repositories'] = $repodir;
+        $instance = $this->createMock();
+        $this->assertEquals(335872, $instance->getRepositorySize());
     }
 
     public function testIsAvailable()
@@ -139,8 +142,28 @@ class IDF_Scm_Monotone_Test extends PHPUnit_Framework_TestCase
 
     public function testInBranches()
     {
-        // returns the branches the given commit is in
-        $this->markTestIncomplete();
+        $instance = $this->createMock();
+
+        $stdio = "4567890123456789012345678901234567890123\n";
+        $instance->getStdio()->setExpectedOutput(array('select', '456'), array(), $stdio);
+
+        $stdio =<<<END
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "branch"
+    value "main.branch"
+    trust "trusted"
+
+      key [aea5d3716d31281171aaecf3a7c227e5545b0504]
+signature "ok"
+     name "branch"
+    value "feature.branch"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', '4567890123456789012345678901234567890123'), array(), $stdio);
+
+        $out = $instance->inBranches('456', null);
+        $this->assertEquals(array('h:main.branch', 'h:feature.branch'), $out);
     }
 
     public function testGetTags()
@@ -171,8 +194,34 @@ END;
 
     public function testInTags()
     {
-        // returns the tags that are attached to the given commit
-        $this->markTestIncomplete();
+        $instance = $this->createMock();
+
+        $stdio = "3456789012345678901234567890123456789012\n";
+        $instance->getStdio()->setExpectedOutput(array('select', '345'), array(), $stdio);
+
+        $stdio =<<<END
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "tag"
+    value "release-1.0rc"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "tag"
+    value "release-1.0"
+    trust "trusted"
+
+      key [aea5d3716d31281171aaecf3a7c227e5545b0504]
+signature "ok"
+     name "tag"
+    value "release-1.0"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', '3456789012345678901234567890123456789012'), array(), $stdio);
+
+        $out = $instance->inTags('345', null);
+        $this->assertEquals(array('t:release-1.0rc', 't:release-1.0'), $out);
     }
 
     public function testGetTree()
@@ -183,24 +232,22 @@ END;
 
     public function testFindAuthor()
     {
-        $this->markTestSkipped('This functionality here should reside in IDF_Scm');
+        $this->markTestSkipped('code under test should reside in IDF_Scm');
     }
 
     public function testGetAnonymousAccessUrl()
     {
-        // test the generation of the anonymous remote URL
-        $this->markTestIncomplete();
+        $this->markTestSkipped('cannot test this static method');
     }
 
     public function testGetAuthAccessUrl()
     {
-        // test the generation of the authenticated remote URL (only really visible for SSH)
-        $this->markTestIncomplete();
+        $this->markTestSkipped('cannot test this static method');
     }
 
     public function testFactory()
     {
-        $this->markTestSkipped('Cannot mock real repository');
+        $this->markTestSkipped('cannot test this static method');
     }
 
     public function testValidateRevision()
@@ -301,7 +348,7 @@ END;
         $this->assertFalse($instance->getPathInfo('foo', 't:123'));
 
         //
-        // existing file file
+        // existing file
         //
         $stdio =<<<END
       key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
@@ -334,6 +381,7 @@ END;
         $file = $instance->getPathInfo('doc/AUTHORS', 't:123');
         $this->assertEquals('doc/AUTHORS', $file->fullpath);
         $this->assertEquals('doc/AUTHORS', $file->efullpath);
+        $this->assertEquals('de9ed2fffe2e8c0094bf51bb66d1c1ff2deeaa03', $file->hash);
         $this->assertEquals('AUTHORS', $file->file);
         $this->assertEquals('blob', $file->type);
         $this->assertEquals(17024, $file->size);
@@ -386,8 +434,25 @@ END;
 
     public function testGetFile()
     {
-        // test cmd_only and full file fetching
-        $this->markTestIncomplete();
+        $instance = $this->createMock();
+        $thrown = false;
+        try
+        {
+            $instance->getFile(null, true);
+        }
+        catch (Pluf_Exception_NotImplemented $e)
+        {
+            $thrown = true;
+        }
+        $this->assertTrue($thrown);
+
+        $stdio = 'Foobar';
+        $instance->getStdio()->setExpectedOutput(array('get_file', '1234567890123456789012345678901234567890'), array(), $stdio);
+
+        $obj = new stdClass();
+        $obj->hash = '1234567890123456789012345678901234567890';
+
+        $this->assertEquals('Foobar', $instance->getFile($obj));
     }
 
     public function testGetChanges()
@@ -398,15 +463,87 @@ END;
 
     public function testGetCommit()
     {
-        // test get commit information with and without a diff text
-        // test multiple branches, dates, authors, aso
-        $this->markTestIncomplete();
+        $instance = $this->createMock();
+
+        $this->assertFalse($instance->getCommit('t:234'));
+
+        $stdio = "2345678901234567890123456789012345678901\n";
+        $instance->getStdio()->setExpectedOutput(array('select', 't:234'), array(), $stdio);
+
+        $stdio = "1234567890123456789012345678901234567891\n".
+                 "1234567890123456789012345678901234567892\n";
+        $instance->getStdio()->setExpectedOutput(array('parents', '2345678901234567890123456789012345678901'), array(), $stdio);
+
+        $stdio =<<<END
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "author"
+    value "me@thomaskeller.biz"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "author"
+    value "graydon@pobox.com"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "branch"
+    value "main.branch"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "branch"
+    value "feature.branch"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "changelog"
+    value "something changed"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "changelog"
+    value "something changed here as
+well, unbelievable!"
+    trust "trusted"
+
+      key [1aaecf3a7c227e5545b0504aea5d3716d3128117]
+signature "ok"
+     name "date"
+    value "2011-03-19T13:59:47"
+    trust "trusted"
+END;
+        $instance->getStdio()->setExpectedOutput(array('certs', '2345678901234567890123456789012345678901'), array(), $stdio);
+
+        $commit = $instance->getCommit('t:234');
+
+        $this->assertEquals('2345678901234567890123456789012345678901', $commit->commit);
+        $this->assertEquals(array('1234567890123456789012345678901234567891',
+                                  '1234567890123456789012345678901234567892'),
+                            $commit->parents);
+        $this->assertEquals('me@thomaskeller.biz, graydon@pobox.com', $commit->author);
+        $this->assertEquals('2011-03-19 13:59:47', $commit->date);
+        $this->assertEquals('something changed', $commit->title);
+        $this->assertEquals("---\nsomething changed here as\nwell, unbelievable!", $commit->full_message);
+        $this->assertEquals('main.branch, feature.branch', $commit->branch);
+        $this->assertEquals('', $commit->diff);
     }
 
     public function testGetExtraProperties()
     {
-        // test array('parents' => array(rev1, rev2, ...)) or array() if root revision
-        $this->markTestIncomplete();
+        $instance = $this->createMock();
+
+        $this->assertEquals(array(), $instance->getExtraProperties(new stdClass()));
+
+        $cobj = (object) array('parents' => array('1234567890123456789012345678901234567891'));
+
+        $this->assertEquals(array('parents' => array('1234567890123456789012345678901234567891')),
+                            $instance->getExtraProperties($cobj));
     }
 
     public function testIsCommitLarge()
