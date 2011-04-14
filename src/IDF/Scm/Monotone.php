@@ -599,7 +599,7 @@ class IDF_Scm_Monotone extends IDF_Scm
     {
         $revs = $this->_resolveSelector($commit);
         if (count($revs) == 0)
-            return null;
+            return false;
 
         $revision = $revs[0];
         $out = $this->stdio->exec(array('get_revision', $revision));
