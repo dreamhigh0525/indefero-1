@@ -5,6 +5,9 @@ if (!file_exists($config_file)) {
     die("'test/config.php' does not exist\n");
 }
 
+// prevents function calls in Pluf that break tests under php-cli
+define('IN_UNIT_TESTS', 1);
+
 echo ">>> setting paths...\n";
 define('SRCDIR', realpath(dirname(__FILE__) . '/../src'));
 define('TESTDIR', dirname(__FILE__));
