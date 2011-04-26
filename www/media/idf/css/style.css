@@ -327,10 +327,27 @@ h1.title {
 }
 
 h1.project-title {
-  font-weight: normal;
   float: right;
+  font-weight: normal;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  text-align: right;
   z-index: 100;
-  margin: 0;
+  position: relative;
+  padding-right: 3px;
+}
+
+h1.project-title img.logo {
+  max-height: 22px;
+  vertical-align: text-bottom;
+  padding-left: 7px;
+}
+
+h1.project-title img.lock {
+  width: 12px;
+  position: absolute;
+  right: 1px;
+  top: 12px;
 }
 
 .note {
@@ -869,8 +886,21 @@ ol > li {
   margin: 7px;
   white-space: nowrap;
   font-size: 0.95em;
-  list-style-type: square;
-  list-style-position: inside;
+  list-style-type: none;
+  position: relative;
+}
+
+#project-list ul li img.logo {
+  max-height: 16px;
+  vertical-align: text-bottom;
+  padding-right: 5px;
+}
+
+#project-list ul li img.lock {
+  position: absolute;
+  width: 9px;
+  left: 9px;
+  top: 9px;
 }
 
 #project-list ul li:first-child {
@@ -1053,7 +1083,7 @@ div.p-list-img {
 
 div.p-list-prj {
     float: left;
-    margin: .5em 0 .5em 1em;
+    margin: .5em 0 .5em .8em;
 }
 
 div.p-list-prj p {
@@ -1061,7 +1091,7 @@ div.p-list-prj p {
 }
 
 div.p-list-private {
-    bottom: 10px;
-    right: -6px;
+    bottom: 16px;
+    right: -3px;
     position: relative;
 }
