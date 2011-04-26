@@ -8,8 +8,7 @@
 {/if}<li id="project-list"><a href="{url 'IDF_Views::index'}">{trans 'Project List'} &#x25be;</a>
 {if $allProjects.count() != 0}
 <ul>{foreach $allProjects as $p}
-<li>{if $p.private}<img style="vertical-align: text-bottom;" src="{media '/idf/img/lock.png'}" alt="{trans 'Private project'}" /> {/if}
-<a href="{url 'IDF_Views_Project::home', array($p.shortname)}">{$p}</a></li>
+<li><a href="{url 'IDF_Views_Project::home', array($p.shortname)}"><img class="logo" src="{url 'IDF_Views_Project::logo', array($p.shortname)}" alt="{trans 'Project logo'}" />{if $p.private}<img class="lock" src="{media '/idf/img/lock.png'}" alt="{trans 'Private project'}" />{/if}{$p}</a></li>
 {/foreach}</ul>
 {/if}</li>{if $isAdmin}<li><a href="{url 'IDF_Views_Admin::projects'}">{trans 'Forge Management'}</a></li>{/if}<li>
 <a href="{url 'IDF_Views::faq'}" title="{trans 'Help and accessibility features'}">{trans 'Help'}</a></li>

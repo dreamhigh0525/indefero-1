@@ -41,7 +41,7 @@ class IDF_Views
     {
         $projects = self::getProjects($request->user);
         $stats = self::getProjectsStatistics ($projects);
-        
+ 
         if ($api == true) return $projects;
         return Pluf_Shortcuts_RenderToResponse('idf/index.html', 
                                                array('page_title' => __('Projects'),

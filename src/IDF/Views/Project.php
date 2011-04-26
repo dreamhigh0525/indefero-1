@@ -34,6 +34,25 @@ class IDF_Views_Project
     /**
      * Home page of a project.
      */
+    public $logo_precond = array('IDF_Precondition::baseAccess');
+    public function logo($request, $match)
+    {
+        $prj = $request->project;
+        
+        $logo = $prj->getConf()->getVal('logo');
+        if (empty($logo)) {
+            $url = Pluf::f('url_media') . '/idf/img/no_logo.png';
+            return new Pluf_HTTP_Response_Redirect($url);
+        }
+        
+        $info = IDF_FileUtil::getMimeType($logo);
+        return new Pluf_HTTP_Response_File(Pluf::f('upload_path') . '/' . $prj->shortname . $logo,
+                                           $info[0]);
+    }
+    
+    /**
+     * Home page of a project.
+     */
     public $home_precond = array('IDF_Precondition::baseAccess');
     public function home($request, $match)
     {
@@ -272,32 +291,32 @@ class IDF_Views_Project
     public function admin($request, $match)
     {
         $prj = $request->project;
-        $title = sprintf(__('%s Project Summary'), (string) $prj);
-        $form_fields = array('fields'=> array('name', 'shortdesc',
-                                              'description'));
+        $title = sprintf(__('%s Project Summary'), (string) $prj);    
+        $extra = array('project' => $prj);  
         if ($request->method == 'POST') {
-            $form = Pluf_Shortcuts_GetFormForModel($prj, $request->POST,
-                                                   $form_fields);
+            $form = new IDF_Form_ProjectConf(array_merge($request->POST,
+                                                         $request->FILES),
+                                             $extra);      
             if ($form->isValid()) {
-                $prj = $form->save();
+                $form->save();
                 $request->user->setMessage(__('The project has been updated.'));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Project::admin',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
-            $form = Pluf_Shortcuts_GetFormForModel($prj, $prj->getData(),
-                                                   $form_fields);
+            $form = new IDF_Form_ProjectConf($prj->getData(), $extra);    
         }
-        $form->fields['description']->widget->attrs['cols'] = 68;
-        $form->fields['description']->widget->attrs['rows'] = 26;
-        $form->fields['shortdesc']->widget->attrs['size'] = 67;
+        
+        $logo = $prj->getConf()->getVal('logo');
         return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
                                                array(
                                                      'page_title' => $title,
                                                      'form' => $form,
+                                                     'project' => $prj,
+                                                     'logo' => $logo,
                                                      ),
-                                               $request);
+                                               $request);        
     }
 
     /**

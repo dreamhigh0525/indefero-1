@@ -4,6 +4,12 @@ The installation of InDefero is composed of 2 parts, first the
 installation of the [Pluf framework](http://www.pluf.org) and second,
 the installation of InDefero by itself.
 
+## PHP modules for indefero
+
+Indefero need the GD module for PHP. It's named "php5-gd" in debian.
+
+    $ apt-get install php5-gd
+
 ## Recommended Layout of the Files
 
 If your server document root is in `/var/www` a good thing is to keep

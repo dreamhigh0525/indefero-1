@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="no_logo.svg"
+   inkscape:version="0.47 r22583"
+   id="svg2985"
+   height="32"
+   width="32"
+   version="1.1"
+   inkscape:export-filename="/Users/tommyd/Entwicklung/indefero/www/media/idf/img/no_logo.png"
+   inkscape:export-xdpi="89.989998"
+   inkscape:export-ydpi="89.989998">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="16.0625"
+     inkscape:cx="8.5507561"
+     inkscape:cy="16.122403"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g2847"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       orientation="1,0"
+       position="16,25.836575"
+       id="guide3752" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-18.677042,16"
+       id="guide3754" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2987">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective13" />
+    <inkscape:perspective
+       id="perspective2863"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3676"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3717"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter3816"
+       x="-0.14434362"
+       width="1.2886872"
+       y="-0.11562817"
+       height="1.2312563">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.1799243"
+         id="feGaussianBlur3818" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="shadow"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <g
+       transform="translate(0.44042901,0.78704792)"
+       id="g2847-8"
+       style="opacity:0.79710143;fill:#000000;stroke:#000000;stroke-opacity:1;filter:url(#filter3816)">
+      <g
+         id="g3838-0"
+         style="fill:#000000;stroke:#000000;stroke-opacity:1" />
+      <g
+         id="g2401-2"
+         transform="matrix(0.21219597,0,0,0.21219597,-70.751966,-27.73328)"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.4000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:export-filename="/home/loa/Projects/indefero/logo/powered-by-indefero.png"
+         inkscape:export-xdpi="12.330909"
+         inkscape:export-ydpi="12.330909">
+        <path
+           id="path2383-4"
+           d="m 396.19089,173.14471 c -7.67621,0.80661 -14.40195,5.39406 -19.58101,10.89131 -7.23597,7.88004 -11.69742,18.07908 -13.32198,28.60362 -1.7236,11.28173 -0.25925,23.20635 5.07686,33.37271 3.78607,7.24384 9.53161,13.92339 17.29701,16.96772 3.86478,1.53937 8.98362,1.03284 11.67912,-2.41036 2.64357,-3.5671 2.69463,-8.234 2.85756,-12.48867 0.045,-7.61054 -0.54749,-15.25544 0.45618,-22.83193 0.87131,-9.50623 4.03944,-18.56751 6.71612,-27.66851 1.16242,-4.44333 2.25094,-9.02808 1.97499,-13.64988 -0.48817,-4.62476 -3.58059,-9.31042 -8.2964,-10.4067 -1.57489,-0.44882 -3.23412,-0.48948 -4.85845,-0.37931 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path2391-8"
+           d="m 433.14691,149.28687 c 7.2059,2.76589 12.51512,8.93778 16.09494,15.58815 4.94991,9.48434 6.61962,20.49058 5.46486,31.07695 -1.25505,11.34342 -5.75582,22.48271 -13.54134,30.92159 -5.53192,6.01709 -12.81048,10.98198 -21.09918,11.91276 -4.13154,0.4866 -8.94486,-1.32748 -10.65734,-5.35104 -1.63027,-4.12976 -0.4717,-8.65084 0.47212,-12.80269 1.92628,-7.36287 4.47721,-14.59393 5.4687,-22.17201 1.61875,-9.40784 0.90381,-18.98034 0.67386,-28.46402 0.0272,-4.59278 0.1624,-9.30303 1.62515,-13.69592 1.66851,-4.34082 5.86829,-8.06645 10.70716,-7.90484 1.63738,-0.0259 3.25061,0.36424 4.79107,0.89107 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="logo"
+     style="display:inline">
+    <g
+       id="layer1"
+       transform="translate(-0.06540759,0.09444087)">
+      <g
+         id="g2847">
+        <g
+           id="g3838" />
+        <g
+           id="g2401"
+           transform="matrix(0.21219597,0,0,0.21219597,-70.751966,-27.73328)"
+           style="fill:#e6e6e6;fill-opacity:1;stroke:#a0a0a0;stroke-width:2.4000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           inkscape:export-filename="/home/loa/Projects/indefero/logo/powered-by-indefero.png"
+           inkscape:export-xdpi="12.330909"
+           inkscape:export-ydpi="12.330909">
+          <path
+             id="path2383"
+             d="m 396.19089,173.14471 c -7.67621,0.80661 -14.40195,5.39406 -19.58101,10.89131 -7.23597,7.88004 -11.69742,18.07908 -13.32198,28.60362 -1.7236,11.28173 -0.25925,23.20635 5.07686,33.37271 3.78607,7.24384 9.53161,13.92339 17.29701,16.96772 3.86478,1.53937 8.98362,1.03284 11.67912,-2.41036 2.64357,-3.5671 2.69463,-8.234 2.85756,-12.48867 0.045,-7.61054 -0.54749,-15.25544 0.45618,-22.83193 0.87131,-9.50623 4.03944,-18.56751 6.71612,-27.66851 1.16242,-4.44333 2.25094,-9.02808 1.97499,-13.64988 -0.48817,-4.62476 -3.58059,-9.31042 -8.2964,-10.4067 -1.57489,-0.44882 -3.23412,-0.48948 -4.85845,-0.37931 z"
+             style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+             inkscape:connector-curvature="0" />
+          <path
+             id="path2391"
+             d="m 433.14691,149.28687 c 7.2059,2.76589 12.51512,8.93778 16.09494,15.58815 4.94991,9.48434 6.61962,20.49058 5.46486,31.07695 -1.25505,11.34342 -5.75582,22.48271 -13.54134,30.92159 -5.53192,6.01709 -12.81048,10.98198 -21.09918,11.91276 -4.13154,0.4866 -8.94486,-1.32748 -10.65734,-5.35104 -1.63027,-4.12976 -0.4717,-8.65084 0.47212,-12.80269 1.92628,-7.36287 4.47721,-14.59393 5.4687,-22.17201 1.61875,-9.40784 0.90381,-18.98034 0.67386,-28.46402 0.0272,-4.59278 0.1624,-9.30303 1.62515,-13.69592 1.66851,-4.34082 5.86829,-8.06645 10.70716,-7.90484 1.63738,-0.0259 3.25061,0.36424 4.79107,0.89107 z"
+             style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
