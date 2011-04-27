@@ -246,7 +246,7 @@ class IDF_Views_Project
         $tmpl = new Pluf_Template('idf/index.atom');
         $feedurl = Pluf::f('url_base').Pluf::f('idf_base').$request->query;
         $viewurl = Pluf_HTTP_URL_urlForView('IDF_Views_Project::timeline',
-                                            array($prj->shortname));
+                                            array($prj->shortname, $model_filter));
         $context = new Pluf_Template_Context_Request($request,
                                                      array('body' => $out,
                                                            'date' => $date,
