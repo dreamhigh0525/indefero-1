@@ -43,6 +43,9 @@ $cfg['debug'] = true;
 $cfg['debug_scm'] = false;
 
 
+
+
+
 #
 # Path section
 #
@@ -63,6 +66,10 @@ $cfg['upload_path'] = '/home/www/indefero/www/media/upload';
 # create *TERRIBLE* security issues. In this folder, the attachments
 # to the issues will be uploaded and we do not restrict the content type.
 $cfg['upload_issue_path'] = '/home/www/indefero/attachments';
+
+
+
+
 
 #
 # URL section
@@ -94,6 +101,9 @@ $cfg['url_media'] = 'http://localhost/media';
 $cfg['url_upload'] = 'http://localhost/media/upload';
 
 
+
+
+
 #
 # Internationalization section
 #
@@ -103,8 +113,12 @@ $cfg['url_upload'] = 'http://localhost/media/upload';
 $cfg['time_zone'] = 'Europe/Berlin';
 
 # 'languages' is an array of available languages in your forge
-# If you want to enable extra language, add your language files in 'src/IDF/locale' before
+# If you want to enable extra language,
+# add your language files in 'src/IDF/locale' before
 $cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
+
+
+
 
 
 #
@@ -129,23 +143,37 @@ $cfg['mail_backend'] = 'mail';
 $cfg['from_email'] = 'sender@example.com';
 $cfg['bounce_email'] = 'no-reply@example.com';
 
-# 'admins' will get an email in case of errors when the system is in non debug mode.
+# 'admins' will get an email in case of errors
+# when the system is in non debug mode.
 $cfg['admins'] = array(array('You', 'you@example.com'),
                        array('Bob', 'bob@example.com'),
                        );
                        
 ## Example of SMTP configuration
-#$cfg['mail_host'] = 'localhost';        # The server to connect. Default is localhost
-#$cfg['mail_port'] = 25;                 # The port to connect. Default is 25
-#$cfg['mail_username'] = '';             # The username to use for SMTP authentication.
-#$cfg['mail_password'] = '';             # The password to use for SMTP authentication.
-#$cfg['mail_localhost'] = 'localhost';   # The value to give when sending EHLO or HELO. Default is localhost
-#$cfg['mail_timeout'] = NULL;            # The SMTP connection timeout. Default is NULL (no timeout)
-#$cfg['mail_verp'] = FALSE;              # Whether to use VERP or not. Default is FALSE
+## The server to connect. Default is localhost
+#$cfg['mail_host'] = 'localhost';
+## The port to connect. Default is 25     
+#$cfg['mail_port'] = 25;
+## The username to use for SMTP authentication.         
+#$cfg['mail_username'] = '';
+## The password to use for SMTP authentication.       
+#$cfg['mail_password'] = '';
+## The value to give when sending EHLO or HELO. Default is localhost          
+#$cfg['mail_localhost'] = 'localhost';
+## The SMTP connection timeout. Default is NULL (no timeout)
+#$cfg['mail_timeout'] = NULL;
+## Whether to use VERP or not. Default is FALSE
+#$cfg['mail_verp'] = FALSE;
 
 ## Example of sendmail configuration
-#$cfg['mail_sendmail_path'] = '/usr/bin/sendmail'; # The location of the sendmail program on the filesystem. Default is /usr/bin/sendmail
-#$cfg['sendmail_args'] = '-i';                     # Additional parameters to pass to the sendmail. Default is -i
+## The location of the sendmail program on the filesystem.
+## Default is /usr/bin/sendmail
+#$cfg['mail_sendmail_path'] = '/usr/bin/sendmail'; 
+## Additional parameters to pass to the sendmail. Default is -i
+#$cfg['sendmail_args'] = '-i';                     
+
+
+
 
 
 #
@@ -180,6 +208,9 @@ $cfg['db_password'] = 'bar';
 $cfg['db_table_prefix'] = 'indefero_';
 
 
+
+
+
 #
 # Cache section
 # The cache is use to speed up operation on most of scm commands.
@@ -189,7 +220,8 @@ $cfg['db_table_prefix'] = 'indefero_';
 # - Alternative PHP Cache (Pluf_Cache_Apc)
 # - Memcached (Pluf_Cache_Memcached)
 #
-# APC and Memcached need extra installation to run, so It's easier to use Files in a first time.
+# APC and Memcached need extra installation to run,
+# so It's easier to use Files in a first time.
 # @see http://www.php.net/manual/en/book.apc.php
 # @see http://www.php.net/manual/en/book.memcached.php
 #
@@ -210,6 +242,9 @@ $cfg['cache_file_folder'] = $cfg['tmp_folder'].'/cache';
 #$cfg['cache_memcached_compress'] = MEMCACHE_COMPRESSED;
 
 
+
+
+
 #
 # Binary section
 #
@@ -227,6 +262,9 @@ $cfg['mtn_path'] = 'mtn';
 $cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
 
 
+
+
+
 #
 # GIT Scm section
 # Read the file doc/syncgit.mdtext for more information
@@ -240,19 +278,24 @@ $cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
 # For example, adding www to the git group.
 $cfg['git_repositories'] = '/home/git/repositories/%s.git/';
 
-# Git url for public access to a repositorie. %s is replaced with the project name
+# Git url for public access to a repositorie.
+# %s is replaced with the project name
 # @see doc/syncgit.mdtext for the git-daemon configuration
 $cfg['git_remote_url'] = 'git://137.121.75.54/%s.git';
 
-# Git url for private/write access to a repositorie. %s is replaced with the project name
+# Git url for private/write access to a repositorie.
+# %s is replaced with the project name
 # @see doc/syncgit.mdtext for the SSH authentification
 $cfg['git_write_remote_url'] = 'git@137.121.75.54:%s.git';
 
 # The core.quotepath is configured on all new repository created by indefero
-# This option disable characters to be escaped when git commands run on a compatible UTF-8 shell
+# This option disable characters to be escaped,
+#  when git commands run on a UTF-8 shell
 # - true: All characters upper than 0x80 will be escape (default)
-# - false: Characters is print directly, enable accented character in a UTF-8 shell
-# If you see malformed filename in the source viewer, try to uncomment the next line
+# - false: Characters is print directly,
+#          enable accented character in a UTF-8 shell
+# If you see malformed filename in the source viewer,
+# try to uncomment the next line
 # $cfg['git_core_quotepath'] = false;
 
 # Path to the gitserve.py script
@@ -276,6 +319,9 @@ $cfg['idf_plugin_syncgit_base_repositories'] = '/home/git/repositories';
 
 # Automatic delete git repositorie of deleted project
 # $cfg['idf_plugin_syncgit_remove_orphans'] = true;
+
+
+
 
 
 #
@@ -314,6 +360,9 @@ $cfg['idf_plugin_syncsvn_svn_path'] = '/home/svn/repositories';
 # $cfg['idf_plugin_syncsvn_remove_orphans'] = true;
 
 
+
+
+
 #
 # Mercurial Scm section
 # Read the file doc/syncmercurial.mdtext for more information
@@ -327,15 +376,16 @@ $cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
 
 $cfg['mercurial_remote_url'] = 'http://example.com/hg/%s';
 
-$cfg['idf_plugin_syncmercurial_hgrc'] = array('web' => array('push_ssl' => 'false',
-                                                             'allow_push' => '',
-                                                             'description' => '',
-                                                             'allow_archive' => 'bz2, zip, gz',
-                                                             'style' => 'gitweb',
-                                                             'contact' => ''),
-                                              'hooks' => array(),
-                                              'extensions' => array(),
-                                              );
+$cfg['idf_plugin_syncmercurial_hgrc'] = array(
+    'web' => array('push_ssl' => 'false',
+                 'allow_push' => '',
+                 'description' => '',
+                 'allow_archive' => 'bz2, zip, gz',
+                 'style' => 'gitweb',
+                 'contact' => ''),
+    'hooks' => array(),
+    'extensions' => array(),
+);
 
 # Based on the paths provided in the Apache configuration,
 # you need to setup the following lines
@@ -350,6 +400,9 @@ $cfg['idf_plugin_syncmercurial_private_include'] = '/home/mercurial/scripts/priv
 # Password storage type
 # @see doc/syncmercurial.mdtext
 # $cfg['idf_plugin_syncmercurial_passwd_mode'] = 'sha';
+
+
+
 
 
 #
@@ -391,6 +444,9 @@ $cfg['mtn_db_access'] = 'local';
 # Additional configuration files you want to create / copy for new setups.
 # All these file paths have to be relative to $cfg['mtn_confdir'].
 # $cfg['mtn_confdir_extra'] = array('hooks.d/something.lua')
+
+
+
 
 
 #
