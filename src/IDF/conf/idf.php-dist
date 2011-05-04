@@ -3,7 +3,7 @@
 /*
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of InDefero, an open source project management application.
-# Copyright (C) 2008 Céondo Ltd and contributors.
+# Copyright (C) 2008 - 2011 Céondo Ltd and contributors.
 #
 # InDefero is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,34 +24,30 @@
 $cfg = array();
 $cfg['allowed_scm'] = array();
 
-# Write here a long random string unique for this installation. This
-# is critical to put a long string, with at least 40 characters.
-# You can use the output of
-# dd if=/dev/urandom bs=1 count=64 2>/dev/null | base64 -w 0
+# Enter a long random string here that is unique for this installation.
+# It is critical to put in a long string with at least 40 characters.
+# You can use dd like this to gain some randomness:
+#   $ dd if=/dev/urandom bs=1 count=64 2>/dev/null | base64 -w 0
 $cfg['secret_key'] = '';
 
-#
-# Debug section
-#
+# ---------------------------------------------------------------------------- #
+#                              Debug section                                   #
+# ---------------------------------------------------------------------------- #
 
-# You must set them to false once everything is running ok.
-# It will help you catch errors at beginning when configuring your
-# forge and SCM backend.
-#
-# It must be turned off in production.
+# In debug mode Indefero renders stack traces in case of an error that include
+# more information about a specific problem. Since these stack traces often
+# contain sensible data, this option MUST BE DEACTIVATED in production mode.
+# (see $cfg['admins'] below to learn how you can still be notified about
+# problems without 'debug' being enabled).
 $cfg['debug'] = true;
-$cfg['debug_scm'] = false;
 
 
+# ---------------------------------------------------------------------------- #
+#                               Path section                                   #
+# ---------------------------------------------------------------------------- #
 
-
-
-#
-# Path section
-#
-
-# Temporary folder where the script is writing the compiled templates,
-# cached data and other temporary resources.
+# Temporary folder where the application is writing compiled templates,
+# cached data and other temporary resources to.
 # It must be writeable by your webserver instance.
 $cfg['tmp_folder'] = '/tmp';
 
@@ -61,19 +57,30 @@ $cfg['pear_path'] = '/usr/share/php';
 # Path to the upload folder
 $cfg['upload_path'] = '/home/www/indefero/www/media/upload';
 
-# The following path *MUST NOT* be accessible through a web browser
-# as user will be able to upload .html, .php files and this can
-# create *TERRIBLE* security issues. In this folder, the attachments
+# The following path MUST NOT be accessible through a web browser,
+# as user will otherwise be able to upload executable files (*.php) and
+# this can create TERRIBLE security issues. In this folder, the attachments
 # to the issues will be uploaded and we do not restrict the content type.
 $cfg['upload_issue_path'] = '/home/www/indefero/attachments';
 
+# If your SCM binary is not accessible for the web user (for example, because
+# it is not in the system PATH), you can enter the full path to it here.
+$cfg['svn_path'] = 'svn';
+$cfg['svnlook_path'] = 'svnlook';
+$cfg['svnadmin_path'] = 'svnadmin';
+$cfg['hg_path'] = 'hg';
+$cfg['git_path'] = 'git';
+$cfg['mtn_path'] = 'mtn';
+
+# The monotone backend allow you to add extra options for the started monotone
+# process; please keep the default if unsure.
+$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
 
 
+# ---------------------------------------------------------------------------- #
+#                                URL section                                   #
+# ---------------------------------------------------------------------------- #
 
-
-#
-# URL section
-#
 # Examples:
 # You have:
 #   http://www.mydomain.com/myfolder/index.php
@@ -87,110 +94,110 @@ $cfg['upload_issue_path'] = '/home/www/indefero/attachments';
 #   $cfg['idf_base'] = '';
 #   $cfg['url_base'] = 'http://www.mydomain.com';
 #
-#
-#
 $cfg['idf_base'] = '/index.php';
 $cfg['url_base'] = 'http://localhost';
 
-# Url to access the media folder which is in the www folder
-# of the archive
+# URL to access the media folder which is in the www folder
+# of the distribution archive
 $cfg['url_media'] = 'http://localhost/media';
 
-# Url to access a folder in which the files you upload through
+# URL to access a folder in which the files you upload through
 # the downloads tab will be stored.
 $cfg['url_upload'] = 'http://localhost/media/upload';
 
 
+# ---------------------------------------------------------------------------- #
+#                        Internationalization section                          #
+# ---------------------------------------------------------------------------- #
 
-
-
-#
-# Internationalization section
-#
-
-# 'time_zone' must be a valid timezone, you can find a list of them at the url:
-# http://www.php.net/manual/en/timezones.php
+# Enter a valid time zone here to ensure that external timestamps, coming from
+# the SCM for example, are translated into this time zone.
+# A list of available time zones can be found at
+# <http://www.php.net/manual/en/timezones.php>
 $cfg['time_zone'] = 'Europe/Berlin';
 
-# 'languages' is an array of available languages in your forge
-# If you want to enable extra language,
-# add your language files in 'src/IDF/locale' before
+# Configure which languages should be available in your forge.
+# If you want to enable an additional language, ensure that the
+# language file in question resides in 'src/IDF/locale'.
 $cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                               Email section                                  #
+# ---------------------------------------------------------------------------- #
 #
-# Email section
-# Indefero use the PEAR Mail class to send mails. Available mail backend are:
+# Indefero uses the PEAR Mail class to send mails. Available mail backend are:
+#
 # - The PHP Mail built-in function (mail)
 # - Sendmail (sendmail)
 # - Simple Mail Transfer Protocol (smtp)
 #
-# Sendmail and SMTP need extra configuration, see example below
+# Sendmail and SMTP need extra configuration, see the examples below.
 #
 
-# 'send_emails' is a general lock to enable/disable, the mail sending process
-# - true : Enable mail to be send
-# - flase : Disable it
+# This is a general lock to enable or disable the mail sending process.
+# True enables mail sending, false disables it.
 $cfg['send_emails'] = false;
 
-# The baackend to use: mail, sendmail, smtp
+# The mail backend to use: mail, sendmail, or smtp
 $cfg['mail_backend'] = 'mail';
 
-# Mails send by indefero will have thoses headers:
+# Mails sent by indefero will have thoses headers:
 $cfg['from_email'] = 'sender@example.com';
 $cfg['bounce_email'] = 'no-reply@example.com';
 
-# 'admins' will get an email in case of errors
-# when the system is in non debug mode.
-$cfg['admins'] = array(array('You', 'you@example.com'),
-                       array('Bob', 'bob@example.com'),
-                       );
-                       
-## Example of SMTP configuration
+# The following persons will get an email in case of errors, i.e. when the
+# system is in not in debug mode (see $cfg['debug'] above).
+$cfg['admins'] = array(
+    array('You', 'you@example.com'),
+    array('Bob', 'bob@example.com'),
+);
+
+##
+## Example SMTP configuration
+##
 ## The server to connect. Default is localhost
 #$cfg['mail_host'] = 'localhost';
-## The port to connect. Default is 25     
+## The port to connect. Default is 25
 #$cfg['mail_port'] = 25;
-## The username to use for SMTP authentication.         
+## The username to use for SMTP authentication.
 #$cfg['mail_username'] = '';
-## The password to use for SMTP authentication.       
+## The password to use for SMTP authentication.
 #$cfg['mail_password'] = '';
-## The value to give when sending EHLO or HELO. Default is localhost          
+## The value to give when sending EHLO or HELO. Default is localhost
 #$cfg['mail_localhost'] = 'localhost';
 ## The SMTP connection timeout. Default is NULL (no timeout)
 #$cfg['mail_timeout'] = NULL;
 ## Whether to use VERP or not. Default is FALSE
 #$cfg['mail_verp'] = FALSE;
 
-## Example of sendmail configuration
+##
+## Example sendmail configuration
+##
 ## The location of the sendmail program on the filesystem.
 ## Default is /usr/bin/sendmail
-#$cfg['mail_sendmail_path'] = '/usr/bin/sendmail'; 
+#$cfg['mail_sendmail_path'] = '/usr/bin/sendmail';
 ## Additional parameters to pass to the sendmail. Default is -i
-#$cfg['sendmail_args'] = '-i';                     
+#$cfg['sendmail_args'] = '-i';
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                             Database section                                 #
+# ---------------------------------------------------------------------------- #
 #
-# Database section
+# WARNING: DO NOT USE SQLITE IN PRODUCTION
 #
-# ** DO NOT USE SQLITE IN PRODUCTION **
 # This is not because of problems with the quality of the SQLite
-# driver or with SQLite itself, this is due to the lack of migration
-# support in Pluf for SQLite, this means we cannot modify the DB
+# driver or with SQLite itself, but due to the lack of migration
+# support in Pluf for SQLite. This means we cannot modify the DB
 # easily once it is loaded with data.
 #
 
-# 'db_engine' must be one of available database engine: SQLite, MySQL, PostgreSQL
+# Enter one of the supported database engines: SQLite, MySQL, or PostgreSQL
 $cfg['db_engine'] = 'PostgreSQL';
 
-# 'db_database' is the database name for MySQL and PostgreSQL,
-# and the absolute path to the db if you are using SQLite.
+# The database name for MySQL and PostgreSQL,  and the absolute path
+# to the database file if you are using SQLite.
 $cfg['db_database'] = 'website';
 
 # The database server to connect.
@@ -203,27 +210,30 @@ $cfg['db_password'] = 'bar';
 # The version of your database server, only needed for MySQL
 # $cfg['db_version'] = '5.1';
 
-# A prefix for your table name
-# It's can be useful if you run multiple installation in the same database
+# A prefix for your table name; this can be useful if you plan to run
+# multiple indefero installations on the same database instance.
 $cfg['db_table_prefix'] = 'indefero_';
 
 
+# ---------------------------------------------------------------------------- #
+#                               Cache section                                  #
+# ---------------------------------------------------------------------------- #
 
-
-
+# The cache is used to speed up the operations of most of the SCM commands.
 #
-# Cache section
-# The cache is use to speed up operation on most of scm commands.
+# Indefero supports three methods to handle the cache, and you need to
+# configure it with one of them:
 #
-# Indefero support 3 methods to handle the cache, and you need to one of them:
 # - Files (Pluf_Cache_File)
 # - Alternative PHP Cache (Pluf_Cache_Apc)
 # - Memcached (Pluf_Cache_Memcached)
 #
-# APC and Memcached need extra installation to run,
-# so It's easier to use Files in a first time.
-# @see http://www.php.net/manual/en/book.apc.php
-# @see http://www.php.net/manual/en/book.memcached.php
+# Both, APC and Memcached, need additional extensions to be compiled into
+# your PHP installation, so the easiest is to use the file-based cache
+# for an initial setup.
+#
+# For more information on APC, see <http://www.php.net/manual/en/book.apc.php>.
+# Memcached is documented at <http://www.php.net/manual/en/book.memcached.php>.
 #
 $cfg['cache_engine'] = 'Pluf_Cache_File';
 $cfg['cache_timeout'] = 300;
@@ -242,136 +252,114 @@ $cfg['cache_file_folder'] = $cfg['tmp_folder'].'/cache';
 #$cfg['cache_memcached_compress'] = MEMCACHE_COMPRESSED;
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                             Git SCM section                                  #
+# ---------------------------------------------------------------------------- #
 #
-# Binary section
-#
-# You tell indefero to use a specific version of some binary,
-# instead of use thoses find in the system PATH.
-# 
-# Monotone backend allow you to add extra options for the started monotone process
-#
-$cfg['svn_path'] = 'svn';
-$cfg['svnlook_path'] = 'svnlook';
-$cfg['svnadmin_path'] = 'svnadmin';
-$cfg['hg_path'] = 'hg';
-$cfg['git_path'] = 'git';
-$cfg['mtn_path'] = 'mtn';
-$cfg['mtn_opts'] = array('--no-workspace', '--no-standard-rcfiles');
-
-
-
-
-
-#
-# GIT Scm section
-# Read the file doc/syncgit.mdtext for more information
+# Read the file 'doc/syncgit.mdtext' for more information
 #
 
-# Uncomment this line to enable the GIT support
+# Uncomment this line to enable git support.
 # $cfg['allowed_scm']['git'] = 'IDF_Scm_Git';
 
-# The path to git repositories. %s is replaced with the project name
-# Do not forget to give read access to these folders to your www user.
-# For example, adding www to the git group.
+# The path to the git repositories. '%s' is replaced with the project name.
+# Do not forget to give read access to these folders to your www user,
+# for example by adding the www user to the git group.
 $cfg['git_repositories'] = '/home/git/repositories/%s.git/';
 
-# Git url for public access to a repositorie.
-# %s is replaced with the project name
-# @see doc/syncgit.mdtext for the git-daemon configuration
+# Git URL for public access to a repository. '%s' is again replaced with
+# the project name. See 'doc/syncgit.mdtext' for the git-daemon configuration.
 $cfg['git_remote_url'] = 'git://137.121.75.54/%s.git';
 
-# Git url for private/write access to a repositorie.
-# %s is replaced with the project name
-# @see doc/syncgit.mdtext for the SSH authentification
+# Git URL for private / write access to a repository. Again, '%s' is replaced
+# with the name of the project. See 'doc/syncgit.mdtext' for more information
+# about SSH authentification
 $cfg['git_write_remote_url'] = 'git@137.121.75.54:%s.git';
 
-# The core.quotepath is configured on all new repository created by indefero
-# This option disable characters to be escaped,
-#  when git commands run on a UTF-8 shell
-# - true: All characters upper than 0x80 will be escape (default)
-# - false: Characters is print directly,
-#          enable accented character in a UTF-8 shell
-# If you see malformed filename in the source viewer,
-# try to uncomment the next line
+# The 'core.quotepath' option is configured on all new repositories created by
+# indefero. This option disable characters to be escaped, when git commands run
+# on an UTF-8 shell.
+#
+# - true:  All characters above 0x80 will be escaped (default)
+# - false: Characters are printed directly, which for example enables
+#          accented characters in an UTF-8 shell
+#
+# If you see malformed filenames in the source view, try to set this to false.
 # $cfg['git_core_quotepath'] = false;
 
 # Path to the gitserve.py script
 $cfg['idf_plugin_syncgit_path_gitserve'] = '/home/www/indefero/scripts/gitserve.py';
 
-# Path to the authorized_keys of your git user
+# Path to the 'authorized_keys' file of your git user
 $cfg['idf_plugin_syncgit_path_authorized_keys'] = '/home/git/.ssh/authorized_keys';
 
-# Path to the tmp file for keys synch
+# Path to the temporary file for key synchronization
 $cfg['idf_plugin_syncgit_sync_file'] = '/tmp/SYNC-GIT';
 
-# Path to the Git home
+# Path to the git home
 $cfg['idf_plugin_syncgit_git_home_dir'] = '/home/git';
 
 # Path to the folder which contains all git repositories
 $cfg['idf_plugin_syncgit_base_repositories'] = '/home/git/repositories';
 
-# Set a custom git-post-update script
-# Use it only, if you know you are doing !
+# Set a custom git-post-update script. Use this only, if you know you are doing!
 # $cfg['idf_plugin_syncgit_post_update'] = '/my/script';
 
-# Automatic delete git repositorie of deleted project
+# Automatically delete git repositories of deleted projects
 # $cfg['idf_plugin_syncgit_remove_orphans'] = true;
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                             SVN SCM section                                  #
+# ---------------------------------------------------------------------------- #
 #
-# SVN Scm section
 # Read the file doc/syncsvn.mdtext for more information
 #
 
-# Uncomment this line to enable the SVN support
+# Uncomment this line to enable the SVN support.
 # $cfg['allowed_scm']['svn'] = 'IDF_Scm_Svn';
 
-# In the case of subversion, the admin of a project can also select a
-# remote repository from the web interface. From the web interface
-# you can define a local repository, local repositories are defined
-# here. This if for security reasons.
+# In case of subversion, you can either use a local or a remote repository.
+# The forge admin can configure a remote repository directly from the
+# web interface. Local repositories cannot be configured from there,
+# for security reasons, but have to be defined here.
+# '%s' is replaced with the project name.
 $cfg['svn_repositories'] = 'file:///home/svn/repositories/%s';
 
-# The HTTP URL to the svn repositorie
-# We add "trunk" to invite people to checkout the trunk of the project.
+# The HTTP URL to the local SVN repository.
+# We add 'trunk' to invite people to checkout the trunk of the project.
+# Again, '%s' is replaced with the project name.
 $cfg['svn_remote_url'] = 'http://localhost/svn/%s/trunk';
 
-# Path to authenfication files for dav_svn
+# Path to the authentification files for dav_svn
 $cfg['idf_plugin_syncsvn_authz_file'] = '/home/svn/dav_svn.authz';
 $cfg['idf_plugin_syncsvn_passwd_file'] = '/home/svn/dav_svn.passwd';
 
-# Path to the folder which contains all svn repositories
+# Path to the folder which contains all SVN repositories
 $cfg['idf_plugin_syncsvn_svn_path'] = '/home/svn/repositories';
 
-# You can custom permissions access for each user group.
+# You can customize permissions for each user group.
 # $cfg['idf_plugin_syncsvn_access_owners'] = 'rw';
 # $cfg['idf_plugin_syncsvn_access_members'] = 'rw';
 # $cfg['idf_plugin_syncsvn_access_extra'] = 'r';
 # $cfg['idf_plugin_syncsvn_access_public'] = 'r';
 # $cfg['idf_plugin_syncsvn_access_private'] = '';
 
-# Automatic delete svn repositorie of deleted project
+# Automatically delete local SVN repositories of deleted projects
 # $cfg['idf_plugin_syncsvn_remove_orphans'] = true;
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                           Mercurial SCM section                              #
+# ---------------------------------------------------------------------------- #
 #
-# Mercurial Scm section
 # Read the file doc/syncmercurial.mdtext for more information
 #
 
-# Uncomment this line to enable the Mercurial support
+# Uncomment this line to enable the Mercurial support.
 $cfg['allowed_scm']['mercurial'] = 'IDF_Scm_Mercurial';
 
-# The path to mercurial repositories. %s is replaced with the project name
+# The path to mercurial repositories. '%s' is replaced with the project name.
 $cfg['mercurial_repositories'] = '/home/mercurial/repositories/%s';
 
 $cfg['mercurial_remote_url'] = 'http://example.com/hg/%s';
@@ -388,7 +376,7 @@ $cfg['idf_plugin_syncmercurial_hgrc'] = array(
 );
 
 # Based on the paths provided in the Apache configuration,
-# you need to setup the following lines
+# you need to setup the following lines.
 $cfg['idf_plugin_syncmercurial_passwd_file'] = '/home/mercurial/auth/.htpasswd';
 $cfg['idf_plugin_syncmercurial_path'] = '/home/mercurial/repositories';
 $cfg['idf_plugin_syncmercurial_private_notify'] = '/home/mercurial/tmp/notify.tmp';
@@ -397,28 +385,26 @@ $cfg['idf_plugin_syncmercurial_private_url'] = '/hg/%s';
 # Authentification file for private repositories
 $cfg['idf_plugin_syncmercurial_private_include'] = '/home/mercurial/scripts/private_indefero.conf';
 
-# Password storage type
-# @see doc/syncmercurial.mdtext
+# Password storage type (see 'doc/syncmercurial.mdtext')
 # $cfg['idf_plugin_syncmercurial_passwd_mode'] = 'sha';
 
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                            Monotone SCM section                              #
+# ---------------------------------------------------------------------------- #
 #
-# Monotone Scm section
 # Read the file doc/syncmonotone.mdtext for more information
 #
 
-# Uncomment this line to enable the Monotone support
+# Uncomment this line to enable the monotone support.
 # $cfg['allowed_scm']['mtn'] = 'IDF_Scm_Monotone';
 
 # The path to a specific database (local use) or a writable project
-# directory (remote / usher use). %s is replaced with the project name
+# directory (remote / usher use). '%s' is replaced with the project name.
 $cfg['mtn_repositories'] = '/home/mtn/repositories/%s.mtn';
 
 # The URL which is displayed as sync URL to the user and which is also
-# used to connect to a remote usher
+# used to connect to a remote usher.
 $cfg['mtn_remote_url'] = 'mtn://example.com/%s';
 
 # Whether the particular database(s) are accessed locally (via automate stdio)
@@ -431,7 +417,7 @@ $cfg['mtn_db_access'] = 'local';
 # This allows basic control of a running usher process via the forge
 # administration. The variable must point to the full (writable)
 # path of the usher configuration file which gets updated when new projects
-# are added
+# are added.
 # $cfg['mtn_usher_conf'] = '/var/lib/usher/usher.conf';
 
 # Full path to the directory tree which contains default configuration files
@@ -446,13 +432,10 @@ $cfg['mtn_db_access'] = 'local';
 # $cfg['mtn_confdir_extra'] = array('hooks.d/something.lua')
 
 
+# ---------------------------------------------------------------------------- #
+#                  Hacker section (for advanced users)                         #
+# ---------------------------------------------------------------------------- #
 
-
-
-#
-# Hacker section
-# Reserved to avanced user
-#
 $cfg['installed_apps'] = array('Pluf', 'IDF');
 
 $cfg['pluf_use_rowpermission'] = true;
@@ -463,53 +446,54 @@ $cfg['middleware_classes'] = array(
          'IDF_Middleware',
          'Pluf_Middleware_Translation',
          );
-         
+
 $cfg['template_context_processors'] = array('IDF_Middleware_ContextPreProcessor');
 
 $cfg['idf_views'] = dirname(__FILE__).'/urls.php';
 
-# If you want custom some template files,
-# you must tell to the template system where search your updated files by
-# adding this folder in the 'template_folders' array.
-$cfg['template_folders'] = array(/* '/your/folder', */
-                                 dirname(__FILE__).'/../templates',
-                                 );
-                                 
-# You can custom the URL redirection, after a login/logout
+# If you want to customize some of the template files, you must tell the
+# template system where it can find your updated files by adding the particular
+# folder to the following array.
+$cfg['template_folders'] = array(
+   dirname(__FILE__).'/../templates',
+);
+
+# You can customize the URL redirection after a login or logout action.
 $cfg['login_success_url'] = $cfg['url_base'].$cfg['idf_base'];
 $cfg['after_logout_page'] = $cfg['url_base'].$cfg['idf_base'];
 
-# Set to true when uploaded public keys should not only be validated
-# syntactically, but also by the specific backend. For SSH public
-# keys, ssh-keygen(3) must be available and usable in PATH, for
-# monotone public keys, the monotone binary (as configured above)
+# Set to true if uploaded public keys should not only be validated
+# syntactically, but also by a specific backend. For SSH public
+# keys, ssh-keygen(3) must be available and usable in the system PATH,
+# for monotone public keys, the monotone binary (as configured above)
 # is used.
 $cfg['idf_strong_key_check'] = false;
 
-# If you want to use another memtypes database
+# If you want to use another mime types database, enter its path here.
 # $cfg['idf_mimetypes_db'] = '/etc/mime.types';
 
-# Extra text files when displaying source
+# Extentions of additional text files that should be displayed inline.
 # $cfg['idf_extra_text_ext'] = 'ext1 ext2 ext3';
 
-# If you can execute the shell commands executed to get info
-# from the scm  with the user of your PHP process but it is
-# not working from within PHP, this can be due to the environment
-# variables not being set correctly. Note the trailing space.
+# If you can execute the needed shell commands to query information from your
+# SCM, but the same shell commands do not work from within the indefero
+# instance, this can be due to the environment variables not being set
+# correctly. ATTENTION: Do not forget the trailing space!
 # $cfg['idf_exec_cmd_prefix'] = '/usr/bin/env -i ';
 
-# If you do not want to have calculations of the repositories, attachments
-# and downloads size, set it to true. You can set to false some
-# times to times to check the size.
+# If you do not want to let indefero calculate the sizes of repositories,
+# attachments, or downloads, set this to true. (You can temporarily set this
+# to false in case you want to quickly check some size, of course.)
 # $cfg['idf_no_size_check'] = false;
 
-# The extension of the downloads are limited. You can add extra
-# extensions here.
+# The file extensions for file uploads (issues and downloads view) are limited.
+# You can allow additional extensions here.
 # $cfg['idf_extra_upload_ext'] = 'ext1 ext2';
 
-# By default, the size of the downloads is limited to 2MB.
+# By default, the size of a single file upload is limited to 2MB.
 # The php.ini upload_max_filesize and post_max_size configuration setting will
 # always have precedence.
 # $cfg['max_upload_size'] = 2097152; // Size in bytes
 
 return $cfg;
+
