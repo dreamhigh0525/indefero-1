@@ -319,6 +319,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                            'labels_issue_closed' => IDF_Form_IssueTrackingConf::init_closed,
                            'labels_issue_predefined' =>  IDF_Form_IssueTrackingConf::init_predefined,
                            'labels_issue_one_max' => IDF_Form_IssueTrackingConf::init_one_max,
+                           'issue_relations' => IDF_Form_IssueTrackingConf::init_relations,
                            'webhook_url' => '',
                            'downloads_access_rights' => 'all',
                            'review_access_rights' => 'all',

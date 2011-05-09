@@ -90,37 +90,37 @@ class IDF_Views_Issue
         $ctags = $prj->getTagIdsByStatus('closed');
         if (count($otags) == 0) $otags[] = 0;
         if (count($ctags) == 0) $ctags[] = 0;
-        
+
          // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
         $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
         $issue_ids = array(0);
         foreach ($sql_results as $id) {
            $issue_ids[] = $id['id'];
-        } 
+        }
         $issue_ids = implode (',', $issue_ids);
-        
+
         // Count open and close issues
         $sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
         $nb_open = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
         $sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));
         $nb_closed = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
-        
+
         // Generate a filter for the paginator
         switch ($match[2]) {
         case 'closed':
             $title = sprintf(__('Watch List: Closed Issues for %s'), (string) $prj);
             $summary = __('This table shows the closed issues in your watch list for %s project.', (string) $prj);
-            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));   
-            break; 
+            $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array($prj->id));
+            break;
         case 'open':
         default:
             $title = sprintf(__('Watch List: Open Issues for %s'), (string) $prj);
             $summary = __('This table shows the open issues in your watch list for %s project.', (string) $prj);
             $f_sql = new Pluf_SQL('project=%s AND id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array($prj->id));
-            break;  
+            break;
         }
-        
+
         // Paginator to paginate the issues
         $pag = new Pluf_Paginator(new IDF_Issue());
         $pag->class = 'recent-issues';
@@ -170,17 +170,17 @@ class IDF_Views_Issue
         }
         foreach (IDF_Views::getProjects($request->user) as $project) {
             $ctags = array_merge($ctags, $project->getTagIdsByStatus('closed'));
-        }       
+        }
         if (count($otags) == 0) $otags[] = 0;
         if (count($ctags) == 0) $ctags[] = 0;
-    
+
          // Get the id list of issue in the user watch list (for all projects !)
         $db =& Pluf::db();
         $sql_results = $db->select('SELECT idf_issue_id as id FROM '.Pluf::f('db_table_prefix', '').'idf_issue_pluf_user_assoc WHERE pluf_user_id='.$request->user->id);
         $issue_ids = array(0);
         foreach ($sql_results as $id) {
            $issue_ids[] = $id['id'];
-        } 
+        }
         $issue_ids = implode (',', $issue_ids);
 
         // Count open and close issues
@@ -194,16 +194,16 @@ class IDF_Views_Issue
         case 'closed':
             $title = sprintf(__('Watch List: Closed Issues'));
             $summary = __('This table shows the closed issues in your watch list.');
-            $f_sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array());   
-            break; 
+            $f_sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $ctags).')', array());
+            break;
         case 'open':
         default:
             $title = sprintf(__('Watch List: Open Issues'));
             $summary = __('This table shows the open issues in your watch list.');
             $f_sql = new Pluf_SQL('id IN ('.$issue_ids.') AND status IN ('.implode(', ', $otags).')', array());
-            break;  
+            break;
         }
-        
+
         // Paginator to paginate the issues
         $pag = new Pluf_Paginator(new IDF_Issue());
         $pag->class = 'recent-issues';
@@ -453,7 +453,7 @@ class IDF_Views_Issue
         $next_issue = Pluf::factory('IDF_Issue')->getList(array('filter' => $sql_next->gen(),
                                                                 'order' => 'id ASC',
                                                                 'nb' => 1
-                                                               ));                                 
+                                                               ));
         $previous_issue_id = (isset($previous_issue[0])) ? $previous_issue[0]->id : 0;
         $next_issue_id = (isset($next_issue[0])) ? $next_issue[0]->id : 0;
 
@@ -644,6 +644,35 @@ class IDF_Views_Issue
     }
 
     /**
+     * Renders a JSON string containing completed issue information
+     * based on the queried / partial string
+     */
+    public $autoCompleteIssueList_precond = array('IDF_Precondition::accessIssues');
+    public function autoCompleteIssueList($request, $match)
+    {
+        $prj = $request->project;
+
+        // Autocomplete from jQuery UI works with JSON, this old one still
+        // expects a parsable string; since we'd need to bump jQuery beyond
+        // 1.2.6 for this to use as well, we're trying to cope with the old format.
+        // see http://www.learningjquery.com/2010/06/autocomplete-migration-guide
+
+        $arr = array(
+            'Fo|o' => 110,
+            'Bar' => 111,
+            'Baz' => 112,
+        );
+
+        $out = '';
+        foreach ($arr as $key => $val)
+        {
+            $out .= str_replace('|', '&#124;', $key).'|'.$val."\n";
+        }
+
+        return new Pluf_HTTP_Response($out);
+    }
+
+    /**
      * Star/Unstar an issue.
      */
     public $star_precond = array('IDF_Precondition::accessIssues',
@@ -715,6 +744,15 @@ class IDF_Views_Issue
         }
         $auto['auto_owner'] = substr($auto['auto_owner'], 0, -2);
         unset($auto['_auto_owner']);
+        // Get issue relations
+        $r = $project->getRelationsFromConfig();
+        $auto['auto_relation_types'] = '';
+        foreach ($r as $rt) {
+            $esc = Pluf_esc($rt);
+            $auto['auto_relation_types'] .= sprintf('{ name: "%s", to: "%s" }, ',
+                                                    $esc, $esc);
+        }
+        $auto['auto_relation_types'] = substr($auto['auto_relation_types'], 0, -2);
         return $auto;
     }
 }

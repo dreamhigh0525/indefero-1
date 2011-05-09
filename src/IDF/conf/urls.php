@@ -73,7 +73,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
                'method' => 'home');
-               
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/logo/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
@@ -172,6 +172,11 @@ $ctl[] = array('regex' => '#^/watchlist/(\w+)$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'forgeWatchList');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/autocomplete/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Issue',
+               'method' => 'autoCompleteIssueList');
 
 // ---------- SCM ----------------------------------------
 

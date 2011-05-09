@@ -234,6 +234,22 @@ class IDF_Project extends Pluf_Model
     }
 
     /**
+     * Returns a list of relations which are available in this project
+     *
+     * @return array List of relation names
+     */
+    public function getRelationsFromConfig()
+    {
+        $conf = $this->getConf();
+        $rel = $conf->getVal('issue_relations', IDF_Form_IssueTrackingConf::init_relations);
+        $relations = array();
+        foreach (preg_split("/\015\012|\015|\012/", $rel, -1, PREG_SPLIT_NO_EMPTY) as $s) {
+            $relations = array_merge($relations, preg_split("/\s*,\s*/", $s, 2));
+        }
+        return $relations;
+    }
+
+    /**
      * Return membership data.
      *
      * The array has 3 keys: 'members', 'owners' and 'authorized'.

@@ -76,11 +76,11 @@ class IDF_Form_IssueCreate extends Pluf_Form
         // case of someone allowing the upload path to be accessible
         // to everybody.
         for ($i=1;$i<4;$i++) {
-            $filename = substr($md5, 0, 2).'/'.substr($md5, 2, 2).'/'.substr($md5, 4).'/%s.dummy'; 
+            $filename = substr($md5, 0, 2).'/'.substr($md5, 2, 2).'/'.substr($md5, 4).'/%s.dummy';
             $this->fields['attachment'.$i] = new Pluf_Form_Field_File(
                 array('required' => false,
                       'label' => __('Attach a file'),
-                      'move_function_params' => 
+                      'move_function_params' =>
                       array('upload_path' => $upload_path,
                             'upload_path_create' => true,
                             'file_name' => $filename,
@@ -108,6 +108,21 @@ class IDF_Form_IssueCreate extends Pluf_Form
                                                        'size' => 15,
                                                                     ),
                                             ));
+
+            $relation_types =  $extra['project']->getRelationsFromConfig();
+            $this->fields['relation_type'] = new Pluf_Form_Field_Varchar(
+                          array('required' => false,
+                                'label' => __('This issue'),
+                                'initial' => $relation_types[0],
+                                'widget_attrs' => array('size' => 15),
+                                ));
+
+            $this->fields['relation_issue'] = new Pluf_Form_Field_Varchar(
+                          array('required' => false,
+                                'label' => null,
+                                'initial' => '',
+                                'widget_attrs' => array('size' => 10),
+                                ));
 
             /*
              * get predefined tags for issues from current project
@@ -181,7 +196,7 @@ class IDF_Form_IssueCreate extends Pluf_Form
             $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
             if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
                 list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)), 
+                list($class, $name) = array(mb_strtolower(trim($class)),
                                             trim($name));
             } else {
                 $class = 'other';
@@ -215,10 +230,10 @@ class IDF_Form_IssueCreate extends Pluf_Form
     function clean_status()
     {
         // Check that the status is in the list of official status
-        $tags = $this->project->getTagsFromConfig('labels_issue_open', 
+        $tags = $this->project->getTagsFromConfig('labels_issue_open',
                                           IDF_Form_IssueTrackingConf::init_open,
                                           'Status');
-        $tags = array_merge($this->project->getTagsFromConfig('labels_issue_closed', 
+        $tags = array_merge($this->project->getTagsFromConfig('labels_issue_closed',
                                           IDF_Form_IssueTrackingConf::init_closed,
                                           'Status')
                             , $tags);
