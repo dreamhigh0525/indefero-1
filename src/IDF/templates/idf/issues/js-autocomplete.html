@@ -64,11 +64,12 @@
             return row.to;
         }
     });
-  $("#id_relation_issue").autocomplete("{/literal}{url 'IDF_Views_Issue::autoCompleteIssueList', array($project.shortname)}{literal}", {
+  $("#id_relation_issue").autocomplete("{/literal}{url 'IDF_Views_Issue::autoCompleteIssueList', array($project.shortname, $issue.id)}{literal}", {
         minChars: 0,
         width: 310,
         matchContains: true,
         max: 10,
+        multiple: true,
         delay: 500,
         highlightItem: false,
         formatItem: function(row, i, max, term) {

@@ -120,6 +120,15 @@
 </td>
 </tr>
 <tr>
+<th>{$form.f.relation_type.labelTag}:</th>
+<td>
+{if $form.f.relation_type.errors}{$form.f.relation_type.fieldErrors}{/if}
+{if $form.f.relation_issue.errors}{$form.f.relation_issue.fieldErrors}{/if}
+{$form.f.relation_type|unsafe}
+{$form.f.relation_issue|unsafe}
+</td>
+</tr>
+<tr>
 <th>{$form.f.label1.labelTag}:</th>
 <td>
 {if $form.f.label1.errors}{$form.f.label1.fieldErrors}{/if}{$form.f.label1|unsafe}

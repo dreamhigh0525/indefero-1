@@ -173,7 +173,7 @@ $ctl[] = array('regex' => '#^/watchlist/(\w+)$#',
                'model' => 'IDF_Views_Issue',
                'method' => 'forgeWatchList');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/autocomplete/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/autocomplete/(\d*)$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'autoCompleteIssueList');

@@ -345,6 +345,7 @@ class IDF_Views_Issue
                                     'form' => $form,
                                     'page_title' => $title,
                                     'preview' => $preview,
+                                    'issue' => new IDF_Issue(),
                                     ),
                               self::autoCompleteArrays($prj)
                               );
@@ -651,22 +652,60 @@ class IDF_Views_Issue
     public function autoCompleteIssueList($request, $match)
     {
         $prj = $request->project;
+        $issue_id = !empty($match[2]) ? intval($match[2]) : 0;
+        $query = trim($request->REQUEST['q']);
+        $limit = !empty($request->REQUEST['limit']) ? intval($request->REQUEST['limit']) : 0;
+        $limit = max(10, $limit);
+
+        $issues = array();
+
+        // empty search, return the most recently updated issues
+        if (empty($query)) {
+                $sql = new Pluf_SQL('project=%s', array($prj->id));
+                $tmp = Pluf::factory('IDF_Issue')->getList(array(
+                    'filter' => $sql->gen(),
+                    'order' => 'modif_dtime DESC'
+                ));
+                $issues += $tmp->getArrayCopy();
+        }
+        else {
+            // ID-based search
+            if (is_numeric($query)) {
+                $sql = new Pluf_SQL('project=%s AND id LIKE %s', array($prj->id, $query.'%'));
+                $tmp = Pluf::factory('IDF_Issue')->getList(array(
+                    'filter' => $sql->gen(),
+                    'order' => 'id ASC'
+                ));
+                $issues += $tmp->getArrayCopy();
+            }
+
+            // text-based search
+            $res = new Pluf_Search_ResultSet(
+                IDF_Search::mySearch($query, $prj, 'IDF_Issue')
+            );
+            foreach ($res as $issue)
+                $issues[] = $issue;
+        }
 
         // Autocomplete from jQuery UI works with JSON, this old one still
         // expects a parsable string; since we'd need to bump jQuery beyond
         // 1.2.6 for this to use as well, we're trying to cope with the old format.
         // see http://www.learningjquery.com/2010/06/autocomplete-migration-guide
-
-        $arr = array(
-            'Fo|o' => 110,
-            'Bar' => 111,
-            'Baz' => 112,
-        );
-
         $out = '';
-        foreach ($arr as $key => $val)
+        $ids = array();
+        foreach ($issues as $issue)
         {
-            $out .= str_replace('|', '&#124;', $key).'|'.$val."\n";
+            if ($issue->id == $issue_id)
+                continue;
+
+            if (in_array($issue->id, $ids))
+                continue;
+
+            if (--$limit < 0)
+                break;
+
+            $out .= str_replace('|', '&#124;', $issue->summary) .'|'.$issue->id."\n";
+            $ids[] = $issue->id;
         }
 
         return new Pluf_HTTP_Response($out);
