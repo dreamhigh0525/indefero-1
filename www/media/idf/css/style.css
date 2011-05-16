@@ -295,6 +295,11 @@ span.label {
   padding-left: 0.5em;
 }
 
+span.label img {
+  max-height: 13px;
+  vertical-align: -10%;
+}
+
 a.label {
   color: #204a87;
   text-decoration: none;
