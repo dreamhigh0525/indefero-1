@@ -22,19 +22,77 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Mercurial utils.
+ * A simple RAII helper that manages style files to format hg's log output
+ */
+class IDF_Scm_Mercurial_LogStyle
+{
+    const FULL_LOG = 1;
+    const CHANGES = 2;
+
+    public function __construct($type)
+    {
+        $this->file = tempnam(Pluf::f('tmp_folder'), 'hg-log-style-');
+
+        if ($type == self::FULL_LOG) {
+            $style = 'changeset = "'
+                . 'changeset: {node|short}\n'
+                . 'branch: {branch}\n'
+                . 'author: {author}\n'
+                . 'date: {date|isodate}\n'
+                . 'parents: {parents}\n\n'
+                . '{desc}\n'
+                . '\0\n"'
+                . "\n"
+                . 'parent = "{node|short} "'
+                . "\n";
+        } elseif ($type == self::CHANGES) {
+            $style = 'changeset = "'
+                . 'file_mods: {file_mods}\n'
+                . 'file_adds: {file_adds}\n'
+                . 'file_dels: {file_dels}\n'
+                . 'file_copies: {file_copies}\n\n'
+                . '\0\n"'
+                . "\n"
+                . 'file_mod = "{file_mod}\0"'
+                . "\n"
+                . 'file_add = "{file_add}\0"'
+                . "\n"
+                . 'file_del = "{file_del}\0"'
+                . "\n"
+                . 'file_copy = "{name}\0{source}\0"'
+                . "\n";
+        } else {
+            throw new IDF_Scm_Exception('invalid type ' . $type);
+        }
+
+        file_put_contents($this->file, $style);
+    }
+
+    public function __destruct()
+    {
+        @unlink($this->file);
+    }
+
+    public function get()
+    {
+        return $this->file;
+    }
+}
+
+/**
+ * Main SCM class for Mercurial
  *
+ * Note: Some commands take a --debug option, this is not lousy coding, but
+ *       totally wanted, as hg returns additional / different data in this
+ *       mode on which this largely depends.
  */
 class IDF_Scm_Mercurial extends IDF_Scm
 {
-    protected $hg_log_template;
-
     public function __construct($repo, $project=null)
     {
         $this->repo = $repo;
         $this->project = $project;
-        $this->hg_log_template = "'".'changeset: {rev}:{node|short}\nauthor: {author}\ndate: {date|isodate}\nfiles: {files}\n{desc}\n'."'";
-    }
+   }
 
     public function getRepositorySize()
     {
@@ -158,7 +216,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
             throw new Exception(sprintf(__('Not a valid tree: %s.'), $tree));
         }
         $cmd_tmpl = Pluf::f('hg_path', 'hg').' manifest -R %s --debug -r %s';
-        $cmd = sprintf($cmd_tmpl, escapeshellarg($this->repo), $tree, ($recurse) ? '' : '');
+        $cmd = sprintf($cmd_tmpl, escapeshellarg($this->repo),
+                                  escapeshellarg($tree));
         $out = array();
         $res = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
@@ -208,7 +267,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
     public function getPathInfo($totest, $commit='tip')
     {
         $cmd_tmpl = Pluf::f('hg_path', 'hg').' manifest -R %s --debug -r %s';
-        $cmd = sprintf($cmd_tmpl, escapeshellarg($this->repo), $commit);
+        $cmd = sprintf($cmd_tmpl, escapeshellarg($this->repo),
+                                  escapeshellarg($commit));
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::getPathInfo', $cmd, $out);
@@ -284,7 +344,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
         self::exec('IDF_Scm_Mercurial::getBranches', $cmd, $out);
         $res = array();
         foreach ($out as $b) {
-            preg_match('/(\S+).*\S+:(\S+)/', $b, $match);
+            preg_match('/(.+?)\s+\S+:(\S+)/', $b, $match);
             $res[$match[1]] = '';
         }
         $this->cache['branches'] = $res;
@@ -308,7 +368,7 @@ class IDF_Scm_Mercurial extends IDF_Scm
         self::exec('IDF_Scm_Mercurial::getTags', $cmd, $out);
         $res = array();
         foreach ($out as $b) {
-            preg_match('/(\S+).*\S+:(\S+)/', $b, $match);
+            preg_match('/(.+?)\s+\S+:(\S+)/', $b, $match);
             $res[$match[1]] = '';
         }
         $this->cache['tags'] = $res;
@@ -339,14 +399,15 @@ class IDF_Scm_Mercurial extends IDF_Scm
         if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
             return false;
         }
+
+        $logStyle = new IDF_Scm_Mercurial_LogStyle(IDF_Scm_Mercurial_LogStyle::FULL_LOG);
         $tmpl = ($getdiff)
-            ? Pluf::f('hg_path', 'hg').' log -p -r %s -R %s --template %s'
-            : Pluf::f('hg_path', 'hg').' log -r %s -R %s --template %s';
+            ? Pluf::f('hg_path', 'hg').' log --debug -p -r %s -R %s --style %s'
+            : Pluf::f('hg_path', 'hg').' log --debug -r %s -R %s --style %s';
         $cmd = sprintf($tmpl,
                        escapeshellarg($commit),
                        escapeshellarg($this->repo),
-                       $this->hg_log_template);
-
+                       escapeshellarg($logStyle->get()));
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::getCommit', $cmd, $out);
@@ -363,9 +424,60 @@ class IDF_Scm_Mercurial extends IDF_Scm
                 $log[] = $line;
             }
         }
-        $out = self::parseLog($log, 4);
+        $out = self::parseLog($log);
         $out[0]->diff = implode("\n", $change);
         return $out[0];
+    }
+
+    /**
+     * @see IDF_Scm::getChanges()
+     */
+    public function getChanges($commit)
+    {
+        if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
+            return null;
+        }
+
+        $logStyle = new IDF_Scm_Mercurial_LogStyle(IDF_Scm_Mercurial_LogStyle::CHANGES);
+        $tmpl = Pluf::f('hg_path', 'hg').' log --debug -r %s -R %s --style %s';
+        $cmd = sprintf($tmpl,
+                       escapeshellarg($commit),
+                       escapeshellarg($this->repo),
+                       escapeshellarg($logStyle->get()));
+        $out = array();
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        self::exec('IDF_Scm_Mercurial::getChanges', $cmd, $out);
+        $log = self::parseLog($out);
+        // we expect only one log entry that contains all the needed information
+        $log = $log[0];
+
+        $return = (object) array(
+            'additions'  => preg_split('/\0/', $log->file_adds, -1, PREG_SPLIT_NO_EMPTY),
+            'deletions'  => preg_split('/\0/', $log->file_dels, -1, PREG_SPLIT_NO_EMPTY),
+            'patches'    => preg_split('/\0/', $log->file_mods, -1, PREG_SPLIT_NO_EMPTY),
+            // hg has no support for built-in attributes, so this keeps empty
+            'properties' => array(),
+            // this is filled below
+            'renames'    => array(),
+        );
+
+        $file_copies = preg_split('/\0/', $log->file_copies, -1, PREG_SPLIT_NO_EMPTY);
+
+        // FIXME: copies are only treated as renames if they have an add _and_
+        // an drop, otherwise they're just treated as adds
+        for ($i=0; $i<count($file_copies); $i+=2) {
+            $new = $file_copies[$i];
+            $old = $file_copies[$i+1];
+            $newidx = array_search($new, $return->additions);
+            $oldidx = array_search($old, $return->deletions);
+            if ($newidx !== false && $oldidx !== false) {
+                $return->renames[$old] = $new;
+                unset($return->additions[$newidx]);
+                unset($return->deletions[$oldidx]);
+            }
+        }
+
+        return $return;
     }
 
     /**
@@ -388,54 +500,66 @@ class IDF_Scm_Mercurial extends IDF_Scm
      */
     public function getChangeLog($commit='tip', $n=10)
     {
-        $cmd = sprintf(Pluf::f('hg_path', 'hg').' log -R %s -l%s --template %s', escapeshellarg($this->repo), $n, $this->hg_log_template, $commit);
+        $logStyle = new IDF_Scm_Mercurial_LogStyle(IDF_Scm_Mercurial_LogStyle::FULL_LOG);
+
+        // hg accepts revision IDs as arguments to --branch / -b as well and
+        // uses the branch of the revision in question to filter the other
+        // revisions
+        $cmd = sprintf(Pluf::f('hg_path', 'hg').' log --debug -R %s -l%s --style %s -b %s',
+                       escapeshellarg($this->repo),
+                       $n,
+                       escapeshellarg($logStyle->get()),
+                       escapeshellarg($commit));
         $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         self::exec('IDF_Scm_Mercurial::getChangeLog', $cmd, $out);
-        return self::parseLog($out, 4);
+        return self::parseLog($out);
     }
 
     /**
-     * Parse the log lines of a --pretty=medium log output.
+     * Parse the log lines of our custom style format.
      *
      * @param array Lines.
-     * @param int Number of lines in the headers (3)
      * @return array Change log.
      */
-
-    public static function parseLog($lines, $hdrs=3)
+    public static function parseLog($lines)
     {
         $res = array();
         $c = array();
-        $i = 0;
-        $hdrs += 1;
+        $headers_processed = false;
         foreach ($lines as $line) {
-            $i++;
-            if (0 === strpos($line, 'changeset:')) {
+            if ($line == "\0") {
+                $headers_processed = false;
                 if (count($c) > 0) {
                     $c['full_message'] = trim($c['full_message']);
                     $res[] = (object) $c;
                 }
-                $c = array();
-                $c['commit'] = substr(strrchr($line, ':'), 1);
-                $c['full_message'] = '';
-                $i=1;
-                continue;
-
-            }
-            if ($i == $hdrs) {
-                $c['title'] = trim($line);
                 continue;
             }
-            $match = array();
-            if (preg_match('/^(\S+):\s*(.*)/', $line, $match)) {
+            if (!$headers_processed && empty($line)) {
+                $headers_processed = true;
+                continue;
+            }
+            if (!$headers_processed && preg_match('/^(\S+):\s*(.*)/', $line, $match)) {
                 $match[1] = strtolower($match[1]);
-                if ($match[1] == 'user') {
+                if ($match[1] == 'changeset') {
+                    $c = array();
+                    $c['commit'] = $match[2];
+                    $c['tree'] = $c['commit'];
+                    $c['full_message'] = '';
+                } elseif ($match[1] == 'user') {
                     $c['author'] = $match[2];
                 } elseif ($match[1] == 'summary') {
                     $c['title'] = $match[2];
                 } elseif ($match[1] == 'branch') {
-                    $c['branch'] = $match[2];
+                    $c['branch'] = empty($match[2]) ? 'default' : $match[2];
+                } elseif ($match[1] == 'parents') {
+                    $parents = preg_split('/\s+/', $match[2], -1, PREG_SPLIT_NO_EMPTY);
+                    for ($i=0, $j=count($parents); $i<$j; ++$i) {
+                        if ($parents[$i] == '000000000000')
+                            unset($parents[$i]);
+                    }
+                    $c['parents'] = $parents;
                 } else {
                     $c[$match[1]] = trim($match[2]);
                 }
@@ -444,15 +568,14 @@ class IDF_Scm_Mercurial extends IDF_Scm
                 }
                 continue;
             }
-            if ($i > ($hdrs+1)) {
-                $c['full_message'] .= trim($line)."\n";
+            if ($headers_processed) {
+                if (empty($c['title']))
+                    $c['title'] = trim($line);
+                else
+                    $c['full_message'] .= trim($line)."\n";
                 continue;
             }
         }
-        $c['tree'] = !empty($c['commit']) ? trim($c['commit']) : '';
-        $c['branch'] = empty($c['branch']) ? 'default' : $c['branch'];
-        $c['full_message'] = !empty($c['full_message']) ? trim($c['full_message']) : '';
-        $res[] = (object) $c;
         return $res;
     }
 
