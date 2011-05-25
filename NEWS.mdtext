@@ -7,6 +7,7 @@
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
 - Timeline only displays filter options for items a user has actually access to (issue 655)
 - Fix the self-link of the RSS feed (issue 666)
+- Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
 
 ## Documentation
 

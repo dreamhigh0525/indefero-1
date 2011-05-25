@@ -317,8 +317,15 @@ class IDF_Form_UserAccount  extends Pluf_Form
             return '';
         }
 
-        if (preg_match('#^ssh\-[a-z]{3}\s\S+(\s\S+)?$#', $key)) {
-            $key = str_replace(array("\n", "\r"), '', $key);
+        $keysearch = '';
+        if (preg_match('#^(ssh\-(?:dss|rsa)\s+\S+)(.*)#', $key, $m)) {
+            $basekey = preg_replace('/\s+/', ' ', $m[1]);
+            $comment = trim(preg_replace('/[\r\n]/', ' ', $m[2]));
+           
+            $keysearch = $basekey.'%';
+            $key = $basekey;
+            if (!empty($comment))
+                $key .= ' '.$comment;
 
             if (Pluf::f('idf_strong_key_check', false)) {
 
@@ -337,7 +344,9 @@ class IDF_Form_UserAccount  extends Pluf_Form
                 }
             }
         }
-        else if (preg_match('#^\[pubkey [^\]]+\]\s*\S+\s*\[end\]$#', $key)) {
+        else if (preg_match('#^\[pubkey [^\]]+\]\s*(\S+)\s*\[end\]$#', $key, $m)) {
+            $keysearch = '%'.$m[1].'%';
+            
             if (Pluf::f('idf_strong_key_check', false)) {
 
                 // if monotone can read it, it should be valid
@@ -367,7 +376,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
         if ($user) {
             $ruser = Pluf::factory('Pluf_User', $user);
             if ($ruser->id > 0) {
-                $sql = new Pluf_SQL('content=%s', array($key));
+                $sql = new Pluf_SQL('content LIKE %s AND user=%s', array($keysearch, $ruser->id));
                 $keys = Pluf::factory('IDF_Key')->getList(array('filter' => $sql->gen()));
                 if (count($keys) > 0) {
                     throw new Pluf_Form_Invalid(
