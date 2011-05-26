@@ -1,3 +1,17 @@
+# InDefero 1.1.2 - Thu May 26 07:42:25 UTC 2011
+
+## Bugfixes
+
+- Fix tags extraction from git repository (issue 675)
+- Fix SSH validation method (issue 671)
+- Fix malformed URL in the RSS (issue 666)
+- Fix validateRevision call for Mercurial Scm (issue 657)
+
+## Translations
+
+- Missing word in French translation (issue 672)
+- Update Spanish translation
+
 # InDefero 1.1.1 - Mon Mar 28 15:52 2011 UTC
 
 ## Bugfixes
