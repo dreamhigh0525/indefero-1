@@ -209,7 +209,7 @@ class IDF_Scm_Git extends IDF_Scm
             return $this->cache['tags'];
         }
         $cmd = Pluf::f('idf_exec_cmd_prefix', '')
-            .sprintf('GIT_DIR=%s %s for-each-ref --format="%%(taggerdate:iso)%%(committerdate:iso) %%(objectname) %%(refname)" refs/tags',
+            .sprintf('GIT_DIR=%s %s for-each-ref --format="%%(objectname) %%(refname)" refs/tags',
                      escapeshellarg($this->repo),
                      Pluf::f('git_path', 'git'));
         self::exec('IDF_Scm_Git::getTags', $cmd, $out, $return);
@@ -221,15 +221,12 @@ class IDF_Scm_Git extends IDF_Scm
         rsort($out);
         $res = array();
         foreach ($out as $b) {
-            $elts = explode(' ', $b, 5);
-            $tag = substr(trim($elts[4]), 10);
-            if (false !== strpos($tag, '/')) {
-                $res[$elts[3]] = $b;
-            } else {
-                $res[$tag] = '';
-            }
+            $elts = explode(' ', $b, 2);
+            $tag = substr(trim($elts[1]), 10);  // Remove refs/tags/ prefix
+            $res[$tag] = '';
         }
         $this->cache['tags'] = $res;
+        
         return $res;
     }
 

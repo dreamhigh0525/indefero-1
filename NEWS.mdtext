@@ -9,12 +9,25 @@
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
 - Timeline only displays filter options for items a user has actually access to (issue 655)
 - The log, tags and branches parsers for Mercurial are more robust now (issue 663) 
-- Fix the self-link of the RSS feed (issue 666)
 - Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
 
 ## Documentation
 
 ## Translations
+
+# InDefero 1.1.2 - Thu May 26 07:42:25 2011 UTC
+
+## Bugfixes
+
+- Fix tags extraction from git repository (issue 675)
+- Fix SSH validation method (issue 671)
+- Fix malformed URL in the RSS (issue 666)
+- Fix validateRevision call for Mercurial Scm (issue 657)
+
+## Translations
+
+- Missing word in French translation (issue 672)
+- Update Spanish translation
 
 # InDefero 1.1.1 - Mon Mar 28 15:52 2011 UTC
 
