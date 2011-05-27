@@ -59,7 +59,7 @@ class IDF_Views_Download
             $sql .= ' AND id NOT IN ('.implode(',', $ids).')';
         }
         $pag->forced_where = new Pluf_SQL($sql, array($prj->id));
-            
+
         $list_display = array(
              'file' => __('File'),
              array('summary', 'IDF_Views_Download_SummaryAndLabels', __('Summary')),
@@ -79,7 +79,7 @@ class IDF_Views_Download
                                                      'dlabel' => $dtag,
                                                      ),
                                                $request);
-        
+
     }
 
     /**
@@ -99,17 +99,17 @@ class IDF_Views_Download
         $deprecated = Pluf_Model_InArray($dtag, $tags);
         if ($request->method == 'POST' and
             true === IDF_Precondition::projectMemberOrOwner($request)) {
-            
+
             $form = new IDF_Form_UpdateUpload($request->POST,
                                         array('project' => $prj,
                                               'upload' => $upload,
                                               'user' => $request->user));
             if ($form->isValid()) {
                 $upload = $form->save();
-                $urlfile = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view', 
+                $urlfile = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
                                                     array($prj->shortname, $upload->id));
                 $request->user->setMessage(sprintf(__('The file <a href="%1$s">%2$s</a> has been updated.'), $urlfile, Pluf_esc($upload->file)));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
@@ -162,7 +162,7 @@ class IDF_Views_Download
              * [description]
              *
              * This signal allows an application to perform a set of tasks
-             * just before the deletion of the corresponding object in the 
+             * just before the deletion of the corresponding object in the
              * database but just after the deletion from the storage.
              *
              * [parameters]
@@ -171,11 +171,11 @@ class IDF_Views_Download
              *
              */
             $params = array('upload' => $upload);
-            Pluf_Signal::send('IDF_Upload::delete', 
+            Pluf_Signal::send('IDF_Upload::delete',
                               'IDF_Views_Download', $params);
             $upload->delete();
             $request->user->setMessage(__('The file has been deleted.'));
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index', 
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index',
                                             array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -190,17 +190,33 @@ class IDF_Views_Download
     }
 
     /**
-     * Download a file.
+     * Download the file with the given name.
      */
     public $download_precond = array('IDF_Precondition::accessDownloads');
     public function download($request, $match)
     {
         $prj = $request->project;
-        $upload = Pluf_Shortcuts_GetObjectOr404('IDF_Upload', $match[2]);
+        $sql = new Pluf_SQL('file=%s', array($match[2]));
+        $upload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
+        if (!$upload) throw new Pluf_HTTP_Error404();
         $prj->inOr404($upload);
         $upload->downloads += 1;
         $upload->update();
         return new Pluf_HTTP_Response_Redirect($upload->getAbsoluteUrl($prj));
+    }
+
+    /**
+     * Download the file with the given ID (for legacy links).
+     */
+    public $downloadById_precond = array('IDF_Precondition::accessDownloads');
+    public function downloadById($request, $match)
+    {
+        $upload = Pluf_Shortcuts_GetObjectOr404('IDF_Upload', $match[2]);
+        return new Pluf_HTTP_Response_Redirect(
+           Pluf_HTTP_URL_urlForView('IDF_Views_Download::download', array(
+              $match[1], $upload->file
+           )), 301
+        );
     }
 
     /**
@@ -218,10 +234,10 @@ class IDF_Views_Download
                                               'user' => $request->user));
             if ($form->isValid()) {
                 $upload = $form->save();
-                $urlfile = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view', 
+                $urlfile = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
                                                     array($prj->shortname, $upload->id));
                 $request->user->setMessage(sprintf(__('The <a href="%s">file</a> has been uploaded.'), $urlfile));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
@@ -246,7 +262,7 @@ class IDF_Views_Download
     {
         $conf = new IDF_Conf();
         $conf->setProject($project);
-        $st = preg_split("/\015\012|\015|\012/", 
+        $st = preg_split("/\015\012|\015|\012/",
                          $conf->getVal('labels_download_predefined', IDF_Form_UploadConf::init_predefined), -1, PREG_SPLIT_NO_EMPTY);
         $auto = '';
         foreach ($st as $s) {
@@ -354,7 +370,7 @@ function IDF_Views_Download_SummaryAndLabels($field, $down, $extra='')
 {
     $tags = array();
     foreach ($down->get_tags_list() as $tag) {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::listLabel', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::listLabel',
                                         array($down->shortname, $tag->id));
         $tags[] = sprintf('<a href="%s" class="label">%s</a>', $url, Pluf_esc((string) $tag));
     }

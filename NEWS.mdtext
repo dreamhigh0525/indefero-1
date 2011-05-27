@@ -3,6 +3,7 @@
 ## New Features
 
 - Mercurial source views now show parent revisions (if any) and detailed change information
+- File download URLs now contain the file name rather than the upload id; old links still work though (issue 686)
 
 ## Bugfixes 
 

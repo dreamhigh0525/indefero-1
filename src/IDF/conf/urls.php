@@ -73,7 +73,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
                'method' => 'home');
-               
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/logo/$#',
                'base' => $base,
                'model' => 'IDF_Views_Project',
@@ -294,10 +294,15 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/(\d+)/$#',
                'model' => 'IDF_Views_Download',
                'method' => 'view');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/(\d+)/get/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/get/(.+)$#',
                'base' => $base,
                'model' => 'IDF_Views_Download',
                'method' => 'download');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/(\d+)/get/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Download',
+               'method' => 'downloadById');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/create/$#',
                'base' => $base,
