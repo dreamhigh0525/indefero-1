@@ -3420,7 +3420,7 @@ msgstr "Eigenschaft"
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:7
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:12
 msgid "set to:"
-msgstr "setzen auf:"
+msgstr "gesetzt auf:"
 
 #: IDF/gettexttemplates/idf/source/svn/help.html.php:3
 #, php-format
