@@ -11,6 +11,7 @@
 - Timeline only displays filter options for items a user has actually access to (issue 655)
 - The log, tags and branches parsers for Mercurial are more robust now (issue 663) 
 - Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
+- Let the SVN command line client not store the login credentials we give him as arguments
 
 ## Documentation
 

@@ -48,7 +48,7 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function isAvailable()
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --xml --username=%s --password=%s %s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s %s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo));
@@ -163,7 +163,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return IDF_Scm::REVISION_VALID;
         }
 
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo),
@@ -191,7 +191,7 @@ class IDF_Scm_Svn extends IDF_Scm
         }
 
         // Else, test the path on revision
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --xml --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/'.self::smartEncode($path)),
@@ -218,7 +218,7 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function getTree($commit, $folder='/', $branch=null)
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --xml --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --xml --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/'.self::smartEncode($folder)),
@@ -260,7 +260,7 @@ class IDF_Scm_Svn extends IDF_Scm
         if (isset($this->cache['commitmess'][$rev])) {
             return $this->cache['commitmess'][$rev];
         }
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --xml --limit 1 --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml --limit 1 --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo),
@@ -281,7 +281,7 @@ class IDF_Scm_Svn extends IDF_Scm
         if ($rev == null) {
             $rev = 'HEAD';
         }
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --xml --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/'.self::smartEncode($filename)),
@@ -308,7 +308,7 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function getFile($def, $cmd_only=false)
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' cat --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' cat --no-auth-cache --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/'.self::smartEncode($def->fullpath)),
@@ -329,7 +329,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return $this->cache['branches'];
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --username=%s --password=%s %s@HEAD',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --username=%s --password=%s %s@HEAD',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/branches'));
@@ -344,7 +344,7 @@ class IDF_Scm_Svn extends IDF_Scm
             }
         }
         ksort($res);
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --username=%s --password=%s %s@HEAD',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --username=%s --password=%s %s@HEAD',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/trunk'));
@@ -368,7 +368,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return $this->cache['tags'];
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --username=%s --password=%s %s@HEAD',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --username=%s --password=%s %s@HEAD',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/tags'));
@@ -426,7 +426,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return false;
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --xml --limit 1 -v --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml --limit 1 -v --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo),
@@ -473,7 +473,7 @@ class IDF_Scm_Svn extends IDF_Scm
     private function getDiff($rev='HEAD')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' diff -c %s --username=%s --password=%s %s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' diff --no-auth-cache -c %s --username=%s --password=%s %s',
                        escapeshellarg($rev),
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
@@ -498,7 +498,7 @@ class IDF_Scm_Svn extends IDF_Scm
             $branch = 'HEAD';
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --xml -v --limit %s --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml -v --limit %s --username=%s --password=%s %s@%s',
                        escapeshellarg($n),
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
@@ -531,7 +531,7 @@ class IDF_Scm_Svn extends IDF_Scm
     public function getProperties($rev, $path='')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' proplist --xml --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' proplist --no-auth-cache --xml --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo.'/'.self::smartEncode($path)),
@@ -566,7 +566,7 @@ class IDF_Scm_Svn extends IDF_Scm
     private function getProperty($property, $rev, $path='')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' propget --xml %s --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' propget --no-auth-cache --xml %s --username=%s --password=%s %s@%s',
                        escapeshellarg($property),
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
@@ -590,7 +590,7 @@ class IDF_Scm_Svn extends IDF_Scm
     public function getLastCommit($rev='HEAD')
     {
         $xmlInfo = '';
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --xml --username=%s --password=%s %s@%s',
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s %s@%s',
                        escapeshellarg($this->username),
                        escapeshellarg($this->password),
                        escapeshellarg($this->repo),
