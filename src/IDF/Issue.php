@@ -169,6 +169,24 @@ class IDF_Issue extends Pluf_Model
         }
     }
 
+    function getGroupedRelatedIssues($opts = array())
+    {
+        $rels = $this->get_related_issues_list(array_merge($opts, array(
+               'view' => 'with_other_issue',
+        )));
+
+        $res = array();
+        foreach ($rels as $rel) {
+            $verb = $rel->verb;
+            if (!array_key_exists($verb, $res)) {
+                $res[$verb] = array();
+            }
+            $res[$verb][] = $rel;
+        }
+
+        return $res;
+    }
+
     /**
      * Returns an HTML fragment used to display this issue in the
      * timeline.

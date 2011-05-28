@@ -45,7 +45,7 @@ class IDF_IssueRelation extends Pluf_Model
                                   'model' => 'IDF_Issue',
                                   'blank' => false,
                                   'verbose' => __('issue'),
-                                  'relate_name' => 'issues',
+                                  'relate_name' => 'related_issues',
                                   ),
                             'verb' =>
                             array(
@@ -59,7 +59,7 @@ class IDF_IssueRelation extends Pluf_Model
                                   'model' => 'IDF_Issue',
                                   'blank' => false,
                                   'verbose' => __('other issue'),
-                                  'relate_name' => 'other_issues',
+                                  'relate_name' => 'related_other_issues',
                                   ),
                             'submitter' =>
                             array(
@@ -82,6 +82,13 @@ class IDF_IssueRelation extends Pluf_Model
                                   'type' => 'normal',
                                   ),
                             );
+        $issuetbl = $this->_con->pfx.'idf_issues';
+        $this->_a['views'] = array(
+            'with_other_issue' => array(
+                'join' => 'INNER JOIN '.$issuetbl.' ON other_issue='.$issuetbl.'.id',
+                'select' => $this->getSelect().', summary',
+                'props' => array('summary' => 'other_summary'),
+        ));
     }
 
     function preSave($create=false)

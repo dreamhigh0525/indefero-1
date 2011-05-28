@@ -234,7 +234,10 @@ class IDF_Project extends Pluf_Model
     }
 
     /**
-     * Returns a list of relations which are available in this project
+     * Returns a list of relations which are available in this project as
+     * associative array. Each key-value pair marks a set of orthogonal
+     * relations. To ease processing, each of these pairs is included twice
+     * in the array, once as key1 => key2 and once as key2 => key1.
      *
      * @return array List of relation names
      */
@@ -244,7 +247,11 @@ class IDF_Project extends Pluf_Model
         $rel = $conf->getVal('issue_relations', IDF_Form_IssueTrackingConf::init_relations);
         $relations = array();
         foreach (preg_split("/\015\012|\015|\012/", $rel, -1, PREG_SPLIT_NO_EMPTY) as $s) {
-            $relations = array_merge($relations, preg_split("/\s*,\s*/", $s, 2));
+            $verbs = preg_split("/\s*,\s*/", $s, 2);
+            if (count($verbs) == 1)
+                $relations += array($verbs[0] => $verbs[0]);
+            else
+                $relations += array($verbs[0] => $verbs[1], $verbs[1] => $verbs[0]);
         }
         return $relations;
     }

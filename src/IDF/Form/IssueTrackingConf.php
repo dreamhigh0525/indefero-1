@@ -72,9 +72,23 @@ Performance          = Performance issue
 Usability            = Affects program usability
 Maintainability      = Hinders future changes';
     const init_one_max = 'Type, Priority, Milestone';
+    // ATTENTION: if you change something here, change the values below as well!
     const init_relations = 'is related to
 blocks, is blocked by
 duplicates, is duplicated by';
+
+    // These are actually all noop's, but we have no other chance to
+    // tell IDF's translation mechanism to mark the strings as translatable
+    // FIXME: IDF should get a internal translation system for strings like
+    // that, that can also be easily expanded by users
+    private function noop()
+    {
+        __('is related to');
+        __('blocks');
+        __('is blocked by');
+        __('duplicates');
+        __('is duplicated by');
+    }
 
     public function initFields($extra=array())
     {

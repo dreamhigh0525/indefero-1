@@ -39,6 +39,7 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
             or $this->user->hasPerm('IDF.project-member', $this->project)) {
             $this->show_full = true;
         }
+        $this->relation_types = $this->project->getRelationsFromConfig();
         if ($this->show_full) {
             $this->fields['summary'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
@@ -103,11 +104,10 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
                                                                     ),
                                             ));
 
-            $relation_types =  $extra['project']->getRelationsFromConfig();
             $this->fields['relation_type'] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => __('This issue'),
-                                'initial' => $relation_types[0],
+                                'initial' => current($this->relation_types),
                                 'widget_attrs' => array('size' => 15),
                                 ));
 

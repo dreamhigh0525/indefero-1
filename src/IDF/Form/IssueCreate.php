@@ -36,6 +36,7 @@ class IDF_Form_IssueCreate extends Pluf_Form
     public $user = null;
     public $project = null;
     public $show_full = false;
+    public $relation_types = null;
 
     public function initFields($extra=array())
     {
@@ -45,9 +46,12 @@ class IDF_Form_IssueCreate extends Pluf_Form
             or $this->user->hasPerm('IDF.project-member', $this->project)) {
             $this->show_full = true;
         }
+        $this->relation_types = $this->project->getRelationsFromConfig();
+
         $contentTemplate = $this->project->getConf()->getVal(
             'labels_issue_template', IDF_Form_IssueTrackingConf::init_template
         );
+
         $this->fields['summary'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
                                             'label' => __('Summary'),
@@ -109,11 +113,10 @@ class IDF_Form_IssueCreate extends Pluf_Form
                                                                     ),
                                             ));
 
-            $relation_types =  $extra['project']->getRelationsFromConfig();
             $this->fields['relation_type'] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => __('This issue'),
-                                'initial' => $relation_types[0],
+                                'initial' => current($this->relation_types),
                                 'widget_attrs' => array('size' => 15),
                                 ));
 
@@ -250,6 +253,49 @@ class IDF_Form_IssueCreate extends Pluf_Form
         return $this->cleaned_data['status'];
     }
 
+    function clean_relation_type()
+    {
+        $relation_type = trim($this->cleaned_data['relation_type']);
+        if (empty($relation_type))
+            return '';
+
+        $found = false;
+        foreach ($this->relation_types as $type) {
+            if ($type == $relation_type) {
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            throw new Pluf_Form_Invalid(__('You provided an invalid relation type.'));
+        }
+        return $relation_type;
+    }
+
+    function clean_relation_issue()
+    {
+        $issues = trim($this->cleaned_data['relation_issue']);
+        if (empty($issues))
+            return '';
+
+        $issue_ids = preg_split('/\s*,\s*/', $issues, -1, PREG_SPLIT_NO_EMPTY);
+        foreach ($issue_ids as $issue_id) {
+            if (!ctype_digit($issue_id) || (int)$issue_id < 1) {
+                throw new Pluf_Form_Invalid(sprintf(
+                    __('The value "%s" is not a valid issue id.'), $issue_id
+                ));
+            }
+            $issue = new IDF_Issue($issue_id);
+            if ($issue->id != $issue_id || $issue->project != $this->project->id) {
+                throw new Pluf_Form_Invalid(sprintf(
+                    __('The issue "%s" does not exist.'), $issue_id
+                ));
+            }
+        }
+
+        return implode(', ', $issue_ids);
+    }
+
     /**
      * Clean the attachments post failure.
      */
@@ -313,6 +359,27 @@ class IDF_Form_IssueCreate extends Pluf_Form
         foreach ($tags as $tag) {
             $issue->setAssoc($tag);
         }
+        // add relations
+        $verb = $this->cleaned_data['relation_type'];
+        $other_verb = $this->relation_types[$verb];
+        $related_issues = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue'], -1, PREG_SPLIT_NO_EMPTY);
+        foreach ($related_issues as $related_issue_id) {
+            $related_issue = new IDF_Issue($related_issue_id);
+            $rel = new IDF_IssueRelation();
+            $rel->issue = $issue;
+            $rel->verb = $verb;
+            $rel->other_issue = $related_issue;
+            $rel->submitter = $this->user;
+            $rel->create();
+
+            $other_rel = new IDF_IssueRelation();
+            $other_rel->issue = $related_issue;
+            $other_rel->verb = $other_verb;
+            $other_rel->other_issue = $issue;
+            $other_rel->submitter = $this->user;
+            $other_rel->create();
+        }
+
         // add the first comment
         $comment = new IDF_IssueComment();
         $comment->issue = $issue;

@@ -170,6 +170,19 @@
 <span class="label"><a href="{$url}" class="label"><strong>{$tag.class}:</strong>{$tag.name}</a></span><br />
 {/foreach}
 </p>{/if}
+{if count($related_issues) > 0}
+{foreach $related_issues as $verb => $rel_issues}
+<strong>{blocktrans}This issue {$verb}{/blocktrans}</strong><br />
+  {foreach $rel_issues as $rel_issue}
+     <span class="label">
+        <a href="{url 'IDF_Views_Issue::view', array($project.shortname, $rel_issue.other_issue)}"
+           title="{$rel_issue.other_summary}">
+           <strong>{$rel_issue.other_issue}</strong> - {$rel_issue.other_summary|shorten:30}
+        </a>
+     </span><br />
+  {/foreach}
+{/foreach}
+{/if}
 </div>
 {/block}
 {block javascript}{if $form}{include 'idf/issues/js-autocomplete.html'}
