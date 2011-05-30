@@ -164,7 +164,8 @@ class IDF_IssueComment extends Pluf_Model
                         foreach ($ls as $l) {
                             if ($t == 'rem') $out .= '<s>';
                             $out .= Pluf_esc($l);
-                            if ($t == 'rem') $out .= '</s> ';
+                            if ($t == 'rem') $out .= '</s>';
+                            $out .= ' ';
                         }
                     }
                 } else {

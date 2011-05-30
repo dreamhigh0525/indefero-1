@@ -44,7 +44,7 @@
 {if $w == 'lb' or $w == 'rel'}
   {foreach $v as $t => $ls}
     {foreach $ls as $l}
-      {if $t == 'rem'}<s>{/if}{$l}{if $t == 'rem'}</s> {/if}
+      {if $t == 'rem'}<s>{/if}{$l}{if $t == 'rem'}</s>{/if}
     {/foreach}
   {/foreach}
 {else}
