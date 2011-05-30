@@ -169,7 +169,7 @@ class IDF_Issue extends Pluf_Model
         }
     }
 
-    function getGroupedRelatedIssues($opts = array())
+    function getGroupedRelatedIssues($opts = array(), $idsOnly = false)
     {
         $rels = $this->get_related_issues_list(array_merge($opts, array(
                'view' => 'with_other_issue',
@@ -181,7 +181,7 @@ class IDF_Issue extends Pluf_Model
             if (!array_key_exists($verb, $res)) {
                 $res[$verb] = array();
             }
-            $res[$verb][] = $rel;
+            $res[$verb][] = $idsOnly ? $rel->other_issue : $rel;
         }
 
         return $res;

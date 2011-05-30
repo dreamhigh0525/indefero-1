@@ -113,14 +113,14 @@ class IDF_Form_IssueCreate extends Pluf_Form
                                                                     ),
                                             ));
 
-            $this->fields['relation_type'] = new Pluf_Form_Field_Varchar(
+            $this->fields['relation_type0'] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => __('This issue'),
                                 'initial' => current($this->relation_types),
                                 'widget_attrs' => array('size' => 15),
                                 ));
 
-            $this->fields['relation_issue'] = new Pluf_Form_Field_Varchar(
+            $this->fields['relation_issue0'] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => null,
                                 'initial' => '',
@@ -253,9 +253,11 @@ class IDF_Form_IssueCreate extends Pluf_Form
         return $this->cleaned_data['status'];
     }
 
-    function clean_relation_type()
+    // this method is not called from Pluf_Form directly, but shared for
+    // among all similar fields
+    function clean_relation_type($value)
     {
-        $relation_type = trim($this->cleaned_data['relation_type']);
+        $relation_type = trim($value);
         if (empty($relation_type))
             return '';
 
@@ -272,9 +274,16 @@ class IDF_Form_IssueCreate extends Pluf_Form
         return $relation_type;
     }
 
-    function clean_relation_issue()
+    function clean_relation_type0()
     {
-        $issues = trim($this->cleaned_data['relation_issue']);
+        return $this->clean_relation_type($this->cleaned_data['relation_type0']);
+    }
+
+    // this method is not called from Pluf_Form directly, but shared for
+    // among all similar fields
+    function clean_relation_issue($value)
+    {
+        $issues = trim($value);
         if (empty($issues))
             return '';
 
@@ -294,6 +303,11 @@ class IDF_Form_IssueCreate extends Pluf_Form
         }
 
         return implode(', ', $issue_ids);
+    }
+
+    function clean_relation_issue0()
+    {
+        return $this->clean_relation_issue($this->cleaned_data['relation_issue0']);
     }
 
     /**
@@ -360,9 +374,9 @@ class IDF_Form_IssueCreate extends Pluf_Form
             $issue->setAssoc($tag);
         }
         // add relations
-        $verb = $this->cleaned_data['relation_type'];
+        $verb = $this->cleaned_data['relation_type0'];
         $other_verb = $this->relation_types[$verb];
-        $related_issues = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue'], -1, PREG_SPLIT_NO_EMPTY);
+        $related_issues = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue0'], -1, PREG_SPLIT_NO_EMPTY);
         foreach ($related_issues as $related_issue_id) {
             $related_issue = new IDF_Issue($related_issue_id);
             $rel = new IDF_IssueRelation();

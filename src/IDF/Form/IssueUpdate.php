@@ -104,19 +104,50 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
                                                                     ),
                                             ));
 
-            $this->fields['relation_type'] = new Pluf_Form_Field_Varchar(
+            $idx = 0;
+            // note: clean_relation_type0 and clean_relation_issue0 already
+            //       exist in the base class
+            $this->fields['relation_type'.$idx] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => __('This issue'),
                                 'initial' => current($this->relation_types),
                                 'widget_attrs' => array('size' => 15),
                                 ));
 
-            $this->fields['relation_issue'] = new Pluf_Form_Field_Varchar(
+            $this->fields['relation_issue'.$idx] = new Pluf_Form_Field_Varchar(
                           array('required' => false,
                                 'label' => null,
                                 'initial' => '',
                                 'widget_attrs' => array('size' => 10),
                                 ));
+
+            ++$idx;
+            $relatedIssues = $this->issue->getGroupedRelatedIssues(array(), true);
+            foreach ($relatedIssues as $verb => $ids) {
+                $this->fields['relation_type'.$idx] = new Pluf_Form_Field_Varchar(
+                          array('required' => false,
+                                'label' => __('This issue'),
+                                'initial' => $verb,
+                                'widget_attrs' => array('size' => 15),
+                                ));
+                $m = 'clean_relation_type'.$idx;
+                $this->$m = create_function('$form', '
+                    return $form->clean_relation_type($form->cleaned_data["relation_type'.$idx.'"]);
+                ');
+
+                $this->fields['relation_issue'.$idx] = new Pluf_Form_Field_Varchar(
+                              array('required' => false,
+                                    'label' => null,
+                                    'initial' => implode(', ', $ids),
+                                    'widget_attrs' => array('size' => 10),
+                                    ));
+                $m = 'clean_relation_issue'.$idx;
+                $this->$m = create_function('$form', '
+                    return $form->clean_relation_issue($form->cleaned_data["relation_issue'.$idx.'"]);
+                ');
+
+                ++$idx;
+            }
 
             $tags = $this->issue->get_tags_list();
             for ($i=1;$i<7;$i++) {
@@ -171,6 +202,48 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
     public function clean()
     {
         $this->cleaned_data = parent::clean();
+
+        // normalize the user's input by removing dublettes and by combining
+        // ids from identical verbs in different input fields into one array
+        $normRelatedIssues = array();
+        for ($idx = 0; isset($this->cleaned_data['relation_type'.$idx]); ++$idx) {
+            $verb = $this->cleaned_data['relation_type'.$idx];
+            $ids = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue'.$idx],
+                              -1, PREG_SPLIT_NO_EMPTY);
+            if (count($ids) == 0)
+                continue;
+
+            if (!array_key_exists($verb, $normRelatedIssues))
+                $normRelatedIssues[$verb] = array();
+            foreach ($ids as $id) {
+                if (!in_array($id, $normRelatedIssues[$verb]))
+                    $normRelatedIssues[$verb][] = $id;
+            }
+        }
+
+        // now look at any added / removed ids
+        $added = $removed = array();
+        $relatedIssues = $this->issue->getGroupedRelatedIssues(array(), true);
+        $added = array_diff_key($normRelatedIssues, $relatedIssues);
+        $removed = array_diff_key($relatedIssues, $normRelatedIssues);
+
+        $keysToLookAt = array_keys(
+            array_intersect_key($relatedIssues, $normRelatedIssues)
+        );
+        foreach ($keysToLookAt as $key) {
+            $a = array_diff($normRelatedIssues[$key], $relatedIssues[$key]);
+            if (count($a) > 0)
+                $added[$key] = $a;
+            $r = array_diff($relatedIssues[$key], $normRelatedIssues[$key]);
+            if (count($r) > 0)
+                $removed[$key] = $r;
+        }
+
+        // cache the added / removed data, so we do not have to
+        // calculate that again
+        $this->cleaned_data['_added_issue_relations'] = $added;
+        $this->cleaned_data['_removed_issue_relations'] = $removed;
+
         // As soon as we know that at least one change was done, we
         // return the cleaned data and do not go further.
         if (strlen(trim($this->cleaned_data['content']))) {
@@ -230,6 +303,11 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
                     return $this->cleaned_data;
                 }
             }
+
+            if (count($this->cleaned_data['_added_issue_relations']) != 0 ||
+                count($this->cleaned_data['_removed_issue_relations']) != 0) {
+                return $this->cleaned_data;
+            }
         }
         // no changes!
         throw new Pluf_Form_Invalid(__('No changes were entered.'));
@@ -271,20 +349,22 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
             foreach ($tags as $tag) {
                 if (!Pluf_Model_InArray($tag, $oldtags)) {
                     if (!isset($changes['lb'])) $changes['lb'] = array();
+                    if (!isset($changes['lb']['add'])) $changes['lb']['add'] = array();
                     if ($tag->class != 'Other') {
-                        $changes['lb'][] = (string) $tag; //new tag
+                        $changes['lb']['add'][] = (string) $tag; //new tag
                     } else {
-                        $changes['lb'][] = (string) $tag->name;
+                        $changes['lb']['add'][] = (string) $tag->name;
                     }
                 }
             }
             foreach ($oldtags as $tag) {
                 if (!Pluf_Model_InArray($tag, $tags)) {
                     if (!isset($changes['lb'])) $changes['lb'] = array();
+                    if (!isset($changes['lb']['rem'])) $changes['lb']['rem'] = array();
                     if ($tag->class != 'Other') {
-                        $changes['lb'][] = '-'.(string) $tag; //new tag
+                        $changes['lb']['rem'][] = (string) $tag; //new tag
                     } else {
-                        $changes['lb'][] = '-'.(string) $tag->name;
+                        $changes['lb']['rem'][] = (string) $tag->name;
                     }
                 }
             }
@@ -301,6 +381,47 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
                 or (!is_null($owner) and is_null($this->issue->get_owner()))
                 or ((!is_null($owner) and !is_null($this->issue->get_owner())) and $owner->id != $this->issue->get_owner()->id)) {
                 $changes['ow'] = (is_null($owner)) ? '---' : $owner->login;
+            }
+            // Issue relations - additions
+            foreach ($this->cleaned_data['_added_issue_relations'] as $verb => $ids) {
+                $other_verb = $this->relation_types[$verb];
+                foreach ($ids as $id) {
+                    $related_issue = new IDF_Issue($id);
+                    $rel = new IDF_IssueRelation();
+                    $rel->issue = $this->issue;
+                    $rel->verb = $verb;
+                    $rel->other_issue = $related_issue;
+                    $rel->submitter = $this->user;
+                    $rel->create();
+
+                    $other_rel = new IDF_IssueRelation();
+                    $other_rel->issue = $related_issue;
+                    $other_rel->verb = $other_verb;
+                    $other_rel->other_issue = $this->issue;
+                    $other_rel->submitter = $this->user;
+                    $other_rel->create();
+                }
+                if (!isset($changes['rel'])) $changes['rel'] = array();
+                if (!isset($changes['rel']['add'])) $changes['rel']['add'] = array();
+                $changes['rel']['add'][] = $verb.' '.implode(', ', $ids);
+            }
+            // Issue relations - removals
+            foreach ($this->cleaned_data['_removed_issue_relations'] as $verb => $ids) {
+                foreach ($ids as $id) {
+                    $db = &Pluf::db();
+                    $table = Pluf::factory('IDF_IssueRelation')->getSqlTable();
+                    $sql = new Pluf_SQL('verb=%s AND (
+                                        (issue=%s AND other_issue=%s) OR
+                                        (other_issue=%s AND issue=%s))',
+                                        array($verb,
+                                              $this->issue->id, $id,
+                                              $this->issue->id, $id));
+                    $db->execute('DELETE FROM '.$table.' WHERE '.$sql->gen());
+                }
+
+                if (!isset($changes['rel'])) $changes['rel'] = array();
+                if (!isset($changes['rel']['rem'])) $changes['rel']['rem'] = array();
+                $changes['rel']['rem'][] = $verb.' '.implode(', ', $ids);
             }
             // Update the issue
             $this->issue->batchAssoc('IDF_Tag', $tagids);

@@ -32,6 +32,27 @@ function IDF_Migrations_17AddIssueRelations_up($params=null)
     $schema = new Pluf_DB_Schema($db);
     $schema->model = new IDF_IssueRelation();
     $schema->createTables();
+
+    // change the serialization format for added / removed labels in IDF_IssueComment
+    $comments = Pluf::factory('IDF_IssueComment')->getList();
+    foreach ($comments as $comment) {
+        if (!isset($comment->changes['lb'])) continue;
+        $changes = $comment->changes;
+        $adds = $removals = array();
+        foreach ($comment->changes['lb'] as $lb) {
+            if (substr($lb, 0, 1) == '-')
+                $removals[] = substr($lb, 1);
+            else
+                $adds[] = $lb;
+        }
+        $changes['lb'] = array();
+        if (count($adds) > 0)
+            $changes['lb']['add'] = $adds;
+        if (count($removals) > 0)
+            $changes['lb']['rem'] = $removals;
+        $comment->changes = $changes;
+        $comment->update();
+    }
 }
 
 function IDF_Migrations_17AddIssueRelations_down($params=null)
@@ -40,5 +61,30 @@ function IDF_Migrations_17AddIssueRelations_down($params=null)
     $schema = new Pluf_DB_Schema($db);
     $schema->model = new IDF_IssueRelation();
     $schema->dropTables();
+
+    // change the serialization format for added / removed labels in IDF_IssueComment
+    $comments = Pluf::factory('IDF_IssueComment')->getList();
+    foreach ($comments as $comment) {
+        $changes = $comment->changes;
+        if (empty($changes))
+            continue;
+        if (isset($changes['lb'])) {
+            $labels = array();
+            foreach ($changes['lb'] as $type => $lbs) {
+                if (!is_array($lbs)) {
+                    $labels[] = $lbs;
+                    continue;
+                }
+                foreach ($lbs as $lb) {
+                    $labels[] = ($type == 'rem' ? '-' : '') . $lb;
+                }
+            }
+            $changes['lb'] = $labels;
+        }
+        // while we're at it, remove any 'rel' changes
+        unset($changes['rel']);
+        $comment->changes = $changes;
+        $comment->update();
+    }
 }
 

@@ -1,8 +1,14 @@
 # InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
 
+ATTENTION: You need Pluf [324ae60b](http://projects.ceondo.com/p/pluf/source/commit/324ae60b)
+or newer to properly run this version of Indefero!
+
 ## New Features
 
-## Bugfixes 
+- Indefero's issue tracker can now bi-directionally link issues with variable, configurable
+  terms, such as "is related to", "is blocked by" or "is duplicated by" (issue 638)
+
+## Bugfixes
 
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
 - Timeline only displays filter options for items a user has actually access to (issue 655)

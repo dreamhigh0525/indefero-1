@@ -155,10 +155,18 @@ class IDF_IssueComment extends Pluf_Model
                     $out .= __('Owner:'); break;
                 case 'lb':
                     $out .= __('Labels:'); break;
+                case 'rel':
+                    $out .= __('Relations:'); break;
                 }
                 $out .= '</strong>&nbsp;';
-                if ($w == 'lb') {
-                    $out .= Pluf_esc(implode(', ', $v));
+                if ($w == 'lb' || $w == 'rel') {
+                    foreach ($v as $t => $ls) {
+                        foreach ($ls as $l) {
+                            if ($t == 'rem') $out .= '<s>';
+                            $out .= Pluf_esc($l);
+                            if ($t == 'rem') $out .= '</s> ';
+                        }
+                    }
                 } else {
                     $out .= Pluf_esc($v);
                 }

@@ -404,7 +404,7 @@ class IDF_Views_Issue
         $issue = Pluf_Shortcuts_GetObjectOr404('IDF_Issue', $match[2]);
         $prj->inOr404($issue);
         $comments = $issue->get_comments_list(array('order' => 'id ASC'));
-        $related_issues = $issue->getGroupedRelatedIssues(array('order' => 'creation_dtime DESC'));
+        $related_issues = $issue->getGroupedRelatedIssues(array('order' => 'other_issue ASC'));
 
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                         array($prj->shortname, $issue->id));

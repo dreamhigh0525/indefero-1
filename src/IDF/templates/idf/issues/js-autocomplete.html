@@ -51,34 +51,39 @@
             return row.to;
         }
     });
-  $("#id_relation_type").autocomplete(auto_relation_types, {
-        minChars: 0,
-        width: 310,
-        matchContains: true,
-        max: 50,
-        highlightItem: false,
-        formatItem: function(row, i, max, term) {
-            return row.to.replace(new RegExp("(" + term + ")", "gi"), "<strong>$1</strong>") + "  <span style='font-size: 80%;'>" + row.name + "</span>";
-        },
-        formatResult: function(row) {
-            return row.to;
-        }
-    });
-  $("#id_relation_issue").autocomplete("{/literal}{url 'IDF_Views_Issue::autoCompleteIssueList', array($project.shortname, $issue.id)}{literal}", {
-        minChars: 0,
-        width: 310,
-        matchContains: true,
-        max: 10,
-        multiple: true,
-        delay: 500,
-        highlightItem: false,
-        formatItem: function(row, i, max, term) {
-            return row[1].replace(new RegExp("(" + term + ")", "gi"), "<strong>$1</strong>") + "  <span style='font-size: 80%;'>" + row[0] + "</span>";
-        },
-        formatResult: function(row) {
-            return row[1];
-        }
-    });
+  for (var idx = 0; ; ++idx) {
+      if ($("#id_relation_type" + idx).length == 0)
+          break;
+
+      $("#id_relation_type" + idx).autocomplete(auto_relation_types, {
+            minChars: 0,
+            width: 310,
+            matchContains: true,
+            max: 50,
+            highlightItem: false,
+            formatItem: function(row, i, max, term) {
+                return row.to.replace(new RegExp("(" + term + ")", "gi"), "<strong>$1</strong>") + "  <span style='font-size: 80%;'>" + row.name + "</span>";
+            },
+            formatResult: function(row) {
+                return row.to;
+            }
+        });
+      $("#id_relation_issue" + idx).autocomplete("{/literal}{url 'IDF_Views_Issue::autoCompleteIssueList', array($project.shortname, $issue.id)}{literal}", {
+            minChars: 0,
+            width: 310,
+            matchContains: true,
+            max: 10,
+            multiple: true,
+            delay: 500,
+            highlightItem: false,
+            formatItem: function(row, i, max, term) {
+                return row[1].replace(new RegExp("(" + term + ")", "gi"), "<strong>$1</strong>") + "  <span style='font-size: 80%;'>" + row[0] + "</span>";
+            },
+            formatResult: function(row) {
+                return row[1];
+            }
+        });
+    }
   });
 {/literal} //-->
 </script>
