@@ -3231,7 +3231,7 @@ msgid ""
 "%%cobject.date%%."
 msgstr ""
 "Quellcode bei Revision <a class=\"mono\" href=\"%%url%%\">%%commit%%</a> "
-"erzeugt am %%cobject.date%%."
+"erzeugt %%cobject.date%%."
 
 #: IDF/gettexttemplates/idf/source/git/file.html.php:4
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:4
@@ -3410,7 +3410,7 @@ msgstr "Revision:"
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:11
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:16
 msgid "Go to revision"
-msgstr "Zu Revision gehen:"
+msgstr "Zu Rev. gehen"
 
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:6
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:11
