@@ -373,25 +373,28 @@ class IDF_Form_IssueCreate extends Pluf_Form
         foreach ($tags as $tag) {
             $issue->setAssoc($tag);
         }
-        // add relations
-        $verb = $this->cleaned_data['relation_type0'];
-        $other_verb = $this->relation_types[$verb];
-        $related_issues = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue0'], -1, PREG_SPLIT_NO_EMPTY);
-        foreach ($related_issues as $related_issue_id) {
-            $related_issue = new IDF_Issue($related_issue_id);
-            $rel = new IDF_IssueRelation();
-            $rel->issue = $issue;
-            $rel->verb = $verb;
-            $rel->other_issue = $related_issue;
-            $rel->submitter = $this->user;
-            $rel->create();
+        // add relations (if any)
+        if (!empty($this->cleaned_data['relation_type0'])) {
+            $verb = $this->cleaned_data['relation_type0'];
+            $other_verb = $this->relation_types[$verb];
+            $related_issues = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue0'], -1, PREG_SPLIT_NO_EMPTY);
 
-            $other_rel = new IDF_IssueRelation();
-            $other_rel->issue = $related_issue;
-            $other_rel->verb = $other_verb;
-            $other_rel->other_issue = $issue;
-            $other_rel->submitter = $this->user;
-            $other_rel->create();
+            foreach ($related_issues as $related_issue_id) {
+                $related_issue = new IDF_Issue($related_issue_id);
+                $rel = new IDF_IssueRelation();
+                $rel->issue = $issue;
+                $rel->verb = $verb;
+                $rel->other_issue = $related_issue;
+                $rel->submitter = $this->user;
+                $rel->create();
+
+                $other_rel = new IDF_IssueRelation();
+                $other_rel->issue = $related_issue;
+                $other_rel->verb = $other_verb;
+                $other_rel->other_issue = $issue;
+                $other_rel->submitter = $this->user;
+                $other_rel->create();
+            }
         }
 
         // add the first comment

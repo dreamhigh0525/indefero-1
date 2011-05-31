@@ -208,6 +208,9 @@ class IDF_Form_IssueUpdate  extends IDF_Form_IssueCreate
         $normRelatedIssues = array();
         for ($idx = 0; isset($this->cleaned_data['relation_type'.$idx]); ++$idx) {
             $verb = $this->cleaned_data['relation_type'.$idx];
+            if (empty($verb))
+                continue;
+
             $ids = preg_split('/\s*,\s*/', $this->cleaned_data['relation_issue'.$idx],
                               -1, PREG_SPLIT_NO_EMPTY);
             if (count($ids) == 0)
