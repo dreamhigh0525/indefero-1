@@ -13,13 +13,13 @@
       <th>{trans 'Size'}</th>
     </tr>
   </thead>{if (!$tree_in and !$tags_in and $commit != 'HEAD') || $props}
-  {aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)} 
+  {aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)}
   <tfoot>
     {if $props}
     <tr><th colspan="6">
         <ul>
           {foreach $props as $prop => $val}
-          <li>{trans 'Property'} <strong>{$prop}</strong> {trans 'set to:'} <em>{$val}</em></li>
+          <li>{blocktrans}Property <strong>{$prop}</strong> set to <em>{$val}</em>{/blocktrans}</li>
           {/foreach}
         </ul>
     </th></tr>
@@ -45,7 +45,7 @@
       <td class="fileicon"><img src="{media '/idf/img/'~$file.type~'.png'}" alt="{$file.type}" /></td>
 
       <td><a href="{$url}">{$file.file}</a></td>
-      <td><span class="smaller">{$file.date|dateago:"without"}</span></td> 
+      <td><span class="smaller">{$file.date|dateago:"without"}</span></td>
       <td>{$file.rev}</td>
       <td{if $file.type != 'blob'} colspan="2"{/if}><span class="smaller">{$file.author|strip_tags|trim}{trans ':'} {issuetext $file.log, $request, true, false}</span></td>
       {if $file.type == 'blob'}
@@ -66,7 +66,7 @@
 <p>
     <input accesskey="4" type="text" value="{$commit}" name="rev" size="5" />
     <input type="hidden" name="sourcefile" value="{$base}"/>
-    <input type="submit" name="s" value="{trans 'Go to revision'}" /></p>
+    <input type="submit" name="s" value="{trans 'Switch'}" /></p>
   </form>
 <p><strong>{trans 'Branches:'}</strong><br />
 {foreach $branches as $branch => $path}

@@ -714,6 +714,31 @@ END;
         $this->assertEquals('', $commit->diff);
     }
 
+    public function testGetProperties()
+    {
+        $rev = "2345678901234567890123456789012345678901";
+
+        $instance = $this->createMock();
+        $instance->getStdio()->setExpectedOutput(array('interface_version'), array(), '13.1');
+
+        $stdio =<<<END
+attr "foo" "bar"
+state "unchanged"
+
+attr "some new
+line" "and more <weird>-
+nesses"
+END;
+        $instance->getStdio()->setExpectedOutput(array('get_attributes', 'foo'), array('r' => $rev), $stdio);
+        $res = $instance->getProperties($rev, 'foo');
+
+        $this->assertEquals(2, count($res));
+        $this->assertEquals(array(
+          'foo' => 'bar',
+          "some new\nline" => "and more <weird>-\nnesses"
+        ), $res);
+    }
+
     public function testGetExtraProperties()
     {
         $instance = $this->createMock();

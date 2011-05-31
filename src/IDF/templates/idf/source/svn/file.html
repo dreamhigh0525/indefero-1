@@ -6,13 +6,13 @@
 
 <table class="code" summary=" ">
 {if !$tree_in || $props}
-  {aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)} 
+  {aurl 'url', 'IDF_Views_Source::commit', array($project.shortname, $commit)}
   <tfoot>
     {if $props}
     <tr><th colspan="2">
         <ul>
           {foreach $props as $prop => $val}
-          <li>{trans 'Property'} <strong>{$prop}</strong> {trans 'set to:'} <em>{$val}</em></li>
+          <li>{blocktrans}Property <strong>{$prop}</strong> set to <em>{$val}</em>{/blocktrans}</li>
           {/foreach}
         </ul>
     </th></tr>
@@ -38,7 +38,7 @@
 <p>
     <input accesskey="4" type="text" value="{$commit}" name="rev" size="5" />
     <input type="hidden" name="sourcefile" value="{$base}"/>
-    <input type="submit" name="s" value="{trans 'Go to revision'}" /></p>
+    <input type="submit" name="s" value="{trans 'Switch'}" /></p>
   </form>
 {/block}
 
