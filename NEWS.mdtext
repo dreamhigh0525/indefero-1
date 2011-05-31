@@ -4,12 +4,14 @@
 
 - Mercurial source views now show parent revisions (if any) and detailed change information
 - File download URLs now contain the file name rather than the upload id; old links still work though (issue 686)
+- Display monotone file and directory attributes in the tree and file view
+  (needs a monotone with an interface version of 13.1 or newer)
 
-## Bugfixes 
+## Bugfixes
 
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
 - Timeline only displays filter options for items a user has actually access to (issue 655)
-- The log, tags and branches parsers for Mercurial are more robust now (issue 663) 
+- The log, tags and branches parsers for Mercurial are more robust now (issue 663)
 - Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
 - Let the SVN command line client not store the login credentials we give him as arguments
 

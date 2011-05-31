@@ -31,9 +31,9 @@ class IDF_Scm_Monotone extends IDF_Scm
     /** the minimum supported interface version */
     public static $MIN_INTERFACE_VERSION = 13.0;
 
-    private $stdio;
-
     private static $instances = array();
+
+    private $stdio;
 
     /**
      * Constructor
@@ -696,6 +696,29 @@ class IDF_Scm_Monotone extends IDF_Scm
         $res['diff'] = ($getdiff) ? $this->_getDiff($revs[0]) : '';
 
         return (object) $res;
+    }
+
+    /**
+     * @see IDF_Scm::getProperties()
+     */
+    public function getProperties($rev, $path='')
+    {
+        $out = $this->stdio->exec(array('interface_version'));
+        // support for querying file attributes of committed revisions
+        // was added for mtn 1.1 (interface version 13.1)
+        if (floatval($out) < 13.1)
+            return array();
+
+        $out = $this->stdio->exec(array('get_attributes', $path), array('r' => $rev));
+        $stanzas = IDF_Scm_Monotone_BasicIO::parse($out);
+        $res = array();
+
+        foreach ($stanzas as $stanza) {
+            $line = $stanza[0];
+            $res[$line['values'][0]] = $line['values'][1];
+        }
+
+        return $res;
     }
 
     /**
