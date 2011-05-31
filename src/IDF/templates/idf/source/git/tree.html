@@ -32,13 +32,13 @@
 <tr>
 <td class="fileicon"><img src="{media '/idf/img/'~$file.type~'.png'}" alt="{$file.type}" /></td>
 {if $file.type != 'extern'}
-<td{if $file.type == 'tree'} colspan="4"{/if}><a href="{$url}">{$file.file}</a></td>{else}<td><a href="#" title="{$file.hash}">{$file.file}</a></td>{/if}
+<td{if $file.type == 'tree'} colspan="4"{/if}><a href="{$url}"><nobr>{$file.file}</nobr></a></td>{else}<td><a href="#" title="{$file.hash}"><nobr>{$file.file}</nobr></a></td>{/if}
 {if $file.type == 'blob'}
 {if isset($file.date) and $file.log != '----'}
-<td><span class="smaller">{$file.date|dateago:"without"}</span></td>
+<td><span class="smaller"><nobr>{$file.date|dateago:"without"}</nobr></span></td>
 <td><span class="smaller">{$file.author|strip_tags|trim}{trans ':'} {issuetext $file.log, $request, true, false}</span></td>
 {else}<td colspan="2"></td>{/if}
-<td>{$file.size|size}</td>{/if}
+<td><nobr>{$file.size|size}</nobr></td>{/if}
 {if $file.type == 'extern'}
 <td colspan="3">{$file.extern}</td>
 {/if}
