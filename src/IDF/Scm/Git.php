@@ -218,15 +218,15 @@ class IDF_Scm_Git extends IDF_Scm
                                                 $cmd, $return,
                                                 implode("\n", $out)));
         }
-        rsort($out);
         $res = array();
         foreach ($out as $b) {
             $elts = explode(' ', $b, 2);
             $tag = substr(trim($elts[1]), 10);  // Remove refs/tags/ prefix
             $res[$tag] = '';
         }
+        krsort($res);
         $this->cache['tags'] = $res;
-        
+
         return $res;
     }
 
