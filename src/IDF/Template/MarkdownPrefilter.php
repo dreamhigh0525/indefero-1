@@ -90,40 +90,69 @@ class IDF_Template_MarkdownPrefilter extends Pluf_Text_HTML_Filter
                                      );
 
     public $allowed = array(
-                            'a' => array('href', 'title', 'rel'),
-                            'abbr' => array('title'),
-                            'address' => array(),
-                            'b' => array(),
-                            'blockquote' => array(),
-                            'br' => array(),
-                            'caption' => array(),
-                            'code' => array(),
-                            'dd' => array(),
-                            'del' => array('cite', 'class', 'datetime', 'dir', 'id', 'title'),
-                            'div' => array('align', 'class'),
-                            'dl' => array(),
-                            'dt' => array(),
-                            'em' => array(),
-                            'h1' => array('id'),
-                            'h2' => array('id'),
-                            'h3' => array('id'),
-                            'h4' => array('id'),
-                            'h5' => array('id'),
-                            'h6' => array('id'),
-                            'hr' => array(),
-                            'i' => array(),
-                            'img' => array('src', 'class', 'alt', 'height', 'width', 'style'),
-                            'ins' => array('cite', 'class', 'datetime', 'dir', 'id', 'title'),
-                            'li' => array(),
-                            'ol' => array(),
-                            'p' => array('align', 'class'),
-                            'pre' => array(),
-                            'strong' => array(),
-                            'table' => array('summary'),
-                            'td' => array('style'),
-                            'th' => array(),
-                            'tr' => array(),
-                            'ul' => array(),
+                            'a' => array('class', 'dir', 'id', 'style', 'title',
+                                         'href', 'hreflang', 'rel'),
+                            'abbr' => array('class', 'dir', 'id', 'style', 'title'),
+                            'address' => array('class', 'dir', 'id', 'style', 'title'),
+                            'b' => array('class', 'dir', 'id', 'style', 'title'),
+                            'blockquote' => array('class', 'dir', 'id', 'style', 'title',
+                                                  'cite'),
+                            'br' => array('class', 'id', 'style', 'title'),
+                            'caption' => array('class', 'dir', 'id', 'style', 'title',
+                                               'align'), // deprecated attribute),
+                            'code' => array('class', 'dir', 'id', 'style', 'title'),
+                            'dd' => array('class', 'dir', 'id', 'style', 'title'),
+                            'del' => array('class', 'dir', 'id', 'style', 'title',
+                                           'cite', 'datetime'),
+                            'div' => array('class', 'dir', 'id', 'style', 'title',
+                                           'align'), // deprecated attribute
+                            'dl' => array('class', 'dir', 'id', 'style', 'title'),
+                            'dt' => array('class', 'dir', 'id', 'style', 'title'),
+                            'em' => array('class', 'dir', 'id', 'style', 'title'),
+                            'font' => array('class', 'dir', 'id', 'style', 'title', // deprecated element
+                                            'color', 'face', 'size'); // deprecated attribute
+                            'h1' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'h2' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'h3' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'h4' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'h5' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'h6' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align'), // deprecated attribute
+                            'hr' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align', 'noshade', 'size', 'width'), // deprecated attribute
+                            'i' => array('class', 'dir', 'id', 'style', 'title'),
+                            'img' => array('class', 'dir', 'id', 'style', 'title',
+                                           'src', 'alt', 'height', 'width'),
+                            'ins' => array('class', 'dir', 'id', 'style', 'title',
+                                           'cite', 'datetime'),
+                            'li' => array('class', 'dir', 'id', 'style', 'title',
+                                          'type'), // deprecated attribute
+                            'ol' => array('class', 'dir', 'id', 'style', 'title',
+                                          'type'), // deprecated attribute
+                            'p' => array('class', 'dir', 'id', 'style', 'title',
+                                         'align'), // deprecated attribute
+                            'pre' => array('class', 'dir', 'id', 'style', 'title',
+                                           'width'), // deprecated attribute
+                            'strong' => array('class', 'dir', 'id', 'style', 'title'),
+                            'table' => array('class', 'dir', 'id', 'style', 'title',
+                                             'border', 'cellpadding', 'cellspacing', 'frame', 'rules', 'summary', 'width',
+                                             'align', 'bgcolor'), // deprecated attribute
+                            'td' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align', 'colspan', 'headers', 'rowspan', 'scope', 'valign',
+                                          'bgcolor', 'height', 'nowrap', 'width'), // deprecated attribute
+                            'th' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align', 'colspan', 'rowspan', 'scope', 'valign',
+                                          'bgcolor', 'height', 'nowrap', 'width'), // deprecated attribute
+                            'tr' => array('class', 'dir', 'id', 'style', 'title',
+                                          'align', 'valign',
+                                          'bgcolor'), // deprecated attribute
+                            'ul' => array('class', 'dir', 'id', 'style', 'title',
+                                          'type'), // deprecated attribute
                             );
     // tags which should always be self-closing (e.g. "<img />")
     public $no_close = array(
