@@ -127,9 +127,9 @@ ul.errorlist {
 div.user-messages {
   border: 1px solid rgb(229, 225, 169);
   background-color: #fffde3;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   margin-left: -1px;
-  width: 90%;
+  width: 100%;
 }
 
 div.theterms {
@@ -275,7 +275,7 @@ div.issue-changes-timeline {
 
 div.issue-prev-next {
   float: right;
-  margin-top: -25px;
+  margin-top: -1.5em;
 }
 
 div.issue-submit-info {
