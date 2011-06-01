@@ -531,7 +531,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
             if ($line == "\0") {
                 $headers_processed = false;
                 if (count($c) > 0) {
-                    $c['full_message'] = trim($c['full_message']);
+                    if (array_key_exists('full_message', $c))
+                        $c['full_message'] = trim($c['full_message']);
                     $res[] = (object) $c;
                 }
                 continue;
@@ -547,10 +548,8 @@ class IDF_Scm_Mercurial extends IDF_Scm
                     $c['commit'] = $match[2];
                     $c['tree'] = $c['commit'];
                     $c['full_message'] = '';
-                } elseif ($match[1] == 'user') {
+                } elseif ($match[1] == 'author') {
                     $c['author'] = $match[2];
-                } elseif ($match[1] == 'summary') {
-                    $c['title'] = $match[2];
                 } elseif ($match[1] == 'branch') {
                     $c['branch'] = empty($match[2]) ? 'default' : $match[2];
                 } elseif ($match[1] == 'parents') {
