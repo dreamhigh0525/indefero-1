@@ -110,7 +110,7 @@ class IDF_Template_MarkdownPrefilter extends Pluf_Text_HTML_Filter
                             'dt' => array('class', 'dir', 'id', 'style', 'title'),
                             'em' => array('class', 'dir', 'id', 'style', 'title'),
                             'font' => array('class', 'dir', 'id', 'style', 'title', // deprecated element
-                                            'color', 'face', 'size'); // deprecated attribute
+                                            'color', 'face', 'size'), // deprecated attribute
                             'h1' => array('class', 'dir', 'id', 'style', 'title',
                                           'align'), // deprecated attribute
                             'h2' => array('class', 'dir', 'id', 'style', 'title',
