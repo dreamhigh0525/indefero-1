@@ -88,22 +88,37 @@ class IDF_Scm
     }
 
     /**
-     * Run exec and log some information.
+     * Runs the given command and log some information.
+     *
+     * A previous version used plain exec(), but this should not be used
+     * for various reasons, one being that this command does not preserve
+     * trailing whitespace, which is essential for proper diff parsing.
      *
      * @param $caller Calling method
      * @param $cmd Command to run
      * @param &$out Array of output
      * @param &$return Return value
-     * @return string Last line of the command
      */
     public static function exec($caller, $cmd, &$out=null, &$return=null)
     {
+        $return = 1;
         Pluf_Log::stime('timer');
-        $ret = exec($cmd, $out, $return);
+        $fp = popen($cmd, 'r');
+        $buf = '';
+        if ($fp !== false) {
+            $return = 0;
+            while (!feof($fp)) {
+                $buf .= fread($fp, 1024);
+            }
+            pclose($fp);
+        }
+        $out = preg_split('/\r\n|\r|\n/', $buf);
+        $elem = count($out);
+        if ($elem > 0 && $out[$elem-1] === '')
+            unset($out[$elem-1]);
         Pluf_Log::perf(array($caller, $cmd, Pluf_Log::etime('timer', 'total_exec')));
         Pluf_Log::debug(array($caller, $cmd, $out));
         Pluf_Log::inc('exec_calls');
-        return $ret;
     }
 
     /**

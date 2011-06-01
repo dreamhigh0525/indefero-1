@@ -101,7 +101,7 @@ class IDF_Diff
                 $files[$current_file]['chunks'][] = array();
 
                 while ($i < $diffsize && ($addlines >= 0 || $dellines >= 0)) {
-                    $linetype = $this->lines[$i] != '' ? $this->lines[$i][0] : ' ';
+                    $linetype = $this->lines[$i] != '' ? $this->lines[$i][0] : false;
                     switch ($linetype) {
                         case ' ':
                             $files[$current_file]['chunks'][$current_chunk][] =
