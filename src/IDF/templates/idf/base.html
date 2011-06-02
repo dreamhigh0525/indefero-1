@@ -66,7 +66,7 @@
     </div>
       </div>
     </div>
-    <div class="yui-b context">{block context}{/block}</div>
+    <div class="yui-b context" id="context">{block context}{/block}</div>
   </div>
   <div id="ft">{block foot}{/block}</div>
 </div>
@@ -84,6 +84,20 @@ $(document).ready(function(){
     else if (frag.length > 3 && frag.substring(0, 3) == '#ic') {
         $(frag).addClass("issue-comment-focus");
     }
+
+    var contextTop = $('div#context').position().top;
+    var contextFixEnabled = true;
+    $(window).scroll(function() {
+         if (!contextFixEnabled || $(window).scrollTop() < contextTop)
+             $('div#context').css('position', 'relative');
+         else
+             $('div#context').css('position', 'fixed');
+    });
+    $(window).resize(function() {
+         contextFixEnabled =
+             $('div#context').offset().top + $('div#context').height() <
+             $(window).height();
+    });
 });
 //]]>{/literal}
 </script>{/if}

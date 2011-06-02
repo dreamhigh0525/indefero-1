@@ -86,6 +86,14 @@ a.soft:visited {
 
 div.context {
   padding-left: 1em;
+  position: relative;
+  top: 0;
+}
+
+div.context h3 {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 10px 0 5px;
 }
 
 /**
@@ -928,14 +936,6 @@ ol > li {
 /**
  * List expander for tag and branch view
  */
-.context {}
-
-.context h3 {
-  font-size: 13px;
-  font-weight: bold;
-  margin: 10px 0 5px;
-}
-
 .context > .expander {
   position: relative;
   overflow: hidden;
