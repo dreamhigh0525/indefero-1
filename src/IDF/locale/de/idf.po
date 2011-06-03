@@ -130,7 +130,7 @@ msgstr "Entferntes Subversion-Depot"
 
 #: IDF/Form/Admin/ProjectCreate.php:92 IDF/Form/SourceConf.php:40
 msgid "Repository username"
-msgstr "Depot-Nutzername"
+msgstr "Depot-Benutzername"
 
 #: IDF/Form/Admin/ProjectCreate.php:99 IDF/Form/SourceConf.php:47
 msgid "Repository password"
@@ -156,11 +156,11 @@ msgstr "Projekt-Eigentümer"
 #: IDF/Form/Admin/ProjectCreate.php:123 IDF/Form/Admin/ProjectUpdate.php:76
 #: IDF/Form/MembersConf.php:54 IDF/Form/TabsConf.php:52
 msgid "Project members"
-msgstr "Projekt-Mitglieder"
+msgstr "Projektmitglieder"
 
 #: IDF/Form/Admin/ProjectCreate.php:136
 msgid "Project template"
-msgstr "Projekt-Vorlage"
+msgstr "Projektvorlage"
 
 #: IDF/Form/Admin/ProjectCreate.php:138
 msgid ""
@@ -168,7 +168,7 @@ msgid ""
 "general configuration will be taken from the template project."
 msgstr ""
 "Benutze das vorgegebene Projekt, um ein neues zu initialisieren. "
-"Zugriffsrechte und allgemeine Konfiguration werden von der Projekt-Vorlage "
+"Zugriffsrechte und allgemeine Konfiguration werden von der Projektvorlage "
 "übernommen."
 
 #: IDF/Form/Admin/ProjectCreate.php:185
@@ -350,7 +350,7 @@ msgid ""
 "The password must be hard for other people to guess, but easy for the user "
 "to remember."
 msgstr ""
-"Das Passwort sollte für andere Leute schwer zu erraten, aber für den Nutzer "
+"Das Passwort sollte für andere Leute schwer zu erraten, aber für den Benutzer "
 "einfach zu erinnern sein."
 
 #: IDF/Form/Admin/UserUpdate.php:89
@@ -366,7 +366,7 @@ msgstr "Beschreibung"
 
 #: IDF/Form/Admin/UserUpdate.php:109 IDF/Form/UserAccount.php:110
 msgid "Twitter username"
-msgstr "Twitter-Nutzername"
+msgstr "Twitter-Benutzername"
 
 #: IDF/Form/Admin/UserUpdate.php:119 IDF/Form/UserAccount.php:120
 msgid "Public email address"
@@ -403,7 +403,7 @@ msgstr "Stab"
 #: IDF/Form/Admin/UserUpdate.php:164
 msgid "If you give staff rights to a user, you really need to trust them."
 msgstr ""
-"Wenn Du einen Nutzer zum Stab hinzufügst, solltest Du ihm wirklich trauen."
+"Wenn Du einen Benutzer zum Stab hinzufügst, solltest Du ihm wirklich trauen."
 
 #: IDF/Form/Admin/UserUpdate.php:172 IDF/Views/Admin.php:213
 msgid "Active"
@@ -414,8 +414,8 @@ msgid ""
 "If the user is not getting the confirmation email or is abusing the system, "
 "you can directly enable or disable their account here."
 msgstr ""
-"Wenn der Nutzer keine Bestätigungs-E-Mail erhält oder das System "
-"missbraucht, kannst Du sein Konto hier direkt aktivieren oder deaktivieren."
+"Wenn der Benutzer keine Bestätigungs-E-Mail erhält oder das System "
+"missbraucht, kannst Du sein Benutzerkonto hier direkt aktivieren oder deaktivieren."
 
 #: IDF/Form/Admin/UserUpdate.php:274
 msgid "--- is not a valid first name."
@@ -425,7 +425,7 @@ msgstr "--- ist kein gültiger Vorname"
 msgid ""
 "A user with this email already exists, please provide another email address."
 msgstr ""
-"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits, bitte gib eine "
+"Ein Benutzer mit dieser E-Mail-Adresse existiert bereits, bitte gib eine "
 "andere E-Mail-Adresse an."
 
 #: IDF/Form/Admin/UserUpdate.php:301 IDF/Form/UserAccount.php:389
@@ -678,7 +678,7 @@ msgstr ""
 
 #: IDF/Form/Register.php:148
 msgid "Confirm the creation of your account."
-msgstr "Bestätige die Erstellung deines Accounts."
+msgstr "Bestätige die Erstellung Deines Benutzerkontos."
 
 #: IDF/Form/RegisterConfirmation.php:40 IDF/Form/RegisterInputKey.php:36
 msgid "Your confirmation key"
@@ -705,7 +705,7 @@ msgid ""
 "This account has already been confirmed. Maybe should you try to recover "
 "your password using the help link."
 msgstr ""
-"Dieses Konto wurde bereits bestätigt. Vielleicht möchtest Du versuchen, Dein "
+"Dieses Benutzerkonto wurde bereits bestätigt. Vielleicht möchtest Du versuchen, Dein "
 "Passwort über den Hilfe-Link wiederherzustellen?"
 
 #: IDF/Form/ReviewCreate.php:74
@@ -1204,7 +1204,7 @@ msgstr ""
 "Quellcode.<br />\n"
 "Wenn Du den Zugriff auf den Quellcode beschränkst, wird kein anonymer "
 "Zugriff<br />\n"
-"angeboten und die Nutzer müssen sich mit ihrem Passwort oder "
+"angeboten und die Benutzer müssen sich mit ihrem Passwort oder "
 "öffentlichen<br />\n"
 "Schlüssel authentifizieren."
 
@@ -1241,7 +1241,7 @@ msgid ""
 "\" will default to authorized users only."
 msgstr ""
 "Wenn Du ein Projekt als privat markierst, haben nur Projektmitglieder und "
-"Administratoren zusammen mit den von Dir extra authorisierten Nutzern "
+"Administratoren zusammen mit den von Dir extra authorisierten Benutzern "
 "Zugriff darauf. Du kannst weiterhin zusätzliche Zugriffsrechte für bestimmte "
 "Projektfunktionen vergeben, aber die Einstellungen \"Für alle offen\" und "
 "\"Angemeldete Benutzer\" werden standardmäßig nur authorisierte Benutzer "
@@ -1287,7 +1287,7 @@ msgid ""
 "<a href=\"%%url%%\">Sign in or create your account</a> to create issues or "
 "add comments"
 msgstr ""
-"<a href=\"%%url%%\">Melde Dich an oder lege ein Konto an</a>, um Tickets "
+"<a href=\"%%url%%\">Melde Dich an oder lege ein Benutzerkonto an</a>, um Tickets "
 "oder Kommentare hinzuzufügen"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:4
@@ -1587,7 +1587,7 @@ msgid ""
 "You need to create an account on <a href=\"http://en.gravatar.com/"
 "\">Gravatar</a>, this takes about 5 minutes and is free."
 msgstr ""
-"Du musst Dir einen Account auf <a href=\"http://de.gravatar.com/\">Gravatar</"
+"Du musst Dir ein Benutzerkonto auf <a href=\"http://de.gravatar.com/\">Gravatar.com</"
 "a> erstellen, es dauert nur 5 Minuten und ist kostenfrei."
 
 #: IDF/gettexttemplates/idf/faq.html.php:10
@@ -1632,7 +1632,7 @@ msgstr "<kbd>Umschalt+h</kbd>: Diese Hilfeseite."
 #: IDF/gettexttemplates/idf/faq.html.php:18
 msgid "If you are in a project, you have the following shortcuts:"
 msgstr ""
-"Befindest Du Dich in einem Projekt, kannst du die folgenden Tastaturkürzel "
+"Befindest Du Dich in einem Projekt, kannst Du die folgenden Tastaturkürzel "
 "benutzen:"
 
 #: IDF/gettexttemplates/idf/faq.html.php:19
@@ -1874,28 +1874,28 @@ msgstr "Es wird eine Bestätigung verlangt."
 #: IDF/gettexttemplates/idf/gadmin/users/base.html.php:3
 #: IDF/Views/Admin.php:201
 msgid "User List"
-msgstr "Nutzerliste"
+msgstr "Benutzerliste"
 
 #: IDF/gettexttemplates/idf/gadmin/users/base.html.php:4
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:13
 msgid "Update User"
-msgstr "Nutzer aktualisieren"
+msgstr "Benutzer aktualisieren"
 
 #: IDF/gettexttemplates/idf/gadmin/users/base.html.php:5
 #: IDF/gettexttemplates/idf/gadmin/users/create.html.php:4
 msgid "Create User"
-msgstr "Nutzer anlegen"
+msgstr "Benutzer anlegen"
 
 #: IDF/gettexttemplates/idf/gadmin/users/create.html.php:3
 msgid "The form contains some errors. Please correct them to create the user."
 msgstr ""
 "Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um den "
-"Nutzer zu erstellen."
+"Benutzer zu erstellen."
 
 #: IDF/gettexttemplates/idf/gadmin/users/create.html.php:6
 msgid "The user password will be sent by email to the user."
 msgstr ""
-"Das Passwort des Nutzers wird an die E-Mail-Adresse des Nutzers versandt."
+"Das Passwort des Benutzers wird an die E-Mail-Adresse des Benutzers versandt."
 
 #: IDF/gettexttemplates/idf/gadmin/users/createuser-email.txt.php:3
 #, php-format
@@ -1916,10 +1916,11 @@ msgid ""
 msgstr ""
 "Hallo %%user%%,\n"
 "\n"
-"Der Administrator %%admin%% hat ein neues Konto für Dich\n"
-"auf der Forge angelegt.\n"
+"Der Administrator %%admin%% hat ein neues Benutzerkonto\n"
+"für Dich auf der Forge angelegt.\n"
 "\n"
-"Hier sind die Zugangsdaten, mit denen Du auf Dein Konto zugreifen kannst:\n"
+"Hier sind die Zugangsdaten, mit denen Du auf Dein Benutzerkonto\n"
+"zugreifen kannst:\n"
 "\n"
 " Adresse: %%url%%\n"
 " Anmeldename: %%user.login%%\n"
@@ -1931,17 +1932,17 @@ msgstr ""
 #: IDF/gettexttemplates/idf/gadmin/users/index.html.php:3
 #, php-format
 msgid "See <a href=\"%%url%%\">not validated users</a>."
-msgstr "Zeige <a href=\"%%url%%\">nicht validierte Nutzer</a>."
+msgstr "Zeige <a href=\"%%url%%\">nicht validierte Benutzer</a>."
 
 #: IDF/gettexttemplates/idf/gadmin/users/index.html.php:4
 msgid "<p>You have here an overview of the users registered in the forge.</p>"
 msgstr ""
-"<p>Hier siehst Du eine Übersicht der Nutzer, die sich in der Forge "
+"<p>Hier siehst Du eine Übersicht der Benutzer, die sich in der Forge "
 "registriert haben."
 
 #: IDF/gettexttemplates/idf/gadmin/users/index.html.php:5
 msgid "Number of users:"
-msgstr "Anzahl der Nutzer:"
+msgstr "Anzahl der Benutzer:"
 
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:3
 msgid ""
@@ -1949,7 +1950,7 @@ msgid ""
 "need to ensure that you are providing a valid email\n"
 "address"
 msgstr ""
-"Wenn Du die E-Mail-Adresse eines Nutzers änderst,\n"
+"Wenn Du die E-Mail-Adresse eines Benutzers änderst,\n"
 "musst Du sicherstellen, eine gültige, neue E-Mail-Adresse\n"
 "als Ersatz bereitzustellen."
 
@@ -1959,14 +1960,14 @@ msgid ""
 "able to create new projects and update other non staff users.\n"
 msgstr ""
 "Wenn Du dem Benutzer Stab-Rechte erteilst, kann er\n"
-"neue Projekte anlegen und andere Nutzer, die nicht zum Stab\n"
+"neue Projekte anlegen und andere Benutzer, die nicht zum Stab\n"
 "gehören, aktualisieren.\n"
 
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:9
 msgid "The form contains some errors. Please correct them to update the user."
 msgstr ""
 "Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um den "
-"Nutzer zu aktualisieren."
+"Benutzer zu aktualisieren."
 
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:10
 #: IDF/gettexttemplates/idf/register/confirmation.html.php:4
@@ -2449,7 +2450,7 @@ msgid ""
 "is still valid and more work is needed to fully fix it."
 msgstr ""
 "Dieses Ticket wurde als geschlossen markiert. Füge nur dann einen Kommentar "
-"hinzu, wenn du denkst, dass das geschilderte Problem noch nicht ganz "
+"hinzu, wenn Du denkst, dass das geschilderte Problem noch nicht ganz "
 "beseitigt wurde."
 
 #: IDF/gettexttemplates/idf/issues/view.html.orig.php:8
@@ -2531,7 +2532,7 @@ msgid ""
 "If you don't have an account yet, you can create one <a href=\"%%url%%"
 "\">here</a>."
 msgstr ""
-"Wenn Du noch kein Konto hast, kannst Du <a href=\"%%url%%\">hier</a> ein "
+"Wenn Du noch kein Benutzerkonto hast, kannst Du <a href=\"%%url%%\">hier</a> ein "
 "neues erstellen."
 
 #: IDF/gettexttemplates/idf/login_form.html.php:4
@@ -2560,7 +2561,7 @@ msgstr "Willkommen."
 
 #: IDF/gettexttemplates/idf/login_form.html.php:10
 msgid "It takes less than a minute to create your account."
-msgstr "Es dauert weniger als eine Minute, um Dein Konto zu erstellen."
+msgstr "Es dauert weniger als eine Minute, um Dein Benutzerkonto zu erstellen."
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:3
 #, php-format
@@ -2576,7 +2577,7 @@ msgstr "Abmelden"
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:5
 msgid "Sign in or create your account"
-msgstr "Anmelden oder Konto erstellen"
+msgstr "Anmelden oder Benutzerkonto erstellen"
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:8 IDF/Views/Admin.php:42
 msgid "Forge Management"
@@ -2671,7 +2672,7 @@ msgid ""
 msgstr ""
 "Hallo,\n"
 "\n"
-"Du hast die Anlage eines Kontos angeforder, um an dem Leben\n"
+"Du hast die Anlage eines Benutzerkontos angefordert, um an dem Leben\n"
 "eines Softwareprojektes teilhaben zu können.\n"
 "\n"
 "Um Dein Konto zu bestätigen, folge bitte dem folgenden Link:\n"
@@ -2688,7 +2689,7 @@ msgstr ""
 "\n"
 "Wenn Du nicht mehr länger an diesem Software-Projekt\n"
 "interessiert bist oder wenn Du Dich nicht daran erinnern\n"
-"kannst, dieses Konto erstellen zu wollen, entschuldige\n"
+"kannst, dieses Benutzerkonto erstellen zu wollen, entschuldige\n"
 "und ignoriere einfach diese E-Mail.\n"
 "\n"
 "Mit freundlichen Grüßen,\n"
@@ -2716,7 +2717,7 @@ msgid ""
 "strong> to log in afterwards."
 msgstr ""
 "Dies ist der letzte Schritt, aber bitte <strong>stelle sicher, dass Du "
-"Cookies aktiviert hast</strong>, um Dich im folgenden anzumelden."
+"Cookies aktiviert hast</strong>, um Dich im Folgenden anzumelden."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:3
 #: IDF/gettexttemplates/idf/register/index.html~.php:3
@@ -2736,7 +2737,7 @@ msgid ""
 "login name and password."
 msgstr ""
 "Wenn Du einfach nur Deine Anmeldedaten vergessen hast, gibt es keinen Grund, "
-"ein neues Konto zu erstellen. Gehe einfach <a href=\"%%url%%\">hier her</a>, "
+"ein neues Benutzerkonto zu erstellen. Gehe einfach <a href=\"%%url%%\">hier her</a>, "
 "um Deinen Anmeldenamen und Dein Passwort wiederherzustellen."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
@@ -2748,7 +2749,7 @@ msgid ""
 "you have troubles, you can <a href=\"%%url%%\">let us know about your issues "
 "at anytime</a>!"
 msgstr ""
-"Durch Dein Konto bist Du in der Lage, an dem Leben aller Softwareprojekte, "
+"Durch Dein Benutzerkonto bist Du in der Lage, an dem Leben aller Softwareprojekte, "
 "die hierüber verwaltet werden, teilzuhaben. Das Teilnehmen an einem "
 "Softwareprojekt muss Spass machen, deshalb <a href=\"%%url%%\">lass uns "
 "jederzeit von Deinen Problemen wissen</a>, solltest Du welche haben."
@@ -3209,13 +3210,13 @@ msgstr "Zweige filtern"
 #: IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:5
 #: IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:5
 msgid "Tags"
-msgstr "Marken"
+msgstr "Tags"
 
 #: IDF/gettexttemplates/idf/source/git/branch_tag_list.html.php:6
 #: IDF/gettexttemplates/idf/source/mercurial/branch_tag_list.html.php:6
 #: IDF/gettexttemplates/idf/source/mtn/branch_tag_list.html.php:6
 msgid "filter tags"
-msgstr "Marken filtern"
+msgstr "Tags filtern"
 
 #: IDF/gettexttemplates/idf/source/git/file.html.php:3
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:3
@@ -3442,7 +3443,7 @@ msgstr "Zweige:"
 
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:18
 msgid "Tags:"
-msgstr "Marken:"
+msgstr "Tags:"
 
 #: IDF/gettexttemplates/idf/user/changeemail-email.txt.php:3
 #, php-format
@@ -3491,7 +3492,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/user/changeemail.html.php:4
 msgid "Confirm Your New Email Address"
-msgstr "Bestätige deine neue Email-Adresse"
+msgstr "Bestätige Deine neue Email-Adresse"
 
 #: IDF/gettexttemplates/idf/user/changeemail.html.php:7
 #: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:7
@@ -3508,7 +3509,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:3
 #, php-format
 msgid "<a href=\"%%url%%\">Update your account</a>."
-msgstr "<a href=\"%%url%%\">Aktualisiere Dein Konto</a>."
+msgstr "<a href=\"%%url%%\">Aktualisiere Dein Benutzerkonto</a>."
 
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:4
 #, php-format
@@ -3578,7 +3579,7 @@ msgid ""
 "If possible, use your real name. By using your real name, people will have "
 "more trust in your comments and remarks."
 msgstr ""
-"Wenn möglich, nutze Deinen realen Namen. Dadurch wird deinen Kommentaren und "
+"Wenn möglich, nutze Deinen realen Namen. Dadurch wird Deinen Kommentaren und "
 "Bemerkungen mehr Vertrauen geschenkt."
 
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:19
@@ -3646,7 +3647,7 @@ msgstr ""
 "Hallo %%user%%,\n"
 "\n"
 "Du hast Dein Passwort verloren und möchtest es wiederherstellen.\n"
-"Um ein neues Passwort für Dein Konto anzugeben, musst Du lediglich\n"
+"Um ein neues Passwort für Dein Benutzerkonto anzugeben, musst Du lediglich\n"
 "dem folgenden Link folgen. Sie führt zu einer einfachen Eingabemaske,\n"
 "mit der Du ein neues Passwort setzen kannst.\n"
 "\n"
@@ -3801,7 +3802,7 @@ msgstr ""
 "a> mit der <a href=\"%%eurl%%\"><em>Extra</em>-Erweiterung</a> verwendet "
 "werden.</p>\n"
 "<p>Website-Adresses werden automatisch verlinkt und Du kannst außerdem zu "
-"anderen Dokumentations-Seiten durch die Benutzung von doppelten, eckige "
+"anderen Dokumentations-Seiten durch die Benutzung von doppelten, eckigen "
 "Klammern verlinken, etwa so: [[AndereSeite]].</p>\n"
 "<p>Um direkt die Inhalte einer Datei aus dem Depot einzubinden, umklammere "
 "den Pfad zur Datei mit dreifachen, eckigen Klammern: [[[Pfad/zu/Datei.txt]]]."
@@ -4388,7 +4389,7 @@ msgstr "Administrator"
 
 #: IDF/Views/Admin.php:214
 msgid "Last Login"
-msgstr "Letzter Login"
+msgstr "Letztes Login"
 
 #: IDF/Views/Admin.php:221
 msgid "No users were found."
@@ -4954,7 +4955,7 @@ msgstr ""
 
 #: IDF/Views.php:284
 msgid "Here to Help You!"
-msgstr "Hier, um dir zu helfen!"
+msgstr "Hier, um Dir zu helfen!"
 
 #: IDF/Views.php:300
 msgid "InDefero API (Application Programming Interface)"
