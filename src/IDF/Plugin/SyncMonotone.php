@@ -132,7 +132,7 @@ class IDF_Plugin_SyncMonotone
         foreach ($confdir_contents as $content) {
             if (!file_exists($confdir.$content)) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('The configuration file "%s" is missing.'), $content
+                    __('The configuration file %s is missing.'), $content
                 ));
             }
         }
@@ -141,16 +141,13 @@ class IDF_Plugin_SyncMonotone
         $projectpath = sprintf($projecttempl, $shortname);
         if (file_exists($projectpath)) {
             throw new IDF_Scm_Exception(sprintf(
-                __('The project path "%s" already exists.'), $projectpath
+                __('The project path %s already exists.'), $projectpath
             ));
         }
 
-        if (!@mkdir($projectpath)) {
-            $err = error_get_last();
-            $err = $err == null ? 'unknown error' : $err['message'];
+        if (!mkdir($projectpath)) {
             throw new IDF_Scm_Exception(sprintf(
-                __('The project path "%s" could not be created: %s'),
-                $projectpath, $err
+                __('The project path %s could not be created.'), $projectpath
             ));
         }
 
@@ -185,12 +182,9 @@ class IDF_Plugin_SyncMonotone
         //
         $keydir = Pluf::f('tmp_folder').'/mtn-client-keys';
         if (!file_exists($keydir)) {
-            if (!@mkdir($keydir)) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
+            if (!mkdir($keydir)) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('The key directory "%s" could not be created: %s'),
-                    $keydir, $err
+                    __('The key directory %s could not be created.'), $keydir
                 ));
             }
         }
@@ -244,24 +238,18 @@ class IDF_Plugin_SyncMonotone
         foreach ($confdir_contents as $content) {
             $filepath = $projectpath.'/'.$content;
             if (substr($content, -1) == '/') {
-                if (!@mkdir($filepath)) {
-                    $err = error_get_last();
-                    $err = $err == null ? 'unknown error' : $err['message'];
+                if (!mkdir($filepath)) {
                     throw new IDF_Scm_Exception(sprintf(
-                        __('Could not create configuration directory "%s": %s'),
-                        $filepath, $err
+                        __('Could not create configuration directory "%s"'), $filepath
                     ));
                 }
                 continue;
             }
 
             if (substr($content, -3) != '.in') {
-                if (!@symlink($confdir.$content, $filepath)) {
-                    $err = error_get_last();
-                    $err = $err == null ? 'unknown error' : $err['message'];
+                if (!symlink($confdir.$content, $filepath)) {
                     IDF_Scm_Exception(sprintf(
-                        __('Could not create symlink for configuration file "%s": %s'),
-                        $filepath, $err
+                        __('Could not create symlink "%s"'), $filepath
                     ));
                 }
                 continue;
@@ -276,12 +264,9 @@ class IDF_Plugin_SyncMonotone
 
             // remove the .in
             $filepath = substr($filepath, 0, -3);
-            if (@file_put_contents($filepath, $filecontents, LOCK_EX) === false) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
+            if (file_put_contents($filepath, $filecontents, LOCK_EX) === false) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not write configuration file "%s": %s'),
-                    $filepath, $err
+                    __('Could not write configuration file "%s"'), $filepath
                 ));
             }
         }
@@ -330,12 +315,9 @@ class IDF_Plugin_SyncMonotone
 
         // FIXME: more sanity - what happens on failing writes? we do not
         // have a backup copy of usher.conf around...
-        if (@file_put_contents($usher_config, $usher_rc, LOCK_EX) === false) {
-            $err = error_get_last();
-            $err = $err == null ? 'unknown error' : $err['message'];
+        if (file_put_contents($usher_config, $usher_rc, LOCK_EX) === false) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write usher configuration file "%s": %s'),
-                $usher_config, $err
+                __('Could not write usher configuration file "%s"'), $usher_config
             ));
         }
 
@@ -379,12 +361,9 @@ class IDF_Plugin_SyncMonotone
 
         $write_permissions = implode("\n", $key_ids);
         $rcfile = $projectpath.'/write-permissions';
-        if (@file_put_contents($rcfile, $write_permissions, LOCK_EX) === false) {
-            $err = error_get_last();
-            $err = $err == null ? 'unknown error' : $err['message'];
+        if (file_put_contents($rcfile, $write_permissions, LOCK_EX) === false) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write write-permissions file "%s": %s'),
-                $rcfile, $err
+                __('Could not write write-permissions file "%s"'), $rcfile
             ));
         }
 
@@ -405,12 +384,9 @@ class IDF_Plugin_SyncMonotone
         }
         $read_permissions = IDF_Scm_Monotone_BasicIO::compile(array($stanza));
         $rcfile = $projectpath.'/read-permissions';
-        if (@file_put_contents($rcfile, $read_permissions, LOCK_EX) === false) {
-            $err = error_get_last();
-            $err = $err == null ? 'unknown error' : $err['message'];
+        if (file_put_contents($rcfile, $read_permissions, LOCK_EX) === false) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write read-permissions file "%s": %s'),
-                $rcfile, $err
+                __('Could not write read-permissions file "%s"'), $rcfile
             ));
         }
 
@@ -425,19 +401,17 @@ class IDF_Plugin_SyncMonotone
 
         $serverRestartRequired = false;
         if ($project->private && file_exists($projectfile) && is_link($projectfile)) {
-            if (!@unlink($projectfile)) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
+            if (!unlink($projectfile)) {
                 IDF_Scm_Exception(sprintf(
-                    __('Could not remove symlink "%s": %s'), $projectfile, $err
+                    __('Could not remove symlink "%s"'), $projectfile
                 ));
             }
             $serverRestartRequired = true;
         } else
         if (!$project->private && !file_exists($projectfile)) {
-            if (!@symlink($templatefile, $projectfile)) {
+            if (!symlink($templatefile, $projectfile)) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not create symlink "%s": %s'), $projectfile, $err
+                    __('Could not create symlink "%s"'), $projectfile
                 ));
             }
             $serverRestartRequired = true;
@@ -499,11 +473,8 @@ class IDF_Plugin_SyncMonotone
         if ($keyname && $keyhash &&
             file_exists($keydir .'/'. $keyname . '.' . $keyhash)) {
             if (!@unlink($keydir .'/'. $keyname . '.' . $keyhash)) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not delete client private key "%s": %s'),
-                    $keyname, $err
+                    __('Could not delete client private key %s'), $keyname
                 ));
             }
         }
@@ -534,12 +505,9 @@ class IDF_Plugin_SyncMonotone
 
         // FIXME: more sanity - what happens on failing writes? we do not
         // have a backup copy of usher.conf around...
-        if (@file_put_contents($usher_config, $usher_rc, LOCK_EX) === false) {
-            $err = error_get_last();
-            $err = $err == null ? 'unknown error' : $err['message'];
+        if (file_put_contents($usher_config, $usher_rc, LOCK_EX) === false) {
             throw new IDF_Scm_Exception(sprintf(
-                __('Could not write usher configuration file "%s": %s'),
-                $usher_config, $err
+                __('Could not write usher configuration file "%s"'), $usher_config
             ));
         }
 
@@ -630,13 +598,10 @@ class IDF_Plugin_SyncMonotone
 
                 $read_perms = IDF_Scm_Monotone_BasicIO::compile($parsed_read_perms);
 
-                if (@file_put_contents($projectpath.'/read-permissions',
+                if (file_put_contents($projectpath.'/read-permissions',
                                       $read_perms, LOCK_EX) === false) {
-                    $err = error_get_last();
-                    $err = $err == null ? 'unknown error' : $err['message'];
                     throw new IDF_Scm_Exception(sprintf(
-                        __('Could not write read-permissions for project "%s": %s'),
-                        $shortname, $err
+                        __('Could not write read-permissions for project "%s"'), $shortname
                     ));
                 }
             }
@@ -646,13 +611,11 @@ class IDF_Plugin_SyncMonotone
             if (!in_array('*', $lines) && !in_array($mtn_key_id, $lines)) {
                 $lines[] = $mtn_key_id;
             }
-            if (@file_put_contents($projectpath.'/write-permissions',
+            if (file_put_contents($projectpath.'/write-permissions',
                                   implode("\n", $lines) . "\n", LOCK_EX) === false) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not write write-permissions file for project "%s": %s'),
-                    $shortname, $err
+                    __('Could not write write-permissions file for project "%s"'),
+                    $shortname
                 ));
             }
 
@@ -730,13 +693,10 @@ class IDF_Plugin_SyncMonotone
 
                 $read_perms = IDF_Scm_Monotone_BasicIO::compile($parsed_read_perms);
 
-                if (@file_put_contents($projectpath.'/read-permissions',
+                if (file_put_contents($projectpath.'/read-permissions',
                                       $read_perms, LOCK_EX) === false) {
-                    $err = error_get_last();
-                    $err = $err == null ? 'unknown error' : $err['message'];
                     throw new IDF_Scm_Exception(sprintf(
-                        __('Could not write read-permissions for project "%s": %s'),
-                        $shortname, $err
+                        __('Could not write read-permissions for project "%s"'), $shortname
                     ));
                 }
             }
@@ -751,13 +711,11 @@ class IDF_Plugin_SyncMonotone
                     continue;
                 }
             }
-            if (@file_put_contents($projectpath.'/write-permissions',
-                                   implode("\n", $lines) . "\n", LOCK_EX) === false) {
-                $err = error_get_last();
-                $err = $err == null ? 'unknown error' : $err['message'];
+            if (file_put_contents($projectpath.'/write-permissions',
+                                  implode("\n", $lines) . "\n", LOCK_EX) === false) {
                 throw new IDF_Scm_Exception(sprintf(
-                    __('Could not write write-permissions file for project "%s": %s'),
-                    $shortname, $err
+                    __('Could not write write-permissions file for project "%s"'),
+                    $shortname
                 ));
             }
 
@@ -865,7 +823,7 @@ class IDF_Plugin_SyncMonotone
             foreach ($scan as $subpath) {
                 $status |= self::_delete_recursive($subpath);
             }
-            $status |= @rmdir($path);
+            $status |= rmdir($path);
             return $status;
         }
     }
