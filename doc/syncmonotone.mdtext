@@ -112,6 +112,10 @@ The monotone plugin can be used in several different ways:
             ^D
             $ chmod 600 usher.conf
 
+    **ATTENTION:** Do _not_ configure a default monotone server key in `usher.conf`,
+    otherwise the individual server key that IDF creates for each project is
+    not used and this could cause problems.
+
     Your indefero www user needs later write access to `usher.conf` and
     `projects/`. There are two ways of setting this up:
 
@@ -135,8 +139,8 @@ The monotone plugin can be used in several different ways:
             # Mac OS X
             #
             chmod +a '_www allow read,write' usher.conf
-            chmod +a '_www allow read,write,delete,file_inherit,directory_inherit' projects/
-            chmod +a 'usher allow read,write,delete,file_inherit,directory_inherit' projects/
+            chmod +a '_www allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' projects/
+            chmod +a 'usher allow read,write,delete,add_file,add_subdirectory,file_inherit,directory_inherit' projects/
 
       In each example's last line, `usher` is the user which is executing
       the usher instance. **It is very important to add this line, otherwise
