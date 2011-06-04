@@ -17,6 +17,9 @@
 - Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
 - Diff views now show empty context lines for git and hg again (issue 688)
 - Let the SVN command line client not store the login credentials we give him as arguments
+- The usher section in the forge administration no longer displays a bogus
+  server enty in case no monotone server is configured in the connected
+  usher instance
 
 ## Documentation
 

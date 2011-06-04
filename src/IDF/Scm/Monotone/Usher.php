@@ -48,7 +48,7 @@ class IDF_Scm_Monotone_Usher
         if ($conn == 'none')
             return array();
 
-        return preg_split('/[ ]/', $conn);
+        return preg_split('/[ ]/', $conn, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
@@ -73,7 +73,7 @@ class IDF_Scm_Monotone_Usher
         if ($conn == 'none')
             return array();
 
-        $single_conns = preg_split('/[ ]/', $conn);
+        $single_conns = preg_split('/[ ]/', $conn, -1, PREG_SPLIT_NO_EMPTY);
         $ret = array();
         foreach ($single_conns as $conn) {
             preg_match('/\((\w+)\)([^:]+):(\d+)/', $conn, $matches);

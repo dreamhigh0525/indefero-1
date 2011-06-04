@@ -9,6 +9,11 @@
     <th>{trans "status"}</th>
     <th>{trans "action"}</th>
 </tr>
+{if count($servers) == 0}
+<tr>
+    <td colspan="3" align="center">{trans 'No monotone servers configured.'}</td>
+</tr>
+{else}
 {foreach $servers as $server}
 <tr>
     <td>{$server.name}</td>
@@ -31,6 +36,7 @@
         {/if}
 </tr>
 {/foreach}
+{/if}
 </table>
 {/block}
 
