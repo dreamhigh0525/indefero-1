@@ -25,7 +25,7 @@ If you install monotone from source (<http://monotone.ca/downloads.php>),
 please follow the `INSTALL` document which comes with the software.
 It contains detailed instructions, including all needed dependencies.
 
-## Choose your indefero setup
+## Choose your indefero (IDF) setup
 
 The monotone plugin can be used in several different ways:
 
@@ -115,11 +115,33 @@ The monotone plugin can be used in several different ways:
     Your indefero www user needs later write access to `usher.conf` and
     `projects/`. There are two ways of setting this up:
 
-    * Make the usher user the web user, for example via Apache's `suexec`
-    * Use acls, like this:
+    * Make the usher user the web user, for example via Apache's `suexec`.
+      This is however a bit clumsy.
+    * Preferred: Use Access Control Lists (ACLs), like this:
 
+            #
+            # Linux
+            #
             $ setfacl -m u:www:rw usher.conf
             $ setfacl -m d:u:www:rwx projects/
+            $ setfacl -m d:u:usher:rwx projects/
+            #
+            # FreeBSD
+            #
+            $ setfacl -m user:www:rw::allow usher.conf
+            $ setfacl -m user:www:rwxp:fd:allow projects/
+            $ setfacl -m user:usher:rwxp:fd:allow projects/
+            #
+            # Mac OS X
+            #
+            chmod +a '_www allow read,write' usher.conf
+            chmod +a '_www allow read,write,delete,file_inherit,directory_inherit' projects/
+            chmod +a 'usher allow read,write,delete,file_inherit,directory_inherit' projects/
+
+      In each example's last line, `usher` is the user which is executing
+      the usher instance. **It is very important to add this line, otherwise
+      usher won't be able to read and write into the initial file system
+      setup IDF creates!**
 
 5. Wrap a daemonizer around usher, for example supervise from daemontools
    (<http://cr.yp.to/damontools.html>):
