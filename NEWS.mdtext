@@ -20,8 +20,15 @@
 - The usher section in the forge administration no longer displays a bogus
   server enty in case no monotone server is configured in the connected
   usher instance
+- Prevent a timeout from popping up when Usher is restarted (issue 695)
+- The SyncMonotone plugin now cleans up partial artifacts it created during the addition of
+  a new project or monotone key, in case an error popped up in the middle (issue 697)
+- Better error detection and reporting in the SyncMonotone plugin
+  ATTENTION: This needs Pluf 46b7f251 or newer!
 
 ## Documentation
+
+- The documentation on the setup of the monotone plugin has been improved.
 
 ## Translations
 
