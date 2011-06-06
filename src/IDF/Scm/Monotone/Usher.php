@@ -76,7 +76,7 @@ class IDF_Scm_Monotone_Usher
         $single_conns = preg_split('/[ ]/', $conn, -1, PREG_SPLIT_NO_EMPTY);
         $ret = array();
         foreach ($single_conns as $conn) {
-            preg_match('/\((\w+)\)([^:]+):(\d+)/', $conn, $matches);
+            preg_match('/\(([^)]+)\)([^:]+):(\d+)/', $conn, $matches);
             $ret[$matches[1]][] = (object)array(
                 'server'    => $matches[1],
                 'address'   => $matches[2],
