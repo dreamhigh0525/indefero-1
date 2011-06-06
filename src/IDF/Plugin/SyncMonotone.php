@@ -283,7 +283,7 @@ class IDF_Plugin_SyncMonotone
 
             if (substr($content, -3) != '.in') {
                 if (!@symlink($confdir.$content, $filepath)) {
-                    IDF_Scm_Exception(sprintf(
+                    $this->_diagnoseProblem(sprintf(
                         __('Could not create symlink for configuration file "%s"'),
                         $filepath
                     ));
@@ -446,7 +446,7 @@ class IDF_Plugin_SyncMonotone
         $serverRestartRequired = false;
         if ($project->private && file_exists($projectfile) && is_link($projectfile)) {
             if (!@unlink($projectfile)) {
-                IDF_Scm_Exception(sprintf(
+                $this->_diagnoseProblem(sprintf(
                     __('Could not remove symlink "%s"'), $projectfile
                 ));
             }
