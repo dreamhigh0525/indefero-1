@@ -142,13 +142,12 @@ class IDF_Plugin_SyncMonotone
              'monotonerc.in',
              'remote-automate-permissions.in',
              'hooks.d/',
-             // this is linked and not copied to be able to update
-             // the list of read-only commands on upgrades
-             'hooks.d/indefero_authorize_remote_automate.conf',
              'hooks.d/indefero_authorize_remote_automate.lua',
              'hooks.d/indefero_post_push.conf.in',
              'hooks.d/indefero_post_push.lua',
         );
+        // enable remote command execution of read-only commands
+        // only for public projects
         if (!$project->private) {
             // this is linked and not copied to be able to update
             // the list of read-only commands on upgrades
