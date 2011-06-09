@@ -1,7 +1,12 @@
 # InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
 
+ATTENTION: You need Pluf [324ae60b](http://projects.ceondo.com/p/pluf/source/commit/324ae60b)
+or newer to properly run this version of Indefero!
+
 ## New Features
 
+- Indefero's issue tracker can now bi-directionally link issues with variable, configurable
+  terms, such as "is related to", "is blocked by" or "is duplicated by" (issue 638)
 - Mercurial source views now show parent revisions (if any) and detailed change information
 - File download URLs now contain the file name rather than the upload id; old links still work though (issues 559 and 686)
 - Display monotone file and directory attributes in the tree and file view

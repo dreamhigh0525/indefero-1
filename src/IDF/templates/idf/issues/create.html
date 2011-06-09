@@ -63,6 +63,15 @@
 </td>
 </tr>
 <tr>
+<th>{$form.f.relation_type0.labelTag}:</th>
+<td>
+{if $form.f.relation_type0.errors}{$form.f.relation_type0.fieldErrors}{/if}
+{if $form.f.relation_issue0.errors}{$form.f.relation_issue0.fieldErrors}{/if}
+{$form.f.relation_type0|unsafe}
+{$form.f.relation_issue0|unsafe}
+</td>
+</tr>
+<tr>
 <th>{$form.f.label1.labelTag}:</th>
 <td>
 {if $form.f.label1.errors}{$form.f.label1.fieldErrors}{/if}{$form.f.label1|unsafe}
@@ -76,8 +85,8 @@
 <tr>
 <td>&nbsp;</td>
 <td>
-<input type="submit" value="{trans 'Submit Issue'}" name="submit" /> 
-<input type="submit" value="{trans 'Preview'}" name="preview" /> | 
+<input type="submit" value="{trans 'Submit Issue'}" name="submit" />
+<input type="submit" value="{trans 'Preview'}" name="preview" /> |
 <a href="{url 'IDF_Views_Issue::index', array($project.shortname)}">{trans 'Cancel'}</a>
 </td>
 </tr>
@@ -123,11 +132,11 @@ $(document).ready(function(){
         });
     var j=0;
     for (j=1;j<4;j=j+1) {
-	if($("tr#form-attachment-"+j+" > td > ul.errorlist").length == 0){
-        	$("#form-attachment-"+j).hide();
-	}else{
-		$("#form-block-"+(j-1)).remove();
-	}
+    if($("tr#form-attachment-"+j+" > td > ul.errorlist").length == 0){
+            $("#form-attachment-"+j).hide();
+    }else{
+        $("#form-block-"+(j-1)).remove();
+    }
     }
     });
 </script>

@@ -37,6 +37,10 @@ help:
 	@printf "\tpo-push    - Send the all PO files to the transifex server.\n"
 	@printf "\tpo-pull    - Get all PO files from the transifex server.\n"
 	@printf "\tpo-stats   - Show translation statistics of all PO files.\n"
+	@printf "\nMisc Rules :\n";
+	@printf "\tdb-install - Install the database schema.\n"
+	@printf "\tdb-update  - Update the database schema.\n"
+
 
 #
 #   Internationalization rule, POT & PO file manipulation
@@ -139,3 +143,8 @@ po-stats:
 		> indefero-$(@:-zipfile=)-`git log $(@:-zipfile=) -n 1 \
 		--pretty=format:%h`.zip
 
+db-install:
+	@cd src && php $(PLUF_PATH)/migrate.php --conf=IDF/conf/idf.php -a -d -i
+
+db-update:
+	@cd src && php $(PLUF_PATH)/migrate.php --conf=IDF/conf/idf.php -a -d

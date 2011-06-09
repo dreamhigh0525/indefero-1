@@ -38,18 +38,18 @@ class IDF_Views_Project
     public function logo($request, $match)
     {
         $prj = $request->project;
-        
+
         $logo = $prj->getConf()->getVal('logo');
         if (empty($logo)) {
             $url = Pluf::f('url_media') . '/idf/img/no_logo.png';
             return new Pluf_HTTP_Response_Redirect($url);
         }
-        
+
         $info = IDF_FileUtil::getMimeType($logo);
         return new Pluf_HTTP_Response_File(Pluf::f('upload_path') . '/' . $prj->shortname . $logo,
                                            $info[0]);
     }
-    
+
     /**
      * Home page of a project.
      */
@@ -291,12 +291,12 @@ class IDF_Views_Project
     public function admin($request, $match)
     {
         $prj = $request->project;
-        $title = sprintf(__('%s Project Summary'), (string) $prj);    
-        $extra = array('project' => $prj);  
+        $title = sprintf(__('%s Project Summary'), (string) $prj);
+        $extra = array('project' => $prj);
         if ($request->method == 'POST') {
             $form = new IDF_Form_ProjectConf(array_merge($request->POST,
                                                          $request->FILES),
-                                             $extra);      
+                                             $extra);
             if ($form->isValid()) {
                 $form->save();
                 $request->user->setMessage(__('The project has been updated.'));
@@ -305,9 +305,9 @@ class IDF_Views_Project
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
-            $form = new IDF_Form_ProjectConf($prj->getData(), $extra);    
+            $form = new IDF_Form_ProjectConf($prj->getData(), $extra);
         }
-        
+
         $logo = $prj->getConf()->getVal('logo');
         return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
                                                array(
@@ -316,7 +316,7 @@ class IDF_Views_Project
                                                      'project' => $prj,
                                                      'logo' => $logo,
                                                      ),
-                                               $request);        
+                                               $request);
     }
 
     /**
@@ -344,7 +344,8 @@ class IDF_Views_Project
             $params = array();
             $keys = array('labels_issue_template',
                           'labels_issue_open', 'labels_issue_closed',
-                          'labels_issue_predefined', 'labels_issue_one_max');
+                          'labels_issue_predefined', 'labels_issue_one_max',
+                          'issue_relations');
             foreach ($keys as $key) {
                 $_val = $conf->getVal($key, false);
                 if ($_val !== false) {
