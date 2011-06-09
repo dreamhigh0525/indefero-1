@@ -1058,6 +1058,10 @@ span.scm-action.renamed {
   background-color: purple;
 }
 
+span.scm-action.copied {
+  background-color: orchid;
+}
+
 span.scm-action.property-changed {
   background-color: blue;
 }

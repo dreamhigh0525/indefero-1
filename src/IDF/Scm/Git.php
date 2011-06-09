@@ -67,6 +67,7 @@ class IDF_Scm_Git extends IDF_Scm
             'additions'  => array(),
             'deletions'  => array(),
             'renames'    => array(),
+            'copies'     => array(),
             'patches'    => array(),
             'properties' => array(),
         );

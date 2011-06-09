@@ -59,7 +59,7 @@ class IDF_Scm_Mercurial_LogStyle
                 . "\n"
                 . 'file_del = "{file_del}\0"'
                 . "\n"
-                . 'file_copy = "{name}\0{source}\0"'
+                . 'file_copy = "{source}\0{name}\0"'
                 . "\n";
         } else {
             throw new IDF_Scm_Exception('invalid type ' . $type);
@@ -457,24 +457,32 @@ class IDF_Scm_Mercurial extends IDF_Scm
             'patches'    => preg_split('/\0/', $log->file_mods, -1, PREG_SPLIT_NO_EMPTY),
             // hg has no support for built-in attributes, so this keeps empty
             'properties' => array(),
-            // this is filled below
+            // these two are filled below
+            'copies'     => array(),
             'renames'    => array(),
         );
 
         $file_copies = preg_split('/\0/', $log->file_copies, -1, PREG_SPLIT_NO_EMPTY);
 
-        // FIXME: copies are only treated as renames if they have an add _and_
-        // an drop, otherwise they're just treated as adds
+        // copies are treated as renames if they have an add _and_ a drop;
+        // only if they only have an add, but no drop, they're treated as copies
         for ($i=0; $i<count($file_copies); $i+=2) {
-            $new = $file_copies[$i];
-            $old = $file_copies[$i+1];
-            $newidx = array_search($new, $return->additions);
-            $oldidx = array_search($old, $return->deletions);
-            if ($newidx !== false && $oldidx !== false) {
-                $return->renames[$old] = $new;
-                unset($return->additions[$newidx]);
-                unset($return->deletions[$oldidx]);
+            $src = $file_copies[$i];
+            $trg = $file_copies[$i+1];
+            $srcidx = array_search($src, $return->deletions);
+            $trgidx = array_search($trg, $return->additions);
+            if ($srcidx !== false && $trgidx !== false) {
+                $return->renames[$src] = $trg;
+                unset($return->deletions[$srcidx]);
+                unset($return->additions[$trgidx]);
+                continue;
             }
+            if ($srcidx === false && $trgidx !== false) {
+                $return->copies[$src] = $trg;
+                unset($return->additions[$trgidx]);
+                continue;
+            }
+            // file sutures (counter-operation to copy) not supported
         }
 
         return $return;

@@ -34,6 +34,9 @@
 {foreach $changes.renames as $oldname => $newname}
 <tr><td><span class="scm-action renamed" title="{trans 'renamed'}">R</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $newname)}">{$oldname} &rarr; {$newname}</a></td></tr>
 {/foreach}
+{foreach $changes.copies as $srcname => $destname}
+<tr><td><span class="scm-action copied" title="{trans 'copied'}">C</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $destname)}">{$srcname} &rarr; {$destname}</a></td></tr>
+{/foreach}
 {foreach $changes.additions as $filename}
 <tr><td><span class="scm-action added" title="{trans 'added'}">A</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $filename)}">{$filename}</a>{if !empty($diff.files[$filename])} (<a href="#diff-{$filename|md5}">{trans 'full'}</a>){/if}</td></tr>
 {/foreach}

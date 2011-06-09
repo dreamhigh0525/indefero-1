@@ -340,7 +340,8 @@ class IDF_Scm
      * stdClass object {
      *  'additions' => array('path/to/file', 'path/to/directory', ...),
      *  'deletions' => array('path/to/file', 'path/to/directory', ...),
-     *  'renames' => array('old/path/to/file' => 'new/path/to/file', ...)
+     *  'renames' => array('old/path/to/file' => 'new/path/to/file', ...),
+     *  'copies' => array('path/to/source' => 'path/to/target', ...),
      *  'patches' => array('path/to/file', ...),
      *  'properties' => array('path/to/file' => array(
      *              'propname' => 'propvalue', 'deletedprop' => null, ...)
