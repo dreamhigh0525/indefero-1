@@ -530,10 +530,10 @@ class IDF_Scm_Svn extends IDF_Scm
 
         // copies are treated as renames if they have an add _and_ a drop;
         // only if they only have an add, but no drop, they're treated as copies
-        foreach ($xml->paths as $path) {
-            $trg = (string) $path;
+        foreach ($entry->paths->path as $p) {
+            $trg = (string) $p;
             $src = null;
-            foreach ($path->attributes() as $k => $v) {
+            foreach ($p->attributes() as $k => $v) {
                 if ((string) $k == 'copyfrom-path') {
                     $src = (string) $v;
                     break;
