@@ -479,6 +479,88 @@ class IDF_Scm_Svn extends IDF_Scm
         return self::shell_exec('IDF_Scm_Svn::getDiff', $cmd);
     }
 
+    /**
+     * @see IDF_Scm::getChanges()
+     */
+    public function getChanges($commit)
+    {
+        if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
+            return null;
+        }
+        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --xml -v --no-auth-cache -r %s --username=%s --password=%s %s',
+                       escapeshellarg($commit),
+                       escapeshellarg($this->username),
+                       escapeshellarg($this->password),
+                       escapeshellarg($this->repo));
+        $out = array();
+        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $out = self::shell_exec('IDF_Scm_Svn::getChanges', $cmd);
+        $xml = simplexml_load_string($out);
+        if (count($xml) == 0) {
+            return null;
+        }
+        $entry = current($xml);
+
+        $return = (object) array(
+            'additions'  => array(),
+            'deletions'  => array(),
+            'patches'    => array(),
+            // while SVN has support for attributes, we cannot see their changes
+            // in the log's XML unfortunately
+            'properties' => array(),
+            'copies'     => array(),
+            'renames'    => array(),
+        );
+
+        foreach ($entry->paths->path as $p) {
+            $path = (string) $p;
+            foreach ($p->attributes() as $k => $v) {
+                $key = (string) $k;
+                $val = (string) $v;
+                if ($key != 'action')
+                    continue;
+                if ($val == 'M')
+                    $return->patches[] = $path;
+                else if ($val == 'A')
+                    $return->additions[] = $path;
+                else if ($val == 'D')
+                    $return->deletions[] = $path;
+            }
+        }
+
+        // copies are treated as renames if they have an add _and_ a drop;
+        // only if they only have an add, but no drop, they're treated as copies
+        foreach ($xml->paths as $path) {
+            $trg = (string) $path;
+            $src = null;
+            foreach ($path->attributes() as $k => $v) {
+                if ((string) $k == 'copyfrom-path') {
+                    $src = (string) $v;
+                    break;
+                }
+            }
+
+            if ($src == null)
+                continue;
+
+            $srcidx = array_search($src, $return->deletions);
+            $trgidx = array_search($trg, $return->additions);
+            if ($srcidx !== false && $trgidx !== false) {
+                $return->renames[$src] = $trg;
+                unset($return->deletions[$srcidx]);
+                unset($return->additions[$trgidx]);
+                continue;
+            }
+            if ($srcidx === false && $trgidx !== false) {
+                $return->copies[$src] = $trg;
+                unset($return->additions[$trgidx]);
+                continue;
+            }
+            // file sutures (counter-operation to copy) not supported
+        }
+
+        return $return;
+    }
 
     /**
      * Get latest changes.
