@@ -101,16 +101,15 @@ class IDF_Scm
      */
     public static function exec($caller, $cmd, &$out=null, &$return=null)
     {
-        $return = 1;
+        $return = -1;
         Pluf_Log::stime('timer');
         $fp = popen($cmd, 'r');
         $buf = '';
         if ($fp !== false) {
-            $return = 0;
             while (!feof($fp)) {
                 $buf .= fread($fp, 1024);
             }
-            pclose($fp);
+            $return = pclose($fp);
         }
         $out = preg_split('/\r\n|\r|\n/', $buf);
         $elem = count($out);
