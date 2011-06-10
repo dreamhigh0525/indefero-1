@@ -77,6 +77,12 @@ class IDF_Upload extends Pluf_Model
                                   'default' => 0,
                                   'verbose' => __('file size in bytes'),
                                   ),
+                            'md5' =>
+                            array(
+                                  'type' => 'Pluf_DB_Field_Text',
+                                  'blank' => true,
+                                  'verbose' => __('MD5'),
+                                  ),
                             'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
@@ -144,6 +150,7 @@ class IDF_Upload extends Pluf_Model
         if ($this->id == '') {
             $this->creation_dtime = gmdate('Y-m-d H:i:s');
             $this->modif_dtime = gmdate('Y-m-d H:i:s');
+            $this->md5 = md5_file (Pluf::f('upload_path') . '/' . $this->get_project()->shortname . '/files/' . $this->file);
         }
     }
 
