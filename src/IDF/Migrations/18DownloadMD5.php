@@ -25,7 +25,7 @@
  * Add the md5 column for the download model.
  */
 
-function IDF_Migrations_17DownloadMD5_up($params=null)
+function IDF_Migrations_18DownloadMD5_up($params=null)
 {
     // Add the row
     $table = Pluf::factory('IDF_Upload')->getSqlTable();
@@ -47,7 +47,7 @@ function IDF_Migrations_17DownloadMD5_up($params=null)
     }
 }
 
-function IDF_Migrations_17DownloadMD5_down($params=null)
+function IDF_Migrations_18DownloadMD5_down($params=null)
 {
     // Remove the row
     $table = Pluf::factory('IDF_Upload')->getSqlTable();
