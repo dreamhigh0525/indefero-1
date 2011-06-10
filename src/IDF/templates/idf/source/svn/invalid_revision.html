@@ -2,16 +2,17 @@
 {block docclass}yui-t2{assign $inError=true}{/block}
 {block body}
 
-<p>{blocktrans}The branch or revision <b>{$commit}</b> is not valid or does not exist
+<p>{blocktrans}The revision <b>{$commit}</b> is not valid or does not exist
 in this repository.{/blocktrans}</p>
 
 {if count($branches) > 0}
 <p>{blocktrans}The following list shows all available branches:{/blocktrans}</p>
 <ul>
 {foreach $branches as $branch => $path}
-{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, $branch)}
+{if $path}{aurl 'url', 'IDF_Views_Source::tree', array($project.shortname, 'HEAD', $path)}
+{else}{aurl 'url', 'IDF_Views_Source::treeBase', array($project.shortname, 'HEAD')}{/if}
 <li class="label">
-  <a href="{$url}" class="label">{if $path}{$path}{else}{$branch}{/if}</a>
+  <a href="{$url}" class="label">{$branch}</a>
 </li>
 {/foreach}
 </ul>

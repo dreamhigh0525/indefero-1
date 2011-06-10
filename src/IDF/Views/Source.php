@@ -66,7 +66,8 @@ class IDF_Views_Source
                         'commit' => $commit,
                         'branches' => $branches,
                         );
-        return Pluf_Shortcuts_RenderToResponse('idf/source/invalid_revision.html',
+        $scmConf = $request->conf->getVal('scm', 'git');
+        return Pluf_Shortcuts_RenderToResponse('idf/source/'.$scmConf.'/invalid_revision.html',
                                                $params, $request);
     }
 

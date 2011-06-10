@@ -31,6 +31,8 @@ or newer to properly run this version of Indefero!
   a new project or monotone key, in case an error popped up in the middle (issue 697)
 - Better error detection and reporting in the SyncMonotone plugin
   ATTENTION: This needs Pluf 46b7f251 or newer!
+- Fix the branch links users of the Subversion frontend get when they enter a wrong revision
+  and only display this list if there are any branches available for all SCMs
 
 ## Documentation
 
