@@ -58,7 +58,7 @@ class IDF_Views_Source
         $title = sprintf(__('%s Invalid Revision'), (string) $request->project);
         $scm = IDF_Scm::get($request->project);
         $branches = $scm->getBranches();
-        
+
         $commit = $match[2];
         $params = array(
                         'page_title' => $title,
@@ -307,12 +307,7 @@ class IDF_Views_Source
         $cobject->diff = null;
         $diff->parse();
         $scmConf = $request->conf->getVal('scm', 'git');
-        try {
-            $changes = $scm->getChanges($commit);
-        } catch (Exception $e) {
-            // getChanges is not yes supported by this backend.
-            $changes = array();
-        }
+        $changes = $scm->getChanges($commit);
         $branches = $scm->getBranches();
         $in_branches = $scm->inBranches($cobject->commit, '');
         $tags = $scm->getTags();
@@ -477,7 +472,7 @@ class IDF_Views_Source
         }
 
         // compare two nodes of different types, directories ("tree")
-        // should come before files ("blob") 
+        // should come before files ("blob")
         if ($a->type > $b->type) {
             return -1;
         }
