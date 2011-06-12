@@ -675,7 +675,7 @@ class IDF_Plugin_SyncMonotone
             $stdio->exec(array('put_public_key', $key->content));
         }
 
-        $key->commit();
+        $keyGuard->commit();
     }
 
     /**
