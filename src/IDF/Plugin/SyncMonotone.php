@@ -39,17 +39,6 @@ class IDF_Plugin_SyncMonotone
         error_reporting($this->old_err_rep);
     }
 
-    private function _diagnoseProblem($msg)
-    {
-        $system_err = error_get_last();
-        if (!empty($system_err)) {
-            $msg .= ': '.$system_err['message'];
-        }
-
-        error_reporting($this->old_err_rep);
-        throw new IDF_Scm_Exception($msg);
-    }
-
     /**
      * Entry point of the plugin.
      */
@@ -188,7 +177,7 @@ class IDF_Plugin_SyncMonotone
         //
         $dbfile = $projectpath.'/database.mtn';
         $cmd = sprintf('db init -d %s', escapeshellarg($dbfile));
-        self::_mtn_exec($cmd);
+        $this->_mtn_exec($cmd);
 
         //
         // step 2) create a server key
@@ -207,7 +196,7 @@ class IDF_Plugin_SyncMonotone
             escapeshellarg($projectpath),
             escapeshellarg($serverkey)
         );
-        self::_mtn_exec($cmd);
+        $this->_mtn_exec($cmd);
 
         //
         // step 3) create a client key, and save it in IDF
@@ -227,7 +216,7 @@ class IDF_Plugin_SyncMonotone
             escapeshellarg($keydir),
             escapeshellarg($clientkey_name)
         );
-        $keyinfo = self::_mtn_exec($cmd);
+        $keyinfo = $this->_mtn_exec($cmd);
 
         $parsed_keyinfo = array();
         try {
@@ -252,13 +241,13 @@ class IDF_Plugin_SyncMonotone
             escapeshellarg($keydir),
             escapeshellarg($clientkey_hash)
         );
-        $clientkey_pubdata = self::_mtn_exec($cmd);
+        $clientkey_pubdata = $this->_mtn_exec($cmd);
 
         $cmd = sprintf('au put_public_key --db=%s %s',
             escapeshellarg($dbfile),
             escapeshellarg($clientkey_pubdata)
         );
-        self::_mtn_exec($cmd);
+        $this->_mtn_exec($cmd);
 
         //
         // step 4) setup the configuration
@@ -385,8 +374,8 @@ class IDF_Plugin_SyncMonotone
         $mtn = IDF_Scm_Monotone::factory($project);
         $stdio = $mtn->getStdio();
 
-        $projectpath = self::_get_project_path($project);
-        $auth_ids    = self::_get_authorized_user_ids($project);
+        $projectpath = $this->_get_project_path($project);
+        $auth_ids    = $this->_get_authorized_user_ids($project);
         $key_ids     = array();
         foreach ($auth_ids as $auth_id) {
             $sql = new Pluf_SQL('user=%s', array($auth_id));
@@ -506,7 +495,7 @@ class IDF_Plugin_SyncMonotone
 
         $projectpath = sprintf($projecttempl, $shortname);
         if (file_exists($projectpath)) {
-            if (!self::_delete_recursive($projectpath)) {
+            if (!$this->_delete_recursive($projectpath)) {
                 $this->_diagnoseProblem(sprintf(
                     __('One or more paths underneath %s could not be deleted'), $projectpath
                 ));
@@ -585,8 +574,8 @@ class IDF_Plugin_SyncMonotone
             if ($scm != 'mtn')
                 continue;
 
-            $projectpath = self::_get_project_path($project);
-            $auth_ids    = self::_get_authorized_user_ids($project);
+            $projectpath = $this->_get_project_path($project);
+            $auth_ids    = $this->_get_authorized_user_ids($project);
             if (!in_array($key->user, $auth_ids))
                 continue;
 
@@ -704,8 +693,8 @@ class IDF_Plugin_SyncMonotone
             if ($scm != 'mtn')
                 continue;
 
-            $projectpath = self::_get_project_path($project);
-            $auth_ids    = self::_get_authorized_user_ids($project);
+            $projectpath = $this->_get_project_path($project);
+            $auth_ids    = $this->_get_authorized_user_ids($project);
             if (!in_array($key->user, $auth_ids))
                 continue;
 
@@ -816,20 +805,7 @@ class IDF_Plugin_SyncMonotone
         ));
     }
 
-    private static function _get_authorized_user_ids($project)
-    {
-        $mem = $project->getMembershipData();
-        $members = array_merge((array)$mem['members'],
-                               (array)$mem['owners'],
-                               (array)$mem['authorized']);
-        $userids = array();
-        foreach ($members as $member) {
-            $userids[] = $member->id;
-        }
-        return $userids;
-    }
-
-    private static function _get_project_path($project)
+    private function _get_project_path($project)
     {
         $projecttempl = Pluf::f('mtn_repositories', false);
         if ($projecttempl === false) {
@@ -847,7 +823,7 @@ class IDF_Plugin_SyncMonotone
         return $projectpath;
     }
 
-    private static function _mtn_exec($cmd)
+    private function _mtn_exec($cmd)
     {
         $fullcmd = sprintf('%s %s %s',
             Pluf::f('idf_exec_cmd_prefix', ''),
@@ -865,7 +841,20 @@ class IDF_Plugin_SyncMonotone
         return implode("\n", $output);
     }
 
-    private static function _delete_recursive($path)
+    private function _get_authorized_user_ids($project)
+    {
+        $mem = $project->getMembershipData();
+        $members = array_merge((array)$mem['members'],
+                               (array)$mem['owners'],
+                               (array)$mem['authorized']);
+        $userids = array();
+        foreach ($members as $member) {
+            $userids[] = $member->id;
+        }
+        return $userids;
+    }
+
+    private function _delete_recursive($path)
     {
         if (is_file($path) || is_link($path)) {
             return @unlink($path);
@@ -875,11 +864,22 @@ class IDF_Plugin_SyncMonotone
             $scan = glob(rtrim($path, '/') . '/*');
             $status = 0;
             foreach ($scan as $subpath) {
-                $status |= self::_delete_recursive($subpath);
+                $status |= $this->_delete_recursive($subpath);
             }
             $status |= @rmdir($path);
             return $status;
         }
+    }
+
+    private function _diagnoseProblem($msg)
+    {
+        $system_err = error_get_last();
+        if (!empty($system_err)) {
+            $msg .= ': '.$system_err['message'];
+        }
+
+        error_reporting($this->old_err_rep);
+        throw new IDF_Scm_Exception($msg);
     }
 }
 
