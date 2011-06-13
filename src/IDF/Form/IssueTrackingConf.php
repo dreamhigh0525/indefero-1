@@ -94,7 +94,7 @@ duplicates, is duplicated by';
     {
         $this->fields['labels_issue_template'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
-                                            'label' => __('Define an issue template to hint to the reporter to provide certain information'),
+                                            'label' => __('Define an issue template to hint the reporter to provide certain information'),
                                             'initial' => self::init_template,
                                             'widget_attrs' => array('rows' => 7,
                                                                     'cols' => 75),
