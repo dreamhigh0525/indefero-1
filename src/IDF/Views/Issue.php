@@ -109,7 +109,7 @@ class IDF_Views_Issue
                 $sqlUsersTable = Pluf::factory('Pluf_User')->getSqlTable();
                 $otags = implode(',', $prj->getTagIdsByStatus('open'));
                 $query = <<<"QUERY"
-SELECT CONCAT(first_name, " ", last_name) as name, nb FROM (SELECT uid as id,count(uid) as nb FROM (SELECT ifnull(owner, -1) as uid FROM $sqlIssueTable WHERE status IN ($otags)) as ff group by uid) AS ff LEFT JOIN $sqlUsersTable using(id)
+SELECT CONCAT(first_name, " ", last_name) as name, nb FROM (SELECT uid as id,count(uid) as nb FROM (SELECT coalesce(owner, -1) as uid FROM $sqlIssueTable WHERE status IN ($otags)) as ff group by uid) AS ff LEFT JOIN $sqlUsersTable using(id)
 QUERY;
                 $db = Pluf::db();
                 $dbData = $db->select($query);
