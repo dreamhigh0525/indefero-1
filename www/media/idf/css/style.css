@@ -1128,7 +1128,7 @@ table.issue-summary {
 
 table.issue-summary tr td {
     border: 0;
-    padding: .1em;
+    padding: .1em .005em;
 }
 
 table.issue-summary td.graph {
