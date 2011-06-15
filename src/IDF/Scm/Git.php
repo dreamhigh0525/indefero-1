@@ -346,6 +346,14 @@ class IDF_Scm_Git extends IDF_Scm
         if (!preg_match('/<(.*)>/', $author, $match)) {
             return null;
         }
+        // FIXME: newer git versions know a i18n.commitencoding setting which
+        // leads to another header, "encoding", with which we _could_ try to
+        // decode the string into utf8. Unfortunately this does not always
+        // work, especially not in older repos, so we would then still have
+        // to supply some fallback.
+        if (!mb_check_encoding($match[1], 'UTF-8')) {
+            return null;
+        }
         $sql = new Pluf_SQL('login=%s', array($match[1]));
         $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
         if ($users->count() > 0) {

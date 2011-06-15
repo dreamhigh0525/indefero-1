@@ -33,6 +33,8 @@ or newer to properly run this version of Indefero!
   ATTENTION: This needs Pluf 46b7f251 or newer!
 - Fix the branch links users of the Subversion frontend get when they enter a wrong revision
   and only display this list if there are any branches available for all SCMs
+- If git's author name is not encoded in an UTF-8 compatible encoding, skip the author lookup,
+  as we have no information what the author string is actually encoded in
 
 ## Documentation
 
