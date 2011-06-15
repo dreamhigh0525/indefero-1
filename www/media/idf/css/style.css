@@ -1146,7 +1146,11 @@ table.graph {
     padding: 0;
 }
 
-td.graph-color {
+table.issue-summary td.graph-color {
     background: #3C78B5;
+}
+
+table.issue-summary td.graph-percent {
+    padding-left: 1em;
 }
 
