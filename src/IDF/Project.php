@@ -132,6 +132,47 @@ class IDF_Project extends Pluf_Model
         }
         return $projects[0];
     }
+    
+    /**
+     * Returns the number of open/closed issues.
+     *
+     * @param string Status ('open'), 'closed'
+     * @param IDF_Tag Subfilter with a label (null)
+     * @return int Count
+     */
+    public function getIssueCountByOwner($status='open')
+    {
+        switch ($status) {
+        case 'open':
+            $tags = implode(',', $this->getTagIdsByStatus('open'));
+            break;
+        case 'closed':
+        default:
+            $tags = implode(',', $this->getTagIdsByStatus('closed'));
+            break;
+        }
+        $sqlIssueTable = Pluf::factory('IDF_Issue')->getSqlTable();
+        $query = <<<"QUERY"
+SELECT uid AS id,COUNT(uid) AS nb
+FROM (
+    SELECT COALESCE(owner, -1) AS uid
+    FROM $sqlIssueTable
+    WHERE status IN ($tags)
+    ) AS ff
+GROUP BY uid
+QUERY;
+        $db = Pluf::db();
+        $dbData = $db->select($query);
+        $ownerStatistics = array();
+        foreach ($dbData as $k => $v) {
+            $key = ($v['id'] === '-1') ? null : $v['id'];
+            $ownerStatistics[$key] = (int)$v['nb'];
+        }
+        
+        arsort($ownerStatistics);
+
+        return $ownerStatistics;
+    }
 
     /**
      * Returns the number of open/closed issues.

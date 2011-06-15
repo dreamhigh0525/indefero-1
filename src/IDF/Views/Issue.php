@@ -105,17 +105,15 @@ class IDF_Views_Issue
             
             if ($opened > 0) {
                 // Issue owner statistics
-                $sqlIssueTable = Pluf::factory('IDF_Issue')->getSqlTable();
-                $sqlUsersTable = Pluf::factory('Pluf_User')->getSqlTable();
-                $otags = implode(',', $prj->getTagIdsByStatus('open'));
-                $query = <<<"QUERY"
-SELECT CONCAT(first_name, " ", last_name) as name, nb FROM (SELECT uid as id,count(uid) as nb FROM (SELECT coalesce(owner, -1) as uid FROM $sqlIssueTable WHERE status IN ($otags)) as ff group by uid) AS ff LEFT JOIN $sqlUsersTable using(id)
-QUERY;
-                $db = Pluf::db();
-                $dbData = $db->select($query);
-                foreach ($dbData as $k => $v) {
-                    $key = ($v['name'] === null) ? __('Not assigned') : $v['name'];
-                    $ownerStatistics[$key] = array($v['nb'], (int)(100 * $v['nb'] / $opened));
+                $owners = $prj->getIssueCountByOwner('open');
+                foreach ($owners as $user => $nb) {
+                    if ($user === '') {
+                        $key = __('Not assigned');
+                    } else {
+                        $obj = Pluf::factory('Pluf_User')->getOne(array('filter'=>'id='.$user));
+                        $key = $obj->first_name . ' ' . $obj->last_name;
+                    }
+                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened));
                 }
 
                 // Issue class tag statistics
