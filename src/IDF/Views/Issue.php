@@ -78,6 +78,68 @@ class IDF_Views_Issue
     }
 
     /**
+     * View the issue summary.
+     * TODO Add thoses data in cache, and process it only after an issue update
+     */
+    public $summary_precond = array('IDF_Precondition::accessIssues');
+    public function summary($request, $match)
+    {
+        $prj = $request->project;
+        $opened = $prj->getIssueCountByStatus('open');
+        $closed = $prj->getIssueCountByStatus('closed');
+        $otags = implode(',', $prj->getTagIdsByStatus('open'));
+
+        // Issue status statistics
+        $status = array();
+        $status['Open'] = array($opened, (int)(100 * $opened / ($opened + $closed)));
+        $status['Closed'] = array($closed, (int)(100 * $closed / ($opened + $closed)));
+        
+        // Issue owner statistics
+        $sqlIssueTable = Pluf::factory('IDF_Issue')->getSqlTable();
+        $sqlUsersTable = Pluf::factory('Pluf_User')->getSqlTable();
+        $query = <<<"QUERY"
+SELECT CONCAT(first_name, " ", last_name) as name, nb FROM (SELECT uid as id,count(uid) as nb FROM (SELECT ifnull(owner, -1) as uid FROM $sqlIssueTable WHERE status IN ($otags)) as ff group by uid) AS ff LEFT JOIN $sqlUsersTable using(id)
+QUERY;
+        $db = Pluf::db();
+        $dbData = $db->select($query);
+        $ownerStatistics = array();
+        foreach ($dbData as $k => $v) {
+            $key = ($v['name'] === null) ? __('Not assigned') : $v['name'];
+            $ownerStatistics[$key] = array($v['nb'], (int)(100 * $v['nb'] / $opened));
+        }
+
+        // Issue class tag statistics
+        $tags = $prj->getTagCloud();
+        $tagStatistics = array();
+        foreach ($tags as $t) {
+            $tagStatistics[$t->class][$t->name] = array($t->nb_use, $t->id);
+        }
+        foreach($tagStatistics as $k => $v) {
+            $nbIssueInClass = 0;
+            foreach ($v as $val) {
+                $nbIssueInClass += $val[0];
+            }
+            foreach ($v as $kk => $vv) {
+                $tagStatistics[$k][$kk] = array($vv[0], (int)(100 * $vv[0] / $nbIssueInClass), $vv[1]);
+            }
+        }
+        
+        // Sort
+        krsort($tagStatistics);
+        arsort($ownerStatistics);
+        
+        $title = sprintf(__('Summary of tracked issues in %s.'), (string) $prj);
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/summary.html',
+                                               array('page_title' => $title,
+                                                     'project' => $prj,
+                                                     'tagStatistics' => $tagStatistics,
+                                                     'ownerStatistics' => $ownerStatistics,
+                                                     'status' => $status,
+                                                     ),
+                                               $request);
+    }
+    
+    /**
      * View the issues watch list of a given user.
      * Limited to a specified project
      */

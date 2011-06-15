@@ -117,6 +117,11 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'index');
+               
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/summary/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Issue',
+               'method' => 'summary');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/search/$#',
                'base' => $base,

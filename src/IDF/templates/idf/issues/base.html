@@ -2,7 +2,8 @@
 {block tabissues} class="active"{/block}
 {block subtabs}
 <div id="sub-tabs">
-<a {if $inOpenIssues}class="active" {/if}href="{url 'IDF_Views_Issue::index', array($project.shortname)}">{trans 'Open Issues'}</a>
+<a {if $inSummaryIssues}class="active" {/if}href="{url 'IDF_Views_Issue::summary', array($project.shortname)}">{trans 'Summary'}</a>
+| <a {if $inOpenIssues}class="active" {/if}href="{url 'IDF_Views_Issue::index', array($project.shortname)}">{trans 'Open Issues'}</a>
 {if !$user.isAnonymous()} | <a {if $inCreate}class="active" {/if}href="{url 'IDF_Views_Issue::create', array($project.shortname)}">{trans 'New Issue'}</a> | <a {if $inMyIssues}class="active" {/if}href="{url 'IDF_Views_Issue::myIssues', array($project.shortname, 'submit')}">{trans 'My Issues'}</a>
 | <a {if $inWatchList}class="active" {/if}href="{url 'IDF_Views_Issue::watchList', array($project.shortname, 'open')}">{trans 'My watch list'}</a>{/if} |
 <form class="star" action="{url 'IDF_Views_Issue::search', array($project.shortname)}" method="get">
