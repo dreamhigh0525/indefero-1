@@ -5,12 +5,12 @@
 {block body}
 {if $trackerEmpty}
     {aurl 'create_url', 'IDF_Views_Issue::create', array($project.shortname)}
-    <p>{blocktrans}The issue tracker is empty<br />You can create your first issue <a href="{$create_url}">here</a>.{/blocktrans}</p>
+    <p>{blocktrans}The issue tracker is empty.<br />You can create your first issue <a href="{$create_url}">here</a>.{/blocktrans}</p>
 {else}
 <div class='issue-summary'>
 {foreach $tagStatistics as $key => $class}
     <div>
-    <h2>Unresolved: By {$key}</h2>
+    <h2>{blocktrans}Unresolved: By {$key}{/blocktrans}</h2>
     <table class='issue-summary'>
     <tbody>
     {foreach $class as $key => $value}
@@ -39,7 +39,7 @@
 <div class='issue-summary'>
 {if $status}
     <div>
-    <h2>Status Summary</h2>
+    <h2>{blocktrans}Status Summary{/blocktrans}</h2>
     <table class='issue-summary'>
     <tbody>
     {foreach $status as $key => $value}
@@ -66,7 +66,7 @@
 
 {if $ownerStatistics}
     <div>
-    <h2>Unresolved: By Assignee</h2>
+    <h2>{blocktrans}Unresolved: By Assignee{/blocktrans}</h2>
     <table class='issue-summary'>
     <tbody>
     {foreach $ownerStatistics as $key => $value}
