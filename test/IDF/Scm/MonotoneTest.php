@@ -625,6 +625,7 @@ END;
             'additions'  => array('new_dir', 'new_dir/new_file'),
             'deletions'  => array('old_dir', 'old_dir/old_file'),
             'renames'    => array('dir_with_old_name' => 'new_dir/dir_with_new_name'),
+            'copies'     => array(), // this is always empty
             'patches'    => array('existing_file'),
             'properties' => array(
                 'new_dir/dir_with_new_name' => array(
