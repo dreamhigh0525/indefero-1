@@ -78,6 +78,79 @@ class IDF_Views_Issue
     }
 
     /**
+     * View the issue summary.
+     * TODO Add thoses data in cache, and process it only after an issue update
+     */
+    public $summary_precond = array('IDF_Precondition::accessIssues');
+    public function summary($request, $match)
+    {
+        $tagStatistics = array();
+        $ownerStatistics = array();
+        $status = array();
+        $isTrackerEmpty = false;
+        
+        $prj = $request->project;
+        $opened = $prj->getIssueCountByStatus('open');
+        $closed = $prj->getIssueCountByStatus('closed');
+
+        // Check if the tracker is empty
+        if ($opened === 0 && $closed === 0) {
+            $isTrackerEmpty = true;
+        } else {
+            if ($opened > 0 || $closed > 0) {
+                // Issue status statistics
+                $status['Open'] = array($opened, (int)(100 * $opened / ($opened + $closed)));
+                $status['Closed'] = array($closed, (int)(100 * $closed / ($opened + $closed)));
+            }
+            
+            if ($opened > 0) {
+                // Issue owner statistics
+                $owners = $prj->getIssueCountByOwner('open');
+                foreach ($owners as $user => $nb) {
+                    if ($user === '') {
+                        $key = __('Not assigned');
+                    } else {
+                        $obj = Pluf::factory('Pluf_User')->getOne(array('filter'=>'id='.$user));
+                        $key = $obj->first_name . ' ' . $obj->last_name;
+                    }
+                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened));
+                }
+
+                // Issue class tag statistics
+                $tags = $prj->getTagCloud();
+                foreach ($tags as $t) {
+                    $tagStatistics[$t->class][$t->name] = array($t->nb_use, $t->id);
+                }
+                foreach($tagStatistics as $k => $v) {
+                    $nbIssueInClass = 0;
+                    foreach ($v as $val) {
+                        $nbIssueInClass += $val[0];
+                    }
+                    foreach ($v as $kk => $vv) {
+                        $tagStatistics[$k][$kk] = array($vv[0], (int)(100 * $vv[0] / $nbIssueInClass), $vv[1]);
+                    }
+                }
+                
+                // Sort
+                krsort($tagStatistics);
+                arsort($ownerStatistics);
+            }
+        }
+        
+        $title = sprintf(__('Summary of tracked issues in %s.'), (string) $prj);
+        
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/summary.html',
+                                               array('page_title' => $title,
+                                                     'trackerEmpty' => $isTrackerEmpty,
+                                                     'project' => $prj,
+                                                     'tagStatistics' => $tagStatistics,
+                                                     'ownerStatistics' => $ownerStatistics,
+                                                     'status' => $status,
+                                                     ),
+                                               $request);
+    }
+    
+    /**
      * View the issues watch list of a given user.
      * Limited to a specified project
      */

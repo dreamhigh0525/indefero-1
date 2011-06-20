@@ -1104,3 +1104,53 @@ div.p-list-private {
     right: -3px;
     position: relative;
 }
+
+/*
+ * Issue summary
+ */
+div.issue-summary {
+    float: left;
+    width: 50%;
+}
+
+div.issue-summary > div {
+    margin-right: 3em;
+    padding-top: 1em;
+}
+
+div.issue-summary h2 {
+    border-bottom: 1px solid #A5E26A;
+}
+
+table.issue-summary {
+    width: 100%;
+}
+
+table.issue-summary tr td {
+    border: 0;
+    padding: .1em .005em;
+}
+
+table.issue-summary td.graph {
+    width: 60%;
+}
+
+table.issue-summary td.count {
+    text-align: right;
+    padding-right: .5em;
+}
+
+table.graph {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+table.issue-summary td.graph-color {
+    background: #3C78B5;
+}
+
+table.issue-summary td.graph-percent {
+    padding-left: 1em;
+}
+
