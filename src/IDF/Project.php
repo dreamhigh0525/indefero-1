@@ -152,15 +152,14 @@ class IDF_Project extends Pluf_Model
             break;
         }
         $sqlIssueTable = Pluf::factory('IDF_Issue')->getSqlTable();
-        $query = <<<"QUERY"
-SELECT uid AS id,COUNT(uid) AS nb
+        $query = "SELECT uid AS id,COUNT(uid) AS nb
 FROM (
     SELECT COALESCE(owner, -1) AS uid
     FROM $sqlIssueTable
     WHERE status IN ($tags)
     ) AS ff
-GROUP BY uid
-QUERY;
+GROUP BY uid"
+
         $db = Pluf::db();
         $dbData = $db->select($query);
         $ownerStatistics = array();
