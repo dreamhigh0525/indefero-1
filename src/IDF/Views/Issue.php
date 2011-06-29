@@ -747,7 +747,7 @@ class IDF_Views_Issue
         else {
             // ID-based search
             if (is_numeric($query)) {
-                $sql = new Pluf_SQL('project=%s AND id LIKE %s', array($prj->id, $query.'%'));
+                $sql = new Pluf_SQL('project=%s AND CAST(id AS CHAR) LIKE %s', array($prj->id, $query.'%'));
                 $tmp = Pluf::factory('IDF_Issue')->getList(array(
                     'filter' => $sql->gen(),
                     'order' => 'id ASC'
