@@ -158,7 +158,7 @@ FROM (
     FROM $sqlIssueTable
     WHERE status IN ($tags)
     ) AS ff
-GROUP BY uid"
+GROUP BY uid";
 
         $db = Pluf::db();
         $dbData = $db->select($query);
