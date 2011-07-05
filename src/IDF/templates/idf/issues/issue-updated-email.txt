@@ -16,7 +16,7 @@
 
 {if strlen($c.content) > 0}{$c.content|safe}{/if}{if $c.changedIssue()}
 {foreach $c.changes as $w => $v}
- {if $w == 'su'}{trans 'Summary:'}{/if}{if $w == 'st'}{trans 'Status:'}{/if}{if $w == 'ow'}{trans 'Owner:'}{/if}{if $w == 'lb'}{trans 'Labels:'}{/if} {if $w == 'lb'}{assign $l = implode(', ', $v)}{$l}{else}{$v}{/if}{/foreach}{/if}{assign $attachments = $c.get_attachment_list()}{if $attachments.count() > 0}
+ {if $w == 'su'}{trans 'Summary:'}{/if}{if $w == 'st'}{trans 'Status:'}{/if}{if $w == 'ow'}{trans 'Owner:'}{/if}{if $w == 'lb'}{trans 'Labels:'}{/if}{if $w == 'rel'}{trans 'Relations:'}{/if} {if $w == 'lb' or $w == 'rel'}{foreach $v as $t => $ls}{foreach $ls as $l}{if $t == 'rem'}-{/if}{$l} {/foreach}{/foreach}{else}{$v}{/if}{/foreach}{/if}{assign $attachments = $c.get_attachment_list()}{if $attachments.count() > 0}
 
 {trans 'Attachments:'}{foreach $attachments as $a}
 - {$a.filename|safe} - {$a.filesize|ssize}

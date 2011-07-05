@@ -747,7 +747,13 @@ class IDF_Views_Issue
         else {
             // ID-based search
             if (is_numeric($query)) {
-                $sql = new Pluf_SQL('project=%s AND id LIKE %s', array($prj->id, $query.'%'));
+                $sql = 'project=%s AND CAST(id AS VARCHAR) LIKE %s';
+                // MySQL can't cast to VARCHAR and a CAST to CHAR converts
+                // the whole number, not just the first digit
+                if (strtolower(Pluf::f('db_engine')) == 'mysql') {
+                    $sql = 'project=%s AND CAST(id AS CHAR) LIKE %s';
+                }
+                $sql = new Pluf_SQL($sql, array($prj->id, $query.'%'));
                 $tmp = Pluf::factory('IDF_Issue')->getList(array(
                     'filter' => $sql->gen(),
                     'order' => 'id ASC'
