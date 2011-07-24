@@ -202,7 +202,11 @@ class IDF_Views_Download
         $prj->inOr404($upload);
         $upload->downloads += 1;
         $upload->update();
-        return new Pluf_HTTP_Response_Redirect($upload->getAbsoluteUrl($prj));
+        $path = $upload->getFullPath();
+        $mime = IDF_FileUtil::getMimeType($path);
+        $render = new Pluf_HTTP_Response_File($path, $mime[0]);
+        $render->headers["Content-MD5"] = $upload->md5;
+        return $render;
     }
 
     /**
