@@ -38,17 +38,18 @@ class IDF_Scm_SvnTest extends PHPUnit_Framework_TestCase
         $this->proj->delete();
     }
 
-    public function createMock()
+    public function createMock($reponame)
     {
-        $instance = new IDF_Scm_Svn(sprintf(Pluf::f('svn_repositories'),'testrepository', $this->proj));
+        $repourl = 'file://'.DATADIR.'/'.__CLASS__.'/'.$reponame;
+        $instance = new IDF_Scm_Svn($repourl, $this->proj);
         return $instance;
     }
 
     public function testAccessHistoryOfRenamedAndDeletedFiles()
     {
-        $instance = $this->createMock();
-	$this->assertEquals('new-file', $instance->getPathInfo('new-file', 1)->fullpath);
-	$this->assertEquals('alternate-name', $instance->getPathInfo('alternate-name', 2)->fullpath);
+        $instance = $this->createMock(__FUNCTION__);
+        $this->assertEquals('new-file', $instance->getPathInfo('new-file', 1)->fullpath);
+        $this->assertEquals('alternate-name', $instance->getPathInfo('alternate-name', 2)->fullpath);
     }
 }
 
