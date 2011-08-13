@@ -33,7 +33,6 @@
  */
 class IDF_Scm_Svn extends IDF_Scm
 {
-
     public $username = '';
     public $password = '';
     private $assoc = array('dir' => 'tree',
@@ -48,11 +47,7 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function isAvailable()
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s %s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('info', '--xml'), $this->repo);
         $xmlInfo = self::shell_exec('IDF_Scm_Svn::isAvailable', $cmd);
 
         try {
@@ -163,13 +158,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return IDF_Scm::REVISION_VALID;
         }
 
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('info'), $this->repo, $rev);
         self::exec('IDF_Scm_Svn::validateRevision', $cmd, $out, $ret);
 
         if ($ret == 0)
@@ -191,13 +180,9 @@ class IDF_Scm_Svn extends IDF_Scm
         }
 
         // Else, test the path on revision
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($path)),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('info', '--xml'),
+                             $this->repo.'/'.self::smartEncode($path),
+                             $rev);
         $xmlInfo = self::shell_exec('IDF_Scm_Svn::testHash', $cmd);
 
         // If exception is thrown, return false
@@ -219,13 +204,9 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function getTree($commit, $folder='/', $branch=null)
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --xml --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($commit),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($folder)),
-                       escapeshellarg($commit));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('ls', '--xml'),
+                             $this->repo.'/'.self::smartEncode($folder),
+                             $commit);
         $xml = simplexml_load_string(self::shell_exec('IDF_Scm_Svn::getTree', $cmd));
         $res = array();
         $folder = (strlen($folder) and ($folder != '/')) ? $folder.'/' : '';
@@ -261,13 +242,7 @@ class IDF_Scm_Svn extends IDF_Scm
         if (isset($this->cache['commitmess'][$rev])) {
             return $this->cache['commitmess'][$rev];
         }
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml --limit 1 --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('log', '--xml', '--limit', '1'), $this->repo, $rev);
         try {
             $xml = simplexml_load_string(self::shell_exec('IDF_Scm_Svn::getCommitMessage', $cmd));
             $this->cache['commitmess'][$rev] = (string) $xml->logentry->msg;
@@ -283,13 +258,8 @@ class IDF_Scm_Svn extends IDF_Scm
         if ($rev == null) {
             $rev = 'HEAD';
         }
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($filename)),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('info', '--xml'),
+                             $this->repo.'/'.self::smartEncode($filename), $rev);
         $xml = simplexml_load_string(self::shell_exec('IDF_Scm_Svn::getPathInfo', $cmd));
         if (!isset($xml->entry)) {
             return false;
@@ -311,13 +281,9 @@ class IDF_Scm_Svn extends IDF_Scm
 
     public function getFile($def, $cmd_only=false)
     {
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' cat --no-auth-cache --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($def->rev),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($def->fullpath)),
-                       escapeshellarg($def->rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('cat'),
+                             $this->repo.'/'.self::smartEncode($def->fullpath),
+                             $def->rev);
         return ($cmd_only) ?
             $cmd : self::shell_exec('IDF_Scm_Svn::getFile', $cmd);
     }
@@ -333,11 +299,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return $this->cache['branches'];
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --username=%s --password=%s --revision=HEAD %s@HEAD',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo.'/branches'));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('ls'), $this->repo.'/branches', 'HEAD');
         self::exec('IDF_Scm_Svn::getBranches', $cmd, $out, $ret);
         if ($ret == 0) {
             foreach ($out as $entry) {
@@ -348,11 +310,8 @@ class IDF_Scm_Svn extends IDF_Scm
             }
         }
         ksort($res);
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --username=%s --password=%s --revision=HEAD %s@HEAD',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo.'/trunk'));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+
+        $cmd = $this->svnCmd(array('info'), $this->repo.'/trunk', 'HEAD');
         self::exec('IDF_Scm_Svn::getBranches', $cmd, $out, $ret);
         if ($ret == 0) {
             $res = array('trunk' => 'trunk') + $res;
@@ -372,11 +331,7 @@ class IDF_Scm_Svn extends IDF_Scm
             return $this->cache['tags'];
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' ls --no-auth-cache --username=%s --password=%s --revision=HEAD %s@HEAD',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo.'/tags'));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('ls'), $this->repo.'/tags', 'HEAD');
         self::exec('IDF_Scm_Svn::getTags', $cmd, $out, $ret);
         if ($ret == 0) {
             foreach ($out as $entry) {
@@ -429,13 +384,8 @@ class IDF_Scm_Svn extends IDF_Scm
             return false;
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml --limit 1 -v --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($commit),
-                       escapeshellarg($this->repo),
-                       escapeshellarg($commit));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('log', '--xml', '--limit', '1', '-v'),
+                             $this->repo, $commit);
         $xmlRes = self::shell_exec('IDF_Scm_Svn::getCommit', $cmd);
         $xml = simplexml_load_string($xmlRes);
         $res['author'] = (string) $xml->logentry->author;
@@ -477,12 +427,7 @@ class IDF_Scm_Svn extends IDF_Scm
     private function getDiff($rev='HEAD')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' diff --no-auth-cache -c %s --username=%s --password=%s %s',
-                       escapeshellarg($rev),
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('diff', '-c', $rev), $this->repo);
         return self::shell_exec('IDF_Scm_Svn::getDiff', $cmd);
     }
 
@@ -494,13 +439,8 @@ class IDF_Scm_Svn extends IDF_Scm
         if ($this->validateRevision($commit) != IDF_Scm::REVISION_VALID) {
             return null;
         }
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --xml -v --no-auth-cache -r %s --username=%s --password=%s %s',
-                       escapeshellarg($commit),
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($this->repo));
+        $cmd = $this->svnCmd(array('log', '--xml', '-v'), $this->repo, $commit);
         $out = array();
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
         $out = self::shell_exec('IDF_Scm_Svn::getChanges', $cmd);
         $xml = simplexml_load_string($out);
         if (count($xml) == 0) {
@@ -577,21 +517,15 @@ class IDF_Scm_Svn extends IDF_Scm
      *
      * @return array Changes.
      */
-    public function getChangeLog($branch=null, $n=10)
+    public function getChangeLog($rev=null, $n=10)
     {
-        if ($branch != 'HEAD' and !preg_match('/^\d+$/', $branch)) {
+        if ($rev != 'HEAD' and !preg_match('/^\d+$/', $rev)) {
             // we accept only revisions or HEAD
-            $branch = 'HEAD';
+            $rev = 'HEAD';
         }
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' log --no-auth-cache --xml -v --limit %s --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($n),
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($branch),
-                       escapeshellarg($this->repo),
-                       escapeshellarg($branch));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('log', '--xml', '-v', '--limit', $n),
+                             $this->repo.'@'.$rev);
         $xmlRes = self::shell_exec('IDF_Scm_Svn::getChangeLog', $cmd);
         $xml = simplexml_load_string($xmlRes);
         foreach ($xml->logentry as $entry) {
@@ -617,13 +551,8 @@ class IDF_Scm_Svn extends IDF_Scm
     public function getProperties($rev, $path='')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' proplist --no-auth-cache --xml --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($path)),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('proplist', '--xml'),
+                             $this->repo.'/'.self::smartEncode($path), $rev);
         $xmlProps = self::shell_exec('IDF_Scm_Svn::getProperties', $cmd);
         $props = simplexml_load_string($xmlProps);
 
@@ -652,14 +581,8 @@ class IDF_Scm_Svn extends IDF_Scm
     private function getProperty($property, $rev, $path='')
     {
         $res = array();
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' propget --no-auth-cache --xml %s --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($property),
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo.'/'.self::smartEncode($path)),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('propget', $property, '--xml'),
+                             $this->repo.'/'.self::smartEncode($path), $rev);
         $xmlProp = self::shell_exec('IDF_Scm_Svn::getProperty', $cmd);
         $prop = simplexml_load_string($xmlProp);
 
@@ -676,17 +599,38 @@ class IDF_Scm_Svn extends IDF_Scm
     public function getLastCommit($rev='HEAD')
     {
         $xmlInfo = '';
-        $cmd = sprintf(Pluf::f('svn_path', 'svn').' info --no-auth-cache --xml --username=%s --password=%s --revision=%s %s@%s',
-                       escapeshellarg($this->username),
-                       escapeshellarg($this->password),
-                       escapeshellarg($rev),
-                       escapeshellarg($this->repo),
-                       escapeshellarg($rev));
-        $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
+        $cmd = $this->svnCmd(array('info', '--xml'), $this->repo, $rev);
         $xmlInfo = self::shell_exec('IDF_Scm_Svn::getLastCommit', $cmd);
 
         $xml = simplexml_load_string($xmlInfo);
         return (string) $xml->entry->commit['revision'];
+    }
+
+    private function svnCmd($args = array(), $repoarg = null, $revarg = null)
+    {
+        $cmdline = array();
+        $cmdline[] = Pluf::f('idf_exec_cmd_prefix', '');
+        $cmdline[] = Pluf::f('svn_path', 'svn');
+        $cmdline[] = '--no-auth-cache';
+        $cmdline[] = '--username='.escapeshellarg($this->username);
+        $cmdline[] = '--password='.escapeshellarg($this->password);
+
+        foreach ($args as $arg) {
+            $cmdline[] = escapeshellarg($arg);
+        }
+
+        if ($repoarg != null) {
+            if ($revarg != null) {
+                $repoarg .= '@'.$revarg;
+            }
+            $cmdline[] = escapeshellarg($repoarg);
+        }
+
+        if ($revarg != null) {
+            $cmdline[] = '--revision='.escapeshellarg($revarg);
+        }
+
+        return implode(' ', $cmdline);
     }
 }
 
