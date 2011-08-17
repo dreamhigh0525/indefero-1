@@ -646,7 +646,11 @@ class IDF_Scm_Git extends IDF_Scm
         $c['full_message'] = IDF_Commit::toUTF8($c['full_message']);
         $c['title'] = IDF_Commit::toUTF8($c['title']);
         if (isset($c['parents'])) {
-            $c['parents'] = explode(' ', trim($c['parents']));
+            $c['parents'] = preg_split('/ /', trim($c['parents']), -1, PREG_SPLIT_NO_EMPTY);
+        } else {
+            // this is actually an error state because we should _always_
+            // be able to parse the parents line with every git version
+            $c['parents'] = null;
         }
         $res[] = (object) $c;
         return $res;
