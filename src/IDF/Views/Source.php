@@ -132,6 +132,12 @@ class IDF_Views_Source
                                                $request);
     }
 
+    public function repository($request, $match)
+    {
+        $scm = IDF_Scm::get($request->project);
+        return $scm->repository($request, $match);
+    }
+
     public $treeBase_precond = array('IDF_Precondition::accessSource',
                                      'IDF_Views_Source_Precondition::scmAvailable',
                                      'IDF_Views_Source_Precondition::revisionValid');
