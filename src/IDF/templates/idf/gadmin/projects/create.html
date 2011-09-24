@@ -37,6 +37,12 @@
 </td>
 </tr>
 <tr>
+<th><strong>{$form.f.external_project_url.labelTag}:</strong></th>
+<td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
+{$form.f.external_project_url|unsafe}
+</td>
+</tr>
+<tr>
 <th><strong>{$form.f.scm.labelTag}:</strong></th>
 <td>{if $form.f.scm.errors}{$form.f.scm.fieldErrors}{/if}
 {$form.f.scm|unsafe}

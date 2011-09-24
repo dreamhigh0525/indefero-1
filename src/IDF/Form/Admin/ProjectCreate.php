@@ -72,6 +72,13 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                                             'widget_attrs' => array('size' => '35'),
                                             ));
 
+        $this->fields['external_project_url'] = new Pluf_Form_Field_Varchar(
+                                    array('required' => false,
+                                          'label' => __('External URL'),
+                                          'widget_attrs' => array('size' => '35'),
+                                          'initial' => '',
+        ));
+
         $this->fields['scm'] = new Pluf_Form_Field_Varchar(
                     array('required' => true,
                           'label' => __('Repository type'),
@@ -235,6 +242,11 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         return $shortname;
     }
 
+    public function clean_external_project_url()
+    {
+        return IDF_Form_ProjectConf::checkWebURL($this->cleaned_data['external_project_url']);
+    }
+
     public function clean()
     {
         if ($this->cleaned_data['scm'] != 'svn') {
@@ -298,7 +310,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         $conf = new IDF_Conf();
         $conf->setProject($project);
         $keys = array('scm', 'svn_remote_url', 'svn_username',
-                      'svn_password', 'mtn_master_branch');
+                      'svn_password', 'mtn_master_branch', 'external_project_url');
         foreach ($keys as $key) {
             $this->cleaned_data[$key] = (!empty($this->cleaned_data[$key])) ?
                 $this->cleaned_data[$key] : '';

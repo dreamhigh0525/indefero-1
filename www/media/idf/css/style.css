@@ -1105,6 +1105,12 @@ div.p-list-private {
     position: relative;
 }
 
+a.external-link {
+	background: url(../img/external_link.png) no-repeat right center;
+	padding-right: 15px;
+	text-decoration: none;
+}
+
 /*
  * Issue summary
  */

@@ -132,7 +132,7 @@ class IDF_Project extends Pluf_Model
         }
         return $projects[0];
     }
-    
+
     /**
      * Returns the number of open/closed issues.
      *
@@ -167,7 +167,7 @@ GROUP BY uid";
             $key = ($v['id'] === '-1') ? null : $v['id'];
             $ownerStatistics[$key] = (int)$v['nb'];
         }
-        
+
         arsort($ownerStatistics);
 
         return $ownerStatistics;
@@ -550,6 +550,22 @@ GROUP BY uid";
             $this->_pconf->setProject($this);
         }
         return $this->_pconf;
+    }
+
+    /**
+     * Magic overload that falls back to the values of the internal configuration
+     * if no getter / caller matched
+     *
+     * @param string $key
+     */
+    public function __get($key)
+    {
+        try {
+            return parent::__get($key);
+        }
+        catch (Exception $e) {
+            return $this->getConf()->getVal($key);
+        }
     }
 
     /**

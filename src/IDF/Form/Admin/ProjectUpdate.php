@@ -53,6 +53,13 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                             'widget_attrs' => array('size' => '35'),
                                             ));
 
+        $this->fields['external_project_url'] = new Pluf_Form_Field_Varchar(
+                                array('required' => false,
+                                      'label' => __('External URL'),
+                                      'widget_attrs' => array('size' => '35'),
+                                      'initial' => $conf->getVal('external_project_url'),
+        ));
+
         if ($this->project->getConf()->getVal('scm') == 'mtn') {
             $this->fields['mtn_master_branch'] = new Pluf_Form_Field_Varchar(
                                           array('required' => false,
@@ -115,6 +122,11 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
         return IDF_Form_MembersConf::checkBadLogins($this->cleaned_data['members']);
     }
 
+    public function clean_external_project_url()
+    {
+        return IDF_Form_ProjectConf::checkWebURL($this->cleaned_data['external_project_url']);
+    }
+
     public function save($commit=true)
     {
         if (!$this->isValid()) {
@@ -127,10 +139,16 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
         $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->update();
 
-        $keys = array('mtn_master_branch');
+        $conf = $this->project->getConf();
+        $keys = array('mtn_master_branch', 'external_project_url');
         foreach ($keys as $key) {
-            if (!empty($this->cleaned_data[$key])) {
-                $this->project->getConf()->setVal($key, $this->cleaned_data[$key]);
+            if (array_key_exists($key, $this->cleaned_data)) {
+                if (!empty($this->cleaned_data[$key])) {
+                    $conf->setVal($key, $this->cleaned_data[$key]);
+                }
+                else {
+                    $conf->delVal($key);
+                }
             }
         }
     }

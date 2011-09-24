@@ -25,6 +25,12 @@
 <span class="helptext">{$form.f.shortdesc.help_text}</span>
 </td>
 </tr>
+<tr>
+<th><strong>{$form.f.external_project_url.labelTag}:</strong></th>
+<td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
+{$form.f.external_project_url|unsafe}
+</td>
+</tr>
 {if $project.getConf().getVal('scm') == 'mtn'}
 <tr class="mtn-form">
 <th><strong>{$form.f.mtn_master_branch.labelTag}:</strong></th>

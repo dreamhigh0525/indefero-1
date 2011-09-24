@@ -25,6 +25,10 @@
 <div class="p-list-prj">
     <p>
         <a href="{url 'IDF_Views_Project::home', array($p.shortname)}"><strong>{$p}</strong></a>
+        {assign $url = $p.external_project_url}
+        {if $url != ''}
+            <a href="{$url}" target="_blank" class="external-link" title="{trans 'External link to project'}" />&nbsp;</a>
+        {/if}
         {if $p.private} - {trans 'Private project'}{/if}
     </p>
     <p>{$p.shortdesc}</p>

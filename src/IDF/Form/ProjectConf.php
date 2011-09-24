@@ -32,6 +32,7 @@ class IDF_Form_ProjectConf extends Pluf_Form
     public function initFields($extra=array())
     {
         $this->project = $extra['project'];
+        $conf = $this->project->getConf();
 
         // Basic part
         $this->fields['name'] = new Pluf_Form_Field_Varchar(array('required' => true,
@@ -51,6 +52,11 @@ class IDF_Form_ProjectConf extends Pluf_Form
                                                                                                 ),
                                                                          'widget' => 'Pluf_Form_Widget_TextareaInput',
                                                                         ));
+        $this->fields['external_project_url'] = new Pluf_Form_Field_Varchar(array('required' => false,
+                                                                 'label' => __('External URL'),
+                                                                 'widget_attrs' => array('size' => '68'),
+                                                                 'initial' => $conf->getVal('external_project_url'),
+        ));
 
         // Logo part
         $upload_path = Pluf::f('upload_path', false);
@@ -118,20 +124,48 @@ class IDF_Form_ProjectConf extends Pluf_Form
         return $this->cleaned_data['logo'];
     }
 
+    public function clean_external_project_url()
+    {
+        return self::checkWebURL($this->cleaned_data['external_project_url']);
+    }
+
+    public static function checkWebURL($url)
+    {
+        $url = trim($url);
+        if (empty($url)) {
+            return '';
+        }
+
+        $parsed = parse_url($url);
+        if ($parsed === false || !array_key_exists('scheme', $parsed) ||
+            ($parsed['scheme'] != 'http' && $parsed['scheme'] != 'https')) {
+            throw new Pluf_Form_Invalid(__('The entered URL is invalid. Only http and https URLs are allowed.'));
+        }
+
+        return $url;
+    }
+
     public function save($commit=true)
     {
-        $conf = $this->project->getConf();
-
         // Basic part
         $this->project->name = $this->cleaned_data['name'];
         $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->description = $this->cleaned_data['description'];
         $this->project->update();
 
-        // Logo part
-        if ($this->cleaned_data['logo'] !== "") {
-            $conf->setVal('logo', $this->cleaned_data['logo']);
+        $conf = $this->project->getConf();
+        $keys = array('logo', 'external_project_url');
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $this->cleaned_data)) {
+                if (!empty($this->cleaned_data[$key])) {
+                    $conf->setVal($key, $this->cleaned_data[$key]);
+                }
+                else {
+                    $conf->delVal($key);
+                }
+            }
         }
+
         if ($this->cleaned_data['logo_remove'] === true) {
             @unlink(Pluf::f('upload_path') . '/' . $this->project->shortname . $conf->getVal('logo'));
             $conf->delVal('logo');

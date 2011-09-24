@@ -40,10 +40,10 @@ class IDF_Views
     public function index($request, $match, $api=false)
     {
         $projects = self::getProjects($request->user);
-        $stats = self::getProjectsStatistics ($projects);
- 
+        $stats = self::getProjectsStatistics($projects);
+
         if ($api == true) return $projects;
-        return Pluf_Shortcuts_RenderToResponse('idf/index.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/index.html',
                                                array('page_title' => __('Projects'),
                                                      'projects' => $projects,
                                                      'stats' => new Pluf_Template_ContextVars($stats)),
@@ -55,7 +55,7 @@ class IDF_Views
      */
     public function login($request, $match)
     {
-        if (isset($request->POST['action']) 
+        if (isset($request->POST['action'])
             and $request->POST['action'] == 'new-user') {
             $login = (isset($request->POST['login'])) ? $request->POST['login'] : '';
             $url = Pluf_HTTP_URL_urlForView('IDF_Views::register', array(),
@@ -91,7 +91,7 @@ class IDF_Views
         $params = array('request'=>$request);
         if ($request->method == 'POST') {
             $form = new IDF_Form_Register(array_merge(
-            									(array)$request->POST, 
+            									(array)$request->POST,
 												(array)$request->FILES
 												), $params);
             if ($form->isValid()) {
@@ -108,7 +108,7 @@ class IDF_Views
         $context = new Pluf_Template_Context(array());
         $tmpl = new Pluf_Template('idf/terms.html');
         $terms = Pluf_Template::markSafe($tmpl->render($context));
-        return Pluf_Shortcuts_RenderToResponse('idf/register/index.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/register/index.html',
                                                array('page_title' => $title,
                                                      'form' => $form,
                                                      'terms' => $terms),
@@ -133,7 +133,7 @@ class IDF_Views
         } else {
             $form = new IDF_Form_RegisterInputKey();
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/register/inputkey.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/register/inputkey.html',
                                                array('page_title' => $title,
                                                      'form' => $form),
                                                $request);
@@ -168,7 +168,7 @@ class IDF_Views
                 $request->session->clear();
                 $request->session->setData('login_time', gmdate('Y-m-d H:i:s'));
                 $user->last_login = gmdate('Y-m-d H:i:s');
-                $user->update();                
+                $user->update();
                 $request->user->setMessage(__('Welcome! You can now participate in the life of your project of choice.'));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views::index');
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -176,7 +176,7 @@ class IDF_Views
         } else {
             $form = new IDF_Form_RegisterConfirmation(null, $extra);
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/register/confirmation.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/register/confirmation.html',
                                                array('page_title' => $title,
                                                      'new_user' => $user,
                                                      'form' => $form),
@@ -213,7 +213,7 @@ class IDF_Views
 
     /**
      * If the key is valid, provide a nice form to reset the password
-     * and automatically login the user. 
+     * and automatically login the user.
      *
      * This is also firing the password change event for the plugins.
      */
@@ -238,7 +238,7 @@ class IDF_Views
                 $request->session->clear();
                 $request->session->setData('login_time', gmdate('Y-m-d H:i:s'));
                 $user->last_login = gmdate('Y-m-d H:i:s');
-                $user->update();                
+                $user->update();
                 $request->user->setMessage(__('Welcome back! Next time, you can use your broswer options to remember the password.'));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views::index');
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -246,12 +246,12 @@ class IDF_Views
         } else {
             $form = new IDF_Form_PasswordReset(null, $extra);
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/user/passrecovery.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/user/passrecovery.html',
                                                array('page_title' => $title,
                                                      'new_user' => $user,
                                                      'form' => $form),
                                                $request);
-        
+
     }
 
     /**
@@ -270,7 +270,7 @@ class IDF_Views
         } else {
             $form = new IDF_Form_PasswordInputKey();
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/user/passrecovery-inputkey.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/user/passrecovery-inputkey.html',
                                                array('page_title' => $title,
                                                      'form' => $form),
                                                $request);
@@ -283,7 +283,7 @@ class IDF_Views
     {
         $title = __('Here to Help You!');
         $projects = self::getProjects($request->user);
-        return Pluf_Shortcuts_RenderToResponse('idf/faq.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/faq.html',
                                                array(
                                                      'page_title' => $title,
                                                      'projects' => $projects,
@@ -299,7 +299,7 @@ class IDF_Views
     {
         $title = __('InDefero API (Application Programming Interface)');
         $projects = self::getProjects($request->user);
-        return Pluf_Shortcuts_RenderToResponse('idf/faq-api.html', 
+        return Pluf_Shortcuts_RenderToResponse('idf/faq-api.html',
                                                array(
                                                      'page_title' => $title,
                                                      'projects' => $projects,
@@ -335,7 +335,7 @@ class IDF_Views
                        );
         $sql = new Pluf_SQL("model_class='IDF_Project' AND owner_class='Pluf_User' AND owner_id=%s AND negative=".$false, $user->id);
         $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $sql->gen()));
-        
+
         $sql = sprintf('%s=%s', $db->qn('private'), $false);
         if ($rows->count() > 0) {
             $ids = array();
@@ -347,7 +347,7 @@ class IDF_Views
         return Pluf::factory('IDF_Project')->getList(array('filter' => $sql,
                                                            'order' => 'name ASC'));
     }
-    
+
     /**
      * Returns statistics on a list of projects.
      *
@@ -362,7 +362,7 @@ class IDF_Views
                             'issues' => 0,
                             'docpages' => 0,
                             'commits' => 0);
-        
+
         // Count for each projects
         foreach ($projects as $p) {
             $pstats = $p->getStats ();
@@ -372,7 +372,7 @@ class IDF_Views
             $forgestats['docpages'] += $pstats['docpages'];
             $forgestats['commits'] += $pstats['commits'];
         }
-    
+
         // Count projects
         $forgestats['projects'] = count($projects);
 
@@ -380,7 +380,7 @@ class IDF_Views
         $sql = new Pluf_SQL('first_name != %s', array('---'));
         $forgestats['members'] = Pluf::factory('Pluf_User')
             ->getCount(array('filter' => $sql->gen()));
-        
+
         return $forgestats;
     }
 }

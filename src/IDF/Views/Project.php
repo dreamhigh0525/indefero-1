@@ -305,7 +305,7 @@ class IDF_Views_Project
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
-            $form = new IDF_Form_ProjectConf($prj->getData(), $extra);
+            $form = new IDF_Form_ProjectConf(null, $extra);
         }
 
         $logo = $prj->getConf()->getVal('logo');
