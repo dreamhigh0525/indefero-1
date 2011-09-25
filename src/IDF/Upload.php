@@ -234,6 +234,45 @@ class IDF_Upload extends Pluf_Model
      */
     public function notify($conf, $create=true)
     {
+        $project = $this->get_project();
+        $url = str_replace(array('%p', '%d'),
+                           array($project->shortname, $this->id),
+                           $conf->getVal('upload_webhook_url', ''));
+
+        $tags = array();
+        foreach ($this->get_tags_list() as $tag) {
+            $tags[] = $tag->class.':'.$tag->name;
+        }
+
+        $payload = array(
+            'to_send' => array(
+                'project' => $project->shortname,
+                'id' => $this->id,
+                'summary' => $this->summary,
+                'changelog' => $this->changelog,
+                'filename' => $this->file,
+                'filesize' => $this->filesize,
+                'md5sum' => $this->md5,
+                'tags' => $tags,
+            ),
+            'project_id' => $project->id,
+            'authkey' => $project->getWebHookKey(),
+            'url' => $url,
+        );
+
+        if ($create === true) {
+            $payload['method'] = 'PUT';
+            $payload['to_send']['creation_date'] = $this->creation_dtime;
+        } else {
+            $payload['method'] = 'POST';
+            $payload['to_send']['update_date'] = $this->modif_dtime;
+        }
+
+        $item = new IDF_Queue();
+        $item->type = 'upload';
+        $item->payload = $payload;
+        $item->create();
+
         if ('' == $conf->getVal('downloads_notification_email', '')) {
             return;
         }
