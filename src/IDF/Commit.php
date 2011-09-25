@@ -297,7 +297,7 @@ class IDF_Commit extends Pluf_Model
                                             'creation_date' => $this->creation_dtime,
                                             ),
                          'project_id' => $project->id,
-                         'authkey' => $project->getPostCommitHookKey(),
+                         'authkey' => $project->getWebHookKey(),
                          'url' => $url,
                          );
         $item = new IDF_Queue();

@@ -60,9 +60,17 @@ Deprecated           = Most users should NOT download this';
         $this->fields['labels_download_one_max'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('Each download may have at most one label with each of these classes'),
-                                            'initial' => self::init_one_max, 
+                                            'initial' => self::init_one_max,
                                             'widget_attrs' => array('size' => 60),
                                             ));
+
+        $this->conf = $extra['conf'];
+        $this->fields['upload_webhook_url'] = new Pluf_Form_Field_Url(
+                                      array('required' => false,
+                                            'label' => __('Webhook URL'),
+                                            'initial' => $this->conf->getVal('upload_webhook_url', ''),
+                                            'widget_attrs' => array('size' => 60),
+        ));
 
     }
 }

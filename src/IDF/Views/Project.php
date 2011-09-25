@@ -375,8 +375,11 @@ class IDF_Views_Project
         $title = sprintf(__('%s Downloads Configuration'), (string) $prj);
         $conf = new IDF_Conf();
         $conf->setProject($prj);
+        $extra = array(
+            'conf' => $conf,
+        );
         if ($request->method == 'POST') {
-            $form = new IDF_Form_UploadConf($request->POST);
+            $form = new IDF_Form_UploadConf($request->POST, $extra);
             if ($form->isValid()) {
                 foreach ($form->cleaned_data as $key=>$val) {
                     $conf->setVal($key, $val);
@@ -388,7 +391,7 @@ class IDF_Views_Project
             }
         } else {
             $params = array();
-            $keys = array('labels_download_predefined', 'labels_download_one_max');
+            $keys = array('labels_download_predefined', 'labels_download_one_max', 'upload_webhook_url');
             foreach ($keys as $key) {
                 $_val = $conf->getVal($key, false);
                 if ($_val !== false) {
@@ -398,12 +401,13 @@ class IDF_Views_Project
             if (count($params) == 0) {
                 $params = null; //Nothing in the db, so new form.
             }
-            $form = new IDF_Form_UploadConf($params);
+            $form = new IDF_Form_UploadConf($params, $extra);
         }
         return Pluf_Shortcuts_RenderToResponse('idf/admin/downloads.html',
                                                array(
                                                      'page_title' => $title,
                                                      'form' => $form,
+                                                     'hookkey' => $prj->getWebHookKey(),
                                                      ),
                                                $request);
     }
@@ -598,7 +602,7 @@ class IDF_Views_Project
                                                      'repository_size' => $prj->getRepositorySize(),
                                                      'page_title' => $title,
                                                      'form' => $form,
-                                                     'hookkey' => $prj->getPostCommitHookKey(),
+                                                     'hookkey' => $prj->getWebHookKey(),
                                                      ),
                                                $request);
     }

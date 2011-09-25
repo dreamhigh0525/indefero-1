@@ -494,12 +494,12 @@ GROUP BY uid";
     }
 
     /**
-     * Get the post commit hook key.
+     * Get the web hook key.
      *
      * The goal is to get something predictable but from which one
      * cannot reverse find the secret key.
      */
-    public function getPostCommitHookKey()
+    public function getWebHookKey()
     {
         return md5($this->id.sha1(Pluf::f('secret_key')).$this->shortname);
     }
