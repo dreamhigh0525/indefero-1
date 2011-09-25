@@ -287,6 +287,12 @@ class IDF_Commit extends Pluf_Model
         $url = str_replace(array('%p', '%r'),
                            array($project->shortname, $this->scm_id),
                            $conf->getVal('webhook_url', ''));
+
+        // trigger a POST instead of the standard PUT if we're asked for
+        $method = 'PUT';
+        if (Pluf::f('webhook_processing', '') === 'compat') {
+            $method = 'POST';
+        }
         $payload = array('to_send' => array(
                                             'project' => $project->shortname,
                                             'rev' => $this->scm_id,
@@ -299,7 +305,7 @@ class IDF_Commit extends Pluf_Model
                          'project_id' => $project->id,
                          'authkey' => $project->getWebHookKey(),
                          'url' => $url,
-                         'method' => 'POST',
+                         'method' => $method,
                          );
         $item = new IDF_Queue();
         $item->type = 'new_commit';

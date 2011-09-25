@@ -594,6 +594,10 @@ class IDF_Views_Project
                          'mtn' => __('monotone'),
                          );
         $repository_type = $options[$scm];
+        $hook_request_method = 'PUT';
+        if (Pluf::f('webhook_processing','') === 'compat') {
+            $hook_request_method = 'POST';
+        }
         return Pluf_Shortcuts_RenderToResponse('idf/admin/source.html',
                                                array(
                                                      'remote_svn' => $remote_svn,
@@ -603,6 +607,7 @@ class IDF_Views_Project
                                                      'page_title' => $title,
                                                      'form' => $form,
                                                      'hookkey' => $prj->getWebHookKey(),
+                                                     'hook_request_method' => $hook_request_method,
                                                      ),
                                                $request);
     }

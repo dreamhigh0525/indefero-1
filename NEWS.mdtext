@@ -6,6 +6,15 @@ from Scilab <http://www.scilab.org/>!
 ATTENTION: You need Pluf [324ae60b](http://projects.ceondo.com/p/pluf/source/commit/324ae60b)
 or newer to properly run this version of Indefero!
 
+## Changes
+
+- Indefero's post-commit web hook now by default issues HTTP PUT instead of
+  HTTP POST requests and carries the authentication digest in the new
+  `Web-Hook-Hmac` header.  The old behaviour can be re-enabled by setting the
+  `$cfg['webhook_processing']` flag to "compat", we urge you to change the
+  implementations of this web hook as this setting is likely to be removed
+  in future versions of Indefero.
+ 
 ## New Features
 
 - Indefero's issue tracker can now bi-directionally link issues with variable, configurable

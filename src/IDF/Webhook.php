@@ -39,14 +39,20 @@ class IDF_Webhook
     public static function processNotification($payload)
     {
         $data = json_encode($payload['to_send']);
+        $sign_header = 'Web-Hook-Hmac';
+        // use the old signature header if we're asked for
+        if (Pluf::f('webhook_processing', '') === 'compat') {
+            $sign_header = 'Post-Commit-Hook-Hmac';
+        }
         $sign = hash_hmac('md5', $data, $payload['authkey']);
         $params = array('http' => array(
+                      // fall-back to POST for old queue items
                       'method' => empty($payload['method']) ? 'POST' : $payload['method'],
                       'content' => $data,
                       'user_agent' => 'Indefero Hook Sender (http://www.indefero.net)',
                       'max_redirects' => 0,
                       'timeout' => 15,
-                      'header'=> 'Post-Commit-Hook-Hmac: '.$sign."\r\n"
+                      'header'=> $sign_header.': '.$sign."\r\n"
                                 .'Content-Type: application/json'."\r\n",
                                         )
                         );

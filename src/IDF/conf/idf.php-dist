@@ -495,5 +495,20 @@ $cfg['idf_strong_key_check'] = false;
 # always have precedence.
 # $cfg['max_upload_size'] = 2097152; // Size in bytes
 
+# Older versions of Indefero submitted a POST request to a configured
+# post-commit web hook when new revisions arrived, whereas a PUT request
+# would have been more appropriate.  Also, the payload's HMAC digest was
+# submitted as value of the HTTP header 'Post-Commit-Hook-Hmac' during
+# such a request.  Since newer versions of Indefero use the same authentication
+# mechanism (based on the same secret key) for other web hooks of the same
+# project as well, the name of this HTTP header was no longer appropriate 
+# and as such changed to simply 'Web-Hook-Hmac'.
+#
+# Setting the following configuration option to 'compat' now restores the
+# old behaviour in both cases. Please notice however that this compatibility
+# option is likely to go away in the next major version of Indefero, so you
+# should really change the other end of your web hooks!
+$cfg['webhook_processing'] = 'compat';
+
 return $cfg;
 
