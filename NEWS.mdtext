@@ -17,6 +17,10 @@ or newer to properly run this version of Indefero!
  
 ## New Features
 
+- Projects can get an external project URL configured that is displayed as linkable
+  icon right beside the project name (if available)
+- It is now possible to configure a web hook that informs an external URL about new and 
+  updated downloads for a specific project, similar to the available post-commit web hook
 - Indefero's issue tracker can now bi-directionally link issues with variable, configurable
   terms, such as "is related to", "is blocked by" or "is duplicated by" (issue 638)
 - Mercurial source views now show parent revisions (if any) and detailed change information
