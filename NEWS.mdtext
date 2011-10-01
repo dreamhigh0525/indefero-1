@@ -31,6 +31,7 @@ or newer to properly run this version of Indefero!
   a new project or monotone key, in case an error popped up in the middle (issue 697)
 - Indefero now sends the MD5 checksum as HTTP header when downloading a file from the
   download area. Additionally, a unneeded redirect has been removed. (issue 716)
+- Source links without a specific revision did not work due to a wrong regex (issue 730)
 - Better error detection and reporting in the SyncMonotone plugin
   ATTENTION: This needs Pluf 46b7f251 or newer!
 - Fix the branch links users of the Subversion frontend get when they enter a wrong revision

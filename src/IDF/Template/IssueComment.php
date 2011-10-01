@@ -58,7 +58,7 @@ class IDF_Template_IssueComment extends Pluf_Template_Tag
                       implode('|', $nouns);
             $text = IDF_Template_safePregReplace('#((?:'.$prefix.')(?:\s+r?))([0-9a-f]{1,40}((?:\s+and|\s+or|,)\s+r?[0-9a-f]{1,40})*)\b#i',
                                                  array($this, 'callbackCommits'), $text);
-            $text = IDF_Template_safePregReplace('=(src:)([^\s@#,\(\)\\\\]+(?:(\\\\)[\s@#][^\s@#,\(\)\\\\]+){0,})+(?:\@([^\s#,]+))(?:#(\d+))?=im',
+            $text = IDF_Template_safePregReplace('=(src:)([^\s@#,\(\)\\\\]+(?:(\\\\)[\s@#][^\s@#,\(\)\\\\]+){0,})+(?:\@([^\s#,]+))?(?:#(\d+))?=im',
                                                  array($this, 'callbackSource'), $text);
         }
         if ($wordwrap) $text = Pluf_Text::wrapHtml($text, 69, "\n");

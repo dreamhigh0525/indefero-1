@@ -88,6 +88,7 @@ class IDF_Middleware
                               'showuser' => 'IDF_Template_ShowUser',
                               'ashowuser' => 'IDF_Template_AssignShowUser',
                               'appversion' => 'IDF_Template_AppVersion',
+                              'upload' => 'IDF_Template_Tag_UploadUrl',
                                             ));
         $params['modifiers'] = array_merge($params['modifiers'],
                                            array(
