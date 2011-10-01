@@ -71,7 +71,9 @@ class IDF_Views_Issue
                         'page_title' => $title,
                         'open' => $open,
                         'closed' => $closed,
-                        'issues' => $pag);
+                        'issues' => $pag,
+                        'cloud' => 'issues',
+                );
         if ($api) return $params;
         return Pluf_Shortcuts_RenderToResponse('idf/issues/index.html',
                                                $params, $request);
@@ -88,7 +90,7 @@ class IDF_Views_Issue
         $ownerStatistics = array();
         $status = array();
         $isTrackerEmpty = false;
-        
+
         $prj = $request->project;
         $opened = $prj->getIssueCountByStatus('open');
         $closed = $prj->getIssueCountByStatus('closed');
@@ -102,7 +104,7 @@ class IDF_Views_Issue
                 $status['Open'] = array($opened, (int)(100 * $opened / ($opened + $closed)));
                 $status['Closed'] = array($closed, (int)(100 * $closed / ($opened + $closed)));
             }
-            
+
             if ($opened > 0) {
                 // Issue owner statistics
                 $owners = $prj->getIssueCountByOwner('open');
@@ -130,15 +132,15 @@ class IDF_Views_Issue
                         $tagStatistics[$k][$kk] = array($vv[0], (int)(100 * $vv[0] / $nbIssueInClass), $vv[1]);
                     }
                 }
-                
+
                 // Sort
                 krsort($tagStatistics);
                 arsort($ownerStatistics);
             }
         }
-        
+
         $title = sprintf(__('Summary of tracked issues in %s.'), (string) $prj);
-        
+
         return Pluf_Shortcuts_RenderToResponse('idf/issues/summary.html',
                                                array('page_title' => $title,
                                                      'trackerEmpty' => $isTrackerEmpty,
@@ -149,7 +151,7 @@ class IDF_Views_Issue
                                                      ),
                                                $request);
     }
-    
+
     /**
      * View the issues watch list of a given user.
      * Limited to a specified project
