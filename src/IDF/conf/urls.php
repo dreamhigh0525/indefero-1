@@ -153,7 +153,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/create/$#',
                'model' => 'IDF_Views_Issue',
                'method' => 'create');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/my/(\w+)/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/(.*)/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'myIssues');

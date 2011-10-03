@@ -1,5 +1,5 @@
 {extends "idf/issues/base.html"}
-{block docclass}yui-t2{assign $inMyIssues = true}{/block}
+{block docclass}yui-t2{if $user.login == $login}{assign $inMyIssues = true}{/if}{/block}
 {block body}
 {$issues.render}
 {if !$user.isAnonymous()}
@@ -8,10 +8,10 @@
 
 {/block}
 {block context}
-{aurl 'owner_url', 'IDF_Views_Issue::myIssues', array($project.shortname, 'owner')}
-{aurl 'submit_url', 'IDF_Views_Issue::myIssues', array($project.shortname, 'submit')}
-{aurl 'owner_closed_url', 'IDF_Views_Issue::myIssues', array($project.shortname, 'ownerclosed')}
-{aurl 'submit_closed_url', 'IDF_Views_Issue::myIssues', array($project.shortname, 'submitclosed')}
+{aurl 'owner_url', 'IDF_Views_Issue::myIssues', array($project.shortname, $login, 'owner')}
+{aurl 'submit_url', 'IDF_Views_Issue::myIssues', array($project.shortname, $login, 'submit')}
+{aurl 'owner_closed_url', 'IDF_Views_Issue::myIssues', array($project.shortname, $login, 'ownerclosed')}
+{aurl 'submit_closed_url', 'IDF_Views_Issue::myIssues', array($project.shortname, $login, 'submitclosed')}
 <p><strong>{trans 'Submitted issues:'}</strong> <a href="{$submit_url}">{$nb_submit}</a> 
 {if $nb_submit_closed}<br /><span class="helptext">{blocktrans $nb_submit_closed}See the <a href="{$submit_closed_url}">{$nb_submit_closed} closed</a>.{plural}See the <a href="{$submit_closed_url}">{$nb_submit_closed} closed</a>.{/blocktrans}</span>{/if}</p>
 {if $nb_owner > 0}
