@@ -477,7 +477,7 @@ class IDF_Views_Issue
         // and other things in the next round
         $results = IDF_Search::mySearch($query, $prj, 'IDF_Issue');
 
-        $issue_ids = array();
+        $issue_ids = array(0);
         foreach ($results as $result) {
             $issue_ids[] = $result['model_id'];
         }
@@ -495,7 +495,7 @@ class IDF_Views_Issue
         // we unfortunately loose the original sort order,
         // so we manually have to apply it here again
         $sorted_issues = new ArrayObject();
-        $filtered_issue_ids = array();
+        $filtered_issue_ids = array(0);
         foreach ($issue_ids as $issue_id) {
             foreach ($issues as $issue) {
                 if ($issue->id != $issue_id)
