@@ -119,9 +119,11 @@ class IDF_Views_Issue
                 }
 
                 // Issue class tag statistics
-                $tags = $prj->getTagCloud();
-                foreach ($tags as $t) {
-                    $tagStatistics[$t->class][$t->name] = array($t->nb_use, $t->id);
+                $grouped_tags = $prj->getTagCloud();
+                foreach ($grouped_tags as $class => $tags) {
+                    foreach ($tags as $tag) {
+                        $tagStatistics[$class][$tag->name] = array($tag->nb_use, $tag->id);
+                    }
                 }
                 foreach($tagStatistics as $k => $v) {
                     $nbIssueInClass = 0;
