@@ -10,8 +10,8 @@
 {if $hasWikiAccess}{hotkey 'Shift+o', 'IDF_Views_Wiki::index', array($project.shortname)}{/if}
 {if $hasSourceAccess}{hotkey 'Shift+s', 'IDF_Views_Source::treeBase', array($project.shortname, $project.getScmRoot())}{/if}
 {if $hasIssuesAccess and !$user.isAnonymous()}
-{hotkey 'Shift+m', 'IDF_Views_Issue::myIssues', array($project.shortname, 'submit')}
-{hotkey 'Shift+w', 'IDF_Views_Issue::myIssues', array($project.shortname, 'owner')}
+{hotkey 'Shift+m', 'IDF_Views_Issue::myIssues', array($project.shortname, $user.login, 'submit')}
+{hotkey 'Shift+w', 'IDF_Views_Issue::myIssues', array($project.shortname, $user.login, 'owner')}
 {/if}{/if} //-->
 </script>
 
