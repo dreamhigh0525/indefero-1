@@ -332,23 +332,23 @@ class IDF_Views_Issue
         if (count($ctags) == 0) $ctags[] = 0;
         switch ($match[3]) {
         case 'submit':
-            $titleFormat = 
+            $titleFormat = __('%s %s Submitted %s Issues');
             $f_sql = new Pluf_SQL('project=%s AND submitter=%s AND status IN ('.implode(', ', $otags).')', array($prj->id, $user->id));
             break;
         case 'submitclosed':
-            $title = __('%s %s Closed Submitted %s Issues');
+            $titleFormat = __('%s %s Closed Submitted %s Issues');
             $f_sql = new Pluf_SQL('project=%s AND submitter=%s AND status IN ('.implode(', ', $ctags).')', array($prj->id, $user->id));
             break;
         case 'ownerclosed':
-            $title = __('%s %s Closed Working %s Issues');
+            $titleFormat = __('%s %s Closed Working %s Issues');
             $f_sql = new Pluf_SQL('project=%s AND owner=%s AND status IN ('.implode(', ', $ctags).')', array($prj->id, $user->id));
             break;
         default:
-            $title = __('%s %s Working %s Issues');
+            $titleFormat = __('%s %s Working %s Issues');
             $f_sql = new Pluf_SQL('project=%s AND owner=%s AND status IN ('.implode(', ', $otags).')', array($prj->id, $user->id));
             break;
         }
-        $title = sprintf(__('%s %s Submitted %s Issues'),
+        $title = sprintf($titleFormat,
                          $user->first_name,
                          $user->last_name,
                          (string) $prj);
