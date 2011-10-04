@@ -15,6 +15,10 @@ or newer to properly run this version of Indefero!
 - Display monotone file and directory attributes in the tree and file view
   (needs a monotone with an interface version of 13.1 or newer)
 - The context area is now kept in view when a page scrolls down several pages
+- Add a summary section to the issue tracker with statistics about open/close issues,
+  tags of open issue, and count of open tickets for each owner.
+- Improved home page with an customizable icon for each project.
+- The download section provide MD5 for each files.
 
 ## Bugfixes
 
@@ -43,6 +47,8 @@ or newer to properly run this version of Indefero!
 - Indefero no longer displays an empty parents paragraph in the commit view for root revisions of
   a git repository
 - Indefero now only shows the tags of the closed and not the open issues in the closed issues list
+- Avatar URL generation use correctly the configuration (issue 732)
+- Git cron job doesn't erase anymore manually added keys (issue 247)
 
 ## Documentation
 
