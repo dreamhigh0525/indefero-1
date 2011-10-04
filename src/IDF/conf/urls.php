@@ -156,7 +156,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/create/$#',
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/(.*)/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
-               'method' => 'myIssues');
+               'method' => 'userIssues');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/attachment/(\d+)/(.*)$#',
                'base' => $base,

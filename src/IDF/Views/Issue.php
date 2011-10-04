@@ -109,11 +109,13 @@ class IDF_Views_Issue
                 foreach ($owners as $user => $nb) {
                     if ($user === '') {
                         $key = __('Not assigned');
+                        $login = null;
                     } else {
                         $obj = Pluf::factory('Pluf_User')->getOne(array('filter'=>'id='.$user));
                         $key = $obj->first_name . ' ' . $obj->last_name;
+                        $login = $obj->login;
                     }
-                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened), $obj->login);
+                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened), $login);
                 }
 
                 // Issue class tag statistics
@@ -313,8 +315,8 @@ class IDF_Views_Issue
      *
      * Only open issues are shown.
      */
-    public $myIssues_precond = array('IDF_Precondition::accessIssues');
-    public function myIssues($request, $match)
+    public $userIssues_precond = array('IDF_Precondition::accessIssues');
+    public function userIssues($request, $match)
     {
         $prj = $request->project;
         
@@ -372,7 +374,7 @@ class IDF_Views_Issue
                                        'current_user' => $request->user);
         $pag->summary = __('This table shows the open issues.');
         $pag->forced_where = $f_sql;
-        $pag->action = array('IDF_Views_Issue::myIssues', array($prj->shortname, $match[2]));
+        $pag->action = array('IDF_Views_Issue::userIssues', array($prj->shortname, $match[2]));
         $pag->sort_order = array('modif_dtime', 'ASC'); // will be reverted
         $pag->sort_reverse_order = array('modif_dtime');
         $pag->sort_link_title = true;
@@ -387,7 +389,7 @@ class IDF_Views_Issue
         $pag->items_per_page = 10;
         $pag->no_results_text = __('No issues were found.');
         $pag->setFromRequest($request);
-        return Pluf_Shortcuts_RenderToResponse('idf/issues/my-issues.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/userIssues.html',
                                                array('project' => $prj,
                                                      'page_title' => $title,
                                                      'login' => $user->login,
