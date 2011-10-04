@@ -7,6 +7,8 @@ or newer to properly run this version of Indefero!
 
 - Indefero's issue tracker can now bi-directionally link issues with variable, configurable
   terms, such as "is related to", "is blocked by" or "is duplicated by" (issue 638)
+- When you search for issues, the results can further be refined by issue state (open or closed)
+  and label (partially implements issue 548)
 - Mercurial source views now show parent revisions (if any) and detailed change information
 - Subversion source views now show detailed change information (issue 622)
 - File download URLs now contain the file name rather than the upload id; old links still work though (issues 559 and 686)
