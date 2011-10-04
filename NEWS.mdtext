@@ -19,6 +19,7 @@ or newer to properly run this version of Indefero!
   tags of open issue, and count of open tickets for each owner.
 - Improved home page with an customizable icon for each project.
 - The download section provide MD5 for each files.
+- Wiki page have now a css for printer output (issue 713)
 
 ## Bugfixes
 
