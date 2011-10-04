@@ -732,6 +732,13 @@ class IDF_Views_Issue
     {
         $prj = $request->project;
         $status = $match[2];
+        
+        if (mb_strtolower($status) == 'open') {
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index',
+                                            array($prj->shortname));
+            return new Pluf_HTTP_Response_Redirect($url);            
+        }
+        
         $title = sprintf(__('%s Closed Issues'), (string) $prj);
         // Get stats about the issues
         $open = $prj->getIssueCountByStatus('open');
