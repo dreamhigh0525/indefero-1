@@ -408,24 +408,23 @@ class IDF_Scm_Mercurial extends IDF_Scm
                        escapeshellarg($commit),
                        escapeshellarg($this->repo),
                        escapeshellarg($logStyle->get()));
-        $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        self::exec('IDF_Scm_Mercurial::getCommit', $cmd, $out);
-        $log = array();
-        $change = array();
-        $inchange = false;
-        foreach ($out as $line) {
-            if (!$inchange and 0 === strpos($line, 'diff -r')) {
-                $inchange = true;
-            }
-            if ($inchange) {
-                $change[] = $line;
-            } else {
-                $log[] = $line;
-            }
+        $out = self::shell_exec('IDF_Scm_Mercurial::getCommit', $cmd);
+        if (strlen($out) == 0) {
+            return false;
         }
-        $out = self::parseLog($log);
-        $out[0]->diff = implode("\n", $change);
+
+        $diffStart = strpos($out, 'diff -r');
+        $diff = '';
+        if ($diffStart !== false) {
+            $log = substr($out, 0, $diffStart);
+            $diff = substr($out, $diffStart);
+        } else {
+            $log = $out;
+        }
+
+        $out = self::parseLog(preg_split('/\r\n|\n/', $log));
+        $out[0]->diff = $diff;
         return $out[0];
     }
 
