@@ -38,11 +38,9 @@ class IDF_DiffTest extends PHPUnit_Framework_TestCase
             }
 
             $expectedfile = str_replace('.diff', '.expected', $difffile);
-            $expectedcontent = @file_get_contents($expectedfile);
-
             $diffcontent = file_get_contents($difffile);
             $diff = new IDF_Diff($diffcontent, $diffprefix);
-            $this->assertEquals(unserialize($expectedcontent),
+            $this->assertEquals(require_once($expectedfile),
                                 $diff->parse(),
                                 'parsed diff '.$difffile.' does not match');
         }

@@ -614,16 +614,54 @@ td.diff-r {
   background-color: #fdd;
 }
 
-td.diff-a, td.diff-r, td.diff-c  {
+td.diff  {
   border-bottom: none;
   border-top: none;
   white-space: pre;
 }
 
-td.diff-a > span,
-td.diff-r > span,
-td.diff-c > span {
+td.diff > span {
   float: left;
+}
+
+td.diff > span.non-printable {
+	visibility: hidden;
+    color: white;
+    text-transform: uppercase;
+    float: none;
+    font-size: 5.5pt;
+    font-family: Calibri, Helvetica, Arial, sans-serif;
+    text-align: center;
+    display: inline-block;
+    word-wrap: break-word;
+    padding: 1px 1px 0px 1px;
+    margin-left: 1px;
+    margin-right: 1px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    cursor: default;
+    vertical-align: 10%;
+}
+
+td.diff:hover > span.non-printable {
+	visibility: visible;
+}
+
+td.diff-a > span.non-printable {
+    background: #0A0;	
+}
+
+td.diff-r > span.non-printable {
+	background: #A00;
+}
+
+td.diff-c > span.non-printable {
+	background: black;
+}
+
+/* override prettify css rule */
+td.diff > span.non-printable > * {
+	color: white;
 }
 
 table.diff tr.diff-next {

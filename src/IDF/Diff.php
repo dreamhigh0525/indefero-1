@@ -35,9 +35,29 @@ class IDF_Diff
     public function __construct($diff, $path_strip_level = 0)
     {
         $this->path_strip_level = $path_strip_level;
+        $this->lines = self::splitIntoLines($diff);
+    }
+
+    /**
+     * Splits a diff into separate lines while retaining the individual
+     * line ending character for every line
+     */
+    private static function splitIntoLines($diff)
+    {
         // this works because in unified diff format even empty lines are
         // either prefixed with a '+', '-' or ' '
-        $this->lines = preg_split("/\015\012|\015|\012/", $diff, -1, PREG_SPLIT_NO_EMPTY);
+        $splitted = preg_split("/\r\n|\n/", $diff, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_OFFSET_CAPTURE);
+
+        $last_off = -1;
+        $lines = array();
+        while (($split = array_shift($splitted)) !== null) {
+            if ($last_off != -1) {
+                $lines[] .= substr($diff, $last_off, $split[1] - $last_off);
+            }
+            $last_off = $split[1];
+        }
+        $lines[] = substr($diff, $last_off);
+        return $lines;
     }
 
     public function parse()
@@ -66,12 +86,12 @@ class IDF_Diff
             }
 
             // use new file name by default
-            preg_match("/^\+\+\+ ([^\t]+)/", $newfileline, $m);
+            preg_match("/^\+\+\+ ([^\t\n\r]+)/", $newfileline, $m);
             $current_file = $m[1];
             if ($current_file === '/dev/null') {
                 // except if it's /dev/null, use the old one instead
                 // eg. mtn 0.48 and newer
-                preg_match("/^--- ([^\t]+)/", $oldfileline, $m);
+                preg_match("/^--- ([^\t\r\n]+)/", $oldfileline, $m);
                 $current_file = $m[1];
             }
             if ($this->path_strip_level > 0) {
@@ -102,10 +122,11 @@ class IDF_Diff
 
                 while ($i < $diffsize && ($addlines >= 0 || $dellines >= 0)) {
                     $linetype = $this->lines[$i] != '' ? $this->lines[$i][0] : false;
+                    $content = substr($this->lines[$i], 1);
                     switch ($linetype) {
                         case ' ':
                             $files[$current_file]['chunks'][$current_chunk][] =
-                                array($delstart, $addstart, substr($this->lines[$i++], 1));
+                                array($delstart, $addstart, $content);
                             $dellines--;
                             $addlines--;
                             $delstart++;
@@ -113,23 +134,26 @@ class IDF_Diff
                             break;
                         case '+':
                             $files[$current_file]['chunks'][$current_chunk][] =
-                                array('', $addstart, substr($this->lines[$i++], 1));
+                                array('', $addstart, $content);
                             $addlines--;
                             $addstart++;
                             break;
                         case '-':
                             $files[$current_file]['chunks'][$current_chunk][] =
-                                array($delstart, '', substr($this->lines[$i++], 1));
+                                array($delstart, '', $content);
                             $dellines--;
                             $delstart++;
                             break;
                         case '\\':
-                            // ignore newline handling for now, see issue 636
-                            $i++;
+                            // no new line at the end of this file; remove pseudo new line from last line
+                            $cur = count($files[$current_file]['chunks'][$current_chunk]) - 1;
+                            $files[$current_file]['chunks'][$current_chunk][$cur][2] =
+                                rtrim($files[$current_file]['chunks'][$current_chunk][$cur][2], "\r\n");
                             continue;
                         default:
                             break 2;
                     }
+                    $i++;
                 }
                 $current_chunk++;
             }
@@ -156,13 +180,15 @@ class IDF_Diff
             foreach ($file['chunks'] as $chunk) {
                 foreach ($chunk as $line) {
                     if ($line[0] and $line[1]) {
-                        $class = 'diff-c';
+                        $class = 'diff diff-c';
                     } elseif ($line[0]) {
-                        $class = 'diff-r';
+                        $class = 'diff diff-r';
                     } else {
-                        $class = 'diff-a';
+                        $class = 'diff diff-a';
                     }
-                    $line_content = self::padLine(Pluf_esc($line[2]));
+                    $line_content = Pluf_esc($line[2]);
+                    $line_content = preg_replace("/\t/", "    ", $line_content);
+                    $line_content = self::makeNonPrintableCharsVisible($line_content);
                     $out .= sprintf('<tr class="diff-line"><td class="diff-lc">%s</td><td class="diff-lc">%s</td><td class="%s%s mono">%s</td></tr>'."\n", $line[0], $line[1], $class, $pretty, $line_content);
                 }
                 if (count($file['chunks']) > $cc)
@@ -172,6 +198,13 @@ class IDF_Diff
             $out .= '</table>';
         }
         return Pluf_Template::markSafe($out);
+    }
+
+    private static function makeNonPrintableCharsVisible($line)
+    {
+        return preg_replace('/([^[:print:]])/e',
+                            '"<span class=\"non-printable\" title=\"0x".strtoupper(bin2hex("\\1"))."\">".bin2hex("\\1")."</span>"',
+                            $line);
     }
 
     public static function padLine($line)
@@ -208,7 +241,7 @@ class IDF_Diff
      */
     public function fileCompare($orig, $chunks, $filename, $context=10)
     {
-        $orig_lines = preg_split("/\015\012|\015|\012/", $orig);
+        $orig_lines = self::splitIntoLines($orig);
         $new_chunks = $this->mergeChunks($orig_lines, $chunks, $context);
         return $this->renderCompared($new_chunks, $filename);
     }
