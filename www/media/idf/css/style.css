@@ -620,10 +620,6 @@ td.diff  {
   white-space: pre;
 }
 
-td.diff > span {
-  float: left;
-}
-
 td.diff > span.non-printable {
 	visibility: hidden;
     color: white;
@@ -633,7 +629,6 @@ td.diff > span.non-printable {
     font-family: Calibri, Helvetica, Arial, sans-serif;
     text-align: center;
     display: inline-block;
-    word-wrap: break-word;
     padding: 1px 1px 0px 1px;
     margin-left: 1px;
     margin-right: 1px;
