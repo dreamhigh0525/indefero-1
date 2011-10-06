@@ -574,6 +574,7 @@ table.commit table.changes table.properties td.removed {
 table.diff {
   border-bottom: 1px solid #d3d7cf;
   width: 100%;
+  table-layout: fixed;
 }
 
 table.diff th {
@@ -583,45 +584,63 @@ table.diff th {
 }
 
 
-table.diff tr {
-  border-left: 1px solid #d3d7cf;
-  border-right: 1px solid #d3d7cf;
-  border-bottom: none;
-  border-top: none;
+table.diff tr.line {
+  border: 1px solid #d3d7cf;
+}
+
+table.diff tr.line td.diff-lc {
+  font-size: 90%;
+  padding: 1px 10px;
+  text-align: right;
+  width: 20px;
+}
+
+table.diff tr.line div.diff-content {
+  overflow: auto;
+  display: block;
 }
 
 table.diff td {
-  font-size: 90%;
   vertical-align: top;
-  padding: 1px;
   border-color: inherit;
+  padding: 0;
 }
 
-table.diff td.diff-lc {
+table.diff td.next {
+  background-color: #e4e8E0;
+  vertical-align: top;
   text-align: right;
-  padding: 1px 5px;
-  border-color: inherit;
-  border-top: 1px solid #d3d7cf;
-  border-bottom: 1px solid #d3d7cf;
-  width: 3em;
+  border-color: #d3d7cf;
+  padding: 1px 10px;
 }
 
-td.diff-a {
+table.diff-content {
+	border: 0;
+	/* setting this to 100% sometimes triggers the overflow of the parent container,
+	   when it is not actually needed. we try to prevent that by taking not the
+	   complete available space... */
+	width: 99.99%;
+	margin: 0;
+}
+
+table.diff-content td.diff {
+	line-height: 12px;
+	padding: 2px;
+    font-size: 90%; 
+	border: none;
+    white-space: pre;
+}
+
+table.diff-content td.diff-a {
   background-color: #dfd;
 }
 
-td.diff-r {
+table.diff-content td.diff-r {
   background-color: #fdd;
 }
 
-td.diff  {
-  border-bottom: none;
-  border-top: none;
-  white-space: pre;
-}
-
-td.diff > span.non-printable {
-	visibility: hidden;
+table.diff-content td.diff > span.non-printable {
+    visibility: hidden;
     color: white;
     text-transform: uppercase;
     float: none;
@@ -638,38 +657,43 @@ td.diff > span.non-printable {
     vertical-align: 10%;
 }
 
-td.diff:hover > span.non-printable {
-	visibility: visible;
+table.diff-content td.diff:hover > span.non-printable {
+    visibility: visible;
 }
 
-td.diff-a > span.non-printable {
-    background: #0A0;	
+table.diff-content td.diff-a > span.non-printable {
+    background: #0A0;   
 }
 
-td.diff-r > span.non-printable {
-	background: #A00;
+table.diff-content td.diff-r > span.non-printable {
+    background: #A00;
 }
 
-td.diff-c > span.non-printable {
-	background: black;
+table.diff-content td.diff-c > span.non-printable {
+    background: black;
 }
 
 /* override prettify css rule */
-td.diff > span.non-printable > * {
-	color: white;
+table.diff-content td.diff > span.non-printable > * {
+    color: white;
 }
 
-table.diff tr.diff-next {
-  background-color: #e4e8E0;
-  vertical-align: top;
-  text-align: right;
-  border-color: #d3d7cf;
+/* 
+   This is a special hack: the outer td.next has 
+   top/bottom border and padding and comes to a total
+   height of 20px - BUT it shares the upper border
+   with the previous row, so the height is actually
+   only 19px. The inner table has no lines between rows,
+   so the upper border is counted and we have 20px
+   in the interior, which is one pixel too much for
+   every occurrence.
+   What we now do is to remove the 1px top padding and
+   therefor lower the total height of the inner one 
+   again by one to match the outer.
+*/
+table.diff-content td.next {
+	padding-top: 0;
 }
-
-table.diff tr.diff-next td {
-  padding: 1px 5px;
-}
-
 
 /**
  * view file content

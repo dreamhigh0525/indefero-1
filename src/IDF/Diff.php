@@ -168,41 +168,73 @@ class IDF_Diff
     public function as_html()
     {
         $out = '';
-        foreach ($this->files as $filename=>$file) {
+        foreach ($this->files as $filename => $file) {
             $pretty = '';
             $fileinfo = IDF_FileUtil::getMimeType($filename);
             if (IDF_FileUtil::isSupportedExtension($fileinfo[2])) {
                 $pretty = ' prettyprint';
             }
-            $out .= "\n".'<table class="diff" summary="">'."\n";
-            $out .= '<tr id="diff-'.md5($filename).'"><th colspan="3">'.Pluf_esc($filename).'</th></tr>'."\n";
+
             $cc = 1;
+            $offsets = array();
+            $contents = array();
+            $maxlinenum = 0;
+
             foreach ($file['chunks'] as $chunk) {
                 foreach ($chunk as $line) {
-                    if ($line[0] and $line[1]) {
+                    list($left, $right, $content) = $line;
+                    if ($left and $right) {
                         $class = 'diff diff-c';
-                    } elseif ($line[0]) {
+                    } elseif ($left) {
                         $class = 'diff diff-r';
                     } else {
                         $class = 'diff diff-a';
                     }
-                    $line_content = Pluf_esc($line[2]);
-                    $line_content = preg_replace("/\t/", "    ", $line_content);
-                    $line_content = self::makeNonPrintableCharsVisible($line_content);
-                    $out .= sprintf('<tr class="diff-line"><td class="diff-lc">%s</td><td class="diff-lc">%s</td><td class="%s%s mono">%s</td></tr>'."\n", $line[0], $line[1], $class, $pretty, $line_content);
+
+                    $offsets[] = sprintf('<td class="diff-lc">%s</td><td class="diff-lc">%s</td>', $left, $right);
+                    $content = Pluf_esc($content);
+                    $content = self::makeNonPrintableCharsVisible($content);
+                    $contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $content);
+
+                    $maxlinenum = max($maxlinenum, max($left, $right));
                 }
-                if (count($file['chunks']) > $cc)
-                $out .= '<tr class="diff-next"><td>...</td><td>...</td><td>&nbsp;</td></tr>'."\n";
+                if (count($file['chunks']) > $cc) {
+                    $offsets[]  = '<td class="next">...</td><td class="next">...</td>';
+                    $contents[] = '<td class="next">&nbsp;</td>';
+                }
                 $cc++;
             }
-            $out .= '</table>';
+
+            $inner = '<table class="diff-content">' ."\n".
+                       '<tr class="diff-line">' .
+                         implode('</tr>'."\n".'<tr class="diff-line">', $contents) .
+                       '</tr>' ."\n".
+                     '</table>' ."\n";
+
+            $rows = count($offsets);
+            $colwidth = (ceil(log10($maxlinenum)) + 1) * 10;
+            $first = array_shift($offsets);
+
+            $out .= '<table class="diff" summary="">' ."\n".
+                      '<colgroup><col width="'.$colwidth.'" /><col width="'.$colwidth.'" /><col width="*" /></colgroup>' ."\n".
+                      '<tr id="diff-'.md5($filename).'">'.
+                        '<th colspan="3">'.Pluf_esc($filename).'</th>'.
+                      '</tr>' ."\n".
+                      '<tr class="line">' .
+                         $first . sprintf('<td rowspan="%d"><div class="diff-content">%s</div></td>', $rows, $inner) .
+                      '</tr>' ."\n".
+                      '<tr class="line">' .
+                         implode('</tr>'."\n".'<tr class="line">', $offsets) .
+                      '</tr>' ."\n".
+                    '</table>' ."\n";
         }
+
         return Pluf_Template::markSafe($out);
     }
 
     private static function makeNonPrintableCharsVisible($line)
     {
-        return preg_replace('/([^[:print:]])/e',
+        return preg_replace('/([^[:print:]\t])/e',
                             '"<span class=\"non-printable\" title=\"0x".strtoupper(bin2hex("\\1"))."\">".bin2hex("\\1")."</span>"',
                             $line);
     }
