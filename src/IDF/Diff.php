@@ -178,7 +178,6 @@ class IDF_Diff
             $cc = 1;
             $offsets = array();
             $contents = array();
-            $maxlinenum = 0;
 
             foreach ($file['chunks'] as $chunk) {
                 foreach ($chunk as $line) {
@@ -195,8 +194,6 @@ class IDF_Diff
                     $content = Pluf_esc($content);
                     $content = self::makeNonPrintableCharsVisible($content);
                     $contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $content);
-
-                    $maxlinenum = max($maxlinenum, max($left, $right));
                 }
                 if (count($file['chunks']) > $cc) {
                     $offsets[]  = '<td class="next">...</td><td class="next">...</td>';
@@ -212,11 +209,23 @@ class IDF_Diff
                      '</table>' ."\n";
 
             $rows = count($offsets);
-            $colwidth = (ceil(log10($maxlinenum)) + 1) * 10;
+
+            list($added, $removed) = end($file['chunks_def']);
+
+            $added = $added[0] + $added[1];
+            $leftwidth = 1;
+            if ($added > 0)
+                $leftwidth = (ceil(log10($added)) + 1) * 10;
+
+            $removed = $removed[0] + $removed[1];
+            $rightwidth = 1;
+            if ($removed > 0)
+                $rightwidth = (ceil(log10($removed)) + 1) * 10;
+
             $first = array_shift($offsets);
 
             $out .= '<table class="diff" summary="">' ."\n".
-                      '<colgroup><col width="'.$colwidth.'" /><col width="'.$colwidth.'" /><col width="*" /></colgroup>' ."\n".
+                      '<colgroup><col width="'.$leftwidth.'" /><col width="'.$rightwidth.'" /><col width="*" /></colgroup>' ."\n".
                       '<tr id="diff-'.md5($filename).'">'.
                         '<th colspan="3">'.Pluf_esc($filename).'</th>'.
                       '</tr>' ."\n".
