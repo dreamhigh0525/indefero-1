@@ -35,29 +35,7 @@ class IDF_Diff
     public function __construct($diff, $path_strip_level = 0)
     {
         $this->path_strip_level = $path_strip_level;
-        $this->lines = self::splitIntoLines($diff);
-    }
-
-    /**
-     * Splits a diff into separate lines while retaining the individual
-     * line ending character for every line
-     */
-    private static function splitIntoLines($diff)
-    {
-        // this works because in unified diff format even empty lines are
-        // either prefixed with a '+', '-' or ' '
-        $splitted = preg_split("/\r\n|\n/", $diff, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_OFFSET_CAPTURE);
-
-        $last_off = -1;
-        $lines = array();
-        while (($split = array_shift($splitted)) !== null) {
-            if ($last_off != -1) {
-                $lines[] .= substr($diff, $last_off, $split[1] - $last_off);
-            }
-            $last_off = $split[1];
-        }
-        $lines[] = substr($diff, $last_off);
-        return $lines;
+        $this->lines = IDF_FileUtil::splitIntoLines($diff, true);
     }
 
     public function parse()
@@ -192,7 +170,7 @@ class IDF_Diff
 
                     $offsets[] = sprintf('<td>%s</td><td>%s</td>', $left, $right);
                     $content = Pluf_esc($content);
-                    $content = self::makeNonPrintableCharsVisible($content);
+                    $content = IDF_FileUtil::emphasizeControlCharacters($content);
                     $contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $content);
                 }
                 if (count($file['chunks']) > $cc) {
@@ -245,33 +223,6 @@ class IDF_Diff
         return Pluf_Template::markSafe($out);
     }
 
-    private static function makeNonPrintableCharsVisible($line)
-    {
-        // This translates most of the C0 ASCII control characters into
-        // their visual counterparts in the 0x24## unicode plane
-        // (http://en.wikipedia.org/wiki/C0_and_C1_control_codes).
-        // We could add DEL (0x7F) to this set, but unfortunately this
-        // is not nicely mapped to 0x247F in the control plane, but 0x2421
-        // and adding an if expression below just for this is a little bit
-        // of a hassle. And of course, the more esoteric ones from C1 are
-        // missing as well...
-        return preg_replace('/([\x00-\x1F])/ue',
-                            '"<span class=\"non-printable\" title=\"0x".bin2hex("\\1")."\">&#x24".bin2hex("\\1")."</span>"',
-                            $line);
-    }
-
-    public static function padLine($line)
-    {
-        $line = str_replace("\t", '    ', $line);
-        $n = strlen($line);
-        for ($i=0;$i<$n;$i++) {
-            if (substr($line, $i, 1) != ' ') {
-                break;
-            }
-        }
-        return str_repeat('&nbsp;', $i).substr($line, $i);
-    }
-
     /**
      * Review patch.
      *
@@ -299,7 +250,7 @@ class IDF_Diff
         return $this->renderCompared($new_chunks, $filename);
     }
 
-    public function mergeChunks($orig_lines, $chunks, $context=10)
+    private function mergeChunks($orig_lines, $chunks, $context=10)
     {
         $spans = array();
         $new_chunks = array();
@@ -396,7 +347,7 @@ class IDF_Diff
         return $nnew_chunks;
     }
 
-    public function renderCompared($chunks, $filename)
+    private function renderCompared($chunks, $filename)
     {
         $fileinfo = IDF_FileUtil::getMimeType($filename);
         $pretty = '';

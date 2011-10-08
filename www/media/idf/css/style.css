@@ -571,6 +571,19 @@ table.commit table.changes table.properties td.removed {
 /**
  * syntax highlighting of diffs
  */
+span.ctrl-char {
+  color: white;
+  background: black;
+  text-align: center;
+  display: inline-block;
+  padding: 1px 1px 0px 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  cursor: default;
+}
+
 table.diff {
   width: 100%;
   table-layout: fixed;
@@ -658,40 +671,24 @@ table.diff-contents td.removed {
   background-color: #fdd;
 }
 
-table.diff-contents td > span.non-printable {
+table.diff-contents td > span.ctrl-char {
   visibility: hidden;
-  color: white;
-  text-transform: uppercase;
-  float: none;
-  text-align: center;
-  display: inline-block;
-  padding: 1px 1px 0px 1px;
-  margin-left: 1px;
-  margin-right: 1px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  cursor: default;
-  vertical-align: 10%;
 }
 
-table.diff-contents td:hover > span.non-printable {
+table.diff-contents td:hover > span.ctrl-char {
   visibility: visible;
 }
 
-table.diff-contents td.added > span.non-printable {
+table.diff-contents td.added > span.ctrl-char {
   background: #0A0;   
 }
 
-table.diff-contents td.removed > span.non-printable {
+table.diff-contents td.removed > span.ctrl-char {
   background: #A00;
 }
 
-table.diff-contents td.context > span.non-printable {
-  background: black;
-}
-
 /* override prettify css rule */
-table.diff-contents td > span.non-printable > * {
+table.diff-contents td > span.ctrl-char > * {
   color: white;
 }
 
@@ -735,6 +732,14 @@ table.code td.code {
   white-space: pre-wrap; /* CSS 2.1 */
   word-wrap: break-word; /* IE */
   padding-left: 5px;
+}
+
+table.code td.code span.ctrl-char {
+  visibility: hidden;
+}
+
+table.code td.code:hover span.ctrl-char {
+  visibility: visible;
 }
 
 table.code td.code-lc {

@@ -65,9 +65,9 @@ class IDF_FileUtil
         }
         $table = array();
         $i = 1;
-        foreach (preg_split("/\015\012|\015|\012/", $content) as $line) {
+        foreach (self::splitIntoLines($content) as $line) {
             $table[] = '<tr class="c-line"><td class="code-lc" id="L'.$i.'"><a href="#L'.$i.'">'.$i.'</a></td>'
-                .'<td class="code mono'.$pretty.'">'.IDF_Diff::padLine(Pluf_esc($line)).'</td></tr>';
+                .'<td class="code mono'.$pretty.'">'.self::emphasizeControlCharacters(Pluf_esc($line)).'</td></tr>';
             $i++;
         }
         return Pluf_Template::markSafe(implode("\n", $table));
@@ -141,6 +141,56 @@ class IDF_FileUtil
             }
         }
         return $res;
+    }
+
+    /**
+     * Splits a string into separate lines while retaining the individual
+     * line ending character for every line.
+     *
+     * OS9 line endings are not supported.
+     *
+     * @param string content
+     * @param boolean if true, skip completely empty lines
+     * @return string
+     */
+    public static function splitIntoLines($content, $skipEmpty = false)
+    {
+        $flags = PREG_SPLIT_OFFSET_CAPTURE;
+        if ($skipEmpty) $flags |= PREG_SPLIT_NO_EMPTY;
+        $splitted = preg_split("/\r\n|\n/", $content, -1, $flags);
+
+        $last_off = -1;
+        $lines = array();
+        while (($split = array_shift($splitted)) !== null) {
+            if ($last_off != -1) {
+                $lines[] .= substr($content, $last_off, $split[1] - $last_off);
+            }
+            $last_off = $split[1];
+        }
+        $lines[] = substr($content, $last_off);
+        return $lines;
+    }
+
+    /**
+     * This translates most of the C0 ASCII control characters into
+     * their visual counterparts in the 0x24## unicode plane
+     * (http://en.wikipedia.org/wiki/C0_and_C1_control_codes).
+     *
+     * We could add DEL (0x7F) to this set, but unfortunately this
+     * is not nicely mapped to 0x247F in the control plane, but 0x2421
+     * and adding an if expression below just for this is a little bit
+     * of a hassle. And of course, the more esoteric ones from C1 are
+     * missing as well...
+     *
+     * @param string $content
+     * @return string
+     */
+    public static function emphasizeControlCharacters($content)
+    {
+        return preg_replace(
+            '/([\x00-\x1F])/ue',
+            '"<span class=\"ctrl-char\" title=\"0x".bin2hex("\\1")."\">&#x24".bin2hex("\\1")."</span>"',
+            $content);
     }
 
     /**
