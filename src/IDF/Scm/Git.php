@@ -513,7 +513,11 @@ class IDF_Scm_Git extends IDF_Scm
             return false;
         }
 
-        $diffStart = strpos($out, 'diff --git a');
+        $diffStart = false;
+        if (preg_match('/^diff (?:--git a|--cc)/m', $out, $m, PREG_OFFSET_CAPTURE)) {
+            $diffStart = $m[0][1];
+        }
+
         $diff = '';
         if ($diffStart !== false) {
             $log = substr($out, 0, $diffStart);
