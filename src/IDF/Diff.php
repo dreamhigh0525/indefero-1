@@ -247,8 +247,16 @@ class IDF_Diff
 
     private static function makeNonPrintableCharsVisible($line)
     {
+        // This translates most of the C0 ASCII control characters into
+        // their visual counterparts in the 0x24## unicode plane
+        // (http://en.wikipedia.org/wiki/C0_and_C1_control_codes).
+        // We could add DEL (0x7F) to this set, but unfortunately this
+        // is not nicely mapped to 0x247F in the control plane, but 0x2421
+        // and adding an if expression below just for this is a little bit
+        // of a hassle. And of course, the more esoteric ones from C1 are
+        // missing as well...
         return preg_replace('/([\x00-\x1F])/ue',
-                            '"<span class=\"non-printable\" title=\"0x".strtoupper(bin2hex("\\1"))."\">".bin2hex("\\1")."</span>"',
+                            '"<span class=\"non-printable\" title=\"0x".bin2hex("\\1")."\">&#x24".bin2hex("\\1")."</span>"',
                             $line);
     }
 
