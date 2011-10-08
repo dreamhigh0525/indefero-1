@@ -71,7 +71,12 @@
     <tbody>
     {foreach $ownerStatistics as $key => $value}
         <tr>
-        <td class="name">{$key}</td>
+        <td class="name">
+        {if !empty($value[2])}
+        {aurl 'url', 'IDF_Views_Issue::userIssues', array($project.shortname, $value[2], 'owner')}
+        <a href="{$url}">{$key}</a>
+        {else}{$key}{/if}
+        </td>
         <td class="count">{$value[0]}</td>
         <td class="graph">
             <table class='graph'>

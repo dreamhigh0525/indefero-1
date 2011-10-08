@@ -178,9 +178,10 @@ GROUP BY uid";
      *
      * @param string Status ('open'), 'closed'
      * @param IDF_Tag Subfilter with a label (null)
+     * @param array Restrict further to a list of ids
      * @return int Count
      */
-    public function getIssueCountByStatus($status='open', $label=null)
+    public function getIssueCountByStatus($status='open', $label=null, $ids=array())
     {
         switch ($status) {
         case 'open':
@@ -203,10 +204,46 @@ GROUP BY uid";
             $sql2 = new Pluf_SQL('idf_tag_id=%s', array($label->id));
             $sql->SAnd($sql2);
         }
+        if (count($ids) > 0) {
+            $sql2 = new Pluf_SQL(sprintf('id IN (%s)', implode(', ', $ids)));
+            $sql->SAnd($sql2);
+        }
         $params = array('filter' => $sql->gen());
         if (!is_null($label)) { $params['view'] = 'join_tags'; }
         $gissue = new IDF_Issue();
         return $gissue->getCount($params);
+    }
+
+    /**
+     * Get the tags for a specific list of issues.
+     *
+     * @param string Status ('open') or 'closed'
+     * @param array A list of issue ids
+     * @return array An array of tag objects
+     */
+    public function getTagsByIssues($issue_ids=array())
+    {
+        // make the below query always a valid one
+        if (count($issue_ids) == 0) $issue_ids[] = 0;
+
+        $assocTable = $this->_con->pfx.'idf_issue_idf_tag_assoc';
+        $query = sprintf(
+            'SELECT DISTINCT idf_tag_id FROM %s '.
+            'WHERE idf_issue_id IN (%s) '.
+            'GROUP BY idf_tag_id',
+            $assocTable, implode(',', $issue_ids)
+        );
+
+        $db = Pluf::db();
+        $dbData = $db->select($query);
+        $ids = array(0);
+        foreach ($dbData as $data) {
+            $ids[] = $data['idf_tag_id'];
+        }
+
+        $sql = new Pluf_SQL(sprintf('id IN (%s)', implode(', ', $ids)));
+        $model = new IDF_Tag();
+        return $model->getList(array('filter' => $sql->gen()));
     }
 
     /**
@@ -415,7 +452,11 @@ GROUP BY uid";
         foreach ($this->_con->select($sql) as $idc) {
             $tag = new IDF_Tag($idc['id']);
             $tag->nb_use = $idc['nb_use'];
-            $tags[] = $tag;
+            // group by class
+            if (!array_key_exists($tag->class, $tags)) {
+                $tags[$tag->class] = array();
+            }
+            $tags[$tag->class][] = $tag;
         }
         return new Pluf_Template_ContextVars($tags);
     }
