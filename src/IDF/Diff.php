@@ -183,57 +183,61 @@ class IDF_Diff
                 foreach ($chunk as $line) {
                     list($left, $right, $content) = $line;
                     if ($left and $right) {
-                        $class = 'diff diff-c';
+                        $class = 'context';
                     } elseif ($left) {
-                        $class = 'diff diff-r';
+                        $class = 'removed';
                     } else {
-                        $class = 'diff diff-a';
+                        $class = 'added';
                     }
 
-                    $offsets[] = sprintf('<td class="diff-lc">%s</td><td class="diff-lc">%s</td>', $left, $right);
+                    $offsets[] = sprintf('<td>%s</td><td>%s</td>', $left, $right);
                     $content = Pluf_esc($content);
                     $content = self::makeNonPrintableCharsVisible($content);
                     $contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $content);
                 }
                 if (count($file['chunks']) > $cc) {
                     $offsets[]  = '<td class="next">...</td><td class="next">...</td>';
-                    $contents[] = '<td class="next">&nbsp;</td>';
+                    $contents[] = '<td class="next"></td>';
                 }
                 $cc++;
             }
-
-            $inner = '<table class="diff-content">' ."\n".
-                       '<tr class="diff-line">' .
-                         implode('</tr>'."\n".'<tr class="diff-line">', $contents) .
-                       '</tr>' ."\n".
-                     '</table>' ."\n";
-
-            $rows = count($offsets);
 
             list($added, $removed) = end($file['chunks_def']);
 
             $added = $added[0] + $added[1];
             $leftwidth = 1;
             if ($added > 0)
-                $leftwidth = (ceil(log10($added)) + 1) * 10;
+                $leftwidth = ((ceil(log10($added)) + 1) * 8) + 12;
 
             $removed = $removed[0] + $removed[1];
             $rightwidth = 1;
             if ($removed > 0)
-                $rightwidth = (ceil(log10($removed)) + 1) * 10;
+                $rightwidth = ((ceil(log10($removed)) + 1) * 8) + 12;
 
-            $first = array_shift($offsets);
+            $inner_linecounts =
+              '<table class="diff-linecounts">' ."\n".
+                '<colgroup><col width="'.$leftwidth.'" /><col width="'. $rightwidth.'" /></colgroup>' ."\n".
+                '<tr class="line">' .
+                  implode('</tr>'."\n".'<tr class="line">', $offsets).
+                '</tr>' ."\n".
+              '</table>' ."\n";
 
-            $out .= '<table class="diff" summary="">' ."\n".
-                      '<colgroup><col width="'.$leftwidth.'" /><col width="'.$rightwidth.'" /><col width="*" /></colgroup>' ."\n".
+
+            $inner_contents =
+              '<table class="diff-contents">' ."\n".
+                '<tr class="line">' .
+                  implode('</tr>'."\n".'<tr class="line">', $contents) .
+                '</tr>' ."\n".
+              '</table>' ."\n";
+
+            $out .= '<table class="diff">' ."\n".
+                      '<colgroup><col width="'.($leftwidth + $rightwidth + 1).'" /><col width="*" /></colgroup>' ."\n".
                       '<tr id="diff-'.md5($filename).'">'.
-                        '<th colspan="3">'.Pluf_esc($filename).'</th>'.
+                        '<th colspan="2">'.Pluf_esc($filename).'</th>'.
                       '</tr>' ."\n".
-                      '<tr class="line">' .
-                         $first . sprintf('<td rowspan="%d"><div class="diff-content">%s</div></td>', $rows, $inner) .
-                      '</tr>' ."\n".
-                      '<tr class="line">' .
-                         implode('</tr>'."\n".'<tr class="line">', $offsets) .
+                      '<tr>' .
+                        '<td>'. $inner_linecounts .'</td>'. "\n".
+                        '<td><div class="scroll">'. $inner_contents .'</div></td>'.
                       '</tr>' ."\n".
                     '</table>' ."\n";
         }
@@ -243,7 +247,7 @@ class IDF_Diff
 
     private static function makeNonPrintableCharsVisible($line)
     {
-        return preg_replace('/([^[:print:]\t])/e',
+        return preg_replace('/([\x00-\x1F])/ue',
                             '"<span class=\"non-printable\" title=\"0x".strtoupper(bin2hex("\\1"))."\">".bin2hex("\\1")."</span>"',
                             $line);
     }

@@ -212,17 +212,17 @@ span.px-header-title a, span.px-header-title a:link, span.px-header-title a:visi
  * Issue
  */
 #tagscloud dl {
-    margin: 0;
+  margin: 0;
 }
 
 #tagscloud dt {
-    margin-top: .5em;
-    font-weight: bold;
+  margin-top: .5em;
+  font-weight: bold;
 }
 
 #tagscloud dd {
-    margin: 0;
-    display: inline;
+  margin: 0;
+  display: inline;
 }
 
 a.issue-c {
@@ -506,16 +506,16 @@ table td.fileicon {
   cursor: default;
   display: block;
   /*
-     if width will be 100% horizontal scrollbar will apear
-     when scroll mode will be used
-     */
+   if width will be 100% horizontal scrollbar will apear
+   when scroll mode will be used
+   */
   /*width: 100%;*/
   font: menu;
   font-size: 12px;
   /*
-     it is very important, if line-height not setted or setted
-     in relative units scroll will be broken in firefox
-     */
+   it is very important, if line-height not setted or setted
+   in relative units scroll will be broken in firefox
+   */
   line-height: 16px;
   overflow: hidden;
 }
@@ -572,9 +572,18 @@ table.commit table.changes table.properties td.removed {
  * syntax highlighting of diffs
  */
 table.diff {
-  border-bottom: 1px solid #d3d7cf;
   width: 100%;
   table-layout: fixed;
+}
+
+table.diff td {
+  border: none;
+  vertical-align: top;
+  padding: 0;
+}
+
+table.diff > tbody > tr > td + td {
+  border-right: 1px solid #d3d7cf;
 }
 
 table.diff th {
@@ -583,30 +592,19 @@ table.diff th {
   border-color: #d3d7cf;
 }
 
-
-table.diff tr.line {
-  border: 1px solid #d3d7cf;
-}
-
-table.diff tr.line td.diff-lc {
-  font-size: 90%;
-  padding: 1px 10px;
-  text-align: right;
-  width: 20px;
-}
-
-table.diff tr.line div.diff-content {
+table.diff div.scroll {
   overflow: auto;
-  display: block;
 }
 
-table.diff td {
+table.diff-contents td,
+table.diff-linecounts td {
   vertical-align: top;
   border-color: inherit;
   padding: 0;
 }
 
-table.diff td.next {
+table.diff-contents td.next,
+table.diff-linecounts td.next  {
   background-color: #e4e8E0;
   vertical-align: top;
   text-align: right;
@@ -614,85 +612,89 @@ table.diff td.next {
   padding: 1px 10px;
 }
 
-table.diff-content {
-	border: 0;
-	/* setting this to 100% sometimes triggers the overflow of the parent container,
-	   when it is not actually needed. we try to prevent that by taking not the
-	   complete available space... */
-	width: 99.99%;
-	margin: 0;
+table.diff-linecounts {
+  margin: 0;
 }
 
-table.diff-content td.diff {
-	line-height: 12px;
-	padding: 2px;
-    font-size: 90%; 
-	border: none;
-    white-space: pre;
+table.diff-contents {
+  border-bottom: 1px solid #d3d7cf;
+  width: 100%;
+  margin: 0;
 }
 
-table.diff-content td.diff-a {
+table.diff-linecounts tr,
+table.diff-contents tr {
+  height: 18px;
+}
+
+table.diff-linecounts tr {
+  border: 1px solid #d3d7cf;
+}
+
+table.diff-linecounts tr:first-child {
+  border-top: 0px;
+}
+
+table.diff-linecounts td {
+  font-size: 90%;
+  padding: 1px 10px;
+  text-align: right;
+  border-left: 1px solid #d3d7cf;
+}
+
+table.diff-contents td {
+  line-height: 12px;
+  padding: 2px;
+  font-size: 90%; 
+  border: none;
+  white-space: pre;
+}
+
+table.diff-contents td.added {
   background-color: #dfd;
 }
 
-table.diff-content td.diff-r {
+table.diff-contents td.removed {
   background-color: #fdd;
 }
 
-table.diff-content td.diff > span.non-printable {
-    visibility: hidden;
-    color: white;
-    text-transform: uppercase;
-    float: none;
-    font-size: 5.5pt;
-    font-family: Calibri, Helvetica, Arial, sans-serif;
-    text-align: center;
-    display: inline-block;
-    padding: 1px 1px 0px 1px;
-    margin-left: 1px;
-    margin-right: 1px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    cursor: default;
-    vertical-align: 10%;
+table.diff-contents td > span.non-printable {
+  visibility: hidden;
+  color: white;
+  text-transform: uppercase;
+  float: none;
+  font-size: 5.5pt;
+  font-family: Calibri, Helvetica, Arial, sans-serif;
+  text-align: center;
+  display: inline-block;
+  padding: 1px 1px 0px 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  cursor: default;
+  vertical-align: 10%;
 }
 
-table.diff-content td.diff:hover > span.non-printable {
-    visibility: visible;
+table.diff-contents td:hover > span.non-printable {
+  visibility: visible;
 }
 
-table.diff-content td.diff-a > span.non-printable {
-    background: #0A0;   
+table.diff-contents td.added > span.non-printable {
+  background: #0A0;   
 }
 
-table.diff-content td.diff-r > span.non-printable {
-    background: #A00;
+table.diff-contents td.removed > span.non-printable {
+  background: #A00;
 }
 
-table.diff-content td.diff-c > span.non-printable {
-    background: black;
+table.diff-contents td.context > span.non-printable {
+  background: black;
 }
 
 /* override prettify css rule */
-table.diff-content td.diff > span.non-printable > * {
-    color: white;
-}
-
-/* 
-   This is a special hack: the outer td.next has 
-   top/bottom border and padding and comes to a total
-   height of 20px - BUT it shares the upper border
-   with the previous row, so the height is actually
-   only 19px. The inner table has no lines between rows,
-   so the upper border is counted and we have 20px
-   in the interior, which is one pixel too much for
-   every occurrence.
-   What we now do is to remove the 1px top padding and
-   therefor lower the total height of the inner one 
-   again by one to match the outer.
-*/
-table.diff-content td.next {
-	padding-top: 0;
+table.diff-contents td > span.non-printable > * {
+  color: white;
 }
 
 /**
@@ -858,37 +860,37 @@ ol > li {
 }
 
 #wiki-toc {
-    float: right;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    max-width: 33%;
+  float: right;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  max-width: 33%;
 }
 
 #wiki-toc-content {
-    border:  1px solid #999999;
-    border-width: 1px 0;
-    padding: 10px 0;
-    padding-bottom: 15px;
-    background-color: #ffffff;
-    display: block;
+  border:  1px solid #999999;
+  border-width: 1px 0;
+  padding: 10px 0;
+  padding-bottom: 15px;
+  background-color: #ffffff;
+  display: block;
 }
 
 #wiki-toc-content a {
-    display: block;
-    margin-top: 0.5em;
-    font-size: 90%;
+  display: block;
+  margin-top: 0.5em;
+  font-size: 90%;
 }
 
 #wiki-toc-content a:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 #wiki-toc-content a.wiki-h2 {
-    margin-left: 1em;
+  margin-left: 1em;
 }
 
 #wiki-toc-content a.wiki-h3 {
-    margin-left: 2em;
+  margin-left: 2em;
 }
 
 /**
@@ -1127,87 +1129,86 @@ span.scm-action.property-changed {
  *  Stats on index
  */
 #stats > h3 {
-    text-decoration : underline;
+  text-decoration : underline;
 }
 
 #stats table tr td {
-    border-style: none;
+  border-style: none;
 }
 
 #stats td {
-    padding: .2em;
+  padding: .2em;
 }
 
 /*
  *  Project list on index
  */
 div.p-list-img {
-    float: left;
-    height: 32px;
-    margin-top: .5em;
+  float: left;
+  height: 32px;
+  margin-top: .5em;
 }
 
 div.p-list-prj {
-    float: left;
-    margin: .5em 0 .5em .8em;
+  float: left;
+  margin: .5em 0 .5em .8em;
 }
 
 div.p-list-prj p {
-    margin: 0px;
+  margin: 0px;
 }
 
 div.p-list-private {
-    bottom: 16px;
-    right: -3px;
-    position: relative;
+  bottom: 16px;
+  right: -3px;
+  position: relative;
 }
 
 /*
  * Issue summary
  */
 div.issue-summary {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
 
 div.issue-summary > div {
-    margin-right: 3em;
-    padding-top: 1em;
+  margin-right: 3em;
+  padding-top: 1em;
 }
 
 div.issue-summary h2 {
-    border-bottom: 1px solid #A5E26A;
+  border-bottom: 1px solid #A5E26A;
 }
 
 table.issue-summary {
-    width: 100%;
+  width: 100%;
 }
 
 table.issue-summary tr td {
-    border: 0;
-    padding: .1em .005em;
+  border: 0;
+  padding: .1em .005em;
 }
 
 table.issue-summary td.graph {
-    width: 60%;
+  width: 60%;
 }
 
 table.issue-summary td.count {
-    text-align: right;
-    padding-right: .5em;
+  text-align: right;
+  padding-right: .5em;
 }
 
 table.graph {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 table.issue-summary td.graph-color {
-    background: #3C78B5;
+  background: #3C78B5;
 }
 
 table.issue-summary td.graph-percent {
-    padding-left: 1em;
+  padding-left: 1em;
 }
-
