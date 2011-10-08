@@ -111,17 +111,21 @@ class IDF_Views_Issue
                 foreach ($owners as $user => $nb) {
                     if ($user === '') {
                         $key = __('Not assigned');
+                        $login = null;
                     } else {
                         $obj = Pluf::factory('Pluf_User')->getOne(array('filter'=>'id='.$user));
                         $key = $obj->first_name . ' ' . $obj->last_name;
+                        $login = $obj->login;
                     }
-                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened), $obj->login);
+                    $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened), $login);
                 }
 
                 // Issue class tag statistics
-                $tags = $prj->getTagCloud();
-                foreach ($tags as $t) {
-                    $tagStatistics[$t->class][$t->name] = array($t->nb_use, $t->id);
+                $grouped_tags = $prj->getTagCloud();
+                foreach ($grouped_tags as $class => $tags) {
+                    foreach ($tags as $tag) {
+                        $tagStatistics[$class][$tag->name] = array($tag->nb_use, $tag->id);
+                    }
                 }
                 foreach($tagStatistics as $k => $v) {
                     $nbIssueInClass = 0;
@@ -315,8 +319,8 @@ class IDF_Views_Issue
      *
      * Only open issues are shown.
      */
-    public $myIssues_precond = array('IDF_Precondition::accessIssues');
-    public function myIssues($request, $match)
+    public $userIssues_precond = array('IDF_Precondition::accessIssues');
+    public function userIssues($request, $match)
     {
         $prj = $request->project;
         
@@ -374,7 +378,7 @@ class IDF_Views_Issue
                                        'current_user' => $request->user);
         $pag->summary = __('This table shows the open issues.');
         $pag->forced_where = $f_sql;
-        $pag->action = array('IDF_Views_Issue::myIssues', array($prj->shortname, $match[2]));
+        $pag->action = array('IDF_Views_Issue::userIssues', array($prj->shortname, $match[2]));
         $pag->sort_order = array('modif_dtime', 'ASC'); // will be reverted
         $pag->sort_reverse_order = array('modif_dtime');
         $pag->sort_link_title = true;
@@ -389,7 +393,7 @@ class IDF_Views_Issue
         $pag->items_per_page = 10;
         $pag->no_results_text = __('No issues were found.');
         $pag->setFromRequest($request);
-        return Pluf_Shortcuts_RenderToResponse('idf/issues/my-issues.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/userIssues.html',
                                                array('project' => $prj,
                                                      'page_title' => $title,
                                                      'login' => $user->login,
@@ -446,44 +450,141 @@ class IDF_Views_Issue
     public $search_precond = array('IDF_Precondition::accessIssues');
     public function search($request, $match)
     {
+        $query = !isset($request->REQUEST['q']) ? '' : $request->REQUEST['q'];
+        return $this->doSearch($request, $query, 'open');
+    }
+
+    public $searchStatus_precond = array('IDF_Precondition::accessIssues');
+    public function searchStatus($request, $match)
+    {
+        $query  = !isset($request->REQUEST['q']) ? '' : $request->REQUEST['q'];
+        $status = in_array($match[2], array('open', 'closed')) ? $match[2] : 'open';
+        return $this->doSearch($request, $query, $status);
+    }
+
+    public $searchLabel_precond = array('IDF_Precondition::accessIssues');
+    public function searchLabel($request, $match)
+    {
+        $query  = !isset($request->REQUEST['q']) ? '' : $request->REQUEST['q'];
+        $tag_id = intval($match[2]);
+        $status = in_array($match[3], array('open', 'closed')) ? $match[3] : 'open';
+        return $this->doSearch($request, $query, $status, $tag_id);
+    }
+
+    private function doSearch($request, $query, $status, $tag_id=null)
+    {
         $prj = $request->project;
-        if (!isset($request->REQUEST['q']) or trim($request->REQUEST['q']) == '') {
-            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index',
-                                             array($prj->shortname));
+        if (trim($query) == '') {
+            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index', array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
-        $q = $request->REQUEST['q'];
-        $title = sprintf(__('Search Issues - %s'), $q);
-        $issues = new Pluf_Search_ResultSet(IDF_Search::mySearch($q, $prj, 'IDF_Issue'));
-        if (count($issues) > 100) {
-            // no more than 100 results as we do not care
-            $issues->results = array_slice($issues->results, 0, 100);
+
+        $tag = null;
+        if ($tag_id !== null) {
+            $tag = Pluf_Shortcuts_GetObjectOr404('IDF_Tag', $tag_id);
         }
+
+        $title = sprintf(__('Search issues - %s'), $query);
+        if ($status === 'closed') {
+            $title = sprintf(__('Search closed issues - %s'), $query);
+        }
+
+        // using Plufs ResultSet implementation here is inefficient, because
+        // it makes a SELECT for each item and does not allow for further
+        // filtering neither, so we just return the ids and filter by them
+        // and other things in the next round
+        $results = IDF_Search::mySearch($query, $prj, 'IDF_Issue');
+
+        $issue_ids = array(0);
+        foreach ($results as $result) {
+            $issue_ids[] = $result['model_id'];
+        }
+
+        $otags = $prj->getTagIdsByStatus($status);
+        if (count($otags) == 0) $otags[] = 0;
+        $sql = new Pluf_SQL(
+            'id IN ('.implode(',', $issue_ids).') '.
+            'AND status IN ('.implode(', ', $otags).') '.
+            ($tag_id !== null ? 'AND idf_tag_id='.$tag_id.' ' : '')
+        );
+        $model = new IDF_Issue();
+        $issues = $model->getList(array('filter' => $sql->gen(), 'view' => 'join_tags'));
+
+        // we unfortunately loose the original sort order,
+        // so we manually have to apply it here again
+        $sorted_issues = new ArrayObject();
+        $filtered_issue_ids = array(0);
+        foreach ($issue_ids as $issue_id) {
+            foreach ($issues as $issue) {
+                if ($issue->id != $issue_id)
+                    continue;
+                if (array_key_exists($issue_id, $sorted_issues))
+                    continue;
+                $sorted_issues[$issue_id] = $issue;
+                $filtered_issue_ids[] = $issue_id;
+            }
+        }
+
         $pag = new Pluf_Paginator();
-        $pag->items = $issues;
         $pag->class = 'recent-issues';
-        $pag->item_extra_props = array('project_m' => $prj,
-                                       'shortname' => $prj->shortname,
-                                       'current_user' => $request->user);
+        $pag->items = $sorted_issues;
+        $pag->item_extra_props = array(
+            'project_m' => $prj,
+            'shortname' => $prj->shortname,
+            'current_user' => $request->user
+        );
         $pag->summary = __('This table shows the found issues.');
-        $pag->action = array('IDF_Views_Issue::search', array($prj->shortname), array('q'=> $q));
         $pag->extra_classes = array('a-c', '', 'a-c', '');
-        $list_display = array(
-                              'id' => __('Id'),
-                              array('summary', 'IDF_Views_Issue_SummaryAndLabels', __('Summary')),
-                              array('status', 'IDF_Views_Issue_ShowStatus', __('Status')),
-                              array('modif_dtime', 'Pluf_Paginator_DateAgo', __('Last Updated')),
-                              );
-        $pag->configure($list_display);
-        $pag->items_per_page = 100;
+        $pag->configure(array(
+            'id' => __('Id'),
+            array('summary', 'IDF_Views_Issue_SummaryAndLabels', __('Summary')),
+            array('status', 'IDF_Views_Issue_ShowStatus', __('Status')),
+            array('modif_dtime', 'Pluf_Paginator_DateAgo', __('Last Updated')),
+        ));
+        // disable paginating
+        $pag->items_per_page = PHP_INT_MAX;
         $pag->no_results_text = __('No issues were found.');
         $pag->setFromRequest($request);
-        $params = array('page_title' => $title,
-                        'issues' => $pag,
-                        'q' => $q,
-                        );
-        return Pluf_Shortcuts_RenderToResponse('idf/issues/search.html', $params, $request);
 
+        if ($tag_id === null) {
+            $pag->action = array('IDF_Views_Issue::searchStatus',
+                array($prj->shortname, $status),
+                array('q'=> $query),
+            );
+        } else {
+            $pag->action = array('IDF_Views_Issue::searchLabel',
+                array($prj->shortname, $tag_id, $status),
+                array('q'=> $query),
+            );
+        }
+
+        // get stats about the issues
+        $open = $prj->getIssueCountByStatus('open', $tag, $issue_ids);
+        $closed = $prj->getIssueCountByStatus('closed', $tag, $issue_ids);
+
+        // query the available tags for this search result
+        $all_tags = $prj->getTagsByIssues($filtered_issue_ids);
+        $grouped_tags = array();
+        foreach ($all_tags as $atag) {
+            // group by class
+            if (!array_key_exists($atag->class, $grouped_tags)) {
+                $grouped_tags[$atag->class] = array();
+            }
+            $grouped_tags[$atag->class][] = $atag;
+        }
+
+        $params = array(
+            'page_title' => $title,
+            'issues' => $pag,
+            'query' => $query,
+            'status' => $status,
+            'open' => $open,
+            'closed' => $closed,
+            'tag' => $tag,
+            'all_tags' => $grouped_tags,
+        );
+
+        return Pluf_Shortcuts_RenderToResponse('idf/issues/search.html', $params, $request);
     }
 
     public $view_precond = array('IDF_Precondition::accessIssues');
@@ -631,6 +732,13 @@ class IDF_Views_Issue
     {
         $prj = $request->project;
         $status = $match[2];
+        
+        if (mb_strtolower($status) == 'open') {
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index',
+                                            array($prj->shortname));
+            return new Pluf_HTTP_Response_Redirect($url);            
+        }
+        
         $title = sprintf(__('%s Closed Issues'), (string) $prj);
         // Get stats about the issues
         $open = $prj->getIssueCountByStatus('open');

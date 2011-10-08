@@ -319,13 +319,11 @@ class IDF_Views_Download
         $pag->no_results_text = __('No downloads were found.');
         $pag->sort_order = array('creation_dtime', 'DESC');
         $pag->setFromRequest($request);
-        $tags = $prj->getTagCloud('downloads');
         return Pluf_Shortcuts_RenderToResponse('idf/downloads/index.html',
                                                array(
                                                      'page_title' => $title,
                                                      'label' => $tag,
                                                      'downloads' => $pag,
-                                                     'tags' => $tags,
                                                      'dlabel' => $dtag,
                                                      ),
                                                $request);

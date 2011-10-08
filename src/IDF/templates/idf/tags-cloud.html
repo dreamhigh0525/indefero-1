@@ -1,8 +1,6 @@
-{assign $class = ''}{assign $i = 0}
-<div id="tagscloud" class="smaller"><dl>{foreach $project.getTagCloud($cloud) as $label}
+<div id="tagscloud" class="smaller"><dl>{foreach $project.getTagCloud($cloud) as $class => $labels}
+<dt class="label">{$class}</dt>
+{foreach $labels as $idx => $label}
 {aurl 'url', $cloud_url, array($project.shortname, $label.id, 'open')}
-{if $class != $label.class}<dt class="label">{$label.class}</dt>{assign $i = 0}{/if}
-<dd><a href="{$url}" class="label">{$label.name},</a></dd>
-{assign $class = $label.class}
-{assign $i = $i + 1}
-{/foreach}</dl></p>
+<dd><a href="{$url}" class="label">{$label.name}{if $idx != count($labels) - 1},{/if}</a></dd>
+{/foreach}{/foreach}</dl></p>

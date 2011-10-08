@@ -1,5 +1,10 @@
 {extends "idf/wiki/base.html"}
-{block extraheader}{if $oldrev}<meta name="ROBOTS" content="NOINDEX" />{/if}{/block}
+
+{block extraheader}
+{if $oldrev}<meta name="ROBOTS" content="NOINDEX" />{/if}
+<link rel="stylesheet" type="text/css" media="print" href="{media '/idf/css/print-wiki.css'}" />
+{/block}
+
 {block docclass}yui-t3{assign $inView=true}{/block}
 
 {block body}
