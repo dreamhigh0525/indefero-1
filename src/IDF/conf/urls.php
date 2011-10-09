@@ -117,7 +117,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'index');
-               
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/summary/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
@@ -127,6 +127,16 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/search/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
                'method' => 'search');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/search/status/(\w+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Issue',
+               'method' => 'searchStatus');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/search/label/(\d+)/(\w+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Issue',
+               'method' => 'searchLabel');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/(\d+)/$#',
                'base' => $base,
@@ -153,10 +163,10 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/create/$#',
                'model' => 'IDF_Views_Issue',
                'method' => 'create');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/my/(\w+)/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/(.*)/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Issue',
-               'method' => 'myIssues');
+               'method' => 'userIssues');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/issues/attachment/(\d+)/(.*)$#',
                'base' => $base,
