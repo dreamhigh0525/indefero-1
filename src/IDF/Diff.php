@@ -169,8 +169,7 @@ class IDF_Diff
                     }
 
                     $offsets[] = sprintf('<td>%s</td><td>%s</td>', $left, $right);
-                    $content = Pluf_esc($content);
-                    $content = IDF_FileUtil::emphasizeControlCharacters($content);
+                    $content = IDF_FileUtil::emphasizeControlCharacters(Pluf_esc($content));
                     $contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $content);
                 }
                 if (count($file['chunks']) > $cc) {
@@ -208,7 +207,7 @@ class IDF_Diff
                 '</tr>' ."\n".
               '</table>' ."\n";
 
-            $out .= '<table class="diff">' ."\n".
+            $out .= '<table class="diff unified">' ."\n".
                       '<colgroup><col width="'.($leftwidth + $rightwidth + 1).'" /><col width="*" /></colgroup>' ."\n".
                       '<tr id="diff-'.md5($filename).'">'.
                         '<th colspan="2">'.Pluf_esc($filename).'</th>'.
@@ -354,31 +353,108 @@ class IDF_Diff
         if (IDF_FileUtil::isSupportedExtension($fileinfo[2])) {
             $pretty = ' prettyprint';
         }
-        $out = '';
+
         $cc = 1;
-        $i = 0;
+        $left_offsets   = array();
+        $left_contents  = array();
+        $right_offsets  = array();
+        $right_contents = array();
+
+        $max_lineno_left = $max_lineno_right = 0;
+
         foreach ($chunks as $chunk) {
             foreach ($chunk as $line) {
-                $line1 = '&nbsp;';
-                $line2 = '&nbsp;';
-                $line[2] = (strlen($line[2])) ? IDF_FileUtil::emphasizeControlCharacters(Pluf_esc($line[2])) : '&nbsp;';
+                $left    = '';
+                $right   = '';
+                $content = IDF_FileUtil::emphasizeControlCharacters(Pluf_esc($line[2]));
+
                 if ($line[0] and $line[1]) {
-                    $class = 'diff-c';
-                    $line1 = $line2 = $line[2];
+                    $class = 'context';
+                    $left = $right = $content;
                 } elseif ($line[0]) {
-                    $class = 'diff-r';
-                    $line1 = $line[2];
+                    $class = 'removed';
+                    $left = $content;
                 } else {
-                    $class = 'diff-a';
-                    $line2 = $line[2];
+                    $class = 'added';
+                    $right = $content;
                 }
-                $out .= sprintf('<tr class="diff-line"><td class="diff-lc">%s</td><td class="%s mono%s"><code>%s</code></td><td class="diff-lc">%s</td><td class="%s mono%s"><code>%s</code></td></tr>'."\n", $line[0], $class, $pretty, $line1, $line[1], $class, $pretty, $line2);
+
+                $left_offsets[]   = sprintf('<td>%s</td>', $line[0]);
+                $right_offsets[]  = sprintf('<td>%s</td>', $line[1]);
+                $left_contents[]  = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $left);
+                $right_contents[] = sprintf('<td class="%s%s mono">%s</td>', $class, $pretty, $right);
+
+                $max_lineno_left  = max($max_lineno_left, $line[0]);
+                $max_lineno_right = max($max_lineno_right, $line[1]);
             }
-            if (count($chunks) > $cc)
-                $out .= '<tr class="diff-next"><td>...</td><td>&nbsp;</td><td>...</td><td>&nbsp;</td></tr>'."\n";
+
+            if (count($chunks) > $cc) {
+                $left_offsets[]   = '<td class="next">...</td>';
+                $right_offsets[]  = '<td class="next">...</td>';
+                $left_contents[]  = '<td></td>';
+                $right_contents[] = '<td></td>';
+            }
             $cc++;
-            $i++;
         }
+
+        $leftwidth = 1;
+        if ($max_lineno_left > 0)
+            $leftwidth = ((ceil(log10($max_lineno_left)) + 1) * 8) + 12;
+
+        $rightwidth = 1;
+        if ($max_lineno_right > 0)
+            $rightwidth = ((ceil(log10($max_lineno_right)) + 1) * 8) + 12;
+
+        $inner_linecounts_left =
+          '<table class="diff-linecounts">' ."\n".
+            '<colgroup><col width="'.$leftwidth.'" /></colgroup>' ."\n".
+            '<tr class="line">' .
+              implode('</tr>'."\n".'<tr class="line">', $left_offsets).
+            '</tr>' ."\n".
+          '</table>' ."\n";
+
+        $inner_linecounts_right =
+          '<table class="diff-linecounts">' ."\n".
+            '<colgroup><col width="'.$rightwidth.'" /></colgroup>' ."\n".
+            '<tr class="line">' .
+              implode('</tr>'."\n".'<tr class="line">', $right_offsets).
+            '</tr>' ."\n".
+          '</table>' ."\n";
+
+        $inner_contents_left =
+          '<table class="diff-contents">' ."\n".
+            '<tr class="line">' .
+              implode('</tr>'."\n".'<tr class="line">', $left_contents) .
+            '</tr>' ."\n".
+          '</table>' ."\n";
+
+        $inner_contents_right =
+          '<table class="diff-contents">' ."\n".
+            '<tr class="line">' .
+              implode('</tr>'."\n".'<tr class="line">', $right_contents) .
+            '</tr>' ."\n".
+          '</table>' ."\n";
+
+        $out =
+          '<table class="diff context">' ."\n".
+            '<colgroup>' .
+              '<col width="'.($leftwidth + 1).'" /><col width="*" />' .
+              '<col width="'.($rightwidth + 1).'" /><col width="*" />' .
+            '</colgroup>' ."\n".
+            '<tr id="diff-'.md5($filename).'">'.
+              '<th colspan="4">'.Pluf_esc($filename).'</th>'.
+            '</tr>' ."\n".
+            '<tr>' .
+              '<th colspan="2">'.__('Old').'</th><th colspan="2">'.__('New').'</th>' .
+            '</tr>'.
+            '<tr>' .
+              '<td>'. $inner_linecounts_left .'</td>'. "\n".
+              '<td><div class="scroll">'. $inner_contents_left .'</div></td>'. "\n".
+              '<td>'. $inner_linecounts_right .'</td>'. "\n".
+              '<td><div class="scroll">'. $inner_contents_right .'</div></td>'. "\n".
+            '</tr>' ."\n".
+            '</table>' ."\n";
+
         return Pluf_Template::markSafe($out);
     }
 }
