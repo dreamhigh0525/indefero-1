@@ -68,6 +68,9 @@
                 return row.to;
             }
         });
+{/literal}
+    {if $issue}
+{literal}
       $("#id_relation_issue" + idx).autocomplete("{/literal}{url 'IDF_Views_Issue::autoCompleteIssueList', array($project.shortname, $issue.id)}{literal}", {
             minChars: 0,
             width: 310,
@@ -83,6 +86,9 @@
                 return row[1];
             }
         });
+{/literal}
+    {/if}
+{literal}
     }
   });
 {/literal} //-->
