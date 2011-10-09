@@ -245,7 +245,7 @@ class IDF_Diff
      */
     public function fileCompare($orig, $chunks, $filename, $context=10)
     {
-        $orig_lines = self::splitIntoLines($orig);
+        $orig_lines = IDF_FileUtil::splitIntoLines($orig);
         $new_chunks = $this->mergeChunks($orig_lines, $chunks, $context);
         return $this->renderCompared($new_chunks, $filename);
     }
@@ -361,7 +361,7 @@ class IDF_Diff
             foreach ($chunk as $line) {
                 $line1 = '&nbsp;';
                 $line2 = '&nbsp;';
-                $line[2] = (strlen($line[2])) ? self::padLine(Pluf_esc($line[2])) : '&nbsp;';
+                $line[2] = (strlen($line[2])) ? IDF_FileUtil::emphasizeControlCharacters(Pluf_esc($line[2])) : '&nbsp;';
                 if ($line[0] and $line[1]) {
                     $class = 'diff-c';
                     $line1 = $line2 = $line[2];
