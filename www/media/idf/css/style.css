@@ -584,6 +584,11 @@ span.ctrl-char {
   cursor: default;
 }
 
+/* special formatting for the TAB character: make it wider, so it is rendered more properly */ 
+span.ctrl-char[title="0x09"] {
+  width: 24px;
+}
+
 table.diff {
   width: 100%;
   table-layout: fixed;
