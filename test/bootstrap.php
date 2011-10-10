@@ -21,7 +21,7 @@ if (file_exists($testconfig['db_database'])) {
 }
 
 echo ">>> creating empty test database...\n";
-passthru('php ' . PLUF_PATH . '/migrate.php --conf=' . TESTDIR . '/config.php -a -i');
+passthru('php ' . escapeshellarg(PLUF_PATH.'/migrate.php') . ' --conf=' . escapeshellarg(TESTDIR.'/config.php').' -a -i');
 
 echo ">>> setting up web application...\n";
 require 'Pluf.php';

@@ -10,8 +10,26 @@
 {/if}
 </div>
 {/if}
-<table class="disp" summary="">
-<tr><td>
+{if !$user.isAnonymous()}
+<div class="issue-submit-info" style="width: 50%; float: right; position: relative;">
+<p><strong>{trans 'How to Participate in a Code Review'}</strong></p>
+
+<p>{blocktrans}Code review is a process in which
+after or before changes are commited into the code repository,
+different people discuss the code changes. The goal is
+to <strong>improve the quality of the code and the
+contributions</strong>, as such, you must be pragmatic when writing
+your review. Correctly mention the line numbers (in the old or in the
+new file) and try to keep a good balance between seriousness and fun.
+{/blocktrans}</p>
+<p>{blocktrans}
+<strong>Proposing code for review is intimidating</strong>, you know
+you will receive critics, so please, as a reviewer, <strong>keep this
+process fun</strong>, use it to help your contributor learn your
+coding standards and the structure of the code and <strong>make them want
+to propose more contributions</strong>.
+{/blocktrans}</p></div>
+{/if}
 <table class="commit" summary="">
 <tr>
 <th><strong>{trans 'Created:'}</strong></th><td>{$patch.creation_dtime|date:"%Y-%m-%d %H:%M:%S"} ({$patch.creation_dtime|dateago})</td>
@@ -45,39 +63,12 @@
 <th>&nbsp;</th><td><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/package-grey.png'}" alt="{trans 'Archive'}" align="bottom" /></a> <a href="{$url}" class="soft">{trans 'Download the corresponding diff file'}</a></td>
 </tr>
 </table>
-</td><td>
-{if !$user.isAnonymous()}
-<div class="issue-submit-info" style="width: 90%; float: right; position: relative;">
-<p><strong>{trans 'How to Participate in a Code Review'}</strong></p>
-
-<p>{blocktrans}Code review is a process in which
-after or before changes are commited into the code repository,
-different people discuss the code changes. The goal is
-to <strong>improve the quality of the code and the
-contributions</strong>, as such, you must be pragmatic when writing
-your review. Correctly mention the line numbers (in the old or in the
-new file) and try to keep a good balance between seriousness and fun.
-{/blocktrans}</p>
-<p>{blocktrans}
-<strong>Proposing code for review is intimidating</strong>, you know
-you will receive critics, so please, as a reviewer, <strong>keep this
-process fun</strong>, use it to help your contributor learn your
-coding standards and the structure of the code and <strong>make them want
-to propose more contributions</strong>.
-{/blocktrans}</p></div>
-{/if}
-</td></tr>
-</table>
 
 <form method="post" action=".">
 {foreach $files as $file=>$def}
-<table class="diff" summary=" ">
-<tbody>
-<tr id="diff-{$file|md5}"><th colspan="4">{$file}</th></tr>
-<tr><th colspan="2">{trans 'Old'}</th><th colspan="2">{trans 'New'}</th></tr>
-{$def[0]}
-</tbody>
-</table>
+
+    {$def[0]}
+
 {assign $fcomments = $def[2]}
 {assign $nc = $fcomments.count()}
 {assign $i = 1}
