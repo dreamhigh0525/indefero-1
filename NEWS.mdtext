@@ -1,55 +1,69 @@
 # InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
 
-ATTENTION: You need Pluf [324ae60b](http://projects.ceondo.com/p/pluf/source/commit/324ae60b)
+ATTENTION: You need Pluf [46b7f251](http://projects.ceondo.com/p/pluf/source/commit/46b7f251)
 or newer to properly run this version of Indefero!
 
 ## New Features
 
-- Indefero's issue tracker can now bi-directionally link issues with variable, configurable
-  terms, such as "is related to", "is blocked by" or "is duplicated by" (issue 638)
-- When you search for issues, the results can further be refined by issue state (open or closed)
-  and label (partially implements issue 548)
-- Mercurial source views now show parent revisions (if any) and detailed change information
+- Indefero's issue tracker can now bi-directionally link issues with variable,
+  configurable terms, such as "is related to", "is blocked by" or
+  "is duplicated by" (issue 638)
+- When you search for issues, the results can further be refined by issue state
+  (open or closed) and label (partially implements issue 548)
+- Source and diff views now make characters like line endings, tabs and other
+  "invisible" control characters visible on hover and cope with long lines much
+  better (issue 636)
+- Mercurial source views now show parent revisions (if any) and detailed change
+  information
 - Subversion source views now show detailed change information (issue 622)
-- File download URLs now contain the file name rather than the upload id; old links still work though (issues 559 and 686)
-- Display monotone file and directory attributes in the tree and file view
+- File download URLs now contain the file name rather than the upload id;
+  old links still work though (issues 559 and 686)
+- monotone file and directory attributes are displayed in the tree and file view
   (needs a monotone with an interface version of 13.1 or newer)
 - The context area is now kept in view when a page scrolls down several pages
-- Add a summary section to the issue tracker with statistics about open/close issues,
-  tags of open issue, and count of open tickets for each owner.
-- Improved home page with an customizable icon for each project.
-- The download section provide MD5 for each files.
-- Wiki page have now a css for printer output (issue 713)
+- A summary section has been added to the issue tracker with statistics about
+  open / closed  issues, unresolved issues grouped by tags and owners
+- The project list and title has gathered a customizable icon for each project
+- The download section now provides MD5 checksums for uploaded files
+- Wiki pages now come with a designated stylesheet for printer output (issue 713)
 
 ## Bugfixes
 
-- The SVN interface acts more robust if an underlying repository has been restructured (issues 364 and 721)
+- Git's cron job doesn't erase manually added keys anymore (issue 247)
+- The SVN interface acts more robust if an underlying repository has been
+  restructured (issues 364 and 721)
 - monotone zip archive entries now all carry the revision date as mtime (issue 645)
-- Timeline only displays filter options for items a user has actually access to (issue 655)
+- The timeline only now only displays filter options for items a user has
+  actually access to (issue 655)
 - The log, tags and branches parsers for Mercurial are more robust now (issue 663)
-- Fix SSH public key parsing issues and improve the check for existing, uploaded keys (issue 679)
+- Several SSH public key parsing issues have been fixed and the check for existing,
+  uploaded keys has been improved (issue 679)
 - Diff views now show empty context lines for git and hg again (issue 688)
-- Let the SVN command line client not store the login credentials we give him as arguments
+- The SVN command line client no longer accidential tries to store the login
+  credentials we give him as arguments for the user executing the SVN command
 - The usher section in the forge administration no longer displays a bogus
   server enty in case no monotone server is configured in the connected
   usher instance
-- Prevent a timeout from popping up when Usher is restarted (issue 695)
-- The SyncMonotone plugin now cleans up partial artifacts it created during the addition of
-  a new project or monotone key, in case an error popped up in the middle (issue 697)
+- A timeout that popped up when Usher is restarted has been fixed (issue 695)
+- The SyncMonotone plugin now cleans up partial artifacts it created during the
+  addition of a new project or monotone key, in case an error popped up in the
+  middle (issue 697)
 - Indefero now sends the MD5 checksum as HTTP header when downloading a file from the
-  download area. Additionally, a unneeded redirect has been removed. (issue 716)
-- Source links without a specific revision did not work due to a wrong regex (issue 730)
-- Better error detection and reporting in the SyncMonotone plugin
-  ATTENTION: This needs Pluf 46b7f251 or newer!
-- Fix the branch links users of the Subversion frontend get when they enter a wrong revision
-  and only display this list if there are any branches available for all SCMs
-- If git's author name is not encoded in an UTF-8 compatible encoding, skip the author lookup,
-  as we have no information what the author string is actually encoded in
-- Indefero no longer displays an empty parents paragraph in the commit view for root revisions of
-  a git repository
-- Indefero now only shows the tags of the closed and not the open issues in the closed issues list
+  download area; additionally, a unneeded redirect has been removed (issue 716)
 - Avatar URL generation use correctly the configuration (issue 732)
-- Git cron job doesn't erase anymore manually added keys (issue 247)
+- Source links without a specific revision did not work due to a wrong regex
+  (issue 730)
+- The error detection and reporting in the SyncMonotone plugin has been improved
+- The branch links users of the Subversion frontend get when they enter a wrong
+  revision are fixed; this list is now also only displayed (for any SCM) if
+  there are actually branches available in the repository
+- If git's author name is not encoded in an UTF-8 compatible encoding, skip the
+  author lookup, as we have no information what the author string is actually
+  encoded in
+- Indefero no longer displays an empty parents paragraph in the commit view for
+  root revisions of a git repository
+- Indefero now only shows the tags of the closed and not the open issues in the
+  closed issues list
 
 ## Documentation
 
