@@ -589,6 +589,11 @@ span.ctrl-char[title="0x09"] {
   width: 24px;
 }
 
+/* override any prettify css rule */
+span.ctrl-char > * {
+  color: white;
+}
+
 table.diff {
   width: 100%;
   table-layout: fixed;
@@ -691,11 +696,6 @@ table.diff-contents td.added > span.ctrl-char {
 
 table.diff-contents td.removed > span.ctrl-char {
   background: #A00;
-}
-
-/* override prettify css rule */
-table.diff-contents td > span.ctrl-char > * {
-  color: white;
 }
 
 /**
