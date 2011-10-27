@@ -666,6 +666,11 @@ table.diff-linecounts td {
   border-left: 1px solid #d3d7cf;
 }
 
+table.diff-linecounts.left-hidden tr > td:first-child,
+table.diff-linecounts.right-hidden tr > td + td {
+  display: none;
+}
+
 table.diff-contents td {
   line-height: 12px;
   padding: 2px;

@@ -182,17 +182,29 @@ class IDF_Diff
             list($added, $removed) = end($file['chunks_def']);
 
             $added = $added[0] + $added[1];
-            $leftwidth = 1;
+            $leftwidth = 0;
             if ($added > 0)
                 $leftwidth = ((ceil(log10($added)) + 1) * 8) + 12;
 
             $removed = $removed[0] + $removed[1];
-            $rightwidth = 1;
+            $rightwidth = 0;
             if ($removed > 0)
                 $rightwidth = ((ceil(log10($removed)) + 1) * 8) + 12;
 
+            // we need to correct the width of a single column a little
+            // to take less space and to hide the empty one
+            $class = '';
+            if ($leftwidth == 0) {
+                $class = 'left-hidden';
+                $rightwidth -= floor(log10($removed));
+            }
+            else if ($rightwidth == 0) {
+                $class = 'right-hidden';
+                $leftwidth -= floor(log10($added));
+            }
+
             $inner_linecounts =
-              '<table class="diff-linecounts">' ."\n".
+              '<table class="diff-linecounts '.$class.'">' ."\n".
                 '<colgroup><col width="'.$leftwidth.'" /><col width="'. $rightwidth.'" /></colgroup>' ."\n".
                 '<tr class="line">' .
                   implode('</tr>'."\n".'<tr class="line">', $offsets).
