@@ -87,7 +87,7 @@ class IDF_Scm_Git extends IDF_Scm
                     $filename = trim(substr($line, 1));
                     $return->patches[] = $filename;
                 } else if ($action == 'R') {
-                    $matches = split ("\t", $line);
+                    $matches = preg_split("/\t/", $line);
                     $return->renames[$matches[1]] = $matches[2];
                 }
             }
