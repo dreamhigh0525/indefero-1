@@ -1,0 +1,10 @@
+diff --git a/lineendings b/lineendings
+index 7c2b7ec..9c59944 100644
+--- a/lineendings
++++ b/lineendings
+@@ -1,3 +1,4 @@
++Unix, again
+ Windows
+ Unix
+ Old MacintoshNothing
+\ No newline at end of file

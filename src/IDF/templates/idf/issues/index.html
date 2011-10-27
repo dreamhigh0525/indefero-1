@@ -1,5 +1,5 @@
 {extends "idf/issues/base.html"}
-{block docclass}yui-t2{assign $inOpenIssues=true}{/block}
+{block docclass}yui-t2{assign $inAllIssues=true}{/block}
 {block body}
 {$issues.render}
 {if !$user.isAnonymous()}

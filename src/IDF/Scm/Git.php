@@ -87,7 +87,7 @@ class IDF_Scm_Git extends IDF_Scm
                     $filename = trim(substr($line, 1));
                     $return->patches[] = $filename;
                 } else if ($action == 'R') {
-                    $matches = split ("\t", $line);
+                    $matches = preg_split("/\t/", $line);
                     $return->renames[$matches[1]] = $matches[2];
                 }
             }
@@ -507,33 +507,27 @@ class IDF_Scm_Git extends IDF_Scm
                            "'".$this->mediumtree_fmt."'",
                            escapeshellarg($commit));
         }
-        $out = array();
         $cmd = Pluf::f('idf_exec_cmd_prefix', '').$cmd;
-        self::exec('IDF_Scm_Git::getCommit', $cmd, $out, $ret);
-        if ($ret != 0 or count($out) == 0) {
+        $out = self::shell_exec('IDF_Scm_Git::getCommit', $cmd);
+        if (strlen($out) == 0) {
             return false;
         }
-        if ($getdiff) {
-            $log = array();
-            $change = array();
-            $inchange = false;
-            foreach ($out as $line) {
-                if (!$inchange and 0 === strpos($line, 'diff --git a')) {
-                    $inchange = true;
-                }
-                if ($inchange) {
-                    $change[] = $line;
-                } else {
-                    $log[] = $line;
-                }
-            }
-            $out = self::parseLog($log);
-            $out[0]->diff = implode("\n", $change);
-        } else {
-            $out = self::parseLog($out);
-            $out[0]->diff = '';
+
+        $diffStart = false;
+        if (preg_match('/^diff (?:--git a|--cc)/m', $out, $m, PREG_OFFSET_CAPTURE)) {
+            $diffStart = $m[0][1];
         }
 
+        $diff = '';
+        if ($diffStart !== false) {
+            $log = substr($out, 0, $diffStart);
+            $diff = substr($out, $diffStart);
+        } else {
+            $log = $out;
+        }
+
+        $out = self::parseLog(preg_split('/\r\n|\n/', $log));
+        $out[0]->diff = $diff;
         $out[0]->branch = implode(', ', $this->inBranches($out[0]->commit, null));
         return $out[0];
     }
