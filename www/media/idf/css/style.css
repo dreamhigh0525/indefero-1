@@ -85,6 +85,7 @@ a.soft:visited {
 }
 
 div.context {
+  padding-top: 0.5em;
   padding-left: 1em;
   position: relative;
   top: 0;
