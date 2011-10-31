@@ -378,6 +378,9 @@ span.active {
 .helptext {
   font-size: 80%;
   color: #555753;
+  max-width: 600px;
+  margin-top: 0.25em;
+  display: inline-block;
 }
 
 div.container {
