@@ -993,9 +993,8 @@ class IDF_Views_Issue
         $r = $project->getRelationsFromConfig();
         $auto['auto_relation_types'] = '';
         foreach ($r as $rt) {
-            $esc = Pluf_esc($rt);
             $auto['auto_relation_types'] .= sprintf('{ name: "%s", to: "%s" }, ',
-                                                    $esc, $esc);
+                                                    Pluf_esc(__($rt)), Pluf_esc($rt));
         }
         $auto['auto_relation_types'] = substr($auto['auto_relation_types'], 0, -2);
         return $auto;
