@@ -5,6 +5,7 @@
 <li><a href="#q-keyboard">{trans 'What are the keyboard shortcuts?'}</a></li>
 <li><a href="#q-duplicate">{trans 'How to mark an issue as duplicate?'}</a></li>
 <li><a href="#q-mugshot">{trans 'How can I display my head next to my comments?'}</a></li>
+<li><a href="#q-archive-format">{trans 'What is this "Upload Archive" functionality about?'}</a></li>
 <li><a href="#q-api">{trans 'What is the API and how is it used?'}</a></li>
 </ul>
 
@@ -48,11 +49,27 @@
 
 <p>{blocktrans}You need to create an account on <a href="http://en.gravatar.com/">Gravatar</a>, this takes about 5 minutes and is free.{/blocktrans}</p>
 
+
+<h2 id="q-archive-format">{trans 'What is this "Upload Archive" functionality about?'}</h2>
+
+{blocktrans}<p>If you have to publish many files at once for a new release, it is a very tedious task
+to upload them one after another and enter meta information like a summary, a description or additional
+labels for each of them.</p>
+<p>InDefero therefor supports a special archive format that is basically a standard zip file which comes with
+some meta information. These meta information are kept in a special manifest file, which is distinctly kept from
+the rest of the files in the archive that should be published.</p>
+<p>Once this archive has been uploaded, InDefero reads in the meta information, unpacks the other files from
+the archive and creates new individual downloads for each of them.</p>{/blocktrans}
+
+{aurl 'url', 'IDF_Views::faqArchiveFormat'}
+<p>{blocktrans}<a href="{$url}">Learn more about the archive format</a>.{/blocktrans}</p>
+
 <h2 id="q-api">{trans 'What is the API and how is it used?'}</h2>
 
-<p>{blocktrans}The API (Application Programming Interface) is used to interact with InDefero with another program. For example, this can be used to create a desktop program to submit new tickets easily.{/blocktrans}</p>{aurl 'url', 'IDF_Views::faqApi'}
+<p>{blocktrans}The API (Application Programming Interface) is used to interact with InDefero with another program. For example, this can be used to create a desktop program to submit new tickets easily.{/blocktrans}</p>
+{aurl 'url', 'IDF_Views::faqApi'}
 <p>{blocktrans}<a href="{$url}">Learn more about the API</a>.{/blocktrans}</p>
- 
+
 {/block}
 {block context}
 <p>{trans 'Here we are, just to help you.'}</p>

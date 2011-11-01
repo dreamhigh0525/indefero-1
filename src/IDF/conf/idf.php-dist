@@ -495,6 +495,11 @@ $cfg['idf_strong_key_check'] = false;
 # always have precedence.
 # $cfg['max_upload_size'] = 2097152; // Size in bytes
 
+# If a download archive is uploaded, the size of the archive is limited to 20MB.
+# The php.ini upload_max_filesize and post_max_size configuration setting will
+# always have precedence.
+# $cfg['max_upload_archive_size'] = 20971520; // Size in bytes
+
 # Older versions of Indefero submitted a POST request to a configured
 # post-commit web hook when new revisions arrived, whereas a PUT request
 # would have been more appropriate.  Also, the payload's HMAC digest was

@@ -293,6 +293,22 @@ class IDF_Views
     }
 
     /**
+     * Download archive FAQ.
+     */
+    public function faqArchiveFormat($request, $match)
+    {
+        $title = __('InDefero Upload Archive Format');
+        $projects = self::getProjects($request->user);
+        return Pluf_Shortcuts_RenderToResponse('idf/faq-archive-format.html',
+                                               array(
+                                                     'page_title' => $title,
+                                                     'projects' => $projects,
+                                                     ),
+                                               $request);
+
+    }
+
+    /**
      * API FAQ.
      */
     public function faqApi($request, $match)

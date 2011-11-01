@@ -304,6 +304,11 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/page/(.*)/$#',
 
 // ---------- Downloads ------------------------------------
 
+$ctl[] = array('regex' => '#^/help/archive-format/$#',
+               'base' => $base,
+               'model' => 'IDF_Views',
+               'method' => 'faqArchiveFormat');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/$#',
                'base' => $base,
                'model' => 'IDF_Views_Download',
@@ -332,7 +337,12 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/(\d+)/get/$#',
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/create/$#',
                'base' => $base,
                'model' => 'IDF_Views_Download',
-               'method' => 'submit');
+               'method' => 'create');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/create/archive/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Download',
+               'method' => 'createFromArchive');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/downloads/(\d+)/delete/$#',
                'base' => $base,

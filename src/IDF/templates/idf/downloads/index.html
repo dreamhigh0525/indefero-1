@@ -3,7 +3,7 @@
 {block body}
 {$downloads.render}
 {if $isOwner or $isMember}
-{aurl 'url', 'IDF_Views_Download::submit', array($project.shortname)}
+{aurl 'url', 'IDF_Views_Download::create', array($project.shortname)}
 <p><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/add.png'}" alt="+" align="bottom" /></a> <a href="{$url}">{trans 'New Download'}</a></p>{/if}
 
 {/block}

@@ -1,0 +1,100 @@
+{extends "idf/base-simple.html"}
+{block docclass}yui-t3{/block}
+{block body}
+<p>At the moment, this documentation is only available in English.</p>
+
+<ul>
+<li><a href="#q-motivation">Motivation</a></li>
+<li><a href="#q-manifest">The manifest format</a></li>
+</ul>
+
+<h2 id="q-motivation">Motivation</h2>
+
+<p>
+Adding multiple, individual downloads to a project for a release can be a tedious task if
+one has to select each file manually, and then has to fill in the summary and correct labels
+for each of these downloads individually.
+</p>
+
+<p>
+InDefero therefor supports the upload of "archives" that contain multiple downloadable
+files. These archives are standard PKZIP files with only one special property - they
+contain an additional manifest file which describes the files that should be published.
+</p>
+
+<p>
+Once such an archive has been uploaded and validated by InDefero, its files are extracted
+and individual downloads are created for each of them. If the archive contains files
+that should deprecate existing downloads, then InDefero takes care of this as well -
+automatically.
+</p>
+
+<p>
+An archive file and its manifest file can easily be compiled, either by hand with the help
+of a text editor, or through an automated build system with the help of your build tool of
+choice, such as Apache Ant.
+</p>
+
+<h2 id="q-manifest">The manifest format</h2>
+
+<p>
+The manifest is an XML file that follows a simple syntax. As it is always easier to look
+at an example, here you have one:
+</p>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;manifest>
+  &lt;file>
+    &lt;name>foo-1.2.tar.gz&lt;/name>
+    &lt;summary>Tarball&lt;/summary>
+    &lt;replaces>foo-1.1.tar.gz&lt;/replaces>
+    &lt;tags>
+       &lt;tag>Type:Archive&lt;/tag>
+    &lt;/tags>
+  &lt;/file>
+  &lt;file>
+    &lt;name>foo-1.2-installer.exe&lt;/name>
+    &lt;summary>Windows MSI Installer&lt;/summary>
+    &lt;description>This installer needs Windows XP SP2 or later.&lt;/description>
+    &lt;tags>
+       &lt;tag>Type:Installer&lt;/tag>
+       &lt;tag>OpSys:Windows&lt;/tag>
+    &lt;/tags>
+  &lt;/file>
+&lt;/manifest>
+</pre>
+
+<p>
+This is the DTD for the format:
+</p>
+
+<pre>
+&lt;!DOCTYPE manifest [
+&lt;!ELEMENT manifest (file+)>
+&lt;!ELEMENT file (name,summary,replaces?,description?,tags?)>
+&lt;!ELEMENT name (#PCDATA)>
+&lt;!ELEMENT summary (#PCDATA)>
+&lt;!ELEMENT replaces (#PCDATA)>
+&lt;!ELEMENT description (#PCDATA)>
+&lt;!ELEMENT tags (tag+)>
+&lt;!ELEMENT tag (#PCDATA)>
+]>
+</pre>
+
+<p>
+The format is more or less self-explaining, all fields map to properties of a single download.
+One special element has been introduced though, <code>replaces</code>. If this optional element
+is given, InDefero looks for a file with that name in the project and deprecates it by attaching
+the label <code>Other:Deprecated</code> to it. If no such file is found, the element is simply
+ignored.
+</p>
+{/block}
+
+{block context}
+<p>{trans 'Here we are, just to help you.'}</p>
+<h2>{trans 'Projects'}</h2>
+<ul>{foreach $projects as $p}
+<li><a href="{url 'IDF_Views_Project::home', array($p.shortname)}">{$p}</a></li>
+{/foreach}</ul>
+{/block}
