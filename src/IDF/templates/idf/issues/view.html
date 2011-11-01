@@ -190,6 +190,7 @@
 {if count($related_issues) > 0}
 {foreach $related_issues as $verb => $rel_issues}
 <p>
+{assign $verb = __($verb)}
 <strong>{blocktrans}This issue {$verb}{/blocktrans}</strong><br />
   {foreach $rel_issues as $rel_issue}
      <span class="label">

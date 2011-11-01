@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-28 01:13+0200\n"
+"POT-Creation-Date: 2011-10-31 01:11+0100\n"
 "PO-Revision-Date: 2011-03-04 18:20+0000\n"
 "Last-Translator: tommyd <me@thomaskeller.biz>\n"
 "Language-Team: German <>\n"
@@ -15,7 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Language: de_DE\n"
+"X-Source-Language: C\n"
 
 #: IDF/Commit.php:55 IDF/Conf.php:54 IDF/Issue.php:52 IDF/Review.php:65
 #: IDF/Search/Occ.php:69 IDF/Tag.php:52 IDF/Upload.php:49 IDF/WikiPage.php:54
@@ -23,14 +25,14 @@ msgid "project"
 msgstr "Projekt"
 
 #: IDF/Commit.php:63 IDF/Issue.php:67 IDF/IssueComment.php:65
-#: IDF/IssueFile.php:57 IDF/Review/Comment.php:69 IDF/Review.php:80
-#: IDF/Upload.php:85 IDF/WikiPage.php:78 IDF/WikiRevision.php:79
+#: IDF/IssueFile.php:57 IDF/IssueRelation.php:69 IDF/Review/Comment.php:69
+#: IDF/Review.php:80 IDF/Upload.php:91 IDF/WikiPage.php:78
+#: IDF/WikiRevision.php:79
 msgid "submitter"
 msgstr "Absender"
 
-#: IDF/Commit.php:87 IDF/Issue.php:60 IDF/Review/Patch.php:60
-#: IDF/Review.php:73 IDF/Upload.php:57 IDF/WikiPage.php:70
-#: IDF/WikiRevision.php:65
+#: IDF/Commit.php:87 IDF/Issue.php:60 IDF/Review/Patch.php:60 IDF/Review.php:73
+#: IDF/Upload.php:57 IDF/WikiPage.php:70 IDF/WikiRevision.php:65
 msgid "summary"
 msgstr "Zusammenfassung"
 
@@ -39,9 +41,9 @@ msgid "changelog"
 msgstr "Änderungen"
 
 #: IDF/Commit.php:100 IDF/Issue.php:105 IDF/IssueComment.php:79
-#: IDF/IssueFile.php:96 IDF/Review/Comment.php:90
+#: IDF/IssueFile.php:96 IDF/IssueRelation.php:75 IDF/Review/Comment.php:90
 #: IDF/Review/FileComment.php:75 IDF/Review/Patch.php:87 IDF/Review.php:108
-#: IDF/Upload.php:106 IDF/WikiPage.php:100 IDF/WikiRevision.php:92
+#: IDF/Upload.php:112 IDF/WikiPage.php:100 IDF/WikiRevision.php:92
 msgid "creation date"
 msgstr "Erstellt am"
 
@@ -63,6 +65,14 @@ msgstr "Schlüssel"
 msgid "value"
 msgstr "Wert"
 
+#: IDF/Diff.php:460
+msgid "Old"
+msgstr "Alt"
+
+#: IDF/Diff.php:460
+msgid "New"
+msgstr "Neu"
+
 #: IDF/EmailAddress.php:49 IDF/Key.php:49
 msgid "user"
 msgstr "Benutzer"
@@ -71,30 +81,33 @@ msgstr "Benutzer"
 msgid "email"
 msgstr "E-Mail"
 
-#: IDF/Form/Admin/ProjectCreate.php:38 IDF/Views/Project.php:561
+#: IDF/Form/Admin/ProjectCreate.php:38 IDF/Views/Project.php:587
 msgid "git"
 msgstr "git"
 
-#: IDF/Form/Admin/ProjectCreate.php:39 IDF/Views/Project.php:562
+#: IDF/Form/Admin/ProjectCreate.php:39 IDF/Views/Project.php:588
 msgid "Subversion"
 msgstr "Subversion"
 
-#: IDF/Form/Admin/ProjectCreate.php:40 IDF/Views/Project.php:563
+#: IDF/Form/Admin/ProjectCreate.php:40 IDF/Views/Project.php:589
 msgid "mercurial"
 msgstr "mercurial"
 
-#: IDF/Form/Admin/ProjectCreate.php:41 IDF/Views/Project.php:564
+#: IDF/Form/Admin/ProjectCreate.php:41 IDF/Views/Project.php:590
 msgid "monotone"
 msgstr "monotone"
 
 #: IDF/Form/Admin/ProjectCreate.php:49 IDF/Form/Admin/ProjectUpdate.php:44
-#: IDF/Views/Admin.php:66 IDF/Views/Admin.php:210
+#: IDF/Form/ProjectConf.php:38 IDF/Views/Admin.php:66 IDF/Views/Admin.php:210
 msgid "Name"
 msgstr "Name"
 
 #: IDF/Form/Admin/ProjectCreate.php:55 IDF/Form/TabsConf.php:77
-#: IDF/gettexttemplates/idf/index.html.php:6
-#: IDF/gettexttemplates/idf/main-menu.html.php:7
+#: IDF/gettexttemplates/idf/base-full.html.php:5
+#: IDF/gettexttemplates/idf/base.html.php:5
+#: IDF/gettexttemplates/idf/index.html.php:7
+#: IDF/gettexttemplates/idf/index.html.php:8
+#: IDF/gettexttemplates/idf/main-menu.html.php:8
 msgid "Private project"
 msgstr "Privates Projekt"
 
@@ -214,10 +227,10 @@ msgstr ""
 
 #: IDF/Form/Admin/ProjectCreate.php:279 IDF/Form/Admin/ProjectDelete.php:78
 #: IDF/Form/Admin/ProjectUpdate.php:121 IDF/Form/Admin/UserCreate.php:106
-#: IDF/Form/Admin/UserUpdate.php:191 IDF/Form/IssueCreate.php:263
-#: IDF/Form/IssueUpdate.php:232 IDF/Form/MembersConf.php:64
+#: IDF/Form/Admin/UserUpdate.php:191 IDF/Form/IssueCreate.php:338
+#: IDF/Form/IssueUpdate.php:329 IDF/Form/MembersConf.php:64
 #: IDF/Form/Password.php:76 IDF/Form/Register.php:112
-#: IDF/Form/ReviewCreate.php:187 IDF/Form/ReviewFileComment.php:127
+#: IDF/Form/ReviewCreate.php:187 IDF/Form/ReviewFileComment.php:143
 #: IDF/Form/TabsConf.php:98 IDF/Form/UpdateUpload.php:126
 #: IDF/Form/Upload.php:148 IDF/Form/UserAccount.php:216
 #: IDF/Form/UserChangeEmail.php:80 IDF/Form/WikiCreate.php:167
@@ -232,7 +245,7 @@ msgstr ""
 "Klicke auf den Projekt-Management-Reiter, um eine Beschreibung Deines "
 "Projektes zu setzen."
 
-#: IDF/Form/Admin/ProjectCreate.php:362
+#: IDF/Form/Admin/ProjectCreate.php:363
 msgid "This project is not available."
 msgstr "Das Projekt ist nicht verfügbar."
 
@@ -320,8 +333,8 @@ msgstr ""
 msgid "Your details to access your forge."
 msgstr "Die Informationen, um auf Deine Forge zuzugreifen."
 
-#: IDF/Form/Admin/UserCreate.php:189 IDF/Form/UserAccount.php:420
-#: IDF/Form/UserAccount.php:429
+#: IDF/Form/Admin/UserCreate.php:189 IDF/Form/UserAccount.php:429
+#: IDF/Form/UserAccount.php:438
 #, php-format
 msgid "The email \"%s\" is already used."
 msgstr "Die E-Mail \"%s\" wird bereits genutzt."
@@ -350,17 +363,18 @@ msgid ""
 "The password must be hard for other people to guess, but easy for the user "
 "to remember."
 msgstr ""
-"Das Passwort sollte für andere Leute schwer zu erraten, aber für den Benutzer "
-"einfach zu erinnern sein."
+"Das Passwort sollte für andere Leute schwer zu erraten, aber für den "
+"Benutzer einfach zu erinnern sein."
 
 #: IDF/Form/Admin/UserUpdate.php:89
 msgid "Confirm password"
 msgstr "Passwort bestätigen"
 
-#: IDF/Form/Admin/UserUpdate.php:100 IDF/Form/IssueCreate.php:62
-#: IDF/Form/ReviewCreate.php:54 IDF/Form/UpdateUpload.php:51
-#: IDF/Form/Upload.php:49 IDF/Form/UserAccount.php:101
-#: IDF/Form/WikiCreate.php:70 IDF/Form/WikiUpdate.php:60
+#: IDF/Form/Admin/UserUpdate.php:100 IDF/Form/IssueCreate.php:66
+#: IDF/Form/ProjectConf.php:47 IDF/Form/ReviewCreate.php:54
+#: IDF/Form/UpdateUpload.php:51 IDF/Form/Upload.php:49
+#: IDF/Form/UserAccount.php:101 IDF/Form/WikiCreate.php:70
+#: IDF/Form/WikiUpdate.php:60
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -415,7 +429,8 @@ msgid ""
 "you can directly enable or disable their account here."
 msgstr ""
 "Wenn der Benutzer keine Bestätigungs-E-Mail erhält oder das System "
-"missbraucht, kannst Du sein Benutzerkonto hier direkt aktivieren oder deaktivieren."
+"missbraucht, kannst Du sein Benutzerkonto hier direkt aktivieren oder "
+"deaktivieren."
 
 #: IDF/Form/Admin/UserUpdate.php:274
 msgid "--- is not a valid first name."
@@ -428,13 +443,13 @@ msgstr ""
 "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits, bitte gib eine "
 "andere E-Mail-Adresse an."
 
-#: IDF/Form/Admin/UserUpdate.php:301 IDF/Form/UserAccount.php:389
+#: IDF/Form/Admin/UserUpdate.php:301 IDF/Form/UserAccount.php:398
 msgid "For security reason, you cannot upload a file with this extension."
 msgstr ""
 "Aus Sicherheitsgründen kannst Du keine Dateien mit dieser Erweiterung "
 "hochladen."
 
-#: IDF/Form/Admin/UserUpdate.php:316 IDF/Form/UserAccount.php:452
+#: IDF/Form/Admin/UserUpdate.php:316 IDF/Form/UserAccount.php:461
 msgid "The passwords do not match. Please give them again."
 msgstr "Die Passwörter stimmen nicht überein. Bitte gib sie erneut ein."
 
@@ -442,56 +457,62 @@ msgstr "Die Passwörter stimmen nicht überein. Bitte gib sie erneut ein."
 msgid "Please enter one or more valid email addresses."
 msgstr "Bitte gib eine oder mehrere gültige E-Mail-Adressen ein."
 
-#: IDF/Form/IssueCreate.php:53 IDF/Form/IssueUpdate.php:45
+#: IDF/Form/IssueCreate.php:57 IDF/Form/IssueUpdate.php:46
 #: IDF/Form/ReviewCreate.php:45 IDF/Form/ReviewFileComment.php:73
 #: IDF/Form/UpdateUpload.php:42 IDF/Form/Upload.php:40
-#: IDF/Views/Download.php:65 IDF/Views/Download.php:293 IDF/Views/Issue.php:62
-#: IDF/Views/Issue.php:139 IDF/Views/Issue.php:220 IDF/Views/Issue.php:296
-#: IDF/Views/Issue.php:383 IDF/Views/Issue.php:562 IDF/Views/Issue.php:621
-#: IDF/Views/Review.php:58 IDF/Views/User.php:83 IDF/Views/Wiki.php:62
-#: IDF/Views/Wiki.php:107 IDF/Views/Wiki.php:148
+#: IDF/gettexttemplates/idf/issues/base.html.php:3 IDF/Views/Download.php:65
+#: IDF/Views/Download.php:313 IDF/Views/Issue.php:62 IDF/Views/Issue.php:218
+#: IDF/Views/Issue.php:299 IDF/Views/Issue.php:388 IDF/Views/Issue.php:540
+#: IDF/Views/Issue.php:763 IDF/Views/Issue.php:822 IDF/Views/Review.php:58
+#: IDF/Views/User.php:83 IDF/Views/Wiki.php:62 IDF/Views/Wiki.php:107
+#: IDF/Views/Wiki.php:148
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: IDF/Form/IssueCreate.php:72 IDF/Form/IssueUpdate.php:65
+#: IDF/Form/IssueCreate.php:76 IDF/Form/IssueUpdate.php:66
 #: IDF/Form/ReviewCreate.php:83
 msgid "The \"upload_issue_path\" configuration variable was not set."
 msgstr "Die Konfigurationsvariable \"upload_issue_path\" ist nicht gesetzt."
 
-#: IDF/Form/IssueCreate.php:82 IDF/Form/IssueUpdate.php:75
+#: IDF/Form/IssueCreate.php:86 IDF/Form/IssueUpdate.php:76
 msgid "Attach a file"
 msgstr "Datei anhängen"
 
-#: IDF/Form/IssueCreate.php:95 IDF/Form/IssueUpdate.php:88
+#: IDF/Form/IssueCreate.php:99 IDF/Form/IssueUpdate.php:89
 #: IDF/Form/ReviewCreate.php:103 IDF/Form/ReviewFileComment.php:83
-#: IDF/Views/Issue.php:63 IDF/Views/Issue.php:140 IDF/Views/Issue.php:222
-#: IDF/Views/Issue.php:297 IDF/Views/Issue.php:384 IDF/Views/Issue.php:563
-#: IDF/Views/Issue.php:622 IDF/Views/Review.php:59 IDF/Views/User.php:84
+#: IDF/Views/Issue.php:63 IDF/Views/Issue.php:219 IDF/Views/Issue.php:301
+#: IDF/Views/Issue.php:389 IDF/Views/Issue.php:541 IDF/Views/Issue.php:764
+#: IDF/Views/Issue.php:823 IDF/Views/Review.php:59 IDF/Views/User.php:84
 msgid "Status"
 msgstr "Status"
 
-#: IDF/Form/IssueCreate.php:104 IDF/Form/IssueUpdate.php:98
+#: IDF/Form/IssueCreate.php:108 IDF/Form/IssueUpdate.php:99
 msgid "Owner"
 msgstr "Eigentümer"
 
-#: IDF/Form/IssueCreate.php:150 IDF/Form/IssueUpdate.php:117
+#: IDF/Form/IssueCreate.php:118 IDF/Form/IssueUpdate.php:112
+#: IDF/Form/IssueUpdate.php:129
+msgid "This issue"
+msgstr "Dieses Ticket"
+
+#: IDF/Form/IssueCreate.php:168 IDF/Form/IssueUpdate.php:164
 #: IDF/Form/UpdateUpload.php:71 IDF/Form/Upload.php:70
 #: IDF/Form/WikiCreate.php:93 IDF/Form/WikiUpdate.php:104
 msgid "Labels"
 msgstr "Marken"
 
-#: IDF/Form/IssueCreate.php:192
+#: IDF/Form/IssueCreate.php:210
 msgid "You cannot add a label with the \"Status\" prefix to an issue."
 msgstr ""
 "Du kannst keine Marke mit dem Präfix \"Status\" zu einem Ticket hinzufügen."
 
-#: IDF/Form/IssueCreate.php:193 IDF/Form/IssueCreate.php:200
+#: IDF/Form/IssueCreate.php:211 IDF/Form/IssueCreate.php:218
 #: IDF/Form/UpdateUpload.php:110 IDF/Form/Upload.php:120
 #: IDF/Form/WikiCreate.php:151 IDF/Form/WikiUpdate.php:162
 msgid "You provided an invalid label."
 msgstr "Du hast eine ungültige Marke angegeben."
 
-#: IDF/Form/IssueCreate.php:199 IDF/Form/UpdateUpload.php:109
+#: IDF/Form/IssueCreate.php:217 IDF/Form/UpdateUpload.php:109
 #: IDF/Form/Upload.php:119
 #, php-format
 msgid "You cannot provide more than label from the %s class to an issue."
@@ -499,35 +520,68 @@ msgstr ""
 "Du kannst nicht mehr als eine Marke von der %s-Klasse zu einem Ticket "
 "hinzufügen."
 
-#: IDF/Form/IssueCreate.php:210 IDF/Form/IssueUpdate.php:147
+#: IDF/Form/IssueCreate.php:228 IDF/Form/IssueUpdate.php:194
 msgid "You need to provide a description of the issue."
 msgstr "Bitte füge eine Beschreibung des Problems an."
 
-#: IDF/Form/IssueCreate.php:233 IDF/Form/ReviewCreate.php:159
+#: IDF/Form/IssueCreate.php:251 IDF/Form/ReviewCreate.php:159
 msgid "You provided an invalid status."
 msgstr "Du hast einen ungültigen Status angegeben."
 
-#: IDF/Form/IssueTrackingConf.php:80
+#: IDF/Form/IssueCreate.php:272
+msgid "You provided an invalid relation type."
+msgstr "Du hast einen ungültigen Verknüpfungstyp angegeben."
+
+#: IDF/Form/IssueCreate.php:294
+#, php-format
+msgid "The value \"%s\" is not a valid issue id."
+msgstr "Der Wert \"%s\" ist keine gültige Ticket-ID."
+
+#: IDF/Form/IssueCreate.php:300
+#, php-format
+msgid "The issue \"%s\" does not exist."
+msgstr "Das Ticket \"%s\" existiert nicht."
+
+#: IDF/Form/IssueTrackingConf.php:86
+msgid "is related to"
+msgstr "steht in Verbindung mit"
+
+#: IDF/Form/IssueTrackingConf.php:87
+msgid "blocks"
+msgstr "blockiert"
+
+#: IDF/Form/IssueTrackingConf.php:88
+msgid "is blocked by"
+msgstr "wird blockiert von"
+
+#: IDF/Form/IssueTrackingConf.php:89
+msgid "duplicates"
+msgstr "dupliziert"
+
+#: IDF/Form/IssueTrackingConf.php:90
+msgid "is duplicated by"
+msgstr "wird dupliziert von"
+
+#: IDF/Form/IssueTrackingConf.php:97
 msgid ""
-"Define an issue template to hint to the reporter to provide certain "
-"information"
+"Define an issue template to hint the reporter to provide certain information"
 msgstr ""
 "Definiere eine Ticket-Vorlage, um dem Ersteller Hinweise auf benötigte "
 "Informationen zu geben"
 
-#: IDF/Form/IssueTrackingConf.php:89
+#: IDF/Form/IssueTrackingConf.php:106
 msgid "Open issue status values"
 msgstr "Statuswerte für offene Tickets"
 
-#: IDF/Form/IssueTrackingConf.php:97
+#: IDF/Form/IssueTrackingConf.php:114
 msgid "Closed issue status values"
 msgstr "Statuswerte für geschlossene Tickets"
 
-#: IDF/Form/IssueTrackingConf.php:106
+#: IDF/Form/IssueTrackingConf.php:123
 msgid "Predefined issue labels"
 msgstr "Vordefinierte Ticket-Marken"
 
-#: IDF/Form/IssueTrackingConf.php:108
+#: IDF/Form/IssueTrackingConf.php:125
 msgid ""
 "The first \"Type:\" and \"Priority:\" entries found in this list are "
 "automatically chosen as defaults for new issues."
@@ -536,16 +590,31 @@ msgstr ""
 "gefunden werden, werden automatisch als Standardwerte für neue Tickets "
 "übernommen."
 
-#: IDF/Form/IssueTrackingConf.php:116
+#: IDF/Form/IssueTrackingConf.php:133
 msgid "Each issue may have at most one label with each of these classes"
 msgstr "Jedes Ticket darf maximal eine Marke von jeder dieser Klassen haben"
 
-#: IDF/Form/IssueUpdate.php:55 IDF/Form/ReviewFileComment.php:45
+#: IDF/Form/IssueTrackingConf.php:140
+msgid "Issue relations"
+msgstr "Ticketverknüpfungen"
+
+#: IDF/Form/IssueTrackingConf.php:142
+msgid ""
+"You can define bidirectional relations like \"is related to\" or \"blocks, "
+"is blocked by\"."
+msgstr ""
+"Du kannst bidirektionale Verknüpfungen wie \"ist verknüpft mit\" oder "
+"\"blockiert, wird blockiert von\" angeben. Für die Standard-Verknüpfungen "
+"sind bereits Übersetzungen vorkonfiguriert, neue Verknüpfungstypen sollten "
+"jedoch in einer Sprache angegegeben werden, die von allen Projektteilnehmern "
+"verstanden wird."
+
+#: IDF/Form/IssueUpdate.php:56 IDF/Form/ReviewFileComment.php:45
 #: IDF/Form/WikiUpdate.php:82
 msgid "Comment"
 msgstr "Kommentar"
 
-#: IDF/Form/IssueUpdate.php:219
+#: IDF/Form/IssueUpdate.php:316
 msgid "No changes were entered."
 msgstr "Keine Änderung festgestellt."
 
@@ -636,6 +705,34 @@ msgstr ""
 "Das Benutzerkonto ist nicht aktiv. Bitte kontaktiere den Administrator für "
 "die Freischaltung."
 
+#: IDF/Form/ProjectConf.php:42
+msgid "Short Description"
+msgstr "Kurzbeschreibung"
+
+#: IDF/Form/ProjectConf.php:58
+msgid "The \"upload_path\" configuration variable was not set."
+msgstr "Die Konfigurationsvariable \"upload_path\" ist nicht gesetzt."
+
+#: IDF/Form/ProjectConf.php:63
+msgid "Update the logo"
+msgstr "Aktualisiere das Logo"
+
+#: IDF/Form/ProjectConf.php:65
+msgid "The logo must be a picture with a size of 32 by 32."
+msgstr "Das Logo muss ein Bild der Größe 32 x 32 sein."
+
+#: IDF/Form/ProjectConf.php:75
+msgid "Remove the current logo"
+msgstr "Entferne das derzeitige Logo"
+
+#: IDF/Form/ProjectConf.php:111
+msgid "Could not determine the size of the uploaded picture."
+msgstr "Konnte die Größe des hochgeladenen Bildes nicht bestimmen."
+
+#: IDF/Form/ProjectConf.php:115
+msgid "The picture must have a size of 32 by 32."
+msgstr "Das Bild muss eine Größe von 32 x 32 haben."
+
 #: IDF/Form/Register.php:41
 msgid "Your login"
 msgstr "Dein Anmeldename"
@@ -705,11 +802,10 @@ msgid ""
 "This account has already been confirmed. Maybe should you try to recover "
 "your password using the help link."
 msgstr ""
-"Dieses Benutzerkonto wurde bereits bestätigt. Vielleicht möchtest Du versuchen, Dein "
-"Passwort über den Hilfe-Link wiederherzustellen?"
+"Dieses Benutzerkonto wurde bereits bestätigt. Vielleicht möchtest Du "
+"versuchen, Dein Passwort über den Hilfe-Link wiederherzustellen?"
 
-#: IDF/Form/ReviewCreate.php:74
-#: IDF/gettexttemplates/idf/source/base.html.php:5
+#: IDF/Form/ReviewCreate.php:74 IDF/gettexttemplates/idf/source/base.html.php:5
 #: IDF/gettexttemplates/idf/source/changelog.html.php:7
 msgid "Commit"
 msgstr "Revision"
@@ -735,13 +831,21 @@ msgstr "Initiales, zu begutachtendes Patch."
 msgid "General comment"
 msgstr "Allgemeiner Kommentar"
 
-#: IDF/Form/ReviewFileComment.php:104
-msgid "You need to provide comments on at least one file."
-msgstr "Du musst Kommentare zu mindestens einer Datei angeben."
+#: IDF/Form/ReviewFileComment.php:113
+msgid ""
+"You need to provide your general comment about the proposal, or comments on "
+"at least one file."
+msgstr ""
+"Du musst einen allgemeinen Kommentar zu dem Vorschlag angeben oder "
+"mindestens eine Datei kommentieren."
 
-#: IDF/Form/ReviewFileComment.php:111
-msgid "You need to provide your general comment about the proposal."
-msgstr "Du musst einen allgemeinen Kommentar zu Deinem Vorschlag angeben."
+#: IDF/Form/ReviewFileComment.php:124
+msgid "The status have been updated."
+msgstr "Der Status wurde aktualisiert."
+
+#: IDF/Form/ReviewFileComment.php:130
+msgid "This field is required."
+msgstr "Dieses Feld wird benötigt."
 
 #: IDF/Form/SourceConf.php:56
 msgid "Webhook URL"
@@ -753,43 +857,33 @@ msgid "Learn more about the <a href=\"%s\">post-commit web hooks</a>."
 msgstr "Erfahre mehr über die <a href=\"%s\">post-commit Web-Hooks</a>."
 
 #: IDF/Form/TabsConf.php:38 IDF/gettexttemplates/idf/admin/base.html.php:4
-#: IDF/gettexttemplates/idf/base-full.html.php:5
-#: IDF/gettexttemplates/idf/base-full.html~.php:5
-#: IDF/gettexttemplates/idf/base.html.php:5
-#: IDF/gettexttemplates/idf/base.html~.php:5
+#: IDF/gettexttemplates/idf/base-full.html.php:7
+#: IDF/gettexttemplates/idf/base.html.php:7
 #: IDF/gettexttemplates/idf/downloads/base.html.php:3
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:14
-#: IDF/Views/Project.php:75
+#: IDF/Views/Project.php:97
 msgid "Downloads"
 msgstr "Downloads"
 
-#: IDF/Form/TabsConf.php:39 IDF/gettexttemplates/idf/base-full.html.php:9
-#: IDF/gettexttemplates/idf/base-full.html~.php:9
-#: IDF/gettexttemplates/idf/base.html.php:9
-#: IDF/gettexttemplates/idf/base.html~.php:9
+#: IDF/Form/TabsConf.php:39 IDF/gettexttemplates/idf/base-full.html.php:11
+#: IDF/gettexttemplates/idf/base.html.php:11
 msgid "Code Review"
 msgstr "Code-Besprechung"
 
 #: IDF/Form/TabsConf.php:40 IDF/gettexttemplates/idf/admin/base.html.php:5
-#: IDF/gettexttemplates/idf/base-full.html.php:6
-#: IDF/gettexttemplates/idf/base-full.html~.php:6
-#: IDF/gettexttemplates/idf/base.html.php:6
-#: IDF/gettexttemplates/idf/base.html~.php:6
+#: IDF/gettexttemplates/idf/base-full.html.php:8
+#: IDF/gettexttemplates/idf/base.html.php:8
 msgid "Documentation"
 msgstr "Dokumentation"
 
 #: IDF/Form/TabsConf.php:41 IDF/gettexttemplates/idf/admin/base.html.php:7
-#: IDF/gettexttemplates/idf/base-full.html.php:8
-#: IDF/gettexttemplates/idf/base-full.html~.php:8
-#: IDF/gettexttemplates/idf/base.html.php:8
-#: IDF/gettexttemplates/idf/base.html~.php:8
+#: IDF/gettexttemplates/idf/base-full.html.php:10
+#: IDF/gettexttemplates/idf/base.html.php:10
 msgid "Source"
 msgstr "Quellcode"
 
-#: IDF/Form/TabsConf.php:42 IDF/gettexttemplates/idf/base-full.html.php:7
-#: IDF/gettexttemplates/idf/base-full.html~.php:7
-#: IDF/gettexttemplates/idf/base.html.php:7
-#: IDF/gettexttemplates/idf/base.html~.php:7
+#: IDF/Form/TabsConf.php:42 IDF/gettexttemplates/idf/base-full.html.php:9
+#: IDF/gettexttemplates/idf/base.html.php:9
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:17
 msgid "Issues"
 msgstr "Tickets"
@@ -812,9 +906,9 @@ msgstr "Weitere autorisierte Benutzer"
 
 #: IDF/Form/Upload.php:59 IDF/gettexttemplates/idf/source/git/tree.html.php:6
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:6
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:6
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:6
-#: IDF/Views/Download.php:64 IDF/Views/Download.php:292
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:7
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:7
+#: IDF/Views/Download.php:64 IDF/Views/Download.php:312
 msgid "File"
 msgstr "Datei"
 
@@ -878,27 +972,27 @@ msgstr ""
 "Eine Validierungs-E-Mail wurde an \"%s\" versandt, um die Adressänderung zu "
 "überprüfen."
 
-#: IDF/Form/UserAccount.php:334
+#: IDF/Form/UserAccount.php:341
 msgid ""
 "Please check the key as it does not appear to be a valid SSH public key."
 msgstr ""
-"Bitte überprüfe den Schlüssel, er scheint kein gültiger öffentlicher SSH-"
-"Schlüssel zu sein."
+"Bitte überprüfe den Schlüssel, er scheint kein gültiger öffentlicher "
+"SSH-Schlüssel zu sein."
 
-#: IDF/Form/UserAccount.php:354
+#: IDF/Form/UserAccount.php:363
 msgid ""
 "Please check the key as it does not appear to be a valid monotone public key."
 msgstr ""
 "Bitte überprüfe den Schlüssel, er scheint kein gültiger öffentlicher "
 "monotone-Schlüssel zu sein."
 
-#: IDF/Form/UserAccount.php:362
+#: IDF/Form/UserAccount.php:371
 msgid "Public key looks like neither an SSH nor monotone public key."
 msgstr ""
 "Der öffentliche Schlüssel sieht weder wie ein öffentlicher SSH- noch ein "
 "öffentlicher monotone-Schlüssel aus."
 
-#: IDF/Form/UserAccount.php:374
+#: IDF/Form/UserAccount.php:383
 msgid "You already have uploaded this key."
 msgstr "Du hast diesen Schlüssel bereits hochgeladen."
 
@@ -1039,9 +1133,9 @@ msgid ""
 "value.</p>\n"
 msgstr ""
 "\n"
-"<p><strong>Anletung:</strong></p>\n"
-"<p>Füge einen Statuswert pro Zeile in der gewünschten Reihenfolge hinzu.</"
-"p>\n"
+"<p><strong>Anleitung:</strong></p>\n"
+"<p>Füge einen Statuswert pro Zeile in der gewünschten Reihenfolge "
+"hinzu.</p>\n"
 "<p>Füge optional nach einem Istgleich-Zeichen (=) eine kurze Beschreibung "
 "ein, um die Bedeutung des Statuswerts zu beschreiben.</p>\n"
 
@@ -1049,7 +1143,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/admin/issue-tracking.html.php:8
 #: IDF/gettexttemplates/idf/admin/members.html.php:13
 #: IDF/gettexttemplates/idf/admin/source.html.php:31
-#: IDF/gettexttemplates/idf/admin/summary.html.php:8
+#: IDF/gettexttemplates/idf/admin/summary.html.php:11
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:15
 #: IDF/gettexttemplates/idf/admin/wiki.html.php:8
 msgid "Save Changes"
@@ -1077,8 +1171,8 @@ msgid ""
 "\n"
 "<p><strong>Notes:</strong></p>\n"
 "<p>A project owner may make any change to this project, including removing "
-"other project owners. You need to be carefull when you give owner rights.</"
-"p>\n"
+"other project owners. You need to be carefull when you give owner "
+"rights.</p>\n"
 "<p>A project member will not have access to the administration area but will "
 "have more options available in the use of the project.</p>\n"
 msgstr ""
@@ -1095,6 +1189,7 @@ msgid "You can find here the current repository configuration of your project."
 msgstr "Hier findest Du die derzeitige Depot-Konfiguration Deines Projektes."
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:4
+#, qt-format
 msgid ""
 "<p>The webhook URL setting specifies a URL to which a HTTP POST\n"
 "request is sent after each repository commit. If this field is empty,\n"
@@ -1144,8 +1239,8 @@ msgstr ""
 "<p>Beispiel: Wenn die Revision 123 für das Projekt 'mein-projekt' zum Depot\n"
 "gesandt wird und als post-commit-URL http://meine-domain.com/%p/%r "
 "eingestellt\n"
-"ist, würde eine Anfrage an http://meine-domain.com/mein-projekt/123 gesendet."
-"</p>"
+"ist, würde eine Anfrage an http://meine-domain.com/mein-projekt/123 "
+"gesendet.</p>"
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:26
 msgid ""
@@ -1176,13 +1271,13 @@ msgstr "Post-commit Authentifizierungs-Schlüssel:"
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The description of the project can be improved using the <a href=\"%%url%%"
-"\">Markdown syntax</a>.</p>\n"
+"<p>The description of the project can be improved using the <a "
+"href=\"%%url%%\">Markdown syntax</a>.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>Anleitung:</strong></p>\n"
-"<p>Die Beschreibung des Projektes kann durch die Benutzung der <a href="
-"\"%%url%%\">Markdown-Syntax</a> vereinfacht werden.</p>\n"
+"<p>Die Beschreibung des Projektes kann durch die Benutzung der <a "
+"href=\"%%url%%\">Markdown-Syntax</a> vereinfacht werden.</p>\n"
 
 #: IDF/gettexttemplates/idf/admin/summary.html.php:7
 msgid ""
@@ -1190,6 +1285,22 @@ msgid ""
 msgstr ""
 "Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die "
 "Projektzusammenfassung zu aktualisieren."
+
+#: IDF/gettexttemplates/idf/admin/summary.html.php:8
+msgid "Current logo"
+msgstr "Derzeitiges Logo"
+
+#: IDF/gettexttemplates/idf/admin/summary.html.php:9
+#: IDF/gettexttemplates/idf/base-full.html.php:4
+#: IDF/gettexttemplates/idf/base.html.php:4
+#: IDF/gettexttemplates/idf/index.html.php:6
+#: IDF/gettexttemplates/idf/main-menu.html.php:7
+msgid "Project logo"
+msgstr "Projekt-Logo"
+
+#: IDF/gettexttemplates/idf/admin/summary.html.php:10
+msgid "Your project does not have a logo configured yet."
+msgstr "Für Dein Projekt wurde noch kein Logo konfiguriert."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:3
 msgid ""
@@ -1213,8 +1324,8 @@ msgid ""
 "You can configure here the project tabs access rights and notification "
 "emails."
 msgstr ""
-"Hier kannst Du den Zugriff auf die Projektfunktionen und die Benachrichtungs-"
-"E-Mails konfigurieren."
+"Hier kannst Du den Zugriff auf die Projektfunktionen und die "
+"Benachrichtungs-E-Mails konfigurieren."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:9
 #, php-format
@@ -1225,20 +1336,20 @@ msgid ""
 "commas (','). If you do not want to send emails for a given type of changes, "
 "simply leave the corresponding field empty."
 msgstr ""
-"Benachrichtungs-E-Mails werden mit der Absenderadresse <strong>%%from_email"
-"%%</strong> versandt. Wenn Du die E-Mail zu einer Mailingliste senden "
-"möchtest, musst Du eventuell diese E-Mail-Adresse dort registrieren. Mehrere "
-"E-Mail-Adressen müssen durch Kommas (',') voneinander getrennt werden. Wenn "
-"Du keine E-Mails für einen bestimmten Änderungstyp versenden möchtest, lasse "
-"das entsprechende Feld einfach leer."
+"Benachrichtungs-E-Mails werden mit der Absenderadresse "
+"<strong>%%from_email%%</strong> versandt. Wenn Du die E-Mail zu einer "
+"Mailingliste senden möchtest, musst Du eventuell diese E-Mail-Adresse dort "
+"registrieren. Mehrere E-Mail-Adressen müssen durch Kommas (',') voneinander "
+"getrennt werden. Wenn Du keine E-Mails für einen bestimmten Änderungstyp "
+"versenden möchtest, lasse das entsprechende Feld einfach leer."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:10
 msgid ""
 "If you mark a project as private, only the project members and "
 "administrators, together with the extra authorized users you provide will "
 "have access to the project. You will still be able to define further access "
-"rights for the different tabs but the \"Open to all\" and \"Signed in users"
-"\" will default to authorized users only."
+"rights for the different tabs but the \"Open to all\" and \"Signed in "
+"users\" will default to authorized users only."
 msgstr ""
 "Wenn Du ein Projekt als privat markierst, haben nur Projektmitglieder und "
 "Administratoren zusammen mit den von Dir extra authorisierten Benutzern "
@@ -1253,8 +1364,8 @@ msgid ""
 "with the given login. Separate the logins with commas and/or new lines."
 msgstr ""
 "Gib für jede Person ihren Anmeldenamen ein. Jede Person muss sich bereits "
-"mit diesem Namen angemeldet haben. Trenne die Anmeldenamen durch Kommas "
-"und / oder neue Zeilen."
+"mit diesem Namen angemeldet haben. Trenne die Anmeldenamen durch Kommas und "
+"/ oder neue Zeilen."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:12
 msgid ""
@@ -1279,34 +1390,28 @@ msgid "Instructions:"
 msgstr "Anweisungen:"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:3
-#: IDF/gettexttemplates/idf/base-full.html~.php:3
 #: IDF/gettexttemplates/idf/base.html.php:3
-#: IDF/gettexttemplates/idf/base.html~.php:3
 #, php-format
 msgid ""
 "<a href=\"%%url%%\">Sign in or create your account</a> to create issues or "
 "add comments"
 msgstr ""
-"<a href=\"%%url%%\">Melde Dich an oder lege ein Benutzerkonto an</a>, um Tickets "
-"oder Kommentare hinzuzufügen"
+"<a href=\"%%url%%\">Melde Dich an oder lege ein Benutzerkonto an</a>, um "
+"Tickets oder Kommentare hinzuzufügen"
 
-#: IDF/gettexttemplates/idf/base-full.html.php:4
-#: IDF/gettexttemplates/idf/base-full.html~.php:4
-#: IDF/gettexttemplates/idf/base.html.php:4
-#: IDF/gettexttemplates/idf/base.html~.php:4
+#: IDF/gettexttemplates/idf/base-full.html.php:6
+#: IDF/gettexttemplates/idf/base.html.php:6
 msgid "Project Home"
 msgstr "Projekt-Startseite"
 
-#: IDF/gettexttemplates/idf/base-full.html.php:10
-#: IDF/gettexttemplates/idf/base-full.html~.php:10
-#: IDF/gettexttemplates/idf/base.html.php:10
-#: IDF/gettexttemplates/idf/base.html~.php:10
+#: IDF/gettexttemplates/idf/base-full.html.php:12
+#: IDF/gettexttemplates/idf/base.html.php:12
 msgid "Project Management"
 msgstr "Projekt-Management"
 
 #: IDF/gettexttemplates/idf/downloads/base.html.php:4
 #: IDF/gettexttemplates/idf/downloads/index.html.php:4
-#: IDF/Views/Download.php:214
+#: IDF/Views/Download.php:234
 msgid "New Download"
 msgstr "Neuer Download"
 
@@ -1332,7 +1437,6 @@ msgstr ""
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:5
 #: IDF/gettexttemplates/idf/downloads/view.html.php:4
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:4
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:7
 #: IDF/gettexttemplates/idf/issues/view.html.php:7
 #: IDF/gettexttemplates/idf/wiki/delete.html.php:7
 #: IDF/gettexttemplates/idf/wiki/delete.html.php:8
@@ -1350,20 +1454,18 @@ msgstr "Lösche Datei"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:7
 #: IDF/gettexttemplates/idf/downloads/submit.html.php:9
-#: IDF/gettexttemplates/idf/downloads/view.html.php:8
+#: IDF/gettexttemplates/idf/downloads/view.html.php:9
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:21
 #: IDF/gettexttemplates/idf/gadmin/projects/update.html.php:16
 #: IDF/gettexttemplates/idf/gadmin/users/create.html.php:5
 #: IDF/gettexttemplates/idf/gadmin/users/update.html.php:14
 #: IDF/gettexttemplates/idf/issues/create.html.php:14
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:25
-#: IDF/gettexttemplates/idf/issues/view.html.php:25
+#: IDF/gettexttemplates/idf/issues/view.html.php:27
 #: IDF/gettexttemplates/idf/register/confirmation.html.php:7
 #: IDF/gettexttemplates/idf/register/index.html.php:8
-#: IDF/gettexttemplates/idf/register/index.html~.php:7
 #: IDF/gettexttemplates/idf/register/inputkey.html.php:5
 #: IDF/gettexttemplates/idf/review/create.html.php:12
-#: IDF/gettexttemplates/idf/review/view.html.php:43
+#: IDF/gettexttemplates/idf/review/view.html.php:41
 #: IDF/gettexttemplates/idf/user/changeemail.html.php:5
 #: IDF/gettexttemplates/idf/user/myaccount.html.php:13
 #: IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:5
@@ -1377,15 +1479,14 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:8
-#: IDF/gettexttemplates/idf/downloads/view.html.php:13
+#: IDF/gettexttemplates/idf/downloads/view.html.php:14
 msgid "Uploaded:"
 msgstr "Hochgeladen:"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:9
-#: IDF/gettexttemplates/idf/downloads/view.html.php:14
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:27
-#: IDF/gettexttemplates/idf/issues/view.html.php:27
-#: IDF/gettexttemplates/idf/review/view.html.php:26
+#: IDF/gettexttemplates/idf/downloads/view.html.php:15
+#: IDF/gettexttemplates/idf/issues/view.html.php:29
+#: IDF/gettexttemplates/idf/review/view.html.php:27
 #: IDF/gettexttemplates/idf/wiki/delete.html.php:12
 #: IDF/gettexttemplates/idf/wiki/deletepage.html.php:9
 #: IDF/gettexttemplates/idf/wiki/view.html.php:15
@@ -1393,23 +1494,21 @@ msgid "Updated:"
 msgstr "Aktualisiert:"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:10
-#: IDF/gettexttemplates/idf/downloads/view.html.php:15
+#: IDF/gettexttemplates/idf/downloads/view.html.php:16
 #: IDF/gettexttemplates/idf/gadmin/projects/index.html.php:6
-#: IDF/gettexttemplates/idf/index.html.php:13
+#: IDF/gettexttemplates/idf/index.html.php:15
 msgid "Downloads:"
 msgstr "Downloads:"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:11
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:7
-#: IDF/gettexttemplates/idf/downloads/view.html.php:16
+#: IDF/gettexttemplates/idf/downloads/view.html.php:17
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:6
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:9
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:10
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:15
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:20
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:31
-#: IDF/gettexttemplates/idf/issues/view.html.php:20
-#: IDF/gettexttemplates/idf/issues/view.html.php:31
+#: IDF/gettexttemplates/idf/issues/view.html.php:21
+#: IDF/gettexttemplates/idf/issues/view.html.php:33
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:6
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:9
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:13
@@ -1459,7 +1558,7 @@ msgstr "Download:"
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:9
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:10
-#: IDF/gettexttemplates/idf/review/view.html.php:30
+#: IDF/gettexttemplates/idf/review/view.html.php:31
 #: IDF/gettexttemplates/idf/user/public.html.php:4
 msgid "Description:"
 msgstr "Beschreibung:"
@@ -1521,32 +1620,36 @@ msgstr ""
 "nur herunter, falls Du genau diese Version benötigst."
 
 #: IDF/gettexttemplates/idf/downloads/view.html.php:5
+msgid "md5:"
+msgstr "MD5:"
+
+#: IDF/gettexttemplates/idf/downloads/view.html.php:6
 msgid "Changes"
 msgstr "Änderungen"
 
-#: IDF/gettexttemplates/idf/downloads/view.html.php:6
+#: IDF/gettexttemplates/idf/downloads/view.html.php:7
 msgid "The form contains some errors. Please correct them to update the file."
 msgstr ""
 "Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Datei "
 "zu aktualisieren."
 
-#: IDF/gettexttemplates/idf/downloads/view.html.php:7
+#: IDF/gettexttemplates/idf/downloads/view.html.php:8
 msgid "Update File"
 msgstr "Datei aktualisieren"
 
-#: IDF/gettexttemplates/idf/downloads/view.html.php:9
-#: IDF/gettexttemplates/idf/downloads/view.html.php:11
+#: IDF/gettexttemplates/idf/downloads/view.html.php:10
+#: IDF/gettexttemplates/idf/downloads/view.html.php:12
 msgid "Remove this file"
 msgstr "Entferne diese Datei"
 
-#: IDF/gettexttemplates/idf/downloads/view.html.php:10
+#: IDF/gettexttemplates/idf/downloads/view.html.php:11
 #: IDF/gettexttemplates/idf/gadmin/projects/update.html.php:18
 #: IDF/gettexttemplates/idf/wiki/update.html.php:9
 #: IDF/gettexttemplates/idf/wiki/view.html.php:12
 msgid "Trash"
 msgstr "Mülleimer"
 
-#: IDF/gettexttemplates/idf/downloads/view.html.php:12
+#: IDF/gettexttemplates/idf/downloads/view.html.php:13
 msgid "Delete this file"
 msgstr "Lösche diese Datei"
 
@@ -1558,7 +1661,6 @@ msgstr "Wir sind hier, um Dir zu helfen."
 #: IDF/gettexttemplates/idf/faq-api.html.php:4
 #: IDF/gettexttemplates/idf/faq.html.php:35
 #: IDF/gettexttemplates/idf/gadmin/base.html.php:3
-#: IDF/gettexttemplates/idf/gadmin/base.html~.php:3
 #: IDF/gettexttemplates/idf/index.html.php:3 IDF/Views/Admin.php:57
 #: IDF/Views.php:47
 msgid "Projects"
@@ -1584,11 +1686,13 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/faq.html.php:9
 msgid ""
-"You need to create an account on <a href=\"http://en.gravatar.com/"
-"\">Gravatar</a>, this takes about 5 minutes and is free."
+"You need to create an account on <a "
+"href=\"http://en.gravatar.com/\">Gravatar</a>, this takes about 5 minutes "
+"and is free."
 msgstr ""
-"Du musst Dir ein Benutzerkonto auf <a href=\"http://de.gravatar.com/\">Gravatar.com</"
-"a> erstellen, es dauert nur 5 Minuten und ist kostenfrei."
+"Du musst Dir ein Benutzerkonto auf <a "
+"href=\"http://de.gravatar.com/\">Gravatar.com</a> erstellen, es dauert nur 5 "
+"Minuten und ist kostenfrei."
 
 #: IDF/gettexttemplates/idf/faq.html.php:10
 msgid ""
@@ -1684,12 +1788,10 @@ msgid "<kbd>Alt+4</kbd>: Search (when available)."
 msgstr "<kbd>Alt+4</kbd>: Suche (wenn verfügbar)."
 
 #: IDF/gettexttemplates/idf/gadmin/base.html.php:4
-#: IDF/gettexttemplates/idf/gadmin/base.html~.php:4
 msgid "People"
 msgstr "Personen"
 
 #: IDF/gettexttemplates/idf/gadmin/base.html.php:5
-#: IDF/gettexttemplates/idf/gadmin/base.html~.php:5
 msgid "Usher"
 msgstr "Usher"
 
@@ -1700,7 +1802,6 @@ msgstr "Hier hast Du Zugriff auf die Administration der Forge."
 #: IDF/gettexttemplates/idf/gadmin/home.html.php:4
 #: IDF/gettexttemplates/idf/project/home.html.php:3
 #: IDF/gettexttemplates/idf/project/timeline.html.php:4
-#: IDF/gettexttemplates/idf/project/timeline.html~.php:4
 msgid "Welcome"
 msgstr "Willkommen"
 
@@ -1730,8 +1831,8 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:4
 msgid ""
-"<strong>Once you have defined the repository type, you cannot change it</"
-"strong>."
+"<strong>Once you have defined the repository type, you cannot change "
+"it</strong>."
 msgstr ""
 "<strong>Wurde der Typ des Depots einmal festgelegt, kann dieser nicht "
 "nachträglich geändert werden.</strong>."
@@ -1806,7 +1907,7 @@ msgid "Code reviews"
 msgstr "Code-Besprechungen"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:16
-#: IDF/Views/Project.php:73
+#: IDF/Views/Project.php:93
 msgid "Commits"
 msgstr "Revisionen"
 
@@ -1834,7 +1935,7 @@ msgstr "Depots:"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/index.html.php:5
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:11
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:16
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:17
 msgid "Attachments:"
 msgstr "Anhänge:"
 
@@ -1871,8 +1972,7 @@ msgstr "Lösche dieses Projekt"
 msgid "You will be asked to confirm."
 msgstr "Es wird eine Bestätigung verlangt."
 
-#: IDF/gettexttemplates/idf/gadmin/users/base.html.php:3
-#: IDF/Views/Admin.php:201
+#: IDF/gettexttemplates/idf/gadmin/users/base.html.php:3 IDF/Views/Admin.php:201
 msgid "User List"
 msgstr "Benutzerliste"
 
@@ -1989,8 +2089,7 @@ msgstr "Administratives"
 msgid "Configured servers"
 msgstr "Konfigurierte Server"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/base.html.php:4
-#: IDF/Views/Admin.php:358
+#: IDF/gettexttemplates/idf/gadmin/usher/base.html.php:4 IDF/Views/Admin.php:358
 msgid "Usher control"
 msgstr "Usher-Kontrolle"
 
@@ -2001,6 +2100,10 @@ msgstr "Adresse"
 #: IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:4
 msgid "port"
 msgstr "Port"
+
+#: IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:5
+msgid "No connections found."
+msgstr "Keine Verbindungen gefunden."
 
 #: IDF/gettexttemplates/idf/gadmin/usher/control.html.php:3
 msgid "current server status:"
@@ -2023,7 +2126,7 @@ msgid "reload"
 msgstr "neu laden"
 
 #: IDF/gettexttemplates/idf/gadmin/usher/control.html.php:8
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:10
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:11
 msgid "Status explanation"
 msgstr "Statuserklärung"
 
@@ -2061,46 +2164,50 @@ msgid "action"
 msgstr "Aktion"
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:6
+msgid "No monotone servers configured."
+msgstr "Keine monotone-Server konfiguriert."
+
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:7
 msgid "stop"
 msgstr "stoppen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:7
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:8
 msgid "start"
 msgstr "starten"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:8
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:9
 msgid "kill"
 msgstr "töten"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:9
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:10
 msgid "active connections"
 msgstr "aktive Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:11
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:12
 msgid "remote server without open connections"
 msgstr "entfernter Server ohne offene Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:12
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:13
 msgid "server with n open connections"
 msgstr "Server mit n offenen Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:13
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:14
 msgid "local server running, without open connections"
 msgstr "lokaler Server läuft ohne offene Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:14
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:15
 msgid "local server not running, waiting for connections"
 msgstr "lokaler Server läuft nicht und wartet auf Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:15
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:16
 msgid "local server is about to stop, n connections still open"
 msgstr "lokaler Server stoppt gerade, n Verbindungen sind noch offen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:16
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:17
 msgid "local server not running, not accepting connections"
 msgstr "lokaler Server läuft nicht und akzeptiert keine Verbindungen"
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:17
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:18
 msgid "usher is shut down, not running and not accepting connections"
 msgstr ""
 "Usher ist heruntergefahren, läuft nicht und akzeptiert keine Verbindungen"
@@ -2114,31 +2221,31 @@ msgstr "Persönlicher Projekt-Feed für %%user%%."
 msgid "No projects managed with InDefero were found."
 msgstr "Es wurden keine verwalteten Projekte gefunden."
 
-#: IDF/gettexttemplates/idf/index.html.php:7
+#: IDF/gettexttemplates/idf/index.html.php:9
 msgid "Forge statistics"
 msgstr "Forge-Statistiken"
 
-#: IDF/gettexttemplates/idf/index.html.php:8
+#: IDF/gettexttemplates/idf/index.html.php:10
 msgid "Projects:"
 msgstr "Projekte:"
 
-#: IDF/gettexttemplates/idf/index.html.php:9
+#: IDF/gettexttemplates/idf/index.html.php:11
 msgid "Members:"
 msgstr "Mitglieder:"
 
-#: IDF/gettexttemplates/idf/index.html.php:10
+#: IDF/gettexttemplates/idf/index.html.php:12
 msgid "Issues:"
 msgstr "Tickets:"
 
-#: IDF/gettexttemplates/idf/index.html.php:11
+#: IDF/gettexttemplates/idf/index.html.php:13
 msgid "Commits:"
 msgstr "Revisionen:"
 
-#: IDF/gettexttemplates/idf/index.html.php:12
+#: IDF/gettexttemplates/idf/index.html.php:14
 msgid "Documentations:"
 msgstr "Dokumentationsseiten:"
 
-#: IDF/gettexttemplates/idf/index.html.php:14
+#: IDF/gettexttemplates/idf/index.html.php:16
 msgid "Code reviews:"
 msgstr "Code-Besprechungen:"
 
@@ -2148,49 +2255,38 @@ msgid "Attachment to issue <a href=\"%%url%%\">%%issue.id%%</a>"
 msgstr "Anhang zum Ticket <a href=\"%%url%%\">%%issue.id%%</a>"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:5
-#: IDF/gettexttemplates/idf/review/view.html.php:34
-#: IDF/gettexttemplates/idf/source/commit.html.php:22
-#: IDF/gettexttemplates/idf/source/commit.html~.php:22
+#: IDF/gettexttemplates/idf/review/view.html.php:35
+#: IDF/gettexttemplates/idf/source/commit.html.php:23
 #: IDF/gettexttemplates/idf/source/git/file.html.php:6
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:11
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:6
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:11
-#: IDF/gettexttemplates/idf/source/mtn/file.html.php:6
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:11
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:8
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:7
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:12
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:7
 msgid "Archive"
 msgstr "Archiv"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:6
 #: IDF/gettexttemplates/idf/source/git/file.html.php:7
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:7
-#: IDF/gettexttemplates/idf/source/mtn/file.html.php:7
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:9
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:8
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:8
 msgid "Download this file"
 msgstr "Lade diese Datei herunter"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:7
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:26
-#: IDF/gettexttemplates/idf/issues/view.html.php:26
-#: IDF/gettexttemplates/idf/review/view.html.php:25
+#: IDF/gettexttemplates/idf/issues/view.html.php:28
+#: IDF/gettexttemplates/idf/review/view.html.php:26
 #: IDF/gettexttemplates/idf/wiki/delete.html.php:11
 #: IDF/gettexttemplates/idf/wiki/deletepage.html.php:8
 #: IDF/gettexttemplates/idf/wiki/view.html.php:14
 msgid "Created:"
 msgstr "Erstellt:"
 
-#: IDF/gettexttemplates/idf/issues/base.html.php:3
-msgid "Open Issues"
-msgstr "Offene Tickets"
-
 #: IDF/gettexttemplates/idf/issues/base.html.php:4
-#: IDF/gettexttemplates/idf/issues/by-label.html.php:6
-#: IDF/gettexttemplates/idf/issues/index.html.php:5
-#: IDF/gettexttemplates/idf/issues/my-issues.html.php:5
-#: IDF/gettexttemplates/idf/issues/project-watchlist.html.php:5
-#: IDF/gettexttemplates/idf/issues/search.html.php:3
-msgid "New Issue"
-msgstr "Neues Ticket"
+msgid "All Issues"
+msgstr "Alle Tickets"
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:5
 msgid "My Issues"
@@ -2201,11 +2297,20 @@ msgid "My watch list"
 msgstr "Meine Beobachtungsliste"
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:7
+#: IDF/gettexttemplates/idf/issues/by-label.html.php:6
+#: IDF/gettexttemplates/idf/issues/index.html.php:5
+#: IDF/gettexttemplates/idf/issues/project-watchlist.html.php:5
+#: IDF/gettexttemplates/idf/issues/search.html.php:8
+#: IDF/gettexttemplates/idf/issues/userIssues.html.php:5
+msgid "New Issue"
+msgstr "Neues Ticket"
+
+#: IDF/gettexttemplates/idf/issues/base.html.php:8
 #: IDF/gettexttemplates/idf/wiki/base.html.php:6
 msgid "Search"
 msgstr "Suche"
 
-#: IDF/gettexttemplates/idf/issues/base.html.php:8
+#: IDF/gettexttemplates/idf/issues/base.html.php:9
 msgid "Back to the issue"
 msgstr "Zurück zum Ticket"
 
@@ -2213,13 +2318,13 @@ msgstr "Zurück zum Ticket"
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>\n"
+"<p><strong>Closed issues:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 msgstr ""
-"<p><strong>Offene Tickets:</strong> <a href=\"%%open_url%%\">%%open%%</a></"
-"p>\n"
-"<p><strong>Geschlossene Tickets:</strong> <a href=\"%%closed_url%%\">%%closed"
-"%%</a></p>\n"
+"<p><strong>Offene Tickets:</strong> <a "
+"href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Geschlossene Tickets:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 
 #: IDF/gettexttemplates/idf/issues/by-label.html.php:7
 msgid "Label:"
@@ -2237,8 +2342,8 @@ msgid ""
 "<li>The steps to reproduce the problem.</li>\n"
 "<li>The version of the software and your operating system.</li>\n"
 "<li>Any information that can help the developers to solve the issue.</li>\n"
-"<li><strong>Do not provide any password or confidential information!</"
-"strong></li>\n"
+"<li><strong>Do not provide any password or confidential "
+"information!</strong></li>\n"
 "</ul>"
 msgstr ""
 "<p>Wenn Du ein Ticket erstellst, vergesse nicht die folgenden Angaben zu "
@@ -2246,10 +2351,10 @@ msgstr ""
 "<ul>\n"
 "<li>Die erfolgten Schritte, um das Problem zu reproduzieren.</li>\n"
 "<li>Die Version der Software und Deines Betriebssystems.</li>\n"
-"<li>Jede Information, die dem Entwickler helfen könnte, das Problem zu lösen."
-"</li>\n"
-"<li><strong>Füge dem Ticket keine Passwörter oder vertrauliche Angaben hinzu!"
-"</strong></li>\n"
+"<li>Jede Information, die dem Entwickler helfen könnte, das Problem zu "
+"lösen.</li>\n"
+"<li><strong>Füge dem Ticket keine Passwörter oder vertrauliche Angaben "
+"hinzu!</strong></li>\n"
 "</ul>"
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:10
@@ -2260,10 +2365,8 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:11
 #: IDF/gettexttemplates/idf/issues/create.html.php:13
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:22
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:24
-#: IDF/gettexttemplates/idf/issues/view.html.php:22
 #: IDF/gettexttemplates/idf/issues/view.html.php:24
+#: IDF/gettexttemplates/idf/issues/view.html.php:26
 #: IDF/gettexttemplates/idf/wiki/create.html.php:5
 #: IDF/gettexttemplates/idf/wiki/update.html.php:5
 msgid "Preview"
@@ -2274,26 +2377,22 @@ msgid "Submit Issue"
 msgstr "Ticket einreichen"
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:15
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:32
-#: IDF/gettexttemplates/idf/issues/view.html.php:32
+#: IDF/gettexttemplates/idf/issues/view.html.php:34
 msgid "Attach file"
 msgstr "Datei anhängen"
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:16
 #: IDF/gettexttemplates/idf/issues/create.html.php:17
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:33
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:34
-#: IDF/gettexttemplates/idf/issues/view.html.php:33
-#: IDF/gettexttemplates/idf/issues/view.html.php:34
+#: IDF/gettexttemplates/idf/issues/view.html.php:35
+#: IDF/gettexttemplates/idf/issues/view.html.php:36
 msgid "Attach another file"
 msgstr "Eine andere Datei anhängen"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:3
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:12
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:17
-#: IDF/gettexttemplates/idf/issues/view.html.php:17
+#: IDF/gettexttemplates/idf/issues/view.html.php:18
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:3
-#: IDF/gettexttemplates/idf/review/view.html.php:40
+#: IDF/gettexttemplates/idf/review/view.html.php:38
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:6
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:11
 #: IDF/IssueComment.php:151
@@ -2304,27 +2403,29 @@ msgstr "Zusammenfassung:"
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:7
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:7
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:13
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:18
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:28
-#: IDF/gettexttemplates/idf/issues/view.html.php:18
-#: IDF/gettexttemplates/idf/issues/view.html.php:28
+#: IDF/gettexttemplates/idf/issues/view.html.php:19
+#: IDF/gettexttemplates/idf/issues/view.html.php:30
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:4
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:6
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:10
-#: IDF/gettexttemplates/idf/review/view.html.php:41 IDF/IssueComment.php:153
+#: IDF/gettexttemplates/idf/review/view.html.php:39 IDF/IssueComment.php:153
 msgid "Status:"
 msgstr "Status:"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:5
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:14
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:19
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:29
-#: IDF/gettexttemplates/idf/issues/view.html.php:19
-#: IDF/gettexttemplates/idf/issues/view.html.php:29
+#: IDF/gettexttemplates/idf/issues/view.html.php:20
+#: IDF/gettexttemplates/idf/issues/view.html.php:31
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:5
 #: IDF/IssueComment.php:155
 msgid "Owner:"
 msgstr "Besitzer:"
+
+#: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:7
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:16
+#: IDF/gettexttemplates/idf/issues/view.html.php:22 IDF/IssueComment.php:159
+msgid "Relations:"
+msgstr "Verknüpfungen:"
 
 #: IDF/gettexttemplates/idf/issues/forge-watchlist.html.php:3
 #: IDF/gettexttemplates/idf/issues/index.html.php:3
@@ -2332,13 +2433,13 @@ msgstr "Besitzer:"
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
-"a></p>"
+"<p><strong>Closed issues:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>"
 msgstr ""
-"<p><strong>Offene Tickets:</strong> <a href=\"%%open_url%%\">%%open%%</a></"
-"p>\n"
-"<p><strong>Geschlossene Tickets:</strong> <a href=\"%%closed_url%%\">%%closed"
-"%%</a></p>"
+"<p><strong>Offene Tickets:</strong> <a "
+"href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Geschlossene Tickets:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:3
 msgid ""
@@ -2356,7 +2457,7 @@ msgid "Reported by:"
 msgstr "Gemeldet von:"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:12
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:17
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:18
 msgid "Issue:"
 msgstr "Ticket:"
 
@@ -2380,7 +2481,55 @@ msgstr "URL:"
 msgid "Comments (last first):"
 msgstr "Kommentare (neueste zuerst):"
 
-#: IDF/gettexttemplates/idf/issues/my-issues.html.php:3
+#: IDF/gettexttemplates/idf/issues/search.html.php:3
+#, php-format
+msgid ""
+"\n"
+"<p><strong>Found open issues:</strong> <a "
+"href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Found closed issues:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>"
+msgstr ""
+"\n"
+"<p><strong>Gefundene offene Tickets:</strong> <a "
+"href=\"%%open_url%%\">%%open%%</a></p>\n"
+"<p><strong>Gefundene geschlossene Tickets:</strong> <a "
+"href=\"%%closed_url%%\">%%closed%%</a></p>"
+
+#: IDF/gettexttemplates/idf/issues/search.html.php:6
+#, php-format
+msgid ""
+"<p><strong>Label:</strong>\n"
+"<a href=\"%%open_url%%\" "
+"class=\"label\"><strong>%%tag.class%%:</strong>%%tag.name%%</a></p>"
+msgstr ""
+"<p><strong>Label:</strong>\n"
+"<a href=\"%%open_url%%\" "
+"class=\"label\"><strong>%%tag.class%%:</strong>%%tag.name%%</a></p>"
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:3
+#, php-format
+msgid ""
+"The issue tracker is empty.<br />You can create your first issue <a "
+"href=\"%%create_url%%\">here</a>."
+msgstr ""
+"Es gibt noch keine Tickets.<br />Du kannst Dein erstes Ticket <a "
+"href=\"%%create_url%%\">hier</a> erstellen."
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:4
+#, php-format
+msgid "Unresolved: By %%key%%"
+msgstr "Ungelöst: Nach %%key%%"
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:5
+msgid "Status Summary"
+msgstr "Status-Zusammenfassung"
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:6
+msgid "Unresolved: By Assignee"
+msgstr "Ungelöst: Nach Zugeordneten"
+
+#: IDF/gettexttemplates/idf/issues/userIssues.html.php:3
 #, php-format
 msgid ""
 "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
@@ -2393,57 +2542,49 @@ msgstr[1] ""
 "Siehe die <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% "
 "geschlossenen</a>."
 
-#: IDF/gettexttemplates/idf/issues/my-issues.html.php:4
+#: IDF/gettexttemplates/idf/issues/userIssues.html.php:4
 #, php-format
 msgid ""
 "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgid_plural ""
 "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgstr[0] ""
-"Siehe das <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% geschlossene</"
-"a>."
+"Siehe das <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% "
+"geschlossene</a>."
 msgstr[1] ""
 "Siehe die <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% "
 "geschlossenen</a>."
 
-#: IDF/gettexttemplates/idf/issues/my-issues.html.php:6
+#: IDF/gettexttemplates/idf/issues/userIssues.html.php:6
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:7
 msgid "Submitted issues:"
 msgstr "Eingereichte Tickets:"
 
-#: IDF/gettexttemplates/idf/issues/my-issues.html.php:7
+#: IDF/gettexttemplates/idf/issues/userIssues.html.php:7
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:6
 msgid "Working issues:"
 msgstr "Tickets in Bearbeitung:"
 
-#: IDF/gettexttemplates/idf/issues/search.html.php:4
-msgid "Found issues:"
-msgstr "Gefundene Tickets:"
-
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:3
 #: IDF/gettexttemplates/idf/issues/view.html.php:3
 #, php-format
 msgid "Reported by %%submitter%%, %%c.creation_dtime%%"
 msgstr "Eingesandt von %%submitter%%, %%c.creation_dtime%%"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:4
 #: IDF/gettexttemplates/idf/issues/view.html.php:4
 #: IDF/gettexttemplates/idf/review/view.html.php:22
 #, php-format
 msgid ""
 "Comment <a href=\"%%url%%\">%%i%%</a> by %%submitter%%, %%c.creation_dtime%%"
 msgstr ""
-"Kommentar <a href=\"%%url%%\">%%i%%</a> von %%submitter%%, %%c.creation_dtime"
-"%%"
+"Kommentar <a href=\"%%url%%\">%%i%%</a> von %%submitter%%, "
+"%%c.creation_dtime%%"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:5
 #: IDF/gettexttemplates/idf/issues/view.html.php:5
 #, php-format
 msgid "<a href=\"%%url%%\">Sign in</a> to reply to this comment."
 msgstr ""
 "<a href=\"%%url%%\">Melde Dich an</a>, um auf diesen Kommentar zu antworten."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:6
 #: IDF/gettexttemplates/idf/issues/view.html.php:6
 msgid ""
 "This issue is marked as closed, add a comment only if you think this issue "
@@ -2453,7 +2594,6 @@ msgstr ""
 "hinzu, wenn Du denkst, dass das geschilderte Problem noch nicht ganz "
 "beseitigt wurde."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:8
 #: IDF/gettexttemplates/idf/issues/view.html.php:8
 #, php-format
 msgid "%%interested%% person"
@@ -2461,79 +2601,65 @@ msgid_plural "%%interested%% persons"
 msgstr[0] "%%interested%% Person"
 msgstr[1] "%%interested%% Personen"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:9
 #: IDF/gettexttemplates/idf/issues/view.html.php:9
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:3
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:7
+#, php-format
+msgid "This issue %%verb%%"
+msgstr "Dieses Ticket %%verb%%"
+
+#: IDF/gettexttemplates/idf/issues/view.html.php:10
 msgid "Remove this issue from your watch list"
 msgstr "Entferne dieses Ticket von Deiner Beobachtungsliste."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:10
-#: IDF/gettexttemplates/idf/issues/view.html.php:10
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:4
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:8
+#: IDF/gettexttemplates/idf/issues/view.html.php:11
 msgid "Add this issue to your watch list"
 msgstr "Füge dieses Ticket zu Deiner Beobachtungsliste hinzu."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:11
-#: IDF/gettexttemplates/idf/issues/view.html.php:11
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:5
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:9
+#: IDF/gettexttemplates/idf/issues/view.html.php:12
 msgid "Click here to view the previous closed issue"
 msgstr "Klicke hier, um das vorherige geschlossene Ticket zu sehen."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:12
-#: IDF/gettexttemplates/idf/issues/view.html.php:12
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:6
-#: IDF/gettexttemplates/idf/issues/view.html.rej.php:10
+#: IDF/gettexttemplates/idf/issues/view.html.php:13
 msgid "Click here to view the previous open issue"
 msgstr "Klicke hier, um das vorherige offene Ticket zu sehen."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:13
-#: IDF/gettexttemplates/idf/issues/view.html.php:13
+#: IDF/gettexttemplates/idf/issues/view.html.php:14
 msgid "Click here to view the next closed issue"
 msgstr "Klicke hier, um das nächte geschlossene Ticket zu sehen."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:14
-#: IDF/gettexttemplates/idf/issues/view.html.php:14
+#: IDF/gettexttemplates/idf/issues/view.html.php:15
 msgid "Click here to view the next open issue"
 msgstr "Klicke hier, um das nächste offene Ticket zu sehen."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:15
-#: IDF/gettexttemplates/idf/issues/view.html.php:15
+#: IDF/gettexttemplates/idf/issues/view.html.php:16
 msgid "download"
 msgstr "herunterladen"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:16
-#: IDF/gettexttemplates/idf/issues/view.html.php:16
+#: IDF/gettexttemplates/idf/issues/view.html.php:17
 msgid "view"
 msgstr "anzeigen"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:21
-#: IDF/gettexttemplates/idf/issues/view.html.php:21
+#: IDF/gettexttemplates/idf/issues/view.html.php:23
 msgid "The form contains some errors. Please correct them to change the issue."
 msgstr ""
 "Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um das "
 "Ticket zu ändern."
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:23
-#: IDF/gettexttemplates/idf/issues/view.html.php:23
+#: IDF/gettexttemplates/idf/issues/view.html.php:25
 msgid "Submit Changes"
 msgstr "Sende Änderungen"
 
-#: IDF/gettexttemplates/idf/issues/view.html.orig.php:30
-#: IDF/gettexttemplates/idf/issues/view.html.php:30
+#: IDF/gettexttemplates/idf/issues/view.html.php:32
 msgid "Followed by:"
 msgstr "Beobachtet von:"
 
 #: IDF/gettexttemplates/idf/login_form.html.php:3
 #, php-format
 msgid ""
-"If you don't have an account yet, you can create one <a href=\"%%url%%"
-"\">here</a>."
+"If you don't have an account yet, you can create one <a "
+"href=\"%%url%%\">here</a>."
 msgstr ""
-"Wenn Du noch kein Benutzerkonto hast, kannst Du <a href=\"%%url%%\">hier</a> ein "
-"neues erstellen."
+"Wenn Du noch kein Benutzerkonto hast, kannst Du <a href=\"%%url%%\">hier</a> "
+"ein neues erstellen."
 
 #: IDF/gettexttemplates/idf/login_form.html.php:4
 msgid "What is your account information?"
@@ -2568,8 +2694,8 @@ msgstr "Es dauert weniger als eine Minute, um Dein Benutzerkonto zu erstellen."
 msgid ""
 "Welcome, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
 msgstr ""
-"Willkommen, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></"
-"strong>."
+"Willkommen, <strong><a class=\"userw\" "
+"href=\"%%url%%\">%%user%%</a></strong>."
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:4
 msgid "Sign Out"
@@ -2579,25 +2705,24 @@ msgstr "Abmelden"
 msgid "Sign in or create your account"
 msgstr "Anmelden oder Benutzerkonto erstellen"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:8 IDF/Views/Admin.php:42
+#: IDF/gettexttemplates/idf/main-menu.html.php:9 IDF/Views/Admin.php:42
 msgid "Forge Management"
 msgstr "Administration"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:9
+#: IDF/gettexttemplates/idf/main-menu.html.php:10
 msgid "Help and accessibility features"
 msgstr "Hilfe und Barrierefreiheit"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:10
+#: IDF/gettexttemplates/idf/main-menu.html.php:11
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:14
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:14
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:14
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:14
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:15
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:13
 msgid "Help"
 msgstr "Hilfe"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:4
 #: IDF/gettexttemplates/idf/project/timeline.html.php:5
-#: IDF/gettexttemplates/idf/project/timeline.html~.php:5
 msgid "Latest Updates"
 msgstr "Letzte Änderungen"
 
@@ -2627,19 +2752,28 @@ msgid "Happy Crew"
 msgstr "Glückliche Mannschaft"
 
 #: IDF/gettexttemplates/idf/project/timeline.html.php:3
-#: IDF/gettexttemplates/idf/project/timeline.html~.php:3
 msgid "Latest updates"
 msgstr "Letzte Änderungen"
 
-#: IDF/gettexttemplates/idf/project/timeline.html.php:6
-#: IDF/Views/Project.php:72
+#: IDF/gettexttemplates/idf/project/timeline.html.php:6 IDF/Views/Project.php:90
 msgid "All Updates"
 msgstr "Alle Aktualisierungen"
 
 #: IDF/gettexttemplates/idf/project/timeline.html.php:7
-#: IDF/gettexttemplates/idf/project/timeline.html~.php:6
 msgid "Filter by type"
 msgstr "Nach Typ filtern"
+
+#: IDF/gettexttemplates/idf/project/timeline.html.php:8
+msgid "Subscribe to this timeline"
+msgstr "Abonniere diese Zeitleiste"
+
+#: IDF/gettexttemplates/idf/project/timeline.html.php:9
+msgid "RSS"
+msgstr "RSS"
+
+#: IDF/gettexttemplates/idf/project/timeline.html.php:10
+msgid "Atom feed"
+msgstr "Atom-Feed"
 
 #: IDF/gettexttemplates/idf/register/confirmation-email.txt.php:3
 #, php-format
@@ -2713,21 +2847,20 @@ msgstr "Aktiviere Dein Konto"
 #: IDF/gettexttemplates/idf/register/confirmation.html.php:8
 #: IDF/gettexttemplates/idf/user/passrecovery.html.php:8
 msgid ""
-"This is the last step, but just <strong>be sure to have the cookies enabled</"
-"strong> to log in afterwards."
+"This is the last step, but just <strong>be sure to have the cookies "
+"enabled</strong> to log in afterwards."
 msgstr ""
 "Dies ist der letzte Schritt, aber bitte <strong>stelle sicher, dass Du "
 "Cookies aktiviert hast</strong>, um Dich im Folgenden anzumelden."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:3
-#: IDF/gettexttemplates/idf/register/index.html~.php:3
 msgid ""
 "Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> "
 "&ndash; basically <em>\"Please be nice, we respect you\"</em>."
 msgstr ""
 "Lies die <a id=\"showterms\" href=\"#theterms\">Geschäftsbedingungen</a> "
-"&ndash; kurz zusammengefast <em>\"Bitte sei nett, wir respektieren Dich\"</"
-"em>."
+"&ndash; kurz zusammengefast <em>\"Bitte sei nett, wir respektieren "
+"Dich\"</em>."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:4
 #, php-format
@@ -2737,11 +2870,10 @@ msgid ""
 "login name and password."
 msgstr ""
 "Wenn Du einfach nur Deine Anmeldedaten vergessen hast, gibt es keinen Grund, "
-"ein neues Benutzerkonto zu erstellen. Gehe einfach <a href=\"%%url%%\">hier her</a>, "
-"um Deinen Anmeldenamen und Dein Passwort wiederherzustellen."
+"ein neues Benutzerkonto zu erstellen. Gehe einfach <a href=\"%%url%%\">hier "
+"her</a>, um Deinen Anmeldenamen und Dein Passwort wiederherzustellen."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
-#: IDF/gettexttemplates/idf/register/index.html~.php:4
 #, php-format
 msgid ""
 "With your account, you will able to participate in the life of all the "
@@ -2749,25 +2881,22 @@ msgid ""
 "you have troubles, you can <a href=\"%%url%%\">let us know about your issues "
 "at anytime</a>!"
 msgstr ""
-"Durch Dein Benutzerkonto bist Du in der Lage, an dem Leben aller Softwareprojekte, "
-"die hierüber verwaltet werden, teilzuhaben. Das Teilnehmen an einem "
-"Softwareprojekt muss Spass machen, deshalb <a href=\"%%url%%\">lass uns "
-"jederzeit von Deinen Problemen wissen</a>, solltest Du welche haben."
+"Durch Dein Benutzerkonto bist Du in der Lage, an dem Leben aller "
+"Softwareprojekte, die hierüber verwaltet werden, teilzuhaben. Das Teilnehmen "
+"an einem Softwareprojekt muss Spass machen, deshalb <a href=\"%%url%%\">lass "
+"uns jederzeit von Deinen Problemen wissen</a>, solltest Du welche haben."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:6
-#: IDF/gettexttemplates/idf/register/index.html~.php:5
 msgid "Oops, please check the provided login and email address to register."
 msgstr ""
 "Bitte überprüfe den angegebenen Anmeldenamen und die E-Mail-Adresse zum "
 "registrieren."
 
-#: IDF/gettexttemplates/idf/register/index.html.php:7
-#: IDF/gettexttemplates/idf/register/index.html~.php:6 IDF/Views.php:90
+#: IDF/gettexttemplates/idf/register/index.html.php:7 IDF/Views.php:90
 msgid "Create Your Account"
 msgstr "Erstelle Deinen Account"
 
 #: IDF/gettexttemplates/idf/register/index.html.php:9
-#: IDF/gettexttemplates/idf/register/index.html~.php:8
 msgid ""
 "Be sure to provide a valid email address, as we are sending a validation "
 "link by email."
@@ -2776,7 +2905,6 @@ msgstr ""
 "diese Adresse versenden."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:10
-#: IDF/gettexttemplates/idf/register/index.html~.php:9
 msgid "Did you know?"
 msgstr "Wusstest Du?"
 
@@ -2826,14 +2954,14 @@ msgid ""
 "<ul>\n"
 "<li>A commit or revision of the current code in the repository from which "
 "you started your work.</li>\n"
-"<li>A patch describing your changes with respect to the reference commit.</"
-"li>\n"
+"<li>A patch describing your changes with respect to the reference "
+"commit.</li>\n"
 "<li><strong>Check your patch does not provide any password or confidential "
 "information!</strong></li>\n"
 "</ul>"
 msgstr ""
-"<p>Wenn Du eine Code-Besprechung erstellst, musst Du folgende Angaben machen:"
-"</p>\n"
+"<p>Wenn Du eine Code-Besprechung erstellst, musst Du folgende Angaben "
+"machen:</p>\n"
 "<ul>\n"
 "<li>Eine Revision Deines derzeitigen Codes im Depot, von der aus Du Deine "
 "Arbeit begonnen hast.</li>\n"
@@ -2847,8 +2975,8 @@ msgstr ""
 msgid ""
 "The form contains some errors. Please correct them to submit the code review."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Code-"
-"Besprechung einzusenden."
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die "
+"Code-Besprechung einzusenden."
 
 #: IDF/gettexttemplates/idf/review/create.html.php:10
 msgid ""
@@ -2889,22 +3017,6 @@ msgid "Detailed file comments (last first):"
 msgstr "Detaillierte Dateikommentare (neueste zuerst):"
 
 #: IDF/gettexttemplates/idf/review/view.html.php:3
-#: IDF/gettexttemplates/idf/source/commit.html.php:3
-#: IDF/gettexttemplates/idf/source/commit.html~.php:3
-#, php-format
-msgid "%%ndiff%% diff"
-msgid_plural "%%ndiff%% diffs"
-msgstr[0] "%%ndiff%% Änderung"
-msgstr[1] "%%ndiff%% Änderungen"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:4
-#, php-format
-msgid "%%nc%% comment"
-msgid_plural "%%nc%% comments"
-msgstr[0] "%%nc%% Kommentar"
-msgstr[1] "%%nc%% Kommentare"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:5
 msgid ""
 "Code review is a process in which\n"
 "after or before changes are commited into the code repository,\n"
@@ -2923,7 +3035,7 @@ msgstr ""
 "alten oder der neuen Datei) und versuche, eine gute Balance zwischen\n"
 "Ernsthaftigkeit und Spass zu bewahren.\n"
 
-#: IDF/gettexttemplates/idf/review/view.html.php:13
+#: IDF/gettexttemplates/idf/review/view.html.php:11
 msgid ""
 "\n"
 "<strong>Proposing code for review is intimidating</strong>, you know\n"
@@ -2937,8 +3049,23 @@ msgstr ""
 "Du als Rezensent weißt, dass Du Kritik erhalten wirst, deshalb\n"
 "<strong>versuche, dem Prozess nicht den Spass zu nehmen</strong>, sondern\n"
 "nutze ihn, um Deinen Aspiranten Deine Coding-Standards und die Struktur\n"
-"Deines Codes zu lehren und <strong>bring sie dazu, mehr beizutragen</"
-"strong>.\n"
+"Deines Codes zu lehren und <strong>bring sie dazu, mehr "
+"beizutragen</strong>.\n"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:18
+#: IDF/gettexttemplates/idf/source/commit.html.php:3
+#, php-format
+msgid "%%ndiff%% diff"
+msgid_plural "%%ndiff%% diffs"
+msgstr[0] "%%ndiff%% Änderung"
+msgstr[1] "%%ndiff%% Änderungen"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:19
+#, php-format
+msgid "%%nc%% comment"
+msgid_plural "%%nc%% comments"
+msgstr[0] "%%nc%% Kommentar"
+msgstr[1] "%%nc%% Kommentare"
 
 #: IDF/gettexttemplates/idf/review/view.html.php:20
 #, php-format
@@ -2946,8 +3073,8 @@ msgid ""
 "Comment <a href=\"%%url%%\">%%i%%</a> by <a href=\"%%whourl%%\">%%who%%</a>, "
 "%%c.creation_dtime%%"
 msgstr ""
-"Kommentar <a href=\"%%url%%\">%%i%%</a> von <a href=\"%%whourl%%\">%%who%%</"
-"a>, %%c.creation_dtime%%"
+"Kommentar <a href=\"%%url%%\">%%i%%</a> von <a "
+"href=\"%%whourl%%\">%%who%%</a>, %%c.creation_dtime%%"
 
 #: IDF/gettexttemplates/idf/review/view.html.php:21
 #, php-format
@@ -2965,63 +3092,51 @@ msgstr ""
 msgid ""
 "The form contains some errors. Please correct them to submit your review."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Code-"
-"Besprechung einzusenden."
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die "
+"Code-Besprechung einzusenden."
 
-#: IDF/gettexttemplates/idf/review/view.html.php:27
-#: IDF/gettexttemplates/idf/source/commit.html.php:5
-#: IDF/gettexttemplates/idf/source/commit.html~.php:5
-msgid "Author:"
-msgstr "Autor:"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:28
-#: IDF/gettexttemplates/idf/source/commit-created-email.txt.php:5
-#: IDF/gettexttemplates/idf/source/commit.html.php:7
-#: IDF/gettexttemplates/idf/source/commit.html~.php:7
-msgid "Commit:"
-msgstr "Revision"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:29
-#: IDF/gettexttemplates/idf/source/commit.html.php:8
-#: IDF/gettexttemplates/idf/source/commit.html~.php:8
-msgid "View corresponding source tree"
-msgstr "Zeige den dazugehörigen Quellcode-Baum"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:31
-msgid "Reviewers:"
-msgstr "Rezensenten:"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:32
-msgid "No reviewers at the moment."
-msgstr "Derzeit gibt es keine Rezensenten."
-
-#: IDF/gettexttemplates/idf/review/view.html.php:33
-msgid "Files:"
-msgstr "Dateien:"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:35
-#: IDF/gettexttemplates/idf/source/commit.html.php:23
-#: IDF/gettexttemplates/idf/source/commit.html~.php:23
-msgid "Download the corresponding diff file"
-msgstr "Dazugehörige Unterschiedsdatei herunterladen"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:36
+#: IDF/gettexttemplates/idf/review/view.html.php:25
 msgid "How to Participate in a Code Review"
 msgstr "Wie man an einer Code-Besprechung teilnimmt"
 
+#: IDF/gettexttemplates/idf/review/view.html.php:28
+#: IDF/gettexttemplates/idf/source/commit.html.php:5
+msgid "Author:"
+msgstr "Autor:"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:29
+#: IDF/gettexttemplates/idf/source/commit-created-email.txt.php:5
+#: IDF/gettexttemplates/idf/source/commit.html.php:7
+msgid "Commit:"
+msgstr "Revision"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:30
+#: IDF/gettexttemplates/idf/source/commit.html.php:8
+msgid "View corresponding source tree"
+msgstr "Zeige den dazugehörigen Quellcode-Baum"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:32
+msgid "Reviewers:"
+msgstr "Rezensenten:"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:33
+msgid "No reviewers at the moment."
+msgstr "Derzeit gibt es keine Rezensenten."
+
+#: IDF/gettexttemplates/idf/review/view.html.php:34
+msgid "Files:"
+msgstr "Dateien:"
+
+#: IDF/gettexttemplates/idf/review/view.html.php:36
+#: IDF/gettexttemplates/idf/source/commit.html.php:24
+msgid "Download the corresponding diff file"
+msgstr "Dazugehörige Unterschiedsdatei herunterladen"
+
 #: IDF/gettexttemplates/idf/review/view.html.php:37
-msgid "Old"
-msgstr "Alt"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:38
-msgid "New"
-msgstr "Neu"
-
-#: IDF/gettexttemplates/idf/review/view.html.php:39
 msgid "General Comments"
 msgstr "Allgemeine Kommentare"
 
-#: IDF/gettexttemplates/idf/review/view.html.php:42
+#: IDF/gettexttemplates/idf/review/view.html.php:40
 msgid "Submit Code Review"
 msgstr "Code-Besprechung einsenden"
 
@@ -3040,17 +3155,16 @@ msgstr "Wie man den Code bekommt"
 #: IDF/gettexttemplates/idf/source/changelog.html.php:3
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:7
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:7
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:7
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:7
-#: IDF/Views/Project.php:163
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:8
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:8 IDF/Views/Project.php:188
 msgid "Age"
 msgstr "Alter"
 
 #: IDF/gettexttemplates/idf/source/changelog.html.php:4
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:8
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:8
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:8
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:9
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:9
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:10
 msgid "Message"
 msgstr "Logmeldung"
 
@@ -3060,7 +3174,6 @@ msgstr "Eltern:"
 
 #: IDF/gettexttemplates/idf/source/changelog.html.php:6
 #: IDF/gettexttemplates/idf/source/commit.html.php:10
-#: IDF/gettexttemplates/idf/source/commit.html~.php:10
 msgid "View corresponding commit"
 msgstr "Zeige dazugehörige Revision"
 
@@ -3092,71 +3205,61 @@ msgid "Commit details:"
 msgstr "Revision-Details:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:4
-#: IDF/gettexttemplates/idf/source/commit.html~.php:4
 msgid "Date:"
 msgstr "Datum:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:6
-#: IDF/gettexttemplates/idf/source/commit.html~.php:6
 msgid "Branch:"
 msgstr "Zweig:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:9
-#: IDF/gettexttemplates/idf/source/commit.html~.php:9
 msgid "Parents:"
 msgstr "Eltern:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:11
-#: IDF/gettexttemplates/idf/source/commit.html~.php:11
 msgid "Message:"
 msgstr "Logmeldung:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:12
-#: IDF/gettexttemplates/idf/source/commit.html~.php:12
 #: IDF/gettexttemplates/idf/wiki/feedfragment.xml.php:3
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:10
 msgid "Changes:"
 msgstr "Änderungen:"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:13
-#: IDF/gettexttemplates/idf/source/commit.html~.php:13
 msgid "deleted"
 msgstr "gelöscht"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:14
-#: IDF/gettexttemplates/idf/source/commit.html.php:17
-#: IDF/gettexttemplates/idf/source/commit.html~.php:14
-#: IDF/gettexttemplates/idf/source/commit.html~.php:17
+#: IDF/gettexttemplates/idf/source/commit.html.php:18
 msgid "full"
 msgstr "voll"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:15
-#: IDF/gettexttemplates/idf/source/commit.html~.php:15
 msgid "renamed"
 msgstr "umbenannt"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:16
-#: IDF/gettexttemplates/idf/source/commit.html~.php:16
+msgid "copied"
+msgstr "kopiert"
+
+#: IDF/gettexttemplates/idf/source/commit.html.php:17
 msgid "added"
 msgstr "hinzugefügt"
 
-#: IDF/gettexttemplates/idf/source/commit.html.php:18
-#: IDF/gettexttemplates/idf/source/commit.html~.php:18
+#: IDF/gettexttemplates/idf/source/commit.html.php:19
 msgid "modified"
 msgstr "verändert"
 
-#: IDF/gettexttemplates/idf/source/commit.html.php:19
-#: IDF/gettexttemplates/idf/source/commit.html~.php:19
+#: IDF/gettexttemplates/idf/source/commit.html.php:20
 msgid "properies changed"
 msgstr "Eigenschaften geändert"
 
-#: IDF/gettexttemplates/idf/source/commit.html.php:20
-#: IDF/gettexttemplates/idf/source/commit.html~.php:20
+#: IDF/gettexttemplates/idf/source/commit.html.php:21
 msgid "removed"
 msgstr "entfernt"
 
-#: IDF/gettexttemplates/idf/source/commit.html.php:21
-#: IDF/gettexttemplates/idf/source/commit.html~.php:21
+#: IDF/gettexttemplates/idf/source/commit.html.php:22
 msgid "File differences"
 msgstr "Dateiunterschiede"
 
@@ -3222,10 +3325,10 @@ msgstr "Tags filtern"
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:3
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:3
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:3
-#: IDF/gettexttemplates/idf/source/mtn/file.html.php:3
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:3
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:3
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:3
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:4
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:4
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:4
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:4
 #, php-format
 msgid ""
 "Source at commit <a class=\"mono\" href=\"%%url%%\">%%commit%%</a> created "
@@ -3238,10 +3341,10 @@ msgstr ""
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:4
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:4
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:4
-#: IDF/gettexttemplates/idf/source/mtn/file.html.php:4
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:4
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:4
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:4
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:5
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:5
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:5
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:5
 #, php-format
 msgid "By %%cobject.author%%, %%cobject.title%%"
 msgstr "Von %%cobject.author%%, %%cobject.title%%"
@@ -3250,10 +3353,10 @@ msgstr "Von %%cobject.author%%, %%cobject.title%%"
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:5
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:5
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:5
-#: IDF/gettexttemplates/idf/source/mtn/file.html.php:5
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:5
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:5
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:5
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:6
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:6
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:6
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:6
 msgid "Root"
 msgstr "Wurzel"
 
@@ -3272,13 +3375,15 @@ msgstr ""
 msgid ""
 "You may need to <a href=\"%%url%%\">provide your SSH key</a>. The "
 "synchronization of your SSH key can take a couple of minutes. You can learn "
-"more about <a href=\"http://www.google.com/search?q=public+ssh+key"
-"+authentication\">SSH key authentication</a>."
+"more about <a "
+"href=\"http://www.google.com/search?q=public+ssh+key+authentication\">SSH "
+"key authentication</a>."
 msgstr ""
 "Eventuell musst Du <a href=\"%%url%%\">Deinen SSH-Schlüssel hochladen</a>. "
 "Die Synchronizierung Deines SSH-Schlüssels kann einige Minuten dauern. Du "
-"kannst <a href=\"http://www.google.com/search?q=public+ssh+key+authentication"
-"\">hier mehr über SSH-Schlüssel-Authentifizierung erfahren</a>."
+"kannst <a "
+"href=\"http://www.google.com/search?q=public+ssh+key+authentication\">hier "
+"mehr über SSH-Schlüssel-Authentifizierung erfahren</a>."
 
 #: IDF/gettexttemplates/idf/source/git/help.html.php:7
 #: IDF/gettexttemplates/idf/source/mtn/help.html.php:6
@@ -3311,28 +3416,28 @@ msgstr "Erste Revision"
 
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:9
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:9
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:9
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:10
-#: IDF/Views/Download.php:66 IDF/Views/Download.php:294
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:10
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:11
+#: IDF/Views/Download.php:66 IDF/Views/Download.php:314
 msgid "Size"
 msgstr "Größe"
 
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:10
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:10
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:10
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:13
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:11
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:12
 msgid ":"
 msgstr ":"
 
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:12
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:12
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:12
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:13
 msgid "Download this version"
 msgstr "Diese Version herunterladen"
 
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:13
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:13
-#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:13
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:14
 msgid "or"
 msgstr "oder"
 
@@ -3347,10 +3452,12 @@ msgstr ""
 "in diesem Depot."
 
 #: IDF/gettexttemplates/idf/source/invalid_revision.html.php:5
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:5
 msgid "The following list shows all available branches:"
 msgstr "Die folgende Liste führt alle verfügbaren Zweige auf:"
 
 #: IDF/gettexttemplates/idf/source/invalid_revision.html.php:6
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:6
 #, php-format
 msgid ""
 "If this is a new repository, the reason for this error\n"
@@ -3389,6 +3496,14 @@ msgstr ""
 msgid "Write Access Authentication"
 msgstr "Authentifizierung für Schreibberechtigung"
 
+#: IDF/gettexttemplates/idf/source/mtn/file.html.php:3
+#: IDF/gettexttemplates/idf/source/mtn/tree.html.php:3
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:3
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:3
+#, php-format
+msgid "Property <strong>%%prop%%</strong> set to <em>%%val%%</em>"
+msgstr "Eigenschaft <strong>%%prop%%</strong> auf <em>%%val%%</em> gesetzt"
+
 #: IDF/gettexttemplates/idf/source/mtn/help.html.php:3
 #, php-format
 msgid ""
@@ -3401,27 +3516,17 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/source/svn/changelog.html.php:3
 #: IDF/gettexttemplates/idf/source/svn/commit.html.php:3
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:10
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:15
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:9
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:14
 msgid "Revision:"
 msgstr "Revision:"
 
 #: IDF/gettexttemplates/idf/source/svn/changelog.html.php:4
 #: IDF/gettexttemplates/idf/source/svn/commit.html.php:4
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:11
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:16
+#: IDF/gettexttemplates/idf/source/svn/file.html.php:10
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:15
 msgid "Switch"
 msgstr "Wechseln"
-
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:6
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:11
-msgid "Property"
-msgstr "Eigenschaft"
-
-#: IDF/gettexttemplates/idf/source/svn/file.html.php:7
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:12
-msgid "set to:"
-msgstr "gesetzt auf:"
 
 #: IDF/gettexttemplates/idf/source/svn/help.html.php:3
 #, php-format
@@ -3433,15 +3538,24 @@ msgstr ""
 "Das Team von %%project%% nutzt <strong>subversion</strong>\n"
 "als Software zur Versionsverwaltung."
 
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:8
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:3
+#, php-format
+msgid ""
+"The revision <b>%%commit%%</b> is not valid or does not exist\n"
+"in this repository."
+msgstr ""
+"Die Revision <b>%%commit%%</b> ist ungültig oder existiert nicht\n"
+"in diesem Depot."
+
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:9
 msgid "Rev"
 msgstr "Revision"
 
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:17
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:16
 msgid "Branches:"
 msgstr "Zweige:"
 
-#: IDF/gettexttemplates/idf/source/svn/tree.html.php:18
+#: IDF/gettexttemplates/idf/source/svn/tree.html.php:17
 msgid "Tags:"
 msgstr "Tags:"
 
@@ -3715,7 +3829,7 @@ msgstr "Seiten anzeigen"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:4
 #: IDF/gettexttemplates/idf/wiki/index.html.php:4
-#: IDF/gettexttemplates/idf/wiki/search.html.php:3 IDF/Views/Wiki.php:175
+#: IDF/gettexttemplates/idf/wiki/search.html.php:3 IDF/Views/Wiki.php:173
 msgid "New Page"
 msgstr "Neue Seite"
 
@@ -3741,8 +3855,8 @@ msgstr "Seite anlegen"
 #: IDF/gettexttemplates/idf/wiki/delete.html.php:3
 #, php-format
 msgid ""
-"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the "
-"page \n"
+"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the page "
+"\n"
 "<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
 "by %%submitter%%."
 msgstr ""
@@ -3788,8 +3902,8 @@ msgstr "Lösche Seite"
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</"
-"a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
+"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown "
+"syntax</a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
 "<p>Website addresses are automatically linked and you can link to another "
 "page in the documentation using double square brackets like that "
 "[[AnotherPage]].</p>\n"
@@ -3798,15 +3912,15 @@ msgid ""
 msgstr ""
 "\n"
 "<p><strong>Anleitung:</strong></p>\n"
-"<p>Für den Inhalt der Seite kann die <a href=\"%%burl%%\">Markdown-Syntax</"
-"a> mit der <a href=\"%%eurl%%\"><em>Extra</em>-Erweiterung</a> verwendet "
-"werden.</p>\n"
+"<p>Für den Inhalt der Seite kann die <a "
+"href=\"%%burl%%\">Markdown-Syntax</a> mit der <a "
+"href=\"%%eurl%%\"><em>Extra</em>-Erweiterung</a> verwendet werden.</p>\n"
 "<p>Website-Adresses werden automatisch verlinkt und Du kannst außerdem zu "
 "anderen Dokumentations-Seiten durch die Benutzung von doppelten, eckigen "
 "Klammern verlinken, etwa so: [[AndereSeite]].</p>\n"
 "<p>Um direkt die Inhalte einer Datei aus dem Depot einzubinden, umklammere "
-"den Pfad zur Datei mit dreifachen, eckigen Klammern: [[[Pfad/zu/Datei.txt]]]."
-"</p>\n"
+"den Pfad zur Datei mit dreifachen, eckigen Klammern: "
+"[[[Pfad/zu/Datei.txt]]].</p>\n"
 
 #: IDF/gettexttemplates/idf/wiki/index.html.php:3
 #, php-format
@@ -3901,16 +4015,16 @@ msgstr ""
 "Interessierte Benutzer werden eine E-Mail erhalten, wenn das Ticket geändert "
 "wird."
 
-#: IDF/Issue.php:92 IDF/Review.php:95 IDF/Upload.php:93 IDF/WikiPage.php:94
+#: IDF/Issue.php:92 IDF/Review.php:95 IDF/Upload.php:99 IDF/WikiPage.php:94
 msgid "labels"
 msgstr "Labels"
 
 #: IDF/Issue.php:111 IDF/IssueFile.php:102 IDF/Review.php:114
-#: IDF/Upload.php:112 IDF/WikiPage.php:106
+#: IDF/Upload.php:118 IDF/WikiPage.php:106
 msgid "modification date"
 msgstr "Änderungsdatum"
 
-#: IDF/Issue.php:194 IDF/IssueComment.php:143
+#: IDF/Issue.php:212 IDF/IssueComment.php:143
 #, php-format
 msgid ""
 "<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
@@ -3918,27 +4032,27 @@ msgstr ""
 "<a href=\"%1$s\" class=\"%2$s\" title=\"Ticket anzeigen\">Ticket %3$d</a>, "
 "%4$s"
 
-#: IDF/Issue.php:196
+#: IDF/Issue.php:214
 #, php-format
 msgid "Creation of <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
 msgstr "Erstellung von <a href=\"%s\" class=\"%s\">Ticket&nbsp;%d</a>, von %s"
 
-#: IDF/Issue.php:206
+#: IDF/Issue.php:224
 #, php-format
 msgid "%s: Issue %d created - %s"
 msgstr "%s: Ticket %d angelegt - %s"
 
-#: IDF/Issue.php:272
+#: IDF/Issue.php:290
 #, php-format
 msgid "Issue %s - %s (%s)"
 msgstr "Ticket %s - %s (%s)"
 
-#: IDF/Issue.php:318
+#: IDF/Issue.php:336
 #, php-format
 msgid "Updated Issue %s - %s (%s)"
 msgstr "Ticket %s aktualisiert - %s (%s)"
 
-#: IDF/IssueComment.php:51
+#: IDF/IssueComment.php:51 IDF/IssueRelation.php:47
 msgid "issue"
 msgstr "Ticket"
 
@@ -3956,12 +4070,12 @@ msgstr "Änderungen"
 msgid "Serialized array of the changes in the issue."
 msgstr "Serialisierte Liste von Änderungen im Ticket"
 
-#: IDF/IssueComment.php:171
+#: IDF/IssueComment.php:180
 #, php-format
 msgid "Comment on <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
 msgstr "Kommentar zum <a href=\"%s\" class=\"%s\">Ticket&nbsp;%d</a>, von %s"
 
-#: IDF/IssueComment.php:182
+#: IDF/IssueComment.php:191
 #, php-format
 msgid "%s: Comment on issue %d - %s"
 msgstr "%s: Kommentar zum Ticket %d - %s"
@@ -3990,11 +4104,19 @@ msgstr "Bild"
 msgid "Other"
 msgstr "Andere"
 
+#: IDF/IssueRelation.php:54
+msgid "verb"
+msgstr "Verb"
+
+#: IDF/IssueRelation.php:61
+msgid "other issue"
+msgstr "anderes Ticket"
+
 #: IDF/Key.php:55
 msgid "public key"
 msgstr "öffentlicher Schlüssel"
 
-#: IDF/Key.php:87
+#: IDF/Key.php:90
 msgid "Invalid or unknown key data detected."
 msgstr "Ungültige oder unbekannte Schlüsseldaten bemerkt."
 
@@ -4008,125 +4130,134 @@ msgstr "Das Depot %s existiert bereits."
 msgid "%s does not exist or is not writable."
 msgstr "%s existiert nicht oder ist nicht schreibbar."
 
-#: IDF/Plugin/SyncMonotone.php:86 IDF/Plugin/SyncMonotone.php:457
-#: IDF/Plugin/SyncMonotone.php:783
+#: IDF/Plugin/SyncMonotone.php:107 IDF/Plugin/SyncMonotone.php:492
+msgid "\"mtn_repositories\" must be defined in your configuration file"
+msgstr "\"mtn_repositories\" muss in Deiner Konfigurationsdatei definiert sein"
+
+#: IDF/Plugin/SyncMonotone.php:114 IDF/Plugin/SyncMonotone.php:482
+msgid "\"mtn_usher_conf\" does not exist or is not writable"
+msgstr "\"mtn_usher_conf\" existiert nicht oder ist nicht schreibbar"
+
+#: IDF/Plugin/SyncMonotone.php:121
+#, php-format
+msgid "Could not find mtn-post-push script \"%s\""
+msgstr "Konnte das mtn-post-push-Skript \"%s\" nicht finden"
+
+#: IDF/Plugin/SyncMonotone.php:155
+#, php-format
+msgid "The configuration file \"%s\" is missing"
+msgstr "Die Konfigurationsdatei \"%s\" fehlt"
+
+#: IDF/Plugin/SyncMonotone.php:164
+#, php-format
+msgid "The project path \"%s\" already exists"
+msgstr "Der Projektpfad \"%s\" existiert bereits"
+
+#: IDF/Plugin/SyncMonotone.php:170
+#, php-format
+msgid "The project path \"%s\" could not be created"
+msgstr "Der Projektpfad \"%s\" konnte nicht angelegt werden"
+
+#: IDF/Plugin/SyncMonotone.php:208
+#, php-format
+msgid "The key directory \"%s\" could not be created"
+msgstr "Das Schlüsselverzeichnis \"%s\" konnte nicht erstellt werden"
+
+#: IDF/Plugin/SyncMonotone.php:227
+#, php-format
+msgid "Could not parse key information: %s"
+msgstr "Konnte die Schlüsselinformationen nicht analysieren: %s"
+
+#: IDF/Plugin/SyncMonotone.php:265
+#, php-format
+msgid "Could not create configuration directory \"%s\""
+msgstr "Konnte Konfigurationsverzeichnis \"%s\" nicht erstellen"
+
+#: IDF/Plugin/SyncMonotone.php:275
+#, php-format
+msgid "Could not create symlink for configuration file \"%s\""
+msgstr ""
+"Konnte den symbolischen Link für die Konfigurationsdatei \"%s\" nicht anlegen"
+
+#: IDF/Plugin/SyncMonotone.php:293
+#, php-format
+msgid "Could not write configuration file \"%s\""
+msgstr "Konnte die Konfigurationsdatei \"%s\" nicht schreiben"
+
+#: IDF/Plugin/SyncMonotone.php:309 IDF/Plugin/SyncMonotone.php:525
+#, php-format
+msgid "Could not parse usher configuration in \"%s\": %s"
+msgstr "Konnte die usher-Konfiguration in \"%s\" nicht analysieren: %s"
+
+#: IDF/Plugin/SyncMonotone.php:320
+#, php-format
+msgid "usher configuration already contains a server entry named \"%s\""
+msgstr ""
+"Die usher-Konfiguration enthält bereits einen Servereintrag mit dem Namen "
+"\"%s\""
+
+#: IDF/Plugin/SyncMonotone.php:345 IDF/Plugin/SyncMonotone.php:546
+#, php-format
+msgid "Could not write usher configuration file \"%s\""
+msgstr "Konnte die usher-Konfigurationsdatei \"%s\" nicht schreiben"
+
+#: IDF/Plugin/SyncMonotone.php:395
+#, php-format
+msgid "Could not write write-permissions file \"%s\""
+msgstr "Konnte die write-permissions-Datei \"%s\" nicht schreiben"
+
+#: IDF/Plugin/SyncMonotone.php:420
+#, php-format
+msgid "Could not write read-permissions file \"%s\""
+msgstr "Konnte die read-permissions-Datei \"%s\" nicht schreiben"
+
+#: IDF/Plugin/SyncMonotone.php:438
+#, php-format
+msgid "Could not remove symlink \"%s\""
+msgstr "Konnte symbolischen Link \"%s\" nicht entfernen"
+
+#: IDF/Plugin/SyncMonotone.php:446
+#, php-format
+msgid "Could not create symlink \"%s\""
+msgstr "Konnte symbolischen Link \"%s\" nicht erstellen"
+
+#: IDF/Plugin/SyncMonotone.php:500
+#, php-format
+msgid "One or more paths underneath %s could not be deleted"
+msgstr "Ein oder mehrere Pfade unterhalb %s konnten nicht gelöscht werden"
+
+#: IDF/Plugin/SyncMonotone.php:512
+#, php-format
+msgid "Could not delete client private key \"%s\""
+msgstr "Konnte privaten Schlüssel \"%s\" des Clients nicht löschen"
+
+#: IDF/Plugin/SyncMonotone.php:599 IDF/Plugin/SyncMonotone.php:718
+#, php-format
+msgid "Could not parse read-permissions for project \"%s\": %s"
+msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht analysieren: %s"
+
+#: IDF/Plugin/SyncMonotone.php:643 IDF/Plugin/SyncMonotone.php:741
+#, php-format
+msgid "Could not write read-permissions for project \"%s\""
+msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht schreiben."
+
+#: IDF/Plugin/SyncMonotone.php:657 IDF/Plugin/SyncMonotone.php:760
+#, php-format
+msgid "Could not write write-permissions file for project \"%s\""
+msgstr "Konnte write-permissions-Datei für Projekt \"%s\" nicht schreiben."
+
+#: IDF/Plugin/SyncMonotone.php:813
 msgid "\"mtn_repositories\" must be defined in your configuration file."
 msgstr ""
 "Die Variable \"mtn_repositories\" muss in der Konfigurationsdatei definiert "
 "sein."
 
-#: IDF/Plugin/SyncMonotone.php:93 IDF/Plugin/SyncMonotone.php:447
-msgid "\"mtn_usher_conf\" does not exist or is not writable."
-msgstr "\"mtn_usher_conf\" existiert nicht oder ist nicht schreibbar."
-
-#: IDF/Plugin/SyncMonotone.php:100
-#, php-format
-msgid "Could not find mtn-post-push script \"%s\"."
-msgstr "Konnte das mtn-post-push-Skript \"%s\" nicht finden."
-
-#: IDF/Plugin/SyncMonotone.php:135
-#, php-format
-msgid "The configuration file %s is missing."
-msgstr "Die Konfigurationsdatei %s fehlt."
-
-#: IDF/Plugin/SyncMonotone.php:144
-#, php-format
-msgid "The project path %s already exists."
-msgstr "Der Projektpfad %s existiert bereits."
-
-#: IDF/Plugin/SyncMonotone.php:150
-#, php-format
-msgid "The project path %s could not be created."
-msgstr "Der Projektpfad %s konnte nicht angelegt werden."
-
-#: IDF/Plugin/SyncMonotone.php:187 IDF/Scm/Monotone/Stdio.php:87
-#, php-format
-msgid "The key directory %s could not be created."
-msgstr "Das Schlüsselverzeichnis %s konnte nicht erstellt werden."
-
-#: IDF/Plugin/SyncMonotone.php:205
-#, php-format
-msgid "Could not parse key information: %s"
-msgstr "Konnte die Schlüsselinformationen nicht analysieren: %s"
-
-#: IDF/Plugin/SyncMonotone.php:243
-#, php-format
-msgid "Could not create configuration directory \"%s\""
-msgstr "Konnte Konfigurationsverzeichnis \"%s\" nicht erstellen."
-
-#: IDF/Plugin/SyncMonotone.php:252 IDF/Plugin/SyncMonotone.php:414
-#, php-format
-msgid "Could not create symlink \"%s\""
-msgstr "Konnte symbolischen Link \"%s\" nicht erstellen."
-
-#: IDF/Plugin/SyncMonotone.php:269
-#, php-format
-msgid "Could not write configuration file \"%s\""
-msgstr "Konnte die Konfigurationsdatei \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:284 IDF/Plugin/SyncMonotone.php:489
-#, php-format
-msgid "Could not parse usher configuration in \"%s\": %s"
-msgstr "Konnte die usher-Konfiguration in \"%s\" nicht analysieren: %s"
-
-#: IDF/Plugin/SyncMonotone.php:295
-#, php-format
-msgid "usher configuration already contains a server entry named \"%s\""
-msgstr ""
-"Die usher-Konfiguration enthält bereits einen Servereintrag mit dem Namen "
-"\"%s\"."
-
-#: IDF/Plugin/SyncMonotone.php:320 IDF/Plugin/SyncMonotone.php:510
-#, php-format
-msgid "Could not write usher configuration file \"%s\""
-msgstr "Konnte die usher-Konfigurationsdatei \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:366
-#, php-format
-msgid "Could not write write-permissions file \"%s\""
-msgstr "Konnte die write-permissions-Datei \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:389
-#, php-format
-msgid "Could not write read-permissions file \"%s\""
-msgstr "Konnte die read-permissions-Datei \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:406
-#, php-format
-msgid "Could not remove symlink \"%s\""
-msgstr "Konnte symbolischen Link \"%s\" nicht entfernen."
-
-#: IDF/Plugin/SyncMonotone.php:465
-#, php-format
-msgid "One or more paths underknees %s could not be deleted."
-msgstr "Ein oder mehrere Pfade unterhalb %s konnten nicht gelöscht werden."
-
-#: IDF/Plugin/SyncMonotone.php:477
-#, php-format
-msgid "Could not delete client private key %s"
-msgstr "Konnte privaten Schlüssel %s des Clients nicht löschen."
-
-#: IDF/Plugin/SyncMonotone.php:560 IDF/Plugin/SyncMonotone.php:676
-#, php-format
-msgid "Could not parse read-permissions for project \"%s\": %s"
-msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht analysieren: %s"
-
-#: IDF/Plugin/SyncMonotone.php:604 IDF/Plugin/SyncMonotone.php:699
-#, php-format
-msgid "Could not write read-permissions for project \"%s\""
-msgstr "Konnte read-permissions-Datei für Projekt \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:617 IDF/Plugin/SyncMonotone.php:717
-#, php-format
-msgid "Could not write write-permissions file for project \"%s\""
-msgstr "Konnte write-permissions-Datei für Projekt \"%s\" nicht schreiben."
-
-#: IDF/Plugin/SyncMonotone.php:790
+#: IDF/Plugin/SyncMonotone.php:820
 #, php-format
 msgid "The project path %s does not exists."
 msgstr "Der Projektpfad %s existiert nicht."
 
-#: IDF/Plugin/SyncMonotone.php:808
+#: IDF/Plugin/SyncMonotone.php:838
 #, php-format
 msgid "The command \"%s\" could not be executed."
 msgstr "Das Kommando \"%s\" konnte nicht ausgeführt werden."
@@ -4183,8 +4314,8 @@ msgstr "abstimmen"
 msgid ""
 "<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
 msgstr ""
-"<a href=\"%1$s\" class=\"%2$s\" title=\"Code-Besprechung anzeigenw\">Code-"
-"Besprechung %3$d</a>, %4$s"
+"<a href=\"%1$s\" class=\"%2$s\" title=\"Code-Besprechung "
+"anzeigenw\">Code-Besprechung %3$d</a>, %4$s"
 
 #: IDF/Review/Comment.php:141
 #, php-format
@@ -4228,23 +4359,28 @@ msgstr "%s: Erstellung von Code-Besprechung %d -%s"
 msgid "New Code Review %s - %s (%s)"
 msgstr "Neue Code-Besprechung %s - %s (%s)"
 
-#: IDF/Scm/Git.php:311 IDF/Scm/Mercurial.php:141
+#: IDF/Scm/Git.php:309 IDF/Scm/Mercurial.php:199
 #, php-format
 msgid "Folder %1$s not found in commit %2$s."
 msgstr "Verzeichnis %1$s in Revision %2$s nicht gefunden."
 
-#: IDF/Scm/Git.php:427 IDF/Scm/Mercurial.php:158
+#: IDF/Scm/Git.php:433 IDF/Scm/Mercurial.php:216
 #, php-format
 msgid "Not a valid tree: %s."
 msgstr "Kein gültiger Quellcode-Baum: %s."
 
-#: IDF/Scm/Monotone/Stdio.php:79
+#: IDF/Scm/Monotone/Stdio.php:81
 msgid "Monotone client key name or hash not in project conf."
 msgstr ""
 "Kein monotone-Client-Schlüsselname oder -prüfsumme in Projektkonfiguration "
 "gefunden."
 
-#: IDF/Scm/Monotone/Stdio.php:98
+#: IDF/Scm/Monotone/Stdio.php:89
+#, php-format
+msgid "The key directory %s could not be created."
+msgstr "Das Schlüsselverzeichnis %s konnte nicht erstellt werden."
+
+#: IDF/Scm/Monotone/Stdio.php:100
 #, php-format
 msgid "Could not write client key \"%s\""
 msgstr "Konnte Client-Schlüssel \"%s\" nicht schreiben."
@@ -4309,26 +4445,30 @@ msgstr "Der Pfad ist relativ zum Upload-Pfad."
 msgid "file size in bytes"
 msgstr "Dateigröße in Bytes"
 
-#: IDF/Upload.php:100
+#: IDF/Upload.php:84
+msgid "MD5"
+msgstr "MD5"
+
+#: IDF/Upload.php:106
 msgid "number of downloads"
 msgstr "Anzahl der Downloads"
 
-#: IDF/Upload.php:189
+#: IDF/Upload.php:201
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View download\">Download %2$d</a>, %3$s"
 msgstr "<a href=\"%1$s\" title=\"Zeige Download\">Download %2$d</a>, %3$s"
 
-#: IDF/Upload.php:192
+#: IDF/Upload.php:204
 #, php-format
 msgid "Addition of <a href=\"%s\">download&nbsp;%d</a>, by %s"
 msgstr "Hinzufügen von <a href=\"%s\">Download&nbsp;%d</a>, von %s"
 
-#: IDF/Upload.php:202
+#: IDF/Upload.php:214
 #, php-format
 msgid "%s: Download %d added - %s"
 msgstr "%s: Download %d hinzugefügt - %s"
 
-#: IDF/Upload.php:244
+#: IDF/Upload.php:256
 #, php-format
 msgid "New download - %s (%s)"
 msgstr "Neuer Download  - %s (%s)"
@@ -4349,12 +4489,12 @@ msgstr "Größe des Depots"
 msgid "No projects were found."
 msgstr "Es wurden keine Projekte gefunden."
 
-#: IDF/Views/Admin.php:93 IDF/Views/Admin.php:251 IDF/Views/Wiki.php:312
+#: IDF/Views/Admin.php:93 IDF/Views/Admin.php:251 IDF/Views/Wiki.php:310
 #, php-format
 msgid "Update %s"
 msgstr "Aktualisiere %s"
 
-#: IDF/Views/Admin.php:101 IDF/Views/Project.php:277
+#: IDF/Views/Admin.php:101 IDF/Views/Project.php:302
 msgid "The project has been updated."
 msgstr "Das Projekt wurde aktualisiert."
 
@@ -4470,11 +4610,11 @@ msgstr "%s Downloads"
 msgid "This table shows the files to download."
 msgstr "Diese Tabelle zeigt die herunterladbaren Dateien."
 
-#: IDF/Views/Download.php:67 IDF/Views/Download.php:295
+#: IDF/Views/Download.php:67 IDF/Views/Download.php:315
 msgid "Uploaded"
 msgstr "Hochgeladen"
 
-#: IDF/Views/Download.php:71 IDF/Views/Download.php:299
+#: IDF/Views/Download.php:71 IDF/Views/Download.php:319
 msgid "No downloads were found."
 msgstr "Keine Downloads gefunden."
 
@@ -4497,17 +4637,17 @@ msgstr "Lösche Download %s"
 msgid "The file has been deleted."
 msgstr "Die Datei wurde gelöscht."
 
-#: IDF/Views/Download.php:223
+#: IDF/Views/Download.php:243
 #, php-format
 msgid "The <a href=\"%s\">file</a> has been uploaded."
 msgstr "Die <a href=\"%s\">Datei</a> wurde hochgeladen."
 
-#: IDF/Views/Download.php:277
+#: IDF/Views/Download.php:297
 #, php-format
 msgid "%1$s Downloads with Label %2$s"
 msgstr "%1$s Downloads mit der Marke %2$s"
 
-#: IDF/Views/Download.php:287
+#: IDF/Views/Download.php:307
 #, php-format
 msgid "This table shows the downloads with label %s."
 msgstr "Diese Tabelle zeigt die Downloads mit der Marke %s."
@@ -4517,242 +4657,256 @@ msgstr "Diese Tabelle zeigt die Downloads mit der Marke %s."
 msgid "%s Open Issues"
 msgstr "%s Offene Tickets"
 
-#: IDF/Views/Issue.php:51 IDF/Views/Issue.php:287 IDF/Views/User.php:75
+#: IDF/Views/Issue.php:51 IDF/Views/Issue.php:379 IDF/Views/User.php:75
 msgid "This table shows the open issues."
 msgstr "Diese Tabelle zeigt die offenen Tickets."
 
-#: IDF/Views/Issue.php:61 IDF/Views/Issue.php:138 IDF/Views/Issue.php:219
-#: IDF/Views/Issue.php:295 IDF/Views/Issue.php:382 IDF/Views/Issue.php:561
-#: IDF/Views/Issue.php:620 IDF/Views/Review.php:57 IDF/Views/User.php:81
+#: IDF/Views/Issue.php:61 IDF/Views/Issue.php:217 IDF/Views/Issue.php:298
+#: IDF/Views/Issue.php:387 IDF/Views/Issue.php:539 IDF/Views/Issue.php:762
+#: IDF/Views/Issue.php:821 IDF/Views/Review.php:57 IDF/Views/User.php:81
 msgid "Id"
 msgstr "Id"
 
-#: IDF/Views/Issue.php:64 IDF/Views/Issue.php:141 IDF/Views/Issue.php:223
-#: IDF/Views/Issue.php:298 IDF/Views/Issue.php:385 IDF/Views/Issue.php:564
-#: IDF/Views/Issue.php:623 IDF/Views/Review.php:60 IDF/Views/User.php:85
+#: IDF/Views/Issue.php:64 IDF/Views/Issue.php:220 IDF/Views/Issue.php:302
+#: IDF/Views/Issue.php:390 IDF/Views/Issue.php:542 IDF/Views/Issue.php:765
+#: IDF/Views/Issue.php:824 IDF/Views/Review.php:60 IDF/Views/User.php:85
 msgid "Last Updated"
 msgstr "Letzte Aktualisierung"
 
-#: IDF/Views/Issue.php:68 IDF/Views/Issue.php:145 IDF/Views/Issue.php:227
-#: IDF/Views/Issue.php:302 IDF/Views/Issue.php:389 IDF/Views/Issue.php:568
-#: IDF/Views/Issue.php:627
+#: IDF/Views/Issue.php:68 IDF/Views/Issue.php:224 IDF/Views/Issue.php:306
+#: IDF/Views/Issue.php:394 IDF/Views/Issue.php:546 IDF/Views/Issue.php:769
+#: IDF/Views/Issue.php:828
 msgid "No issues were found."
 msgstr "Es wurden keine Tickets gefunden."
 
-#: IDF/Views/Issue.php:112
+#: IDF/Views/Issue.php:113
+msgid "Not assigned"
+msgstr "Nicht zugeordnet"
+
+#: IDF/Views/Issue.php:146
+#, php-format
+msgid "Summary of tracked issues in %s."
+msgstr "Zusammenfassung verfolgter Tickets in %s"
+
+#: IDF/Views/Issue.php:191
 #, php-format
 msgid "Watch List: Closed Issues for %s"
 msgstr "Beobachtungsliste: Geschlossene Tickets für %s"
 
-#: IDF/Views/Issue.php:113
+#: IDF/Views/Issue.php:192
 #, php-format
 msgid "This table shows the closed issues in your watch list for %s project."
 msgstr ""
 "Diese Tabelle zeigt die geschlossenen Tickets auf Deiner Beobachtungsliste "
 "für das Projekt %s."
 
-#: IDF/Views/Issue.php:118
+#: IDF/Views/Issue.php:197
 #, php-format
 msgid "Watch List: Open Issues for %s"
 msgstr "Beobachtungsliste: Offene Tickets für %s"
 
-#: IDF/Views/Issue.php:119
+#: IDF/Views/Issue.php:198
 #, php-format
 msgid "This table shows the open issues in your watch list for %s project."
 msgstr ""
 "Diese Tabelle zeigt die offenen Tickets auf Deiner Beobachtungsliste für das "
 "Projekt %s."
 
-#: IDF/Views/Issue.php:195
+#: IDF/Views/Issue.php:274
 msgid "Watch List: Closed Issues"
 msgstr "Beobachtungsliste: Geschlossene Tickets"
 
-#: IDF/Views/Issue.php:196
+#: IDF/Views/Issue.php:275
 msgid "This table shows the closed issues in your watch list."
 msgstr ""
 "Diese Tabelle zeigt die geschlossenen Tickets auf Deiner Beobachtungsliste."
 
-#: IDF/Views/Issue.php:201
+#: IDF/Views/Issue.php:280
 msgid "Watch List: Open Issues"
 msgstr "Beobachtungsliste: Offene Tickets"
 
-#: IDF/Views/Issue.php:202
+#: IDF/Views/Issue.php:281
 msgid "This table shows the open issues in your watch list."
 msgstr "Diese Tabelle zeigt die offenen Tickets auf Deiner Beobachtungsliste."
 
-#: IDF/Views/Issue.php:221 IDF/Views/User.php:82
+#: IDF/Views/Issue.php:300 IDF/Views/User.php:82
 msgid "Project"
 msgstr "Projekt"
 
-#: IDF/Views/Issue.php:254
+#: IDF/Views/Issue.php:341
 #, php-format
-msgid "My Submitted %s Issues"
-msgstr "Meine erstellten Tickets für %s"
+msgid "%s %s Submitted %s Issues"
+msgstr "%s %s eingesandte Tickets für %s"
 
-#: IDF/Views/Issue.php:258
+#: IDF/Views/Issue.php:345
 #, php-format
-msgid "My Closed Submitted %s Issues"
-msgstr "Meine eingesandten, geschlossenen Tickets für %s"
+msgid "%s %s Closed Submitted %s Issues"
+msgstr "%s %s eingesandte, geschlossene Tickets für %s"
 
-#: IDF/Views/Issue.php:262
+#: IDF/Views/Issue.php:349
 #, php-format
-msgid "My Closed Working %s Issues"
-msgstr "Meine bearbeiteten, geschlossenen Tickets für %s"
+msgid "%s %s Closed Working %s Issues"
+msgstr "%s %s bearbeitete, geschlossene Tickets für %s"
 
-#: IDF/Views/Issue.php:266
+#: IDF/Views/Issue.php:353
 #, php-format
-msgid "My Working %s Issues"
-msgstr "Meine bearbeiteten Tickets für %s"
+msgid "%s %s Working %s Issues"
+msgstr "%s %s bearbeitete Tickets für %s"
 
-#: IDF/Views/Issue.php:321
+#: IDF/Views/Issue.php:414
 msgid "Submit a new issue"
 msgstr "Erstelle ein neues Ticket"
 
-#: IDF/Views/Issue.php:337
+#: IDF/Views/Issue.php:430
 #, php-format
 msgid "<a href=\"%s\">Issue %d</a> has been created."
 msgstr "<a href=\"%s\">Ticket %d</a> wurde erstellt."
 
-#: IDF/Views/Issue.php:366
+#: IDF/Views/Issue.php:487
 #, php-format
-msgid "Search Issues - %s"
+msgid "Search issues - %s"
 msgstr "Suche Tickets - %s"
 
-#: IDF/Views/Issue.php:378
+#: IDF/Views/Issue.php:489
+#, php-format
+msgid "Search closed issues - %s"
+msgstr "Suche geschlossene Tickets - %s"
+
+#: IDF/Views/Issue.php:536
 msgid "This table shows the found issues."
 msgstr "Diese Tabelle zeigt die gefundenen Tickets."
 
-#: IDF/Views/Issue.php:408
+#: IDF/Views/Issue.php:601
 #, php-format
 msgid "Issue <a href=\"%s\">%d</a>: %s"
 msgstr "Ticket <a href=\"%s\">%d</a>: %s"
 
-#: IDF/Views/Issue.php:432
+#: IDF/Views/Issue.php:625
 #, php-format
 msgid "<a href=\"%s\">Issue %d</a> has been updated."
 msgstr "<a href=\"%s\">Ticket %d</a> wurde aktualisiert."
 
-#: IDF/Views/Issue.php:521
+#: IDF/Views/Issue.php:715
 #, php-format
 msgid "View %s"
 msgstr "Zeige %s"
 
-#: IDF/Views/Issue.php:541
+#: IDF/Views/Issue.php:742
 #, php-format
 msgid "%s Closed Issues"
 msgstr "%s Geschlossene Tickets"
 
-#: IDF/Views/Issue.php:551
+#: IDF/Views/Issue.php:752
 msgid "This table shows the closed issues."
 msgstr "Diese Tabelle zeigt die geschlossenen Tickets."
 
-#: IDF/Views/Issue.php:594
+#: IDF/Views/Issue.php:795
 #, php-format
 msgid "%1$s Issues with Label %2$s"
 msgstr "%1$s Tickets mit Markierung %2$s"
 
-#: IDF/Views/Issue.php:597
+#: IDF/Views/Issue.php:798
 #, php-format
 msgid "%1$s Closed Issues with Label %2$s"
 msgstr "%1$s geschlossene Tickets mit Markierung %2$s"
 
-#: IDF/Views/Issue.php:610
+#: IDF/Views/Issue.php:811
 #, php-format
 msgid "This table shows the issues with label %s."
 msgstr "Diese Tabelle zeigt die Tickets mit der Markierung %s."
 
-#: IDF/Views/Issue.php:660
+#: IDF/Views/Issue.php:934
 msgid "The issue has been removed from your watch list."
 msgstr "Das Ticket wurde von Deiner Beobachtungsliste entfernt."
 
-#: IDF/Views/Issue.php:663
+#: IDF/Views/Issue.php:937
 msgid "The issue has been added to your watch list."
 msgstr "Das Ticket wurde zu Deiner Beobachtungsliste hinzugefügt."
 
-#: IDF/Views/Issue.php:752
+#: IDF/Views/Issue.php:1035
 msgid "On your watch list."
 msgstr "Auf Deiner Beobachtungsliste."
 
-#: IDF/Views/Project.php:74
+#: IDF/Views/Project.php:95
 msgid "Issues and Comments"
 msgstr "Tickets u. Kommentare"
 
-#: IDF/Views/Project.php:76
+#: IDF/Views/Project.php:99
 msgid "Documents"
 msgstr "Dokumentation"
 
-#: IDF/Views/Project.php:77
+#: IDF/Views/Project.php:101
 msgid "Reviews and Patches"
 msgstr "Besprechungen u. Patches"
 
-#: IDF/Views/Project.php:153
+#: IDF/Views/Project.php:178
 msgid "This table shows the project updates."
 msgstr "Diese Tabelle zeigt Projekt-Aktualisierungen."
 
-#: IDF/Views/Project.php:164
+#: IDF/Views/Project.php:189
 msgid "Change"
 msgstr "Änderung"
 
-#: IDF/Views/Project.php:168
+#: IDF/Views/Project.php:193
 msgid "No changes were found."
 msgstr "Es wurden keine Änderungen gefunden."
 
-#: IDF/Views/Project.php:269
+#: IDF/Views/Project.php:294
 #, php-format
 msgid "%s Project Summary"
 msgstr "%s Projektzusammenfassung"
 
-#: IDF/Views/Project.php:304
+#: IDF/Views/Project.php:329
 #, php-format
 msgid "%s Issue Tracking Configuration"
 msgstr "%s Ticket-Einstellungen"
 
-#: IDF/Views/Project.php:313
+#: IDF/Views/Project.php:338
 msgid "The issue tracking configuration has been saved."
 msgstr "Die Ticket-Einstellungen wurden gespeichert."
 
-#: IDF/Views/Project.php:349
+#: IDF/Views/Project.php:375
 #, php-format
 msgid "%s Downloads Configuration"
 msgstr "%s Download-Einstellungen"
 
-#: IDF/Views/Project.php:358
+#: IDF/Views/Project.php:384
 msgid "The downloads configuration has been saved."
 msgstr "Die Download-Einstellungen wurden gespeichert."
 
-#: IDF/Views/Project.php:392
+#: IDF/Views/Project.php:418
 #, php-format
 msgid "%s Documentation Configuration"
 msgstr "%s Dokumentations-Einstellungen"
 
-#: IDF/Views/Project.php:401
+#: IDF/Views/Project.php:427
 msgid "The documentation configuration has been saved."
 msgstr "Die Dokumentations-Einstellungen wurden gespeichert."
 
-#: IDF/Views/Project.php:435
+#: IDF/Views/Project.php:461
 #, php-format
 msgid "%s Project Members"
 msgstr "%s Projektmitglieder"
 
-#: IDF/Views/Project.php:444
+#: IDF/Views/Project.php:470
 msgid "The project membership has been saved."
 msgstr "Die Projektmitgliedschaft wurde gespeichert."
 
-#: IDF/Views/Project.php:467
+#: IDF/Views/Project.php:493
 #, php-format
 msgid "%s Tabs Access Rights"
 msgstr "%s Zugriffsrechte auf Registerkarten"
 
-#: IDF/Views/Project.php:481
+#: IDF/Views/Project.php:507
 msgid "The project tabs access rights have been saved."
 msgstr "Die Zugriffsrechte für die Projekt-Registerkarten wurden gespeichert."
 
-#: IDF/Views/Project.php:527
+#: IDF/Views/Project.php:553
 #, php-format
 msgid "%s Source"
 msgstr "%s Quellcode"
 
-#: IDF/Views/Project.php:541
+#: IDF/Views/Project.php:567
 msgid "The project source configuration  has been saved."
 msgstr "Die Konfiguration des Projekt-Quellcodes wurde gespeichert."
 
@@ -4794,27 +4948,27 @@ msgstr "%s Quellcode-Hilfe"
 msgid "%s Invalid Revision"
 msgstr "%s Ungültige Revision"
 
-#: IDF/Views/Source.php:81
+#: IDF/Views/Source.php:82
 #, php-format
 msgid "%s Ambiguous Revision"
 msgstr "%s Mehrdeutige Revision"
 
-#: IDF/Views/Source.php:106
+#: IDF/Views/Source.php:107
 #, php-format
 msgid "%1$s %2$s Change Log"
 msgstr "%1$s %2$s Logmeldung"
 
-#: IDF/Views/Source.php:146 IDF/Views/Source.php:227 IDF/Views/Source.php:360
+#: IDF/Views/Source.php:147 IDF/Views/Source.php:228 IDF/Views/Source.php:356
 #, php-format
 msgid "%1$s %2$s Source Tree"
 msgstr "%1$s %2$s Quellcode-Baum"
 
-#: IDF/Views/Source.php:303
+#: IDF/Views/Source.php:304
 #, php-format
 msgid "%s Commit Details"
 msgstr "%s Revisions-Details"
 
-#: IDF/Views/Source.php:304
+#: IDF/Views/Source.php:305
 #, php-format
 msgid "%s Commit Details - %s"
 msgstr "%s Revisions-Details - %s"
@@ -4904,30 +5058,30 @@ msgstr "%1$s Dokumentations-Seiten mit der Marke %2$s"
 msgid "This table shows the documentation pages with label %s."
 msgstr "Diese Tabelle zeigt die Dokumentations-Seiten mit der Bezeichnung %s."
 
-#: IDF/Views/Wiki.php:186
+#: IDF/Views/Wiki.php:184
 #, php-format
 msgid "The page <a href=\"%s\">%s</a> has been created."
 msgstr "Die Seite <a href=\"%s\">%s</a> wurde neu angelegt."
 
-#: IDF/Views/Wiki.php:273
+#: IDF/Views/Wiki.php:271
 msgid "The old revision has been deleted."
 msgstr "Alte Version der Seite wurde gelöscht."
 
-#: IDF/Views/Wiki.php:279
+#: IDF/Views/Wiki.php:277
 #, php-format
 msgid "Delete Old Revision of %s"
 msgstr "Lösche alte Version von %s"
 
-#: IDF/Views/Wiki.php:324
+#: IDF/Views/Wiki.php:322
 #, php-format
 msgid "The page <a href=\"%s\">%s</a> has been updated."
 msgstr "Die Seite <a href=\"%s\">%s</a> wurde aktualisiert."
 
-#: IDF/Views/Wiki.php:362
+#: IDF/Views/Wiki.php:360
 msgid "The documentation page has been deleted."
 msgstr "Die Dokumentations-Seite wurde gelöscht."
 
-#: IDF/Views/Wiki.php:370
+#: IDF/Views/Wiki.php:368
 #, php-format
 msgid "Delete Page %s"
 msgstr "Lösche Seite '%s'"
@@ -5024,5 +5178,21 @@ msgstr "Neue Dokumentations-Seite %s - %s (%s)"
 msgid "Documentation Page Changed %s - %s (%s)"
 msgstr "Dokumentations-Seite geändert %s - %s (%s)"
 
+#~ msgid "You need to provide comments on at least one file."
+#~ msgstr "Du musst Kommentare zu mindestens einer Datei angeben."
+
+#~ msgid "Open Issues"
+#~ msgstr "Offene Tickets"
+
+#~ msgid "Found issues:"
+#~ msgstr "Gefundene Tickets:"
+
+#~ msgid "Property"
+#~ msgstr "Eigenschaft"
+
+#~ msgid "set to:"
+#~ msgstr "gesetzt auf:"
+
+#, qt-format
 #~ msgid "Invalid value for the parameter %1$s: %2$s. Use %3$s."
 #~ msgstr "Ungültiger Wert für Parameter %1$s: %2$s. Nutze %3$s."
