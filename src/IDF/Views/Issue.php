@@ -119,6 +119,7 @@ class IDF_Views_Issue
                     }
                     $ownerStatistics[$key] = array($nb, (int)(100 * $nb / $opened), $login);
                 }
+                arsort($ownerStatistics);
 
                 // Issue class tag statistics
                 $grouped_tags = $prj->getTagCloud();
@@ -126,6 +127,12 @@ class IDF_Views_Issue
                     foreach ($tags as $tag) {
                         $tagStatistics[$class][$tag->name] = array($tag->nb_use, $tag->id);
                     }
+                    uasort($tagStatistics[$class], function ($a, $b) {
+                        if ($a[0] === $b[0])
+                            return 0;
+                            
+                        return ($a[0] > $b[0]) ? -1 : 1;
+                    });
                 }
                 foreach($tagStatistics as $k => $v) {
                     $nbIssueInClass = 0;
@@ -136,10 +143,6 @@ class IDF_Views_Issue
                         $tagStatistics[$k][$kk] = array($vv[0], (int)(100 * $vv[0] / $nbIssueInClass), $vv[1]);
                     }
                 }
-
-                // Sort
-                krsort($tagStatistics);
-                arsort($ownerStatistics);
             }
         }
 
