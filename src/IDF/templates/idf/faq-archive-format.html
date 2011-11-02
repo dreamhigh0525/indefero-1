@@ -49,18 +49,18 @@ at an example, here you have one:
     &lt;name>foo-1.2.tar.gz&lt;/name>
     &lt;summary>Tarball&lt;/summary>
     &lt;replaces>foo-1.1.tar.gz&lt;/replaces>
-    &lt;tags>
-       &lt;tag>Type:Archive&lt;/tag>
-    &lt;/tags>
+    &lt;labels>
+       &lt;label>Type:Archive&lt;/label>
+    &lt;/labels>
   &lt;/file>
   &lt;file>
     &lt;name>foo-1.2-installer.exe&lt;/name>
     &lt;summary>Windows MSI Installer&lt;/summary>
     &lt;description>This installer needs Windows XP SP2 or later.&lt;/description>
-    &lt;tags>
-       &lt;tag>Type:Installer&lt;/tag>
-       &lt;tag>OpSys:Windows&lt;/tag>
-    &lt;/tags>
+    &lt;labels>
+       &lt;label>Type:Installer&lt;/label>
+       &lt;label>OpSys:Windows&lt;/label>
+    &lt;/labels>
   &lt;/file>
 &lt;/manifest>
 </pre>
@@ -77,8 +77,8 @@ This is the DTD for the format:
 &lt;!ELEMENT summary (#PCDATA)>
 &lt;!ELEMENT replaces (#PCDATA)>
 &lt;!ELEMENT description (#PCDATA)>
-&lt;!ELEMENT tags (tag+)>
-&lt;!ELEMENT tag (#PCDATA)>
+&lt;!ELEMENT labels (label+)>
+&lt;!ELEMENT label (#PCDATA)>
 ]>
 </pre>
 
