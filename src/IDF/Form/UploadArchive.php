@@ -29,6 +29,7 @@ class IDF_Form_UploadArchive extends Pluf_Form
 {
     public $user = null;
     public $project = null;
+    private $archiveHelper = null;
 
     public function initFields($extra=array())
     {
@@ -40,26 +41,34 @@ class IDF_Form_UploadArchive extends Pluf_Form
                                             'label' => __('Archive file'),
                                             'initial' => '',
                                             'max_size' => Pluf::f('max_upload_archive_size', 20971520),
-                                            ));
+                                            'move_function_params' => array(
+                                                'upload_path' => Pluf::f('upload_path').'/'.$this->project->shortname.'/archives',
+                                                'upload_path_create' => true,
+                                                'upload_overwrite' => true,
+                                            )));
     }
 
 
     public function clean_archive()
     {
-        $extra = strtolower(implode('|', explode(' ', Pluf::f('idf_extra_upload_ext'))));
-        if (strlen($extra)) $extra .= '|';
-        if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $this->cleaned_data['file'])) {
-            @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
-            throw new Pluf_Form_Invalid(__('For security reasons, you cannot upload a file with this extension.'));
-        }
-        return $this->cleaned_data['file'];
-    }
+        $this->archiveHelper = new IDF_Form_UploadArchiveHelper(
+            Pluf::f('upload_path').'/'.$this->project->shortname.'/archives/'.$this->cleaned_data['archive']);
 
-    /**
-     * Validate the interconnection in the form.
-     */
-    public function clean()
-    {
+        // basic archive validation
+        $this->archiveHelper->validate();
+
+        // extension validation
+        $names = $this->archiveHelper->getEntryNames();
+        foreach ($names as $name) {
+            $extra = strtolower(implode('|', explode(' ', Pluf::f('idf_extra_upload_ext'))));
+            if (strlen($extra)) $extra .= '|';
+            if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $name)) {
+                @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
+                throw new Pluf_Form_Invalid(sprintf(__('For security reasons, you cannot upload a file (%s) with this extension.'), $name));
+            }
+        }
+
+        // label and file name validation
         $conf = new IDF_Conf();
         $conf->setProject($this->project);
         $onemax = array();
@@ -68,26 +77,39 @@ class IDF_Form_UploadArchive extends Pluf_Form
                 $onemax[] = mb_strtolower(trim($class));
             }
         }
-        $count = array();
-        for ($i=1;$i<7;$i++) {
-            $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
-            if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
-                list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)),
-                                            trim($name));
-            } else {
-                $class = 'other';
-                $name = $this->cleaned_data['label'.$i];
+
+        foreach ($names as $name) {
+            $meta = $this->archiveHelper->getMetaData($name);
+            $count = array();
+            foreach ($meta['labels'] as $label) {
+                $label = trim($label);
+                if (strpos($label, ':') !== false) {
+                    list($class, $name) = explode(':', $label, 2);
+                    list($class, $name) = array(mb_strtolower(trim($class)),
+                    trim($name));
+                } else {
+                    $class = 'other';
+                    $name = $label;
+                }
+                if (!isset($count[$class])) $count[$class] = 1;
+                else $count[$class] += 1;
+                if (in_array($class, $onemax) and $count[$class] > 1) {
+                    throw new Pluf_Form_Invalid(
+                       sprintf(__('You cannot provide more than label from the %s class to a download (%s).'), $class, $name)
+                    );
+                }
             }
-            if (!isset($count[$class])) $count[$class] = 1;
-            else $count[$class] += 1;
-            if (in_array($class, $onemax) and $count[$class] > 1) {
-                if (!isset($this->errors['label'.$i])) $this->errors['label'.$i] = array();
-                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to an issue.'), $class);
-                throw new Pluf_Form_Invalid(__('You provided an invalid label.'));
+
+            $sql = new Pluf_SQL('file=%s AND project=%s', array($name, $this->project->id));
+            $upload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
+
+            if ($upload) {
+                throw new Pluf_Form_Invalid(
+                    sprintf(__('A file with the name "%s" has already been uploaded.'), $name));
             }
         }
-        return $this->cleaned_data;
+
+        return $this->cleaned_data['archive'];
     }
 
     /**
@@ -96,9 +118,9 @@ class IDF_Form_UploadArchive extends Pluf_Form
      */
     function failed()
     {
-        if (!empty($this->cleaned_data['file'])
-            and file_exists(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file'])) {
-            @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
+        if (!empty($this->cleaned_data['archive'])
+            and file_exists(Pluf::f('upload_path').'/'.$this->project->shortname.'/archives/'.$this->cleaned_data['archive'])) {
+            @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/archives/'.$this->cleaned_data['archive']);
         }
     }
 
@@ -107,65 +129,93 @@ class IDF_Form_UploadArchive extends Pluf_Form
      *
      * @param bool Commit in the database or not. If not, the object
      *             is returned but not saved in the database.
-     * @return Object Model with data set from the form.
      */
     function save($commit=true)
     {
         if (!$this->isValid()) {
             throw new Exception(__('Cannot save the model from an invalid form.'));
         }
-        // Add a tag for each label
-        $tags = array();
-        for ($i=1;$i<7;$i++) {
-            if (strlen($this->cleaned_data['label'.$i]) > 0) {
-                if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
-                    list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                    list($class, $name) = array(trim($class), trim($name));
-                } else {
-                    $class = 'Other';
-                    $name = trim($this->cleaned_data['label'.$i]);
+
+        $uploadDir = Pluf::f('upload_path').'/'.$this->project->shortname.'/files/';
+        $fileNames = $this->archiveHelper->getEntryNames();
+
+        foreach ($fileNames as $fileName) {
+            $meta = $this->archiveHelper->getMetaData($fileName);
+
+            // add a tag for each label
+            $tags = array();
+            foreach ($meta['labels'] as $label) {
+                $label = trim($label);
+                if (strlen($label) > 0) {
+                    if (strpos($label, ':') !== false) {
+                        list($class, $name) = explode(':', $label, 2);
+                        list($class, $name) = array(trim($class), trim($name));
+                    } else {
+                        $class = 'Other';
+                        $name = $label;
+                    }
+                    $tags[] = IDF_Tag::add($name, $this->project, $class);
                 }
-                $tags[] = IDF_Tag::add($name, $this->project, $class);
             }
+
+            // extract the file
+            $this->archiveHelper->extract($fileName, $uploadDir);
+
+            // create the upload
+            $upload = new IDF_Upload();
+            $upload->project = $this->project;
+            $upload->submitter = $this->user;
+            $upload->summary = trim($meta['summary']);
+            $upload->changelog = trim($meta['description']);
+            $upload->file = $fileName;
+            $upload->filesize = filesize($uploadDir.$fileName);
+            $upload->downloads = 0;
+            $upload->create();
+            foreach ($tags as $tag) {
+                $upload->setAssoc($tag);
+            }
+
+            // process a possible replacement
+            if (!empty($meta['replaces'])) {
+                $sql = new Pluf_SQL('file=%s AND project=%s', array($meta['replaces'], $this->project->id));
+                $oldUpload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
+                if ($oldUpload) {
+                    $tags = $this->project->getTagsFromConfig('labels_download_predefined',
+                                                              IDF_Form_UploadConf::init_predefined);
+                    // the deprecate tag is - by definition - always the last one
+                    $deprecatedTag = array_pop($tags);
+                    $oldUpload->setAssoc($deprecatedTag);
+                }
+            }
+
+            // send the notification
+            $upload->notify($this->project->getConf());
+            /**
+             * [signal]
+             *
+             * IDF_Upload::create
+             *
+             * [sender]
+             *
+             * IDF_Form_Upload
+             *
+             * [description]
+             *
+             * This signal allows an application to perform a set of tasks
+             * just after the upload of a file and after the notification run.
+             *
+             * [parameters]
+             *
+             * array('upload' => $upload);
+             *
+             */
+            $params = array('upload' => $upload);
+            Pluf_Signal::send('IDF_Upload::create', 'IDF_Form_Upload',
+                              $params);
         }
-        // Create the upload
-        $upload = new IDF_Upload();
-        $upload->project = $this->project;
-        $upload->submitter = $this->user;
-        $upload->summary = trim($this->cleaned_data['summary']);
-        $upload->changelog = trim($this->cleaned_data['changelog']);
-        $upload->file = $this->cleaned_data['file'];
-        $upload->filesize = filesize(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
-        $upload->downloads = 0;
-        $upload->create();
-        foreach ($tags as $tag) {
-            $upload->setAssoc($tag);
-        }
-        // Send the notification
-        $upload->notify($this->project->getConf());
-        /**
-         * [signal]
-         *
-         * IDF_Upload::create
-         *
-         * [sender]
-         *
-         * IDF_Form_Upload
-         *
-         * [description]
-         *
-         * This signal allows an application to perform a set of tasks
-         * just after the upload of a file and after the notification run.
-         *
-         * [parameters]
-         *
-         * array('upload' => $upload);
-         *
-         */
-        $params = array('upload' => $upload);
-        Pluf_Signal::send('IDF_Upload::create', 'IDF_Form_Upload',
-                          $params);
-        return $upload;
+
+        // finally unlink the uploaded archive
+        @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/archives/'.$this->cleaned_data['archive']);
     }
 }
 

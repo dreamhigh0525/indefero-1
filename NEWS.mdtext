@@ -11,6 +11,7 @@ by the friendly folks from Scilab <http://www.scilab.org/>!
   `$cfg['webhook_processing']` flag to "compat", we urge you to change the
   implementations of this web hook as this setting is likely to be removed
   in future versions of Indefero.
+- Indefero now needs PHP's zip module which is not enabled by default.
 
 ## New Features
 
@@ -19,6 +20,9 @@ by the friendly folks from Scilab <http://www.scilab.org/>!
 - It is now possible to configure a web hook that informs an external URL about
   new and updated downloads for a specific project, similar to the available 
   post-commit web hook
+- One can now upload multiple files at once by using a special archive format
+  which Indefero processes in the background and for which individual upload
+  records are created
 
 # InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
 
