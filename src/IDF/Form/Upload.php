@@ -106,7 +106,7 @@ class IDF_Form_Upload extends Pluf_Form
             $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
             if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
                 list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)), 
+                list($class, $name) = array(mb_strtolower(trim($class)),
                                             trim($name));
             } else {
                 $class = 'other';
@@ -116,7 +116,7 @@ class IDF_Form_Upload extends Pluf_Form
             else $count[$class] += 1;
             if (in_array($class, $onemax) and $count[$class] > 1) {
                 if (!isset($this->errors['label'.$i])) $this->errors['label'.$i] = array();
-                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to an issue.'), $class);
+                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to a download.'), $class);
                 throw new Pluf_Form_Invalid(__('You provided an invalid label.'));
             }
         }
@@ -129,7 +129,7 @@ class IDF_Form_Upload extends Pluf_Form
      */
     function failed()
     {
-        if (!empty($this->cleaned_data['file']) 
+        if (!empty($this->cleaned_data['file'])
             and file_exists(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file'])) {
             @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
         }
