@@ -12,6 +12,8 @@ by the friendly folks from Scilab <http://www.scilab.org/>!
   implementations of this web hook as this setting is likely to be removed
   in future versions of Indefero.
 - Indefero now needs PHP's zip module which is not enabled by default.
+- Existing email notifications now have to be explicitely activated in the
+  project's administrative area.
 
 ## New Features
 

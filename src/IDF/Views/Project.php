@@ -508,21 +508,24 @@ class IDF_Views_Project
                     }
                 }
                 $form->save(); // Save the authorized users.
-                $request->user->setMessage(__('The project tabs access rights have been saved.'));
+                $request->user->setMessage(__('The project tabs access rights and notification settings have been saved.'));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Project::adminTabs',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
             $params = array();
-            $keys = array('downloads_access_rights', 'source_access_rights',
-                          'issues_access_rights', 'review_access_rights',
-                          'wiki_access_rights',
-                          'downloads_notification_email',
-                          'review_notification_email',
-                          'wiki_notification_email',
-                          'source_notification_email',
-                          'issues_notification_email');
+            $sections = array('downloads', 'wiki', 'source', 'issues', 'review');
+            $keys = array();
+
+            foreach ($sections as $section) {
+                $keys[] = $section.'_access_rights';
+                $keys[] = $section.'_notification_owners_enabled';
+                $keys[] = $section.'_notification_members_enabled';
+                $keys[] = $section.'_notification_email_enabled';
+                $keys[] = $section.'_notification_email';
+            }
+
             foreach ($keys as $key) {
                 $_val = $request->conf->getVal($key, false);
                 if ($_val !== false) {

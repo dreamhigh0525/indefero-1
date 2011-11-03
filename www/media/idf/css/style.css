@@ -43,8 +43,12 @@ a:active{
   padding: 0 1em;
 }
 
+.left {
+  text-align: left !important;
+}
+
 .right {
-  text-align: right;
+  text-align: right !important;
 }
 
 .a-c {
@@ -1231,4 +1235,20 @@ table.issue-summary td.graph-color {
 
 table.issue-summary td.graph-percent {
   padding-left: 1em;
+}
+
+table.form.access-rights {}
+
+table.form.access-rights th + th,
+table.form.access-rights td + td {
+  padding-left: 1em;
+}
+
+table.form.access-rights td + td label {
+  padding-right: 0.5em;
+}
+
+table.form.access-rights th *,
+table.form.access-rights td * {
+  vertical-align: middle;
 }
