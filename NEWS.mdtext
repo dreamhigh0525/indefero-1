@@ -17,6 +17,12 @@ by the friendly folks from Scilab <http://www.scilab.org/>!
 
 ## New Features
 
+- The notification system has been overhauled; it is now possible to configure
+  what kind of user group, project administrators, members and / or additional
+  mail addresses are notified about updates in a certain section, such as 
+  issues, downloads, reviews, and so on. We now also ensure that notification
+  emails for one object are uniquely identifyable to support a grouped view
+  in email clients that support that. (fixes issues  334, 452, and 480)
 - Projects can get an external project URL configured that is displayed as
   linkable icon right beside the project name (if available)
 - It is now possible to configure a web hook that informs an external URL about
@@ -25,6 +31,11 @@ by the friendly folks from Scilab <http://www.scilab.org/>!
 - One can now upload multiple files at once by using a special archive format
   which Indefero processes in the background and for which individual upload
   records are created
+
+## Bugfixes
+
+- Indefero no longer confuses a non-owner of an issue with a notification that
+  a particular ticket has been opened and assigned to him (fixes issue 562)
 
 # InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
 
