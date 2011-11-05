@@ -796,4 +796,52 @@ GROUP BY uid";
         $this->_isRestricted = false;
         return false;
     }
+
+    /**
+     * Returns an associative array of email addresses to notify about changes
+     * in a certain tab like 'issues', 'source', and so on.
+     *
+     * @param string $tab
+     * @return array Key is the email address, value is the preferred language setting
+     */
+    public function getNotificationRecipientsForTab($tab)
+    {
+        if (!in_array($tab, array('source', 'issues', 'downloads', 'wiki', 'review'))) {
+            throw new Exception(sprintf('unknown tab %s', $tab));
+        }
+
+        $conf = $this->getConf();
+        $recipients = array();
+        $membership_data = $this->getMembershipData();
+
+        if ($conf->getVal($tab.'_notification_owners_enabled', false)) {
+            foreach ($membership_data['owners'] as $owner) {
+                $recipients[$owner->email] = $owner->language;
+            }
+        }
+
+        if ($conf->getVal($tab.'_notification_members_enabled', false)) {
+            foreach ($membership_data['members'] as $member) {
+                $recipients[$member->email] = $member->language;
+            }
+        }
+
+        if ($conf->getVal($tab.'_notification_email_enabled', false)) {
+            $addresses = preg_split('/\s*,\s*/',
+                                $conf->getVal($tab.'_notification_email', ''),
+                                -1, PREG_SPLIT_NO_EMPTY);
+
+            // we use a default language setting for this plain list of
+            // addresses, but we ensure that we do not overwrite an existing
+            // address which might come with a proper setting already
+            $languages = Pluf::f('languages', array('en'));
+            foreach ($addresses as $address) {
+                if (array_key_exists($address, $recipients))
+                    continue;
+                $recipients[$address] = $languages[0];
+            }
+        }
+
+        return $recipients;
+    }
 }

@@ -312,33 +312,42 @@ class IDF_Commit extends Pluf_Model
         $item->payload = $payload;
         $item->create();
 
-        if ('' == $conf->getVal('source_notification_email', '')) {
-            return;
-        }
-
         $current_locale = Pluf_Translation::getLocale();
-        $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);
 
-        $context = new Pluf_Template_Context(
-                       array(
-                             'c' => $this,
-                             'project' => $this->get_project(),
-                             'url_base' => Pluf::f('url_base'),
-                             )
-                                             );
-        $tmpl = new Pluf_Template('idf/source/commit-created-email.txt');
-        $text_email = $tmpl->render($context);
-        $addresses = explode(',', $conf->getVal('source_notification_email'));
-        foreach ($addresses as $address) {
-            $email = new Pluf_Mail(Pluf::f('from_email'),
+        $from_email = Pluf::f('from_email');
+        $recipients = $project->getNotificationRecipientsForTab('source');
+
+        foreach ($recipients as $address => $language) {
+
+            if (!empty($this->author) && $this->author->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'commit'   => $this,
+                'project'  => $project,
+                'url_base' => Pluf::f('url_base'),
+            ));
+
+            // commits are usually not updated, therefor we do not
+            // distinguish between create and update here
+            $tplfile = 'idf/source/commit-created-email.txt';
+            $subject = __('New commit %s - %s (%s)');
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email,
                                    $address,
-                                   sprintf(__('New Commit %s - %s (%s)'),
+                                   sprintf($subject,
                                            $this->scm_id, $this->summary,
-                                           $this->get_project()->shortname));
+                                           $project->shortname));
             $email->addTextMessage($text_email);
             $email->sendMail();
         }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

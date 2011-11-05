@@ -42,9 +42,9 @@ class IDF_Review_Patch extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'review' => 
+                            'review' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Review',
@@ -59,7 +59,7 @@ class IDF_Review_Patch extends Pluf_Model
                                   'size' => 250,
                                   'verbose' => __('summary'),
                                   ),
-                            'commit' => 
+                            'commit' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Commit',
@@ -129,8 +129,8 @@ class IDF_Review_Patch extends Pluf_Model
     function postSave($create=false)
     {
         if ($create) {
-            IDF_Timeline::insert($this, 
-                                 $this->get_review()->get_project(), 
+            IDF_Timeline::insert($this,
+                                 $this->get_review()->get_project(),
                                  $this->get_review()->get_submitter());
             IDF_Search::index($this->get_review());
         }
@@ -139,7 +139,7 @@ class IDF_Review_Patch extends Pluf_Model
     public function timelineFragment($request)
     {
         $review = $this->get_review();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($request->project->shortname,
                                               $review->id));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
@@ -150,14 +150,14 @@ class IDF_Review_Patch extends Pluf_Model
         $ic = (in_array($review->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View review">Review %3$d</a>, %4$s'), $url, $ic, $review->id, Pluf_esc($review->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">review&nbsp;%d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">review&nbsp;%d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     public function feedFragment($request)
     {
         $review = $this->get_review();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($request->project->shortname,
                                               $review->id));
         $title = sprintf(__('%s: Creation of Review %d - %s'),
@@ -179,35 +179,49 @@ class IDF_Review_Patch extends Pluf_Model
 
     public function notify($conf, $create=true)
     {
-        if ('' == $conf->getVal('review_notification_email', '')) {
-            return;
-        }
+        $review  = $this->get_review();
+        $project = $review->get_project();
         $current_locale = Pluf_Translation::getLocale();
-        $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);        
 
-        $context = new Pluf_Template_Context(
-                       array(
-                             'review' => $this->get_review(),
-                             'patch' => $this,
-                             'comments' => array(),
-                             'project' => $this->get_review()->get_project(),
-                             'url_base' => Pluf::f('url_base'),
-                             )
-                                                     );
-        $tmpl = new Pluf_Template('idf/review/review-created-email.txt');
-        $text_email = $tmpl->render($context);
-        $addresses = explode(';',$conf->getVal('review_notification_email'));
-        foreach ($addresses as $address) {
-            $email = new Pluf_Mail(Pluf::f('from_email'), 
+        $from_email = Pluf::f('from_email');
+        $messageId  = '<'.md5('review'.$review->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
+        $recipients = $project->getNotificationRecipientsForTab('review');
+
+        foreach ($recipients as $address => $language) {
+
+            if ($review->get_submitter()->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'review'   => $review,
+                'patch'    => $this,
+                'comments' => array(),
+                'project'  => $project,
+                'url_base' => Pluf::f('url_base'),
+            ));
+
+            // reviews are updated through comments, see IDF_Review_Comment::notify()
+            $tplfile = 'idf/review/review-created-email.txt';
+            $subject = __('New Code Review %s - %s (%s)');
+            $headers = array('Message-ID' => $messageId);
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email,
                                    $address,
-                                   sprintf(__('New Code Review %s - %s (%s)'),
-                                           $this->get_review()->id, 
-                                           $this->get_review()->summary, 
-                                           $this->get_review()->get_project()->shortname));
+                                   sprintf($subject,
+                                           $review->id,
+                                           $review->summary,
+                                           $project->shortname));
             $email->addTextMessage($text_email);
+            $email->addHeaders($headers);
             $email->sendMail();
         }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

@@ -1,6 +1,6 @@
 {trans 'Hello,'}
 
-{blocktrans}The following issue has been updated:{/blocktrans}
+{if $owns_issue}{blocktrans}The following issue you are owning has been updated:{/blocktrans}{else}{blocktrans}The following issue has been updated:{/blocktrans}{/if}
 
 {$issue.id} - {$issue.summary|safe}
 {trans 'Project:'} {$project.name|safe}

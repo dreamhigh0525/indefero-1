@@ -175,50 +175,63 @@ class IDF_Review_Comment extends Pluf_Model
      */
     public function notify($conf, $create=true)
     {
-        $patch = $this->get_patch();
-        $review = $patch->get_review();
-        $prj = $review->get_project();
-        $to_email = array();
-        if ('' != $conf->getVal('review_notification_email', '')) {
-            $langs = Pluf::f('languages', array('en'));
-            $to_email[] = array($conf->getVal('issues_notification_email'),
-                                $langs[0]);
-        }
-        $current_locale = Pluf_Translation::getLocale();
-        $reviewers = $review->getReviewers();
+        $patch      = $this->get_patch();
+        $review     = $patch->get_review();
+        $prj        = $review->get_project();
+        $reviewers  = $review->getReviewers();
+
         if (!Pluf_Model_InArray($review->get_submitter(), $reviewers)) {
             $reviewers[] = $review->get_submitter();
         }
+
         $comments = $patch->getFileComments(array('order' => 'id DESC'));
         $gcomments = $patch->get_comments_list(array('order' => 'id DESC'));
-        $context = new Pluf_Template_Context(
-                       array(
-                             'review' => $review,
-                             'patch' => $patch,
-                             'comments' => $comments,
-                             'gcomments' => $gcomments,
-                             'project' => $prj,
-                             'url_base' => Pluf::f('url_base'),
-                             )
-                                             );
-        // build the list of emails and lang
-        foreach ($reviewers as $user) {
-            $email_lang = array($user->email,
-                                $user->language);
-            if (!in_array($email_lang, $to_email)) {
-                $to_email[] = $email_lang;
-            }
-        }
-        $tmpl = new Pluf_Template('idf/review/review-updated-email.txt');
-        foreach ($to_email as $email_lang) {
-            Pluf_Translation::loadSetLocale($email_lang[1]);
-            $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                   sprintf(__('Updated Code Review %s - %s (%s)'),
-                                           $review->id, $review->summary, $prj->shortname));
 
-            $email->addTextMessage($tmpl->render($context));
+        $recipients = $prj->getNotificationRecipientsForTab('review');
+
+        foreach ($reviewers as $user) {
+            if (array_key_exists($user->email, $recipients))
+                continue;
+            $recipients[$user->email] = $user->language;
+        }
+
+        $current_locale = Pluf_Translation::getLocale();
+
+        $from_email = Pluf::f('from_email');
+        $messageId  = '<'.md5('review'.$review->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
+
+        foreach ($recipients as $address => $language) {
+
+            if ($this->get_submitter()->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'review'    => $review,
+                'patch'     => $patch,
+                'comments'  => $comments,
+                'gcomments' => $gcomments,
+                'project'   => $prj,
+                'url_base'  => Pluf::f('url_base'),
+            ));
+
+            // reviews only updated through comments, see IDF_Review_Patch::notify()
+            $tplfile = 'idf/review/review-updated-email.txt';
+            $subject = __('Updated Code Review %s - %s (%s)');
+            $headers = array('References' => $messageId);
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email, $address,
+                                   sprintf($subject, $review->id, $review->summary, $prj->shortname));
+            $email->addTextMessage($text_email);
+            $email->addHeaders($headers);
             $email->sendMail();
         }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 

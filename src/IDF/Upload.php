@@ -273,31 +273,49 @@ class IDF_Upload extends Pluf_Model
         $item->payload = $payload;
         $item->create();
 
-        if ('' == $conf->getVal('downloads_notification_email', '')) {
-            return;
-        }
         $current_locale = Pluf_Translation::getLocale();
-        $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);
 
-        $context = new Pluf_Template_Context(
-            array('file' => $this,
-                  'urlfile' => $this->getAbsoluteUrl($this->get_project()),
-                  'project' => $this->get_project(),
-                  'tags' => $this->get_tags_list(),
-                  ));
-        $tmpl = new Pluf_Template('idf/downloads/download-created-email.txt');
-        $text_email = $tmpl->render($context);
-        $addresses = explode(',', $conf->getVal('downloads_notification_email'));
-        foreach ($addresses as $address) {
-            $email = new Pluf_Mail(Pluf::f('from_email'),
+        $from_email = Pluf::f('from_email');
+        $messageId  = '<'.md5('upload'.$this->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
+        $recipients = $project->getNotificationRecipientsForTab('downloads');
+
+        foreach ($recipients as $address => $language) {
+
+            if ($this->get_submitter()->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'file'    => $this,
+                'urlfile' => $this->getAbsoluteUrl($project),
+                'project' => $project,
+                'tags'    => $this->get_tags_list(),
+            ));
+
+            $tplfile = 'idf/downloads/download-created-email.txt';
+            $subject = __('New download - %s (%s)');
+            $headers = array('Message-ID' => $messageId);
+            if (!$create) {
+                $tplfile = 'idf/downloads/download-updated-email.txt';
+                $subject = __('Updated download - %s (%s)');
+                $headers = array('References' => $messageId);
+            }
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email,
                                    $address,
-                                   sprintf(__('New download - %s (%s)'),
+                                   sprintf($subject,
                                            $this->summary,
-                                           $this->get_project()->shortname));
+                                           $project->shortname));
             $email->addTextMessage($text_email);
+            $email->addHeaders($headers);
             $email->sendMail();
         }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

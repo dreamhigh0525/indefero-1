@@ -256,91 +256,72 @@ class IDF_Issue extends Pluf_Model
      */
     public function notify($conf, $create=true)
     {
-        $prj = $this->get_project();
-        $to_email = array();
-        if ('' != $conf->getVal('issues_notification_email', '')) {
-            $langs     = Pluf::f('languages', array('en'));
-            $addresses = explode(',', $conf->getVal('issues_notification_email'));
-            foreach ($addresses as $address) {
-                $to_email[] = array($address, $langs[0]);
-            }
-        }
+        $project = $this->get_project();
         $current_locale = Pluf_Translation::getLocale();
-        $id = '<'.md5($this->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
-        if ($create) {
-            if (null != $this->get_owner() and $this->owner != $this->submitter) {
-                $email_lang = array($this->get_owner()->email,
-                                    $this->get_owner()->language);
-                if (!in_array($email_lang, $to_email)) {
-                    $to_email[] = $email_lang;
-                }
-            }
-            $comments = $this->get_comments_list(array('order' => 'id ASC'));
-            $context = new Pluf_Template_Context(
-                                   array(
-                                         'issue' => $this,
-                                         'comment' => $comments[0],
-                                         'project' => $prj,
-                                         'url_base' => Pluf::f('url_base'),
-                                         )
-                                                 );
-            foreach ($to_email as $email_lang) {
-                Pluf_Translation::loadSetLocale($email_lang[1]);
-                $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                       sprintf(__('Issue %s - %s (%s)'),
-                                               $this->id, $this->summary, $prj->shortname));
-                $tmpl = new Pluf_Template('idf/issues/issue-created-email.txt');
-                $email->addTextMessage($tmpl->render($context));
-                $email->addHeaders(array('Message-ID'=>$id));
-                $email->sendMail();
-            }
-        } else {
-            $comments = $this->get_comments_list(array('order' => 'id DESC'));
-            $email_sender = '';
-            if (isset($comments[0])) {
-                $email_sender = $comments[0]->get_submitter()->email;
-            }
-            foreach ($this->get_interested_list() as $interested) {
-                $email_lang = array($interested->email,
-                                    $interested->language);
-                if (!in_array($email_lang, $to_email)) {
-                    $to_email[] = $email_lang;
-                }
-            }
-            $email_lang = array($this->get_submitter()->email,
-                                $this->get_submitter()->language);
-            if (!in_array($email_lang, $to_email)) {
-                $to_email[] = $email_lang;
-            }
-            if (null != $this->get_owner()) {
-                $email_lang = array($this->get_owner()->email,
-                                    $this->get_owner()->language);
-                if (!in_array($email_lang, $to_email)) {
-                    $to_email[] = $email_lang;
-                }
-            }
-            $context = new Pluf_Template_Context(
-                            array(
-                                  'issue' => $this,
-                                  'comments' => $comments,
-                                  'project' => $prj,
-                                  'url_base' => Pluf::f('url_base'),
-                                  ));
-            foreach ($to_email as $email_lang) {
-                if ($email_lang[0] == $email_sender) {
-                    continue; // Do not notify the one having created
-                              // the comment
-                }
-                Pluf_Translation::loadSetLocale($email_lang[1]);
-                $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                       sprintf(__('Updated Issue %s - %s (%s)'),
-                                               $this->id, $this->summary, $prj->shortname));
-                $tmpl = new Pluf_Template('idf/issues/issue-updated-email.txt');
-                $email->addTextMessage($tmpl->render($context));
-                $email->addHeaders(array('References'=>$id));
-                $email->sendMail();
-            }
+
+        $from_email = Pluf::f('from_email');
+        $comments   = $this->get_comments_list(array('order' => 'id DESC'));
+        $messageId  = '<'.md5('issue'.$this->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
+        $recipients = $project->getNotificationRecipientsForTab('issues');
+
+        // the submitter (might be skipped later on if he is the one who also
+        // submitted the last comment)
+        if (!array_key_exists($this->get_submitter()->email, $recipients)) {
+            $recipients[$this->get_submitter()->email] = $this->get_submitter()->language;
         }
+
+        // the owner of the issue, if we have one
+        $owner = $this->get_owner();
+        if (null != $owner && !array_key_exists($owner->email, $recipients)) {
+            $recipients[$owner->email] = $owner->language;
+        }
+
+        // additional users who starred the issue
+        foreach ($this->get_interested_list() as $interested) {
+            if (array_key_exists($interested->email, $recipients))
+                continue;
+            $recipients[$interested->email] = $interested->language;
+        }
+
+        foreach ($recipients as $address => $language) {
+
+            // do not notify the creator of the last comment,
+            // i.e. the user who triggered this notification
+            if ($comments[0]->get_submitter()->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'issue'      => $this,
+                'owns_issue' => $owner !== null && $owner->email === $address,
+                // the initial comment for create, the last for update
+                'comment'    => $comments[0],
+                'comments'   => $comments,
+                'project'    => $project,
+                'url_base'   => Pluf::f('url_base'),
+            ));
+
+            $tplfile = 'idf/issues/issue-created-email.txt';
+            $subject = __('Issue %s - %s (%s)');
+            $headers = array('Message-ID' => $messageId);
+            if (!$create) {
+                $tplfile = 'idf/issues/issue-updated-email.txt';
+                $subject = __('Updated Issue %s - %s (%s)');
+                $headers = array('References' => $messageId);
+            }
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email, $address,
+                                   sprintf($subject, $this->id, $this->summary, $project->shortname));
+            $email->addTextMessage($text_email);
+            $email->addHeaders($headers);
+            $email->sendMail();
+        }
+
         Pluf_Translation::loadSetLocale($current_locale);
     }
 }

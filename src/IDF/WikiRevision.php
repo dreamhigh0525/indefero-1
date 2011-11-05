@@ -243,42 +243,49 @@ class IDF_WikiRevision extends Pluf_Model
      */
     public function notify($conf, $create=true)
     {
-        if ('' == $conf->getVal('wiki_notification_email', '')) {
-            return;
-        }
+        $wikipage = $this->get_wikipage();
+        $project  = $wikipage->get_project();
         $current_locale = Pluf_Translation::getLocale();
-        $langs = Pluf::f('languages', array('en'));
-        Pluf_Translation::loadSetLocale($langs[0]);
-        $context = new Pluf_Template_Context(
-                       array(
-                             'page' => $this->get_wikipage(),
-                             'rev' => $this,
-                             'project' => $this->get_wikipage()->get_project(),
-                             'url_base' => Pluf::f('url_base'),
-                             )
-                                             );
-        if ($create) {
-            $template = 'idf/wiki/wiki-created-email.txt';
-            $title = sprintf(__('New Documentation Page %s - %s (%s)'),
-                             $this->get_wikipage()->title,
-                             $this->get_wikipage()->summary,
-                             $this->get_wikipage()->get_project()->shortname);
-        } else {
-            $template = 'idf/wiki/wiki-updated-email.txt';
-            $title = sprintf(__('Documentation Page Changed %s - %s (%s)'),
-                             $this->get_wikipage()->title,
-                             $this->get_wikipage()->summary,
-                             $this->get_wikipage()->get_project()->shortname);
-        }
-        $tmpl = new Pluf_Template($template);
-        $text_email = $tmpl->render($context);
 
-        $addresses = explode(',', $conf->getVal('wiki_notification_email'));
-        foreach ($addresses as $address) {
-            $email = new Pluf_Mail(Pluf::f('from_email'),
+        $from_email = Pluf::f('from_email');
+        $messageId  = '<'.md5('wiki'.$wikipage->id.md5(Pluf::f('secret_key'))).'@'.Pluf::f('mail_host', 'localhost').'>';
+        $recipients = $project->getNotificationRecipientsForTab('wiki');
+
+        foreach ($recipients as $address => $language) {
+
+            if ($this->get_submitter()->email === $address) {
+                continue;
+            }
+
+            Pluf_Translation::loadSetLocale($language);
+
+            $context = new Pluf_Template_Context(array(
+                'page'     => $wikipage,
+                'rev'      => $this,
+                'project'  => $project,
+                'url_base' => Pluf::f('url_base'),
+            ));
+
+            $tplfile = 'idf/wiki/wiki-created-email.txt';
+            $subject = __('New Documentation Page %s - %s (%s)');
+            $headers = array('Message-ID' => $messageId);
+            if (!$create) {
+                $tplfile = 'idf/wiki/wiki-updated-email.txt';
+                $subject = __('Documentation Page Changed %s - %s (%s)');
+                $headers = array('References' => $messageId);
+            }
+
+            $tmpl = new Pluf_Template($tplfile);
+            $text_email = $tmpl->render($context);
+
+            $email = new Pluf_Mail($from_email,
                                    $address,
-                                   $title);
+                                   sprintf($subject,
+                                           $wikipage->title,
+                                           $wikipage->summary,
+                                           $project->shortname));
             $email->addTextMessage($text_email);
+            $email->addHeaders($headers);
             $email->sendMail();
         }
 
