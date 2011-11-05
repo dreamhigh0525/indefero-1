@@ -55,6 +55,8 @@ or newer to properly run this version of Indefero!
 - Avatar URL generation use correctly the configuration (issue 732)
 - The SyncGit plugin no longer fails to remove a non-existing post-update hook
   on repository creation (issue 752)
+- When uploading a project logo, an existing uploaded file with the same name
+  no longer leads to an error, but is simple overwritten (fixes issue 740)
 - The error detection and reporting in the SyncMonotone plugin has been improved
 - The branch links users of the Subversion frontend get when they enter a wrong
   revision are fixed; this list is now also only displayed (for any SCM) if

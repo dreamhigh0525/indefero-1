@@ -67,6 +67,7 @@ class IDF_Form_ProjectConf extends Pluf_Form
                                                          'move_function_params' =>
                                                          array('upload_path' => $upload_path,
                                                                'upload_path_create' => true,
+                                                               'upload_overwrite' => true,
                                                                'file_name' => $filename,
                                                                )
                                                          ));
