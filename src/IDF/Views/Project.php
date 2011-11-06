@@ -68,7 +68,7 @@ class IDF_Views_Project
         $pages = array();
         if ($request->rights['hasWikiAccess']) {
             $tags = IDF_Views_Wiki::getWikiTags($prj);
-            $pages = $tags[0]->get_idf_wikipage_list();
+            $pages = $tags[0]->get_idf_wiki_page_list();
         }
         return Pluf_Shortcuts_RenderToResponse('idf/project/home.html',
                                                array(
@@ -131,8 +131,10 @@ class IDF_Views_Project
         }
         if (true === IDF_Precondition::accessWiki($request) &&
             ($model_filter == 'all' || $model_filter == 'documents')) {
-            $classes[] = '\'IDF_WikiPage\'';
-            $classes[] = '\'IDF_WikiRevision\'';
+            $classes[] = '\'IDF_Wiki_Page\'';
+            $classes[] = '\'IDF_Wiki_PageRevision\'';
+            $classes[] = '\'IDF_Wiki_Resource\'';
+            $classes[] = '\'IDF_Wiki_ResourceRevision\'';
         }
         if (true === IDF_Precondition::accessReview($request) &&
             ($model_filter == 'all' || $model_filter == 'reviews')) {

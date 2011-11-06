@@ -22,33 +22,30 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Add wiki functionality.
+ * Add the new IDF_Wiki_Resource and IDF_Wiki_ResourceRevision models.
+ *
  */
 
-function IDF_Migrations_7Wiki_up($params=null)
+function IDF_Migrations_20AddWikiResources_up($params=null)
 {
-    $models = array(
-                    'IDF_Wiki_Page',
-                    'IDF_Wiki_PageRevision',
-                    );
     $db = Pluf::db();
     $schema = new Pluf_DB_Schema($db);
-    foreach ($models as $model) {
-        $schema->model = new $model();
-        $schema->createTables();
-    }
+
+    $schema->model = new IDF_Wiki_Resource();
+    $schema->createTables();
+
+    $schema->model = new IDF_Wiki_ResourceRevision();
+    $schema->createTables();
 }
 
-function IDF_Migrations_7Wiki_down($params=null)
+function IDF_Migrations_20AddWikiResources_down($params=null)
 {
-    $models = array(
-                    'IDF_Wiki_PageRevision',
-                    'IDF_Wiki_Page',
-                    );
     $db = Pluf::db();
     $schema = new Pluf_DB_Schema($db);
-    foreach ($models as $model) {
-        $schema->model = new $model();
-        $schema->dropTables();
-    }
+
+    $schema->model = new IDF_Wiki_ResourceRevision();
+    $schema->dropTables();
+
+    $schema->model = new IDF_Wiki_Resource();
+    $schema->dropTables();
 }

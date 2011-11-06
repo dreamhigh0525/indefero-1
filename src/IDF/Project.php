@@ -427,13 +427,13 @@ GROUP BY uid";
             $dep_ids = IDF_Views_Wiki::getDeprecatedPagesIds($this);
             $extra = '';
             if (count($dep_ids)) {
-                $extra = ' AND idf_wikipage_id NOT IN ('.implode(', ', $dep_ids).') ';
+                $extra = ' AND idf_wiki_page_id NOT IN ('.implode(', ', $dep_ids).') ';
             }
-            $what_t = Pluf::factory('IDF_WikiPage')->getSqlTable();
-            $asso_t = $this->_con->pfx.'idf_tag_idf_wikipage_assoc';
+            $what_t = Pluf::factory('IDF_Wiki_Page')->getSqlTable();
+            $asso_t = $this->_con->pfx.'idf_tag_idf_wiki_page_assoc';
             $sql = 'SELECT '.$tag_t.'.id AS id, COUNT(*) AS nb_use FROM '.$tag_t.' '."\n".
                 'LEFT JOIN '.$asso_t.' ON idf_tag_id='.$tag_t.'.id '."\n".
-                'LEFT JOIN '.$what_t.' ON idf_wikipage_id='.$what_t.'.id '."\n".
+                'LEFT JOIN '.$what_t.' ON idf_wiki_page_id='.$what_t.'.id '."\n".
                 'WHERE idf_tag_id IS NOT NULL '.$extra.' AND '.$what_t.'.project='.$this->id.' GROUP BY '.$tag_t.'.id, '.$tag_t.'.class, '.$tag_t.'.name ORDER BY '.$tag_t.'.class ASC, '.$tag_t.'.name ASC';
         } elseif ($what == 'downloads') {
             $dep_ids = IDF_Views_Download::getDeprecatedFilesIds($this);
@@ -622,10 +622,10 @@ GROUP BY uid";
         $stats = array();
         $stats['total'] = 0;
         $what = array('downloads' => 'IDF_Upload',
-                      'reviews' => 'IDF_Review',
-                      'issues' => 'IDF_Issue',
-                      'docpages' => 'IDF_WikiPage',
-                      'commits' => 'IDF_Commit',
+                      'reviews'   => 'IDF_Review',
+                      'issues'    => 'IDF_Issue',
+                      'docpages'  => 'IDF_Wiki_Page',
+                      'commits'   => 'IDF_Commit',
                       );
         foreach ($what as $key=>$m) {
             $i = Pluf::factory($m)->getCount(array('filter' => 'project='.(int)$this->id));
@@ -755,7 +755,8 @@ GROUP BY uid";
         Pluf_Signal::send('IDF_Project::preDelete',
                           'IDF_Project', $params);
         $what = array('IDF_Upload', 'IDF_Review', 'IDF_Issue',
-                      'IDF_WikiPage', 'IDF_Commit', 'IDF_Tag',
+                      'IDF_Wiki_Page', 'IDF_Wiki_Resource',
+                      'IDF_Commit', 'IDF_Tag',
                       );
         foreach ($what as $m) {
             foreach (Pluf::factory($m)->getList(array('filter' => 'project='.(int)$this->id)) as $item) {

@@ -25,13 +25,13 @@
  * A revision of a wiki page.
  *
  */
-class IDF_WikiRevision extends Pluf_Model
+class IDF_Wiki_PageRevision extends Pluf_Model
 {
     public $_model = __CLASS__;
 
     function init()
     {
-        $this->_a['table'] = 'idf_wikirevisions';
+        $this->_a['table'] = 'idf_wikipagerevs';
         $this->_a['model'] = __CLASS__;
         $this->_a['cols'] = array(
                              // It is mandatory to have an "id" column.
@@ -43,7 +43,7 @@ class IDF_WikiRevision extends Pluf_Model
                             'wikipage' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
-                                  'model' => 'IDF_WikiPage',
+                                  'model' => 'IDF_Wiki_Page',
                                   'blank' => false,
                                   'verbose' => __('page'),
                                   'relate_name' => 'revisions',
@@ -83,7 +83,7 @@ class IDF_WikiRevision extends Pluf_Model
                                   'type' => 'Pluf_DB_Field_Serialized',
                                   'blank' => true,
                                   'verbose' => __('changes'),
-                                  'help_text' => 'Serialized array of the changes in the issue.',
+                                  'help_text' => 'Serialized array of the changes in the page.',
                                   ),
                             'creation_dtime' =>
                             array(
@@ -136,7 +136,7 @@ class IDF_WikiRevision extends Pluf_Model
             // update as update is performed to change the is_head
             // flag.
             $sql = new Pluf_SQL('wikipage=%s', array($this->wikipage));
-            $rev = Pluf::factory('IDF_WikiRevision')->getList(array('filter'=>$sql->gen()));
+            $rev = Pluf::factory('IDF_Wiki_PageRevision')->getList(array('filter'=>$sql->gen()));
             if ($rev->count() > 1) {
                 IDF_Timeline::insert($this, $this->get_wikipage()->get_project(),
                                      $this->get_submitter());
@@ -225,7 +225,7 @@ class IDF_WikiRevision extends Pluf_Model
 
 
     /**
-     * Notification of change of a WikiPage.
+     * Notification of change of a Wiki Page.
      *
      * The content of a WikiPage is in the IDF_WikiRevision object,
      * this is why we send the notificatin from there. This means that

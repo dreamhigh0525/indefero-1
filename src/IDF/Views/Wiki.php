@@ -40,7 +40,7 @@ class IDF_Views_Wiki
         $prj = $request->project;
         $title = sprintf(__('%s Documentation'), (string) $prj);
         // Paginator to paginate the pages
-        $pag = new Pluf_Paginator(new IDF_WikiPage());
+        $pag = new Pluf_Paginator(new IDF_Wiki_Page());
         $pag->class = 'recent-issues';
         $pag->item_extra_props = array('project_m' => $prj,
                                        'shortname' => $prj->shortname,
@@ -82,13 +82,13 @@ class IDF_Views_Wiki
     {
         $prj = $request->project;
         if (!isset($request->REQUEST['q']) or trim($request->REQUEST['q']) == '') {
-            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index', 
+            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
                                              array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
         $q = $request->REQUEST['q'];
         $title = sprintf(__('Documentation Search - %s'), $q);
-        $pages = new Pluf_Search_ResultSet(IDF_Search::mySearch($q, $prj, 'IDF_WikiPage'));
+        $pages = new Pluf_Search_ResultSet(IDF_Search::mySearch($q, $prj, 'IDF_Wiki_Page'));
         if (count($pages) > 100) {
             $pages->results = array_slice($pages->results, 0, 100);
         }
@@ -133,7 +133,7 @@ class IDF_Views_Wiki
         // Paginator to paginate the pages
         $ptags = self::getWikiTags($prj);
         $dtag = array_pop($ptags); // The last tag is the deprecated tag.
-        $pag = new Pluf_Paginator(new IDF_WikiPage());
+        $pag = new Pluf_Paginator(new IDF_Wiki_Page());
         $pag->model_view = 'join_tags';
         $pag->class = 'recent-issues';
         $pag->item_extra_props = array('project_m' => $prj,
@@ -179,10 +179,10 @@ class IDF_Views_Wiki
                                                   ));
             if ($form->isValid() and !isset($request->POST['preview'])) {
                 $page = $form->save();
-                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                                     array($prj->shortname, $page->title));
                 $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been created.'), $urlpage, Pluf_esc($page->title)));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             } elseif (isset($request->POST['preview'])) {
@@ -214,9 +214,9 @@ class IDF_Views_Wiki
     {
         $prj = $request->project;
         // Find the page
-        $sql = new Pluf_SQL('project=%s AND title=%s', 
+        $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($prj->id, $match[2]));
-        $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
+        $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() != 1) {
             return new Pluf_HTTP_Response_NotFound($request);
         }
@@ -224,7 +224,7 @@ class IDF_Views_Wiki
         $oldrev = false;
         // We grab the old revision if requested.
         if (isset($request->GET['rev']) and preg_match('/^[0-9]+$/', $request->GET['rev'])) {
-            $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_WikiRevision',
+            $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision',
                                                     $request->GET['rev']);
             if ($oldrev->wikipage != $page->id or $oldrev->is_head == true) {
                 return new Pluf_HTTP_Response_NotFound($request);
@@ -260,7 +260,7 @@ class IDF_Views_Wiki
     public function deleteRev($request, $match)
     {
         $prj = $request->project;
-        $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_WikiRevision', $match[2]);
+        $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision', $match[2]);
         $page = $oldrev->get_wikipage();
         $prj->inOr404($page);
         if ($oldrev->is_head == true) {
@@ -269,7 +269,7 @@ class IDF_Views_Wiki
         if ($request->method == 'POST') {
             $oldrev->delete();
             $request->user->setMessage(__('The old revision has been deleted.'));
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                             array($prj->shortname, $page->title));
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -300,9 +300,9 @@ class IDF_Views_Wiki
     {
         $prj = $request->project;
         // Find the page
-        $sql = new Pluf_SQL('project=%s AND title=%s', 
+        $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($prj->id, $match[2]));
-        $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
+        $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() != 1) {
             return new Pluf_HTTP_Response_NotFound($request);
         }
@@ -317,17 +317,17 @@ class IDF_Views_Wiki
             $form = new IDF_Form_WikiUpdate($request->POST, $params);
             if ($form->isValid() and !isset($request->POST['preview'])) {
                 $page = $form->save();
-                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                                     array($prj->shortname, $page->title));
                 $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been updated.'), $urlpage, Pluf_esc($page->title)));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             } elseif (isset($request->POST['preview'])) {
                 $preview = $request->POST['content'];
             }
         } else {
-                
+
             $form = new IDF_Form_WikiUpdate(null, $params);
         }
         return Pluf_Shortcuts_RenderToResponse('idf/wiki/update.html',
@@ -350,7 +350,7 @@ class IDF_Views_Wiki
     public function delete($request, $match)
     {
         $prj = $request->project;
-        $page = Pluf_Shortcuts_GetObjectOr404('IDF_WikiPage', $match[2]);
+        $page = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_Page', $match[2]);
         $prj->inOr404($page);
         $params = array('page' => $page);
         if ($request->method == 'POST') {
@@ -358,7 +358,7 @@ class IDF_Views_Wiki
             if ($form->isValid()) {
                 $form->save();
                 $request->user->setMessage(__('The documentation page has been deleted.'));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index', 
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
@@ -411,7 +411,7 @@ class IDF_Views_Wiki
         $sql = new Pluf_SQL('project=%s AND idf_tag_id=%s', array($project->id,
                                                                   $dtag->id));
         $ids = array();
-        foreach (Pluf::factory('IDF_WikiPage')->getList(array('filter' => $sql->gen(), 'view' => 'join_tags'))
+        foreach (Pluf::factory('IDF_Wiki_Page')->getList(array('filter' => $sql->gen(), 'view' => 'join_tags'))
                  as $file) {
             $ids[] = (int) $file->id;
         }
@@ -425,7 +425,7 @@ class IDF_Views_Wiki
     {
         $conf = new IDF_Conf();
         $conf->setProject($project);
-        $st = preg_split("/\015\012|\015|\012/", 
+        $st = preg_split("/\015\012|\015|\012/",
                          $conf->getVal('labels_wiki_predefined', IDF_Form_WikiConf::init_predefined), -1, PREG_SPLIT_NO_EMPTY);
         $auto = '';
         foreach ($st as $s) {

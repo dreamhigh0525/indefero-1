@@ -107,9 +107,9 @@ Add your content here. Format your content with:
         if (preg_match('/[^a-zA-Z0-9\-]/', $title)) {
             throw new Pluf_Form_Invalid(__('The title contains invalid characters.'));
         }
-        $sql = new Pluf_SQL('project=%s AND title=%s', 
+        $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($this->project->id, $title));
-        $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
+        $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() > 0) {
             throw new Pluf_Form_Invalid(__('A page with this title already exists.'));
         }
@@ -137,7 +137,7 @@ Add your content here. Format your content with:
             $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
             if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
                 list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)), 
+                list($class, $name) = array(mb_strtolower(trim($class)),
                                             trim($name));
             } else {
                 $class = 'other';
@@ -181,9 +181,9 @@ Add your content here. Format your content with:
                     $tags[] = IDF_Tag::add($name, $this->project, $class);
                 }
             }
-        } 
+        }
         // Create the page
-        $page = new IDF_WikiPage();
+        $page = new IDF_Wiki_Page();
         $page->project = $this->project;
         $page->submitter = $this->user;
         $page->summary = trim($this->cleaned_data['summary']);
@@ -193,7 +193,7 @@ Add your content here. Format your content with:
             $page->setAssoc($tag);
         }
         // add the first revision
-        $rev = new IDF_WikiRevision();
+        $rev = new IDF_Wiki_PageRevision();
         $rev->wikipage = $page;
         $rev->content = $this->cleaned_data['content'];
         $rev->submitter = $this->user;

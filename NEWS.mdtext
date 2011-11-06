@@ -3,6 +3,9 @@
 The development of this version of Indefero has partially been sponsored
 by the friendly folks from Scilab <http://www.scilab.org/>!
 
+ATTENTION: You need Pluf [4121ca4](http://projects.ceondo.com/p/pluf/source/commit/4121ca4)
+or newer to properly run this version of Indefero!
+
 ## Changes
 
 - Indefero's post-commit web hook now by default issues HTTP PUT instead of

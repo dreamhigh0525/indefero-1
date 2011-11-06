@@ -28,10 +28,10 @@ Pluf::loadFunction('Pluf_Template_dateAgo');
  * Base definition of a wiki page.
  *
  * A wiki page can have tags and be starred by the users. The real
- * content of the page is stored in the IDF_WikiRevision
+ * content of the page is stored in the IDF_Wiki_PageRevision
  * object. Several revisions are associated to a given page.
  */
-class IDF_WikiPage extends Pluf_Model
+class IDF_Wiki_Page extends Pluf_Model
 {
     public $_model = __CLASS__;
 
@@ -44,9 +44,9 @@ class IDF_WikiPage extends Pluf_Model
                             'id' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
@@ -70,7 +70,7 @@ class IDF_WikiPage extends Pluf_Model
                                   'verbose' => __('summary'),
                                   'help_text' => __('A one line description of the page content.'),
                                   ),
-                            'submitter' => 
+                            'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'Pluf_User',
@@ -78,7 +78,7 @@ class IDF_WikiPage extends Pluf_Model
                                   'verbose' => __('submitter'),
                                   'relate_name' => 'submitted_wikipages',
                                   ),
-                            'interested' => 
+                            'interested' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Manytomany',
                                   'model' => 'Pluf_User',
@@ -88,7 +88,7 @@ class IDF_WikiPage extends Pluf_Model
                                   ),
                             'tags' =>
                             array(
-                                  'type' => 'Pluf_DB_Field_Manytomany', 
+                                  'type' => 'Pluf_DB_Field_Manytomany',
                                   'blank' => true,
                                   'model' => 'IDF_Tag',
                                   'verbose' => __('labels'),
@@ -106,19 +106,19 @@ class IDF_WikiPage extends Pluf_Model
                                   'verbose' => __('modification date'),
                                   ),
                             );
-        $this->_a['idx'] = array(                           
+        $this->_a['idx'] = array(
                             'modif_dtime_idx' =>
                             array(
                                   'col' => 'modif_dtime',
                                   'type' => 'normal',
                                   ),
                             );
-        $table = $this->_con->pfx.'idf_tag_idf_wikipage_assoc';
+        $table = $this->_con->pfx.'idf_tag_idf_wiki_page_assoc';
         $this->_a['views'] = array(
-                              'join_tags' => 
+                              'join_tags' =>
                               array(
                                     'join' => 'LEFT JOIN '.$table
-                                    .' ON idf_wikipage_id=id',
+                                    .' ON idf_wiki_page_id=id',
                                     ),
                                    );
     }
@@ -144,7 +144,7 @@ class IDF_WikiPage extends Pluf_Model
         IDF_Search::remove($this);
     }
 
-    function get_current_revision() 
+    function get_current_revision()
     {
         $true = Pluf_DB_BooleanToDb(true, $this->getDbConnection());
         $rev = $this->get_revisions_list(array('filter' => 'is_head='.$true,
@@ -167,7 +167,7 @@ class IDF_WikiPage extends Pluf_Model
         // that the page as a given revision in the database when
         // doing the indexing.
         if ($create) {
-            IDF_Timeline::insert($this, $this->get_project(), 
+            IDF_Timeline::insert($this, $this->get_project(),
                                  $this->get_submitter());
         }
     }
@@ -180,12 +180,12 @@ class IDF_WikiPage extends Pluf_Model
      * as such create links to other items etc. You can consider that
      * if displayed, you can create a link to it.
      *
-     * @param Pluf_HTTP_Request 
+     * @param Pluf_HTTP_Request
      * @return Pluf_Template_SafeString
      */
     public function timelineFragment($request)
     {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                         array($request->project->shortname,
                                               $this->title));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
@@ -195,14 +195,14 @@ class IDF_WikiPage extends Pluf_Model
         $user = $stag->start($this->get_submitter(), $request, '', false);
         $out .= sprintf(__('<a href="%1$s" title="View page">%2$s</a>, %3$s'), $url, Pluf_esc($this->title), Pluf_esc($this->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s">page&nbsp;%s</a>, by %s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%s">page&nbsp;%s</a>, by %s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
     public function feedFragment($request)
     {
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
                                       array($request->project->shortname,
                                             $this->title));
         $title = sprintf(__('%s: Documentation page %s added - %s'),
