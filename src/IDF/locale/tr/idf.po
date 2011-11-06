@@ -3,67 +3,67 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# William MARTIN <wysman@gmail.com>, 2011.
+# Ozan  <uobasar@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
 "POT-Creation-Date: 2011-10-31 01:11+0100\n"
-"PO-Revision-Date: 2011-10-31 00:19+0000\n"
-"Last-Translator: tommyd <me@thomaskeller.biz>\n"
-"Language-Team: Czech (http://www.transifex.net/projects/p/indefero/team/cs/)\n"
+"PO-Revision-Date: 2011-10-31 14:56+0000\n"
+"Last-Translator: uobasar <uobasar@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 #: IDF/Commit.php:55 IDF/Conf.php:54 IDF/Issue.php:52 IDF/Review.php:65
 #: IDF/Search/Occ.php:69 IDF/Tag.php:52 IDF/Upload.php:49 IDF/WikiPage.php:54
 msgid "project"
-msgstr "projekt"
+msgstr "proje"
 
 #: IDF/Commit.php:63 IDF/Issue.php:67 IDF/IssueComment.php:65
 #: IDF/IssueFile.php:57 IDF/IssueRelation.php:69 IDF/Review/Comment.php:69
 #: IDF/Review.php:80 IDF/Upload.php:91 IDF/WikiPage.php:78
 #: IDF/WikiRevision.php:79
 msgid "submitter"
-msgstr "odesílatel"
+msgstr ""
 
 #: IDF/Commit.php:87 IDF/Issue.php:60 IDF/Review/Patch.php:60
 #: IDF/Review.php:73 IDF/Upload.php:57 IDF/WikiPage.php:70
 #: IDF/WikiRevision.php:65
 msgid "summary"
-msgstr "souhrn"
+msgstr "özet"
 
 #: IDF/Commit.php:93
 msgid "changelog"
-msgstr "seznam změn"
+msgstr ""
 
 #: IDF/Commit.php:100 IDF/Issue.php:105 IDF/IssueComment.php:79
 #: IDF/IssueFile.php:96 IDF/IssueRelation.php:75 IDF/Review/Comment.php:90
 #: IDF/Review/FileComment.php:75 IDF/Review/Patch.php:87 IDF/Review.php:108
 #: IDF/Upload.php:112 IDF/WikiPage.php:100 IDF/WikiRevision.php:92
 msgid "creation date"
-msgstr "datum vytvoření"
+msgstr "oluşturulma tarihi"
 
 #: IDF/Commit.php:238
 #, php-format
 msgid "Commit&nbsp;%s, by %s"
-msgstr "Commit&nbsp;%s,  %s"
+msgstr ""
 
 #: IDF/Commit.php:329
 #, php-format
 msgid "New Commit %s - %s (%s)"
-msgstr "Nový commit %s - %s (%s)"
+msgstr ""
 
 #: IDF/Conf.php:61 IDF/Gconf.php:73
 msgid "key"
-msgstr "klíč"
+msgstr "anahtar"
 
 #: IDF/Conf.php:67 IDF/Gconf.php:79
 msgid "value"
-msgstr "hodnota"
+msgstr "değer"
 
 #: IDF/Diff.php:460
 msgid "Old"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: IDF/EmailAddress.php:49 IDF/Key.php:49
 msgid "user"
-msgstr "uživatel"
+msgstr "kullanıcı"
 
 #: IDF/EmailAddress.php:55
 msgid "email"
@@ -128,7 +128,7 @@ msgstr ""
 #: IDF/Form/Admin/ProjectCreate.php:70 IDF/Form/Admin/ProjectUpdate.php:51
 #: IDF/Project.php:79
 msgid "A one line description of the project."
-msgstr "Jednořádkový popis projektu."
+msgstr "Projenin tek satırlık tanımı."
 
 #: IDF/Form/Admin/ProjectCreate.php:77
 msgid "Repository type"
@@ -568,8 +568,6 @@ msgstr ""
 msgid "The following login is invalid: %s."
 msgid_plural "The following logins are invalid: %s."
 msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #: IDF/Form/Password.php:34
 msgid "Your login or email"
@@ -986,11 +984,11 @@ msgstr ""
 
 #: IDF/Gconf.php:60 IDF/Search/Occ.php:56
 msgid "model class"
-msgstr "třída modelu"
+msgstr ""
 
 #: IDF/Gconf.php:66 IDF/Search/Occ.php:62
 msgid "model id"
-msgstr "id modelu"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/admin/base.html.php:3
 msgid "Project Summary"
@@ -1239,7 +1237,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/wiki/view.html.php:9
 #, php-format
 msgid "by %%submitter%%"
-msgstr "kým %%submitter%%"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:6
 msgid "Delete File"
@@ -1269,7 +1267,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/wiki/deletepage.html.php:7
 #: IDF/gettexttemplates/idf/wiki/update.html.php:7
 msgid "Cancel"
-msgstr "Storno"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:8
 #: IDF/gettexttemplates/idf/downloads/view.html.php:14
@@ -1313,7 +1311,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:12
 #: IDF/IssueComment.php:157 IDF/WikiRevision.php:175
 msgid "Labels:"
-msgstr "Nálepky:"
+msgstr "Etiketler:"
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:3
 msgid "A new file is available for download:"
@@ -1328,7 +1326,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:4
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:4
 msgid "Hello,"
-msgstr "Ahoj,"
+msgstr "Merhaba,"
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:5
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:6
@@ -1339,7 +1337,7 @@ msgstr "Ahoj,"
 #: IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:5
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:5
 msgid "Project:"
-msgstr "Projekt:"
+msgstr "Proje:"
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:6
 msgid "Submitted by:"
@@ -1354,7 +1352,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/review/view.html.php:31
 #: IDF/gettexttemplates/idf/user/public.html.php:4
 msgid "Description:"
-msgstr "Popis:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/feedfragment.xml.php:3
 msgid "Details"
@@ -1446,7 +1444,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/index.html.php:3 IDF/Views/Admin.php:57
 #: IDF/Views.php:47
 msgid "Projects"
-msgstr "Projekty"
+msgstr "Projeler"
 
 #: IDF/gettexttemplates/idf/faq.html.php:3
 msgid ""
@@ -1569,7 +1567,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/project/home.html.php:3
 #: IDF/gettexttemplates/idf/project/timeline.html.php:4
 msgid "Welcome"
-msgstr "Vítejte"
+msgstr "Hoşgeldiniz"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:3
 #: IDF/gettexttemplates/idf/main-menu.html.php:6
@@ -1681,7 +1679,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:11
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:17
 msgid "Attachments:"
-msgstr "Přílohy:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/projects/index.html.php:7
 msgid "Database:"
@@ -1872,7 +1870,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:4 IDF/Issue.php:99
 #: IDF/Review.php:102
 msgid "status"
-msgstr "status"
+msgstr "durum"
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:5
 msgid "action"
@@ -1966,7 +1964,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:3
 #, php-format
 msgid "Attachment to issue <a href=\"%%url%%\">%%issue.id%%</a>"
-msgstr "Příloha k předmětu <a href=\"%%url%%\">%%issue.id%%</a>"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:5
 #: IDF/gettexttemplates/idf/review/view.html.php:35
@@ -1979,7 +1977,7 @@ msgstr "Příloha k předmětu <a href=\"%%url%%\">%%issue.id%%</a>"
 #: IDF/gettexttemplates/idf/source/mtn/tree.html.php:12
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:7
 msgid "Archive"
-msgstr "Archív"
+msgstr "Arşiv"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:6
 #: IDF/gettexttemplates/idf/source/git/file.html.php:7
@@ -1987,7 +1985,7 @@ msgstr "Archív"
 #: IDF/gettexttemplates/idf/source/mtn/file.html.php:8
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:8
 msgid "Download this file"
-msgstr "Stáhnout tento soubor"
+msgstr "Bu dosyayı indir"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:7
 #: IDF/gettexttemplates/idf/issues/view.html.php:28
@@ -1996,7 +1994,7 @@ msgstr "Stáhnout tento soubor"
 #: IDF/gettexttemplates/idf/wiki/deletepage.html.php:8
 #: IDF/gettexttemplates/idf/wiki/view.html.php:14
 msgid "Created:"
-msgstr "Vytvořeno:"
+msgstr "Oluşturulma tarihi:"
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:4
 msgid "All Issues"
@@ -2004,7 +2002,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:5
 msgid "My Issues"
-msgstr "Moje předmět k řešení"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:6
 msgid "My watch list"
@@ -2017,16 +2015,16 @@ msgstr ""
 #: IDF/gettexttemplates/idf/issues/search.html.php:8
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:5
 msgid "New Issue"
-msgstr "Nový předmět k řešení"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:8
 #: IDF/gettexttemplates/idf/wiki/base.html.php:6
 msgid "Search"
-msgstr "Hledat"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:9
 msgid "Back to the issue"
-msgstr "Zpátky k předmětu"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/by-label.html.php:3
 #, php-format
@@ -2034,16 +2032,14 @@ msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
 "<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 msgstr ""
-"<p><strong>Otevřené předměty k řešení:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Zavřené předměty k řešení:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
 
 #: IDF/gettexttemplates/idf/issues/by-label.html.php:7
 msgid "Label:"
-msgstr "Nálepka:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/by-label.html.php:8
 msgid "Completion:"
-msgstr "Doplňování:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:3
 msgid ""
@@ -2055,20 +2051,11 @@ msgid ""
 "<li><strong>Do not provide any password or confidential information!</strong></li>\n"
 "</ul>"
 msgstr ""
-"<p>Před odesláním předmetu k řešení, nezapomeňte poskytnout následující informace:</p>\n"
-"<ul>\n"
-"<li>Kroky potřebné pro zopakování problému.</li>\n"
-"<li>Verzi softwaru a typ operačního systému, který používate.</li>\n"
-"<li>Jakákoli informace, která může pomoci vývojářům vyřešit problém.</li>\n"
-"<li><strong>Neposkytujte žádná hesla ani jiné citlivé informace!</strong></li>\n"
-"</ul>"
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:10
 msgid ""
 "The form contains some errors. Please correct them to submit the issue."
 msgstr ""
-"Formulář obsahuje nějaké chyby. Prosím opravte je a poté odešlete předmět k "
-"řešení."
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:11
 #: IDF/gettexttemplates/idf/issues/create.html.php:13
@@ -2077,23 +2064,23 @@ msgstr ""
 #: IDF/gettexttemplates/idf/wiki/create.html.php:5
 #: IDF/gettexttemplates/idf/wiki/update.html.php:5
 msgid "Preview"
-msgstr "Náhled"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:12
 msgid "Submit Issue"
-msgstr "Odeslat předmět k řešení"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:15
 #: IDF/gettexttemplates/idf/issues/view.html.php:34
 msgid "Attach file"
-msgstr "Přiložit soubor"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:16
 #: IDF/gettexttemplates/idf/issues/create.html.php:17
 #: IDF/gettexttemplates/idf/issues/view.html.php:35
 #: IDF/gettexttemplates/idf/issues/view.html.php:36
 msgid "Attach another file"
-msgstr "Přiložit další soubor"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:3
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:12
@@ -2104,7 +2091,7 @@ msgstr "Přiložit další soubor"
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:11
 #: IDF/IssueComment.php:151
 msgid "Summary:"
-msgstr "Souhrn:"
+msgstr "Özet:"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:4
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:7
@@ -2117,7 +2104,7 @@ msgstr "Souhrn:"
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:10
 #: IDF/gettexttemplates/idf/review/view.html.php:39 IDF/IssueComment.php:153
 msgid "Status:"
-msgstr "Status:"
+msgstr "Durum:"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:5
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:14
@@ -2126,7 +2113,7 @@ msgstr "Status:"
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:5
 #: IDF/IssueComment.php:155
 msgid "Owner:"
-msgstr "Vlastník:"
+msgstr "Sahibi:"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:7
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:16
@@ -2142,46 +2129,44 @@ msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
 "<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
 msgstr ""
-"<p><strong>Otevřené předměty k řešení:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Zavřené předměty k řešení:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:3
 msgid ""
 "A new issue has been created and assigned\n"
 "to you:"
-msgstr "Nový předmět k řešení byl vytvořen a vám přiřazen:"
+msgstr "Yeni bir sorun bildirildi ve size atandı:"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:8
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:8
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:7
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:11
 msgid "Reported by:"
-msgstr "Nahlášeno kým:"
+msgstr "Bildiren:"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:12
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:18
 msgid "Issue:"
-msgstr "Předmět k řešení:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:3
 msgid "The following issue has been updated:"
-msgstr "Následující předmět k řešení byl aktualizován:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:4
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:4
 #, php-format
 msgid "By %%who%%, %%c.creation_dtime%%:"
-msgstr "Kým %%who%%, %%c.creation_dtime%%:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:9
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:8
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:12
 msgid "URL:"
-msgstr "URL:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:11
 msgid "Comments (last first):"
-msgstr "Komentář (poslední jako první):"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/search.html.php:3
 #, php-format
@@ -2224,11 +2209,6 @@ msgid "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>
 msgid_plural ""
 "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
 msgstr[0] ""
-"Zobrazit <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% zavřené</a>."
-msgstr[1] ""
-"Zobrazit <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% zavřené</a>."
-msgstr[2] ""
-"Zobrazit <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% zavřené</a>."
 
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:4
 #, php-format
@@ -2236,23 +2216,21 @@ msgid "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgid_plural ""
 "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:6
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:7
 msgid "Submitted issues:"
-msgstr "Odeslané předměty k řešení:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:7
 #: IDF/gettexttemplates/idf/user/dashboard.html.php:6
 msgid "Working issues:"
-msgstr "Rozpracované předmět k řešení:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:3
 #, php-format
 msgid "Reported by %%submitter%%, %%c.creation_dtime%%"
-msgstr "Nahlášeno kým %%submitter%%, %%c.creation_dtime%%"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:4
 #: IDF/gettexttemplates/idf/review/view.html.php:22
@@ -2260,29 +2238,23 @@ msgstr "Nahlášeno kým %%submitter%%, %%c.creation_dtime%%"
 msgid ""
 "Comment <a href=\"%%url%%\">%%i%%</a> by %%submitter%%, %%c.creation_dtime%%"
 msgstr ""
-"Komentář <a href=\"%%url%%\">%%i%%</a> kým %%submitter%%, "
-"%%c.creation_dtime%%"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:5
 #, php-format
 msgid "<a href=\"%%url%%\">Sign in</a> to reply to this comment."
-msgstr "<a href=\"%%url%%\">Přihlásit se</a> pro odpověď na tento komentář."
+msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:6
 msgid ""
 "This issue is marked as closed, add a comment only if you think this issue "
 "is still valid and more work is needed to fully fix it."
 msgstr ""
-"Předmět je nahlášen jako uzavřený, přidejte komentář jen tehdy, pokud si "
-"myslíte, že problém nebyl vyřešen a potřebuje další práci k jeho opravě."
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:8
 #, php-format
 msgid "%%interested%% person"
 msgid_plural "%%interested%% persons"
-msgstr[0] "%%interested%% osoba"
-msgstr[1] "%%interested%% osoby"
-msgstr[2] "%%interested%% osoby"
+msgstr[0] ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:9
 #, php-format
@@ -2325,8 +2297,6 @@ msgstr ""
 msgid ""
 "The form contains some errors. Please correct them to change the issue."
 msgstr ""
-"Formulář obsahuje nějaké chyby. Prosím opravte je ke změně předmětu k "
-"řešení."
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:25
 msgid "Submit Changes"
@@ -2349,7 +2319,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/login_form.html.php:5
 msgid "My login is"
-msgstr "Můj login je"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/login_form.html.php:6
 msgid "My password is"
@@ -2357,11 +2327,11 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/login_form.html.php:7
 msgid "Sign in"
-msgstr "Přihlásit"
+msgstr "Giriş"
 
 #: IDF/gettexttemplates/idf/login_form.html.php:8
 msgid "I lost my password!"
-msgstr "Ztratil jsem heslo!"
+msgstr "Parolamı unuttum!"
 
 #: IDF/gettexttemplates/idf/login_form.html.php:9
 msgid "Welcome."
@@ -2403,36 +2373,36 @@ msgstr ""
 #: IDF/gettexttemplates/idf/project/home.html.php:4
 #: IDF/gettexttemplates/idf/project/timeline.html.php:5
 msgid "Latest Updates"
-msgstr "Poslední změny"
+msgstr "Son Güncellemeler"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:5
 msgid "Featured Downloads"
-msgstr "Doporučené soubory ke stažení"
+msgstr "Sunulan yüklemeler"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:6
 #: IDF/gettexttemplates/idf/project/home.html.php:8
 msgid "show more..."
-msgstr "zobrazit více.."
+msgstr "Daha fazla göster..."
 
 #: IDF/gettexttemplates/idf/project/home.html.php:7
 msgid "Featured Documentation"
-msgstr "Doporučená dokumentace"
+msgstr "Sunulan Dokümanlar"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:9
 msgid "Development Team"
-msgstr "Vývojářksý team"
+msgstr "Geliştirme Ekibi"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:10
 msgid "Admins"
-msgstr "Administrátoři"
+msgstr "Yöneticiler"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:11
 msgid "Happy Crew"
-msgstr "Šťastný team"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/project/timeline.html.php:3
 msgid "Latest updates"
-msgstr "Poslední změny"
+msgstr "Son güncellemeler"
 
 #: IDF/gettexttemplates/idf/project/timeline.html.php:6
 #: IDF/Views/Project.php:90
@@ -2536,7 +2506,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/register/index.html.php:7 IDF/Views.php:90
 msgid "Create Your Account"
-msgstr "Vytvořte si účet"
+msgstr "Yeni Hesap Oluştur"
 
 #: IDF/gettexttemplates/idf/register/index.html.php:9
 msgid ""
@@ -2659,16 +2629,12 @@ msgstr ""
 msgid "%%ndiff%% diff"
 msgid_plural "%%ndiff%% diffs"
 msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:19
 #, php-format
 msgid "%%nc%% comment"
 msgid_plural "%%nc%% comments"
 msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:20
 #, php-format
@@ -3468,106 +3434,102 @@ msgstr ""
 
 #: IDF/Issue.php:76
 msgid "owner"
-msgstr "vlastník"
+msgstr "sahip"
 
 #: IDF/Issue.php:84 IDF/WikiPage.php:86
 msgid "interested users"
-msgstr "zainteresovaní uživatelé"
+msgstr "ilgilenen kullanıcılar"
 
 #: IDF/Issue.php:85
 msgid ""
 "Interested users will get an email notification when the issue is changed."
-msgstr "Zainteresovaní čtenáři dostanou e-mail, pokud se problematika změní."
+msgstr ""
 
 #: IDF/Issue.php:92 IDF/Review.php:95 IDF/Upload.php:99 IDF/WikiPage.php:94
 msgid "labels"
-msgstr "nálepky"
+msgstr "etiketler"
 
 #: IDF/Issue.php:111 IDF/IssueFile.php:102 IDF/Review.php:114
 #: IDF/Upload.php:118 IDF/WikiPage.php:106
 msgid "modification date"
-msgstr "datum změny"
+msgstr "düzenlenme tarihi"
 
 #: IDF/Issue.php:212 IDF/IssueComment.php:143
 #, php-format
 msgid "<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
 msgstr ""
-"<a href=\"%1$s\" class=\"%2$s\" title=\"Zobrazit předmět k řešení\">předmět "
-"k řešení %3$d</a>, %4$s"
 
 #: IDF/Issue.php:214
 #, php-format
 msgid "Creation of <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
-msgstr "Vytvoření <a href=\"%s\" class=\"%s\">předmět&nbsp;%d</a>, by %s"
+msgstr ""
 
 #: IDF/Issue.php:224
 #, php-format
 msgid "%s: Issue %d created - %s"
-msgstr "%s: Předmět %d vytvořen - %s"
+msgstr ""
 
 #: IDF/Issue.php:290
 #, php-format
 msgid "Issue %s - %s (%s)"
-msgstr "Předmět k řešení %s - %s (%s)"
+msgstr ""
 
 #: IDF/Issue.php:336
 #, php-format
 msgid "Updated Issue %s - %s (%s)"
-msgstr "Předmět aktualizován %s - %s (%s)"
+msgstr ""
 
 #: IDF/IssueComment.php:51 IDF/IssueRelation.php:47
 msgid "issue"
-msgstr "předmět k řešení"
+msgstr "sorun"
 
 #: IDF/IssueComment.php:58 IDF/IssueFile.php:49 IDF/Review/Comment.php:62
 #: IDF/Review/FileComment.php:49 IDF/Review/FileComment.php:69
 msgid "comment"
-msgstr "komentář"
+msgstr "yorum"
 
 #: IDF/IssueComment.php:72 IDF/Review/Comment.php:75 IDF/Upload.php:63
 #: IDF/WikiRevision.php:85
 msgid "changes"
-msgstr "změny"
+msgstr "değişiklikler"
 
 #: IDF/IssueComment.php:73
 msgid "Serialized array of the changes in the issue."
-msgstr "Serializované pole změn předmětů k řešení."
+msgstr ""
 
 #: IDF/IssueComment.php:180
 #, php-format
 msgid "Comment on <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
 msgstr ""
-"Komentář k <a href=\"%s\" class=\"%s\">předmětu k "
-"řešení&nbsp;č.&nbsp;%d</a>, %s"
 
 #: IDF/IssueComment.php:191
 #, php-format
 msgid "%s: Comment on issue %d - %s"
-msgstr "%s: komentář k předmětu %d - %s"
+msgstr ""
 
 #: IDF/IssueFile.php:64
 msgid "file name"
-msgstr "jméno souboru"
+msgstr "dosya adı"
 
 #: IDF/IssueFile.php:70
 msgid "the file"
-msgstr "soubor"
+msgstr "dosya"
 
 #: IDF/IssueFile.php:76
 msgid "file size"
-msgstr "velikost souboru"
+msgstr "dosya boyutu"
 
 #: IDF/IssueFile.php:84
 msgid "type"
-msgstr "typ"
+msgstr "tip"
 
 #: IDF/IssueFile.php:86
 msgid "Image"
-msgstr "obrázek"
+msgstr "Resim"
 
 #: IDF/IssueFile.php:87
 msgid "Other"
-msgstr "Ostatní"
+msgstr "Diğer"
 
 #: IDF/IssueRelation.php:54
 msgid "verb"
@@ -3724,40 +3686,38 @@ msgstr ""
 
 #: IDF/Project.php:62 IDF/Tag.php:66
 msgid "name"
-msgstr "jméno"
+msgstr "isim"
 
 #: IDF/Project.php:69
 msgid "short name"
-msgstr "krátké jméno"
+msgstr "kısa isim"
 
 #: IDF/Project.php:70
 msgid ""
 "Used in the url to access the project, must be short with only letters and "
 "numbers."
 msgstr ""
-"Používáné v url k projektu, musí být krátké a obsahovat pouze písmena a "
-"čísla."
 
 #: IDF/Project.php:78
 msgid "short description"
-msgstr "krátký popis"
+msgstr "kısa tanım"
 
 #: IDF/Project.php:86 IDF/Review/Patch.php:74
 msgid "description"
-msgstr "popis"
+msgstr "tanım"
 
 #: IDF/Project.php:87
 msgid "The description can be extended using the markdown syntax."
-msgstr "Popis může být rozšířen pomocí markdown syntaxe."
+msgstr ""
 
 #: IDF/Project.php:93
 msgid "private"
-msgstr "soukromé"
+msgstr "özel"
 
 #: IDF/Project.php:130
 #, php-format
 msgid "Project \"%s\" not found."
-msgstr "Projekt \"%s\" nenalezen."
+msgstr "\"%s\" isimli proje bulunamadı."
 
 #: IDF/Review/Comment.php:55 IDF/Review/Patch.php:80
 msgid "patch"
@@ -3852,31 +3812,31 @@ msgstr ""
 
 #: IDF/Tag.php:59
 msgid "tag class"
-msgstr "třída tagu"
+msgstr "etiket sınıfı"
 
 #: IDF/Tag.php:60
 msgid "The class of the tag."
-msgstr "Třída tagu."
+msgstr "Etiketin sınıfı."
 
 #: IDF/Tag.php:73
 msgid "lcname"
-msgstr "lcname"
+msgstr ""
 
 #: IDF/Tag.php:74
 msgid "Lower case version of the name for fast searching."
-msgstr "Jméno souboru s malými písmenky pro rychlé vyhledávání."
+msgstr "Hızlı arama için ismin küçük harf hali."
 
 #: IDF/Template/Markdown.php:75
 msgid "Create this documentation page"
-msgstr "Vytvořit tuto dokumentační stránku"
+msgstr ""
 
 #: IDF/Template/ShowUser.php:51
 msgid "Anonymous"
-msgstr "Anonym"
+msgstr ""
 
 #: IDF/Template/ShowUser.php:54
 msgid "Me"
-msgstr "Já"
+msgstr ""
 
 #: IDF/Timeline/Paginator.php:49
 msgid "Today"
@@ -3884,15 +3844,15 @@ msgstr ""
 
 #: IDF/Upload.php:70
 msgid "file"
-msgstr "soubor"
+msgstr "dosya"
 
 #: IDF/Upload.php:71
 msgid "The path is relative to the upload path."
-msgstr "Cesta je relativní k adresáři nahrávaných souborů."
+msgstr ""
 
 #: IDF/Upload.php:78
 msgid "file size in bytes"
-msgstr "velikost souboru v bytech"
+msgstr "bayt cinsinden dosya boyutu"
 
 #: IDF/Upload.php:84
 msgid "MD5"
@@ -3900,27 +3860,27 @@ msgstr ""
 
 #: IDF/Upload.php:106
 msgid "number of downloads"
-msgstr "počet stažení"
+msgstr "indirme sayısı"
 
 #: IDF/Upload.php:201
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View download\">Download %2$d</a>, %3$s"
-msgstr "<a href=\"%1$s\" title=\"Zobrazit soubor\">Stáhnout %2$d</a>, %3$s"
+msgstr ""
 
 #: IDF/Upload.php:204
 #, php-format
 msgid "Addition of <a href=\"%s\">download&nbsp;%d</a>, by %s"
-msgstr "<a href=\"%s\">Soubor&nbsp;%d</a> přidán, kým - %s"
+msgstr ""
 
 #: IDF/Upload.php:214
 #, php-format
 msgid "%s: Download %d added - %s"
-msgstr "%s: Soubor %d přidán - %s"
+msgstr ""
 
 #: IDF/Upload.php:256
 #, php-format
 msgid "New download - %s (%s)"
-msgstr "Nové stažení - %s (%s)"
+msgstr ""
 
 #: IDF/Views/Admin.php:60
 msgid "This table shows the projects in the forge."
@@ -4044,7 +4004,7 @@ msgstr ""
 
 #: IDF/Views/Admin.php:471
 msgid "Yes"
-msgstr "Ano"
+msgstr "Evet"
 
 #: IDF/Views/Admin.php:471
 msgid "No"
@@ -4094,18 +4054,17 @@ msgstr ""
 #: IDF/Views/Download.php:297
 #, php-format
 msgid "%1$s Downloads with Label %2$s"
-msgstr "%1$s soubory ke stažení s nálepkou %2$s"
+msgstr ""
 
 #: IDF/Views/Download.php:307
 #, php-format
 msgid "This table shows the downloads with label %s."
 msgstr ""
-"Tato tabulka ukazuje soubory ke stažení s nálepkou problémy k řešení %s."
 
 #: IDF/Views/Issue.php:41
 #, php-format
 msgid "%s Open Issues"
-msgstr "%s otevřené problémy k řešení"
+msgstr ""
 
 #: IDF/Views/Issue.php:51 IDF/Views/Issue.php:379 IDF/Views/User.php:75
 msgid "This table shows the open issues."
@@ -4127,7 +4086,7 @@ msgstr ""
 #: IDF/Views/Issue.php:394 IDF/Views/Issue.php:546 IDF/Views/Issue.php:769
 #: IDF/Views/Issue.php:828
 msgid "No issues were found."
-msgstr "Nebyly nalezeny žádné problémy k řešení."
+msgstr ""
 
 #: IDF/Views/Issue.php:113
 msgid "Not assigned"
@@ -4200,12 +4159,12 @@ msgstr ""
 
 #: IDF/Views/Issue.php:414
 msgid "Submit a new issue"
-msgstr "Odeslat nový předmět k řešení."
+msgstr ""
 
 #: IDF/Views/Issue.php:430
 #, php-format
 msgid "<a href=\"%s\">Issue %d</a> has been created."
-msgstr "<a href=\"%s\">Předmět k řešení č. %d</a> byl vytvořen."
+msgstr ""
 
 #: IDF/Views/Issue.php:487
 #, php-format
@@ -4219,58 +4178,58 @@ msgstr ""
 
 #: IDF/Views/Issue.php:536
 msgid "This table shows the found issues."
-msgstr "Tato tabulka ukazuje nalezené předměty k řešení."
+msgstr ""
 
 #: IDF/Views/Issue.php:601
 #, php-format
 msgid "Issue <a href=\"%s\">%d</a>: %s"
-msgstr "Předmět k řešení <a href=\"%s\">č. %d</a>: %s"
+msgstr ""
 
 #: IDF/Views/Issue.php:625
 #, php-format
 msgid "<a href=\"%s\">Issue %d</a> has been updated."
-msgstr "<a href=\"%s\">Předmět k řešení č. %d</a> byl aktualizován."
+msgstr ""
 
 #: IDF/Views/Issue.php:715
 #, php-format
 msgid "View %s"
-msgstr "Zobrazit %s"
+msgstr ""
 
 #: IDF/Views/Issue.php:742
 #, php-format
 msgid "%s Closed Issues"
-msgstr "%s uzavřený předmět k řešení"
+msgstr ""
 
 #: IDF/Views/Issue.php:752
 msgid "This table shows the closed issues."
-msgstr "Tato tabulka ukazuje uzavřené předměty k řešení."
+msgstr ""
 
 #: IDF/Views/Issue.php:795
 #, php-format
 msgid "%1$s Issues with Label %2$s"
-msgstr "%1$s předmět k řešení s nálepkou %2$s"
+msgstr ""
 
 #: IDF/Views/Issue.php:798
 #, php-format
 msgid "%1$s Closed Issues with Label %2$s"
-msgstr "%1$s uzavřený předmět k řešení s nálepkou %2$s"
+msgstr ""
 
 #: IDF/Views/Issue.php:811
 #, php-format
 msgid "This table shows the issues with label %s."
-msgstr "Tato tabulka ukazuje předměty k řešení s nálepkou %s."
+msgstr ""
 
 #: IDF/Views/Issue.php:934
 msgid "The issue has been removed from your watch list."
-msgstr "Předmět řešení byl odebrán z vašeho seznamu ke sledování."
+msgstr ""
 
 #: IDF/Views/Issue.php:937
 msgid "The issue has been added to your watch list."
-msgstr "Předměty k řešení byl přidán do vašeho seznamu ke sledování."
+msgstr ""
 
 #: IDF/Views/Issue.php:1035
 msgid "On your watch list."
-msgstr "Na vašem sledovacím seznamu."
+msgstr ""
 
 #: IDF/Views/Project.php:95
 msgid "Issues and Comments"
@@ -4533,94 +4492,90 @@ msgstr ""
 
 #: IDF/Views.php:126 IDF/Views.php:152
 msgid "Confirm Your Account Creation"
-msgstr "Potvrďte vytvoření Vašeho účtu"
+msgstr "Hesabınızın Oluşturulmasını Onaylayın"
 
 #: IDF/Views.php:172
 msgid ""
 "Welcome! You can now participate in the life of your project of choice."
-msgstr "Vítejte! Nyní se můžete účastnit života projektu dle vašeho výběru."
+msgstr ""
 
 #: IDF/Views.php:198 IDF/Views.php:222 IDF/Views.php:263
 msgid "Password Recovery"
-msgstr "Obnova hesla"
+msgstr ""
 
 #: IDF/Views.php:242
 msgid ""
 "Welcome back! Next time, you can use your broswer options to remember the "
 "password."
 msgstr ""
-"Vítejte zpět! Příště můžete použít nastavení prohlížeče pro zapamatování "
-"hesla."
 
 #: IDF/Views.php:284
 msgid "Here to Help You!"
-msgstr "Zde k Vaší pomoci!"
+msgstr ""
 
 #: IDF/Views.php:300
 msgid "InDefero API (Application Programming Interface)"
-msgstr "InDefero API (aplikační programátorský interface)"
+msgstr ""
 
 #: IDF/WikiPage.php:62
 msgid "title"
-msgstr "nadpis"
+msgstr "başlık"
 
 #: IDF/WikiPage.php:63
 msgid ""
 "The title of the page must only contain letters, digits or the dash "
 "character. For example: My-new-Wiki-Page."
 msgstr ""
-"Nadpis musí obsahovat pouze písmena, čísla nebo pomlčku. Např. Moje-nova-"
-"WiKi-Stranka."
 
 #: IDF/WikiPage.php:71
 msgid "A one line description of the page content."
-msgstr "Jednořádkový popis obsahu stránky."
+msgstr ""
 
 #: IDF/WikiPage.php:196 IDF/WikiRevision.php:167
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View page\">%2$s</a>, %3$s"
-msgstr "<a href=\"%1$s\" title=\"Zobrazit stránku\">%2$s</a>, %3$s"
+msgstr ""
 
 #: IDF/WikiPage.php:198
 #, php-format
 msgid "Creation of <a href=\"%s\">page&nbsp;%s</a>, by %s"
-msgstr "<a href=\"%s\">Stránka&nbsp;%s</a>, vytvořena %s"
+msgstr ""
 
 #: IDF/WikiPage.php:208
 #, php-format
 msgid "%s: Documentation page %s added - %s"
-msgstr "%s: Stránka dokumentace %s přidána - %s"
+msgstr ""
 
 #: IDF/WikiRevision.php:48
 msgid "page"
-msgstr "stránka"
+msgstr "sayfa"
 
 #: IDF/WikiRevision.php:66
 msgid "A one line description of the changes."
-msgstr "Jednořádkový popis změn."
+msgstr ""
 
 #: IDF/WikiRevision.php:72
 msgid "content"
-msgstr "obsah"
+msgstr "içerik"
 
 #: IDF/WikiRevision.php:189
 #, php-format
 msgid "Change of <a href=\"%s\">%s</a>, by %s"
-msgstr "Změněno <a href=\"%s\">%s</a>, kým %s"
+msgstr ""
 
 #: IDF/WikiRevision.php:208
 #, php-format
 msgid "%s: Documentation page %s updated - %s"
-msgstr "%s: Dokumentační stránka %s aktualizována - %s"
+msgstr ""
 
 #: IDF/WikiRevision.php:262
 #, php-format
 msgid "New Documentation Page %s - %s (%s)"
-msgstr "Nová dokumentační stránka %s - %s (%s)"
+msgstr ""
 
 #: IDF/WikiRevision.php:268
 #, php-format
 msgid "Documentation Page Changed %s - %s (%s)"
-msgstr "Dokumentační stránka změněna %s - %s (%s)"
+msgstr ""
 
 

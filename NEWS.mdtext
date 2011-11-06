@@ -1,4 +1,4 @@
-# InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
+# InDefero 1.2 - Sun Nov 6 23:04:00 UTC 2011
 
 ATTENTION: You need Pluf [46b7f251](http://projects.ceondo.com/p/pluf/source/commit/46b7f251)
 or newer to properly run this version of Indefero!
@@ -74,6 +74,11 @@ or newer to properly run this version of Indefero!
 - The documentation on the setup of the monotone plugin has been improved.
 
 ## Translations
+
+- The Russian translation has been enabled by default (thanks for all the great
+  work, Denis Kot and Litew!)
+- Brazilian Portuguese translation started (thanks to Pedro Kiefer!)
+- Turkish translation started (thanks to Ozan!)
 
 # InDefero 1.1.2 - Thu May 26 07:42:25 2011 UTC
 
