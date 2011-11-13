@@ -3,7 +3,7 @@
 {block body}
 {$pages.render}
 {if !$user.isAnonymous()}
-{aurl 'url', 'IDF_Views_Wiki::create', array($project.shortname)}
+{aurl 'url', 'IDF_Views_Wiki::createPage', array($project.shortname)}
 <p><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/add.png'}" alt="+" align="bottom" /></a> <a href="{$url}">{trans 'New Page'}</a></p>{/if}
 
 {/block}

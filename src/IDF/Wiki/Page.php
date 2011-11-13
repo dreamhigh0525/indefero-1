@@ -185,7 +185,7 @@ class IDF_Wiki_Page extends Pluf_Model
      */
     public function timelineFragment($request)
     {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                         array($request->project->shortname,
                                               $this->title));
         $out = '<tr class="log"><td><a href="'.$url.'">'.
@@ -202,7 +202,7 @@ class IDF_Wiki_Page extends Pluf_Model
     public function feedFragment($request)
     {
         $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                       array($request->project->shortname,
                                             $this->title));
         $title = sprintf(__('%s: Documentation page %s added - %s'),

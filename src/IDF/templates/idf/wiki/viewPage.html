@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" media="print" href="{media '/idf/css/print-wiki.css'}" />
 {/block}
 
-{block docclass}yui-t3{assign $inView=true}{/block}
+{block docclass}yui-t3{assign $inPageView=true}{/block}
 
 {block body}
 {if $deprecated}{* deprecated page *}
@@ -15,7 +15,7 @@ use it as reference only if you are sure you need these specific information.{/b
 </div>
 {/if}
 {if $oldrev}
-{ashowuser 'submitter', $oldrev.get_submitter(), $request}{aurl 'url', 'IDF_Views_Wiki::view', array($project.shortname, $page.title)}
+{ashowuser 'submitter', $oldrev.get_submitter(), $request}{aurl 'url', 'IDF_Views_Wiki::viewPage', array($project.shortname, $page.title)}
 <div class="old-rev">
 <p>{blocktrans}You are looking at an old revision of the page 
 <a href="{$url}">{$page.title}</a>. This revision was created
@@ -32,7 +32,7 @@ by {$submitter}.{/blocktrans}</p>
 {markdown $rev.content, $request}
 {else}
 {markdown $oldrev.content, $request}
-{if $isOwner or $isAdmin}{aurl 'url', 'IDF_Views_Wiki::deleteRev', array($project.shortname, $oldrev.id)}
+{if $isOwner or $isAdmin}{aurl 'url', 'IDF_Views_Wiki::deletePageRev', array($project.shortname, $oldrev.id)}
 <p class="delp"><a href="{$url}" title="{trans 'Delete this revision'}"><img src="{media '/idf/img/trash.png'}" style="vertical-align: text-bottom;" alt="{trans 'Trash'}" /></a> <a href="{$url}">{trans 'Delete this revision'}</a></p>
 {/if}
 {/if}
@@ -54,7 +54,7 @@ by {$submitter}.{/blocktrans}</p>
 {if $revs.count() > 0}
 <p><strong>{trans 'Old Revisions'}</strong></p>
 <ul>{foreach $revs as $old}
-<li><a href="{url 'IDF_Views_Wiki::view', array($project.shortname, $page.title), array('rev'=>$old.id)}">{$old.summary}</a></li>
+<li><a href="{url 'IDF_Views_Wiki::viewPage', array($project.shortname, $page.title), array('rev'=>$old.id)}">{$old.summary}</a></li>
 {/foreach}</ul>
 {/if}
 {/block}

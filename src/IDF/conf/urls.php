@@ -265,12 +265,12 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/source/repo/(.*)$#',
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'index');
+               'method' => 'listPages');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/create/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'create');
+               'method' => 'createPage');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/search/$#',
                'base' => $base,
@@ -280,27 +280,27 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/search/$#',
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/label/(\d+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'listLabel');
+               'method' => 'listPagesWithLabel');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/update/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'update');
+               'method' => 'updatePage');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/delrev/(\d+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'deleteRev');
+               'method' => 'deletePageRev');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/delete/(\d+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'delete');
+               'method' => 'deletePage');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/page/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
-               'method' => 'view');
+               'method' => 'viewPage');
 
 // ---------- Downloads ------------------------------------
 

@@ -32,10 +32,10 @@ Pluf::loadFunction('Pluf_Shortcuts_GetFormForModel');
 class IDF_Views_Wiki
 {
     /**
-     * View list of issues for a given project.
+     * View list of pages for a given project.
      */
-    public $index_precond = array('IDF_Precondition::accessWiki');
-    public function index($request, $match, $api=false)
+    public $listPages_precond = array('IDF_Precondition::accessWiki');
+    public function listPages($request, $match, $api=false)
     {
         $prj = $request->project;
         $title = sprintf(__('%s Documentation'), (string) $prj);
@@ -46,8 +46,8 @@ class IDF_Views_Wiki
                                        'shortname' => $prj->shortname,
                                        'current_user' => $request->user);
         $pag->summary = __('This table shows the documentation pages.');
-        $pag->action = array('IDF_Views_Wiki::index', array($prj->shortname));
-        $pag->edit_action = array('IDF_Views_Wiki::view', 'shortname', 'title');
+        $pag->action = array('IDF_Views_Wiki::listPages', array($prj->shortname));
+        $pag->edit_action = array('IDF_Views_Wiki::viewPage', 'shortname', 'title');
         $sql = 'project=%s';
         $ptags = self::getWikiTags($prj);
         $dtag = array_pop($ptags); // The last tag is the deprecated tag.
@@ -67,7 +67,7 @@ class IDF_Views_Wiki
         $pag->no_results_text = __('No documentation pages were found.');
         $pag->sort_order = array('title', 'ASC');
         $pag->setFromRequest($request);
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/index.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/listPages.html',
                                                array(
                                                      'page_title' => $title,
                                                      'pages' => $pag,
@@ -82,7 +82,7 @@ class IDF_Views_Wiki
     {
         $prj = $request->project;
         if (!isset($request->REQUEST['q']) or trim($request->REQUEST['q']) == '') {
-            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
+            $url =  Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                              array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -100,7 +100,7 @@ class IDF_Views_Wiki
                                        'current_user' => $request->user);
         $pag->summary = __('This table shows the pages found.');
         $pag->action = array('IDF_Views_Wiki::search', array($prj->shortname), array('q'=> $q));
-        $pag->edit_action = array('IDF_Views_Wiki::view', 'shortname', 'title');
+        $pag->edit_action = array('IDF_Views_Wiki::viewPage', 'shortname', 'title');
         $pag->extra_classes = array('right', '', 'a-c');
         $list_display = array(
              'title' => __('Page Title'),
@@ -122,8 +122,8 @@ class IDF_Views_Wiki
     /**
      * View list of pages with a given label.
      */
-    public $listLabel_precond = array('IDF_Precondition::accessWiki');
-    public function listLabel($request, $match)
+    public $listPagesWithLabel_precond = array('IDF_Precondition::accessWiki');
+    public function listPagesWithLabel($request, $match)
     {
         $prj = $request->project;
         $tag = Pluf_Shortcuts_GetObjectOr404('IDF_Tag', $match[2]);
@@ -140,8 +140,8 @@ class IDF_Views_Wiki
                                        'shortname' => $prj->shortname);
         $pag->summary = sprintf(__('This table shows the documentation pages with label %s.'), (string) $tag);
         $pag->forced_where = new Pluf_SQL('project=%s AND idf_tag_id=%s', array($prj->id, $tag->id));
-        $pag->action = array('IDF_Views_Wiki::listLabel', array($prj->shortname, $tag->id));
-        $pag->edit_action = array('IDF_Views_Wiki::view', 'shortname', 'title');
+        $pag->action = array('IDF_Views_Wiki::listPagesWithLabel', array($prj->shortname, $tag->id));
+        $pag->edit_action = array('IDF_Views_Wiki::viewPage', 'shortname', 'title');
         $pag->extra_classes = array('right', '', 'a-c');
         $list_display = array(
              'title' => __('Page Title'),
@@ -152,7 +152,7 @@ class IDF_Views_Wiki
         $pag->items_per_page = 25;
         $pag->no_results_text = __('No documentation pages were found.');
         $pag->setFromRequest($request);
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/index.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/listPages.html',
                                                array(
                                                      'page_title' => $title,
                                                      'label' => $tag,
@@ -165,9 +165,9 @@ class IDF_Views_Wiki
     /**
      * Create a new documentation page.
      */
-    public $create_precond = array('IDF_Precondition::accessWiki',
-                                   'Pluf_Precondition::loginRequired');
-    public function create($request, $match)
+    public $createPage_precond = array('IDF_Precondition::accessWiki',
+                                       'Pluf_Precondition::loginRequired');
+    public function createPage($request, $match)
     {
         $prj = $request->project;
         $title = __('New Page');
@@ -179,10 +179,10 @@ class IDF_Views_Wiki
                                                   ));
             if ($form->isValid() and !isset($request->POST['preview'])) {
                 $page = $form->save();
-                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                                     array($prj->shortname, $page->title));
                 $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been created.'), $urlpage, Pluf_esc($page->title)));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             } elseif (isset($request->POST['preview'])) {
@@ -196,7 +196,7 @@ class IDF_Views_Wiki
                                                   'project' => $prj,
                                                   'user' => $request->user));
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/create.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/createPage.html',
                                                array(
                                                      'auto_labels' => self::autoCompleteArrays($prj),
                                                      'page_title' => $title,
@@ -209,8 +209,8 @@ class IDF_Views_Wiki
     /**
      * View a documentation page.
      */
-    public $view_precond = array('IDF_Precondition::accessWiki');
-    public function view($request, $match)
+    public $viewPage_precond = array('IDF_Precondition::accessWiki');
+    public function viewPage($request, $match)
     {
         $prj = $request->project;
         // Find the page
@@ -239,7 +239,7 @@ class IDF_Views_Wiki
         $false = Pluf_DB_BooleanToDb(false, $page->getDbConnection());
         $revs = $page->get_revisions_list(array('order' => 'creation_dtime DESC',
                                                 'filter' => 'is_head='.$false));
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/view.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/viewPage.html',
                                                array(
                                                      'page_title' => $title,
                                                      'page' => $page,
@@ -255,9 +255,9 @@ class IDF_Views_Wiki
     /**
      * Remove a revision of a page.
      */
-    public $deleteRev_precond = array('IDF_Precondition::accessWiki',
-                                      'IDF_Precondition::projectMemberOrOwner');
-    public function deleteRev($request, $match)
+    public $deletePageRev_precond = array('IDF_Precondition::accessWiki',
+                                          'IDF_Precondition::projectMemberOrOwner');
+    public function deletePageRev($request, $match)
     {
         $prj = $request->project;
         $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision', $match[2]);
@@ -269,7 +269,7 @@ class IDF_Views_Wiki
         if ($request->method == 'POST') {
             $oldrev->delete();
             $request->user->setMessage(__('The old revision has been deleted.'));
-            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                             array($prj->shortname, $page->title));
             return new Pluf_HTTP_Response_Redirect($url);
         }
@@ -279,7 +279,7 @@ class IDF_Views_Wiki
         $false = Pluf_DB_BooleanToDb(false, $page->getDbConnection());
         $revs = $page->get_revisions_list(array('order' => 'creation_dtime DESC',
                                                 'filter' => 'is_head='.$false));
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/delete.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/deletePageRev.html',
                                                array(
                                                      'page_title' => $title,
                                                      'page' => $page,
@@ -294,9 +294,9 @@ class IDF_Views_Wiki
     /**
      * View a documentation page.
      */
-    public $update_precond = array('IDF_Precondition::accessWiki',
-                                   'Pluf_Precondition::loginRequired');
-    public function update($request, $match)
+    public $updatePage_precond = array('IDF_Precondition::accessWiki',
+                                       'Pluf_Precondition::loginRequired');
+    public function updatePage($request, $match)
     {
         $prj = $request->project;
         // Find the page
@@ -317,10 +317,10 @@ class IDF_Views_Wiki
             $form = new IDF_Form_WikiUpdate($request->POST, $params);
             if ($form->isValid() and !isset($request->POST['preview'])) {
                 $page = $form->save();
-                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+                $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                                     array($prj->shortname, $page->title));
                 $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been updated.'), $urlpage, Pluf_esc($page->title)));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             } elseif (isset($request->POST['preview'])) {
@@ -330,7 +330,7 @@ class IDF_Views_Wiki
 
             $form = new IDF_Form_WikiUpdate(null, $params);
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/update.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/updatePage.html',
                                                array(
                                                      'auto_labels' => self::autoCompleteArrays($prj),
                                                      'page_title' => $title,
@@ -345,9 +345,9 @@ class IDF_Views_Wiki
     /**
      * Delete a Wiki page.
      */
-    public $delete_precond = array('IDF_Precondition::accessWiki',
-                                   'IDF_Precondition::projectMemberOrOwner');
-    public function delete($request, $match)
+    public $deletePage_precond = array('IDF_Precondition::accessWiki',
+                                       'IDF_Precondition::projectMemberOrOwner');
+    public function deletePage($request, $match)
     {
         $prj = $request->project;
         $page = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_Page', $match[2]);
@@ -358,7 +358,7 @@ class IDF_Views_Wiki
             if ($form->isValid()) {
                 $form->save();
                 $request->user->setMessage(__('The documentation page has been deleted.'));
-                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::index',
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
@@ -370,7 +370,7 @@ class IDF_Views_Wiki
         $false = Pluf_DB_BooleanToDb(false, $page->getDbConnection());
         $revs = $page->get_revisions_list(array('order' => 'creation_dtime DESC',
                                                 'filter' => 'is_head='.$false));
-        return Pluf_Shortcuts_RenderToResponse('idf/wiki/deletepage.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/deletePage.html',
                                                array(
                                                      'page_title' => $title,
                                                      'page' => $page,

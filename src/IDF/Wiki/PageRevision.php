@@ -156,7 +156,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
     public function timelineFragment($request)
     {
         $page = $this->get_wikipage();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                         array($request->project->shortname,
                                               $page->title));
         $out = "\n".'<tr class="log"><td><a href="'.$url.'">'.
@@ -195,13 +195,13 @@ class IDF_Wiki_PageRevision extends Pluf_Model
         $page = $this->get_wikipage();
         if (!$this->is_head) {
             $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                           array($request->project->shortname,
                                                 $page->title),
                                           array('rev' => $this->id));
         } else {
             $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view',
+                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                           array($request->project->shortname,
                                                 $page->title));
         }
