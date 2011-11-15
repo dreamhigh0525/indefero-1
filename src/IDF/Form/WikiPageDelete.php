@@ -27,7 +27,7 @@
  * This is a hard delete of the page and the revisions.
  *
  */
-class IDF_Form_WikiDelete extends Pluf_Form
+class IDF_Form_WikiPageDelete extends Pluf_Form
 {
     protected $page = null;
 

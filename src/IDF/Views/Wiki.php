@@ -77,6 +77,44 @@ class IDF_Views_Wiki
                                                $request);
     }
 
+    /**
+     * View list of resources for a given project.
+     */
+    public $listResources_precond = array('IDF_Precondition::accessWiki',
+                                          'Pluf_Precondition::loginRequired');
+    public function listResources($request, $match)
+    {
+        $prj = $request->project;
+        $title = sprintf(__('%s Documentation Resources'), (string) $prj);
+        $pag = new Pluf_Paginator(new IDF_Wiki_Resource());
+        $pag->class = 'recent-issues';
+        $pag->item_extra_props = array('project_m' => $prj,
+                                       'shortname' => $prj->shortname,
+                                       'current_user' => $request->user);
+        $pag->summary = __('This table shows the resources that can be used on documentation pages.');
+        $pag->action = array('IDF_Views_Wiki::listResources', array($prj->shortname));
+        $pag->edit_action = array('IDF_Views_Wiki::viewResource', 'shortname', 'title');
+        $pag->forced_where = new Pluf_SQL('project=%s', array($prj->id));
+        $pag->extra_classes = array('right', 'a-c', 'a-c', 'a-c');
+        $list_display = array(
+            'title' => __('Resource Title'),
+            'mime_type' => __('MIME type'),
+            'summary' => __('Description'),
+            array('modif_dtime', 'Pluf_Paginator_DateYMD', __('Updated')),
+        );
+        $pag->configure($list_display, array(), array('title', 'modif_dtime'));
+        $pag->items_per_page = 25;
+        $pag->no_results_text = __('No resources were found.');
+        $pag->sort_order = array('title', 'ASC');
+        $pag->setFromRequest($request);
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/listResources.html',
+            array(
+                'page_title' => $title,
+                'resources' => $pag,
+            ),
+            $request);
+    }
+
     public $search_precond = array('IDF_Precondition::accessWiki',);
     public function search($request, $match)
     {
@@ -173,7 +211,7 @@ class IDF_Views_Wiki
         $title = __('New Page');
         $preview = false;
         if ($request->method == 'POST') {
-            $form = new IDF_Form_WikiCreate($request->POST,
+            $form = new IDF_Form_WikiPageCreate($request->POST,
                                             array('project' => $prj,
                                                   'user' => $request->user
                                                   ));
@@ -191,7 +229,7 @@ class IDF_Views_Wiki
         } else {
             $pagename = (isset($request->GET['name'])) ?
                 $request->GET['name'] : '';
-            $form = new IDF_Form_WikiCreate(null,
+            $form = new IDF_Form_WikiPageCreate(null,
                                             array('name' => $pagename,
                                                   'project' => $prj,
                                                   'user' => $request->user));
@@ -202,6 +240,43 @@ class IDF_Views_Wiki
                                                      'page_title' => $title,
                                                      'form' => $form,
                                                      'preview' => $preview,
+                                                     ),
+                                               $request);
+    }
+
+    /**
+     * Create a new resource.
+     */
+    public $createResource_precond = array('IDF_Precondition::accessWiki',
+                                           'Pluf_Precondition::loginRequired');
+    public function createResource($request, $match)
+    {
+        $prj = $request->project;
+        $title = __('New Resource');
+        $preview = false;
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_WikiResourceCreate(array_merge($request->POST, $request->FILES),
+                                                    array('project' => $prj, 'user' => $request->user));
+            if ($form->isValid()) {
+                $resource = $form->save();
+                $urlresource = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                                        array($prj->shortname, $resource->title));
+                $request->user->setMessage(sprintf(__('The resource <a href="%s">%s</a> has been created.'), $urlresource, Pluf_esc($resource->title)));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listResources',
+                                                array($prj->shortname));
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $resourcename = (isset($request->GET['name'])) ?
+                $request->GET['name'] : '';
+            $form = new IDF_Form_WikiResourceCreate(null,
+                                                    array('name' => $resourcename,
+                                                          'project' => $prj, 'user' => $request->user));
+        }
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/createResource.html',
+                                               array(
+                                                     'resource_title' => $title,
+                                                     'form' => $form,
                                                      ),
                                                $request);
     }
@@ -314,7 +389,7 @@ class IDF_Views_Wiki
                         'user' => $request->user,
                         'page' => $page);
         if ($request->method == 'POST') {
-            $form = new IDF_Form_WikiUpdate($request->POST, $params);
+            $form = new IDF_Form_WikiPageUpdate($request->POST, $params);
             if ($form->isValid() and !isset($request->POST['preview'])) {
                 $page = $form->save();
                 $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
@@ -328,7 +403,7 @@ class IDF_Views_Wiki
             }
         } else {
 
-            $form = new IDF_Form_WikiUpdate(null, $params);
+            $form = new IDF_Form_WikiPageUpdate(null, $params);
         }
         return Pluf_Shortcuts_RenderToResponse('idf/wiki/updatePage.html',
                                                array(
@@ -354,7 +429,7 @@ class IDF_Views_Wiki
         $prj->inOr404($page);
         $params = array('page' => $page);
         if ($request->method == 'POST') {
-            $form = new IDF_Form_WikiDelete($request->POST, $params);
+            $form = new IDF_Form_WikiPageDelete($request->POST, $params);
             if ($form->isValid()) {
                 $form->save();
                 $request->user->setMessage(__('The documentation page has been deleted.'));
@@ -363,7 +438,7 @@ class IDF_Views_Wiki
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
-            $form = new IDF_Form_WikiDelete(null, $params);
+            $form = new IDF_Form_WikiPageDelete(null, $params);
         }
         $title = sprintf(__('Delete Page %s'), $page->title);
         $revision = $page->get_current_revision();

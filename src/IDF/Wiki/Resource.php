@@ -72,6 +72,14 @@ class IDF_Wiki_Resource extends Pluf_Model
                                   'verbose' => __('MIME media type'),
                                   'help_text' => __('The MIME media type of the resource.'),
                                   ),
+                            'orig_file_ext' =>
+                            array(
+                                  'type' => 'Pluf_DB_Field_Varchar',
+                                  'blank' => false,
+                                  'size' => 10,
+                                  'verbose' => __('Original file extension'),
+                                  'help_text' => __('The original file extension of the uploaded resource.'),
+                                  ),
                             'summary' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',

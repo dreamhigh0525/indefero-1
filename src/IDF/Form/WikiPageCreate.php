@@ -27,7 +27,7 @@
  * This create a new page and the corresponding revision.
  *
  */
-class IDF_Form_WikiCreate extends Pluf_Form
+class IDF_Form_WikiPageCreate extends Pluf_Form
 {
     public $user = null;
     public $project = null;

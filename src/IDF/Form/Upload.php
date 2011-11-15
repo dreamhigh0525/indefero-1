@@ -79,6 +79,7 @@ class IDF_Form_Upload extends Pluf_Form
 
     public function clean_file()
     {
+        // FIXME: we do the same in IDF_Form_WikiResourceCreate and a couple of other places as well
         $extra = strtolower(implode('|', explode(' ', Pluf::f('idf_extra_upload_ext'))));
         if (strlen($extra)) $extra .= '|';
         if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $this->cleaned_data['file'])) {

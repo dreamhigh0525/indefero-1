@@ -267,10 +267,20 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/$#',
                'model' => 'IDF_Views_Wiki',
                'method' => 'listPages');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'listResources');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/create/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
                'method' => 'createPage');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/create/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'createResource');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/search/$#',
                'base' => $base,
@@ -287,20 +297,40 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/update/(.*)/$#',
                'model' => 'IDF_Views_Wiki',
                'method' => 'updatePage');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/update/(.*)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'updateResource');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/delrev/(\d+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
                'method' => 'deletePageRev');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/delrev/(\d+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'deleteResourceRev');
 
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/doc/delete/(\d+)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
                'method' => 'deletePage');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/delete/(\d+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'deleteResource');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/page/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
                'method' => 'viewPage');
+
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/resouce/(.*)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'viewResource');
 
 // ---------- Downloads ------------------------------------
 

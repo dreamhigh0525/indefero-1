@@ -27,7 +27,7 @@
  * This add a corresponding revision.
  *
  */
-class IDF_Form_WikiUpdate extends Pluf_Form
+class IDF_Form_WikiPageUpdate extends Pluf_Form
 {
     public $user = null;
     public $project = null;

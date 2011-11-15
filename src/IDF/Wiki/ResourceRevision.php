@@ -109,78 +109,37 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
     {
         if ($this->id == '') {
             $this->creation_dtime = gmdate('Y-m-d H:i:s');
+            $this->is_head = true;
         }
     }
 
     function postSave($create=false)
     {
         if ($create) {
-            IDF_Timeline::insert($this, $this->get_project(),
-                                 $this->get_submitter(), $this->creation_dtime);
+            $sql = new Pluf_SQL('wikiresource=%s', array($this->wikiresource));
+            $rev = Pluf::factory('IDF_Wiki_ResourceRevision')->getList(array('filter'=>$sql->gen()));
+            if ($rev->count() > 1) {
+                foreach ($rev as $r) {
+                    if ($r->id != $this->id and $r->is_head) {
+                        $r->is_head = false;
+                        $r->update();
+                    }
+                }
+            }
+            // update the modification timestamp
+            $resource = $this->get_wikiresource();
+            $resource->update();
         }
     }
 
-    function getAbsoluteUrl($project)
+    function getFilePath()
     {
-        return Pluf::f('url_upload').'/'.$project->shortname.'/files/'.$this->file;
+        return sprintf(Pluf::f('upload_path').'/'.$this->get_wikiresource()->get_project()->shortname.'/wiki/res/%d/%d.%s',
+            $this->get_wikiresource()->id, $this->id, $this->get_wikiresource()->orig_file_ext);
     }
 
-    function getFullPath()
-    {
-        return(Pluf::f('upload_path').'/'.$this->get_project()->shortname.'/files/'.$this->file);
-    }
-
-    /**
-     * We drop the information from the timeline.
-     */
     function preDelete()
     {
-        IDF_Timeline::remove($this);
-        @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->file);
-    }
-
-    /**
-     * Returns the timeline fragment for the file.
-     *
-     *
-     * @param Pluf_HTTP_Request
-     * @return Pluf_Template_SafeString
-     */
-    public function timelineFragment($request)
-    {
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
-                                        array($request->project->shortname,
-                                              $this->id));
-        $out = '<tr class="log"><td><a href="'.$url.'">'.
-            Pluf_esc(Pluf_Template_dateAgo($this->creation_dtime, 'without')).
-            '</a></td><td>';
-        $stag = new IDF_Template_ShowUser();
-        $user = $stag->start($this->get_submitter(), $request, '', false);
-        $out .= sprintf(__('<a href="%1$s" title="View download">Download %2$d</a>, %3$s'), $url, $this->id, Pluf_esc($this->summary)).'</td>';
-        $out .= '</tr>';
-        $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Addition of <a href="%s">download&nbsp;%d</a>, by %s'), $url, $this->id, $user).'</div></td></tr>';
-        return Pluf_Template::markSafe($out);
-    }
-
-    public function feedFragment($request)
-    {
-        $url = Pluf::f('url_base')
-            .Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
-                                      array($request->project->shortname,
-                                            $this->id));
-        $title = sprintf(__('%s: Download %d added - %s'),
-                         $request->project->name,
-                         $this->id, $this->summary);
-        $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
-        $context = new Pluf_Template_Context_Request(
-                       $request,
-                       array('url' => $url,
-                             'title' => $title,
-                             'file' => $this,
-                             'date' => $date)
-                                                     );
-        $tmpl = new Pluf_Template('idf/downloads/feedfragment.xml');
-        return $tmpl->render($context);
+        @unlink($this->getFilePath());
     }
 }
