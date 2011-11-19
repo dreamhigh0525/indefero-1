@@ -25,8 +25,9 @@ contain an additional manifest file which describes the files that should be pub
 <p>
 Once such an archive has been uploaded and validated by InDefero, its files are extracted
 and individual downloads are created for each of them. If the archive contains files
-that should deprecate existing downloads, then InDefero takes care of this as well -
-automatically.
+that should replace existing downloads, then InDefero takes care of this as well -
+automatically. Files that exist in the archive but are not listed in the manifest are
+not extracted.
 </p>
 
 <p>
@@ -85,9 +86,22 @@ This is the DTD for the format:
 <p>
 The format is more or less self-explaining, all fields map to properties of a single download.
 One special element has been introduced though, <code>replaces</code>. If this optional element
-is given, InDefero looks for a file with that name in the project and deprecates it by attaching
-the label <code>Other:Deprecated</code> to it. If no such file is found, the element is simply
-ignored.
+is given, InDefero looks for a file with that name in the project and acts in one of the following
+two ways:
+</p>
+
+<ul>
+<li>If the new file's name is distinct from the file's name that is given in <code>replaces</code>,
+then the replaced file is <strong>marked as deprecated</strong> with the <code>Other:Deprecated</code> label
+(or any other label that is configured as the very last label in the download project configuration).</li>
+<li>If the new file's name is equal to the file's name that is given in <code>replaces</code>,
+then the replaced file <strong>is deleted</strong> before the new file is created. This happens because each file name
+has to be unique per project and a deprecated and a new file with the same name cannot coexist in InDefero.
+Note that while the filename-based URI of the download keeps intact, the download counter will be reset by
+this procedure.</li>
+</ul>
+
+If no existing file is found for the <code>replaces</code> tag, then this is completely ignored.
 </p>
 {/block}
 

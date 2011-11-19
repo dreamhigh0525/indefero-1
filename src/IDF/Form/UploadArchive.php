@@ -58,13 +58,13 @@ class IDF_Form_UploadArchive extends Pluf_Form
         $this->archiveHelper->validate();
 
         // extension validation
-        $names = $this->archiveHelper->getEntryNames();
-        foreach ($names as $name) {
+        $fileNames = $this->archiveHelper->getEntryNames();
+        foreach ($fileNames as $fileName) {
             $extra = strtolower(implode('|', explode(' ', Pluf::f('idf_extra_upload_ext'))));
             if (strlen($extra)) $extra .= '|';
-            if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $name)) {
-                @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['file']);
-                throw new Pluf_Form_Invalid(sprintf(__('For security reasons, you cannot upload a file (%s) with this extension.'), $name));
+            if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $fileName)) {
+                @unlink(Pluf::f('upload_path').'/'.$this->project->shortname.'/files/'.$this->cleaned_data['archive']);
+                throw new Pluf_Form_Invalid(sprintf(__('For security reasons, you cannot upload a file (%s) with this extension.'), $fileName));
             }
         }
 
@@ -78,8 +78,8 @@ class IDF_Form_UploadArchive extends Pluf_Form
             }
         }
 
-        foreach ($names as $name) {
-            $meta = $this->archiveHelper->getMetaData($name);
+        foreach ($fileNames as $fileName) {
+            $meta = $this->archiveHelper->getMetaData($fileName);
             $count = array();
             foreach ($meta['labels'] as $label) {
                 $label = trim($label);
@@ -100,12 +100,13 @@ class IDF_Form_UploadArchive extends Pluf_Form
                 }
             }
 
-            $sql = new Pluf_SQL('file=%s AND project=%s', array($name, $this->project->id));
+            $sql = new Pluf_SQL('file=%s AND project=%s', array($fileName, $this->project->id));
             $upload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
 
-            if ($upload) {
+            $meta = $this->archiveHelper->getMetaData($fileName);
+            if ($upload != null && $meta['replaces'] !== $fileName) {
                 throw new Pluf_Form_Invalid(
-                    sprintf(__('A file with the name "%s" has already been uploaded.'), $name));
+                    sprintf(__('A file with the name "%s" has already been uploaded and is not marked to be replaced.'), $fileName));
             }
         }
 
@@ -158,6 +159,24 @@ class IDF_Form_UploadArchive extends Pluf_Form
                 }
             }
 
+            // process a possible replacement
+            if (!empty($meta['replaces'])) {
+                $sql = new Pluf_SQL('file=%s AND project=%s', array($meta['replaces'], $this->project->id));
+                $oldUpload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
+
+                if ($oldUpload) {
+                    if ($meta['replaces'] === $fileName) {
+                        $oldUpload->delete();
+                    } else {
+                        $tags = $this->project->getTagsFromConfig('labels_download_predefined',
+                                                                  IDF_Form_UploadConf::init_predefined);
+                        // the deprecate tag is - by definition - always the last one
+                        $deprecatedTag = array_pop($tags);
+                        $oldUpload->setAssoc($deprecatedTag);
+                    }
+                }
+            }
+
             // extract the file
             $this->archiveHelper->extract($fileName, $uploadDir);
 
@@ -173,19 +192,6 @@ class IDF_Form_UploadArchive extends Pluf_Form
             $upload->create();
             foreach ($tags as $tag) {
                 $upload->setAssoc($tag);
-            }
-
-            // process a possible replacement
-            if (!empty($meta['replaces'])) {
-                $sql = new Pluf_SQL('file=%s AND project=%s', array($meta['replaces'], $this->project->id));
-                $oldUpload = Pluf::factory('IDF_Upload')->getOne(array('filter' => $sql->gen()));
-                if ($oldUpload) {
-                    $tags = $this->project->getTagsFromConfig('labels_download_predefined',
-                                                              IDF_Form_UploadConf::init_predefined);
-                    // the deprecate tag is - by definition - always the last one
-                    $deprecatedTag = array_pop($tags);
-                    $oldUpload->setAssoc($deprecatedTag);
-                }
             }
 
             // send the notification
