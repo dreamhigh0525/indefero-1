@@ -322,6 +322,11 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/res/delete/(\d+)/$#',
                'model' => 'IDF_Views_Wiki',
                'method' => 'deleteResource');
 
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/res/raw/(.*)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Wiki',
+               'method' => 'rawResource');
+
 $ctl[] = array('regex' => '#^/p/([\-\w]+)/page/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',

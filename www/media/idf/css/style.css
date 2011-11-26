@@ -802,6 +802,15 @@ p.desc {
   width: 60%;
 }
 
+p.preview img {
+  max-width: 60%;
+}
+
+p.preview iframe {
+  width: 60%;
+  height: 300px;
+}
+
 div.old-rev {
   padding: 1em 1em 0.1em 1em;
   margin-bottom: 1em;
@@ -824,6 +833,9 @@ div.deprecated-page {
   -webkit-border-radius: 5px;
 }
 
+li.old-rev {
+  font-style: italic;    
+}
 
 .delp {
   float: right;

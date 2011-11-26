@@ -275,7 +275,7 @@ class IDF_Views_Wiki
         }
         return Pluf_Shortcuts_RenderToResponse('idf/wiki/createResource.html',
                                                array(
-                                                     'resource_title' => $title,
+                                                     'page_title' => $title,
                                                      'form' => $form,
                                                      ),
                                                $request);
@@ -325,6 +325,64 @@ class IDF_Views_Wiki
                                                      'deprecated' => $dep,
                                                      ),
                                                $request);
+    }
+
+    /**
+     * View a documentation resource.
+     */
+    public $viewResource_precond = array('IDF_Precondition::accessWiki');
+    public function viewResource($request, $match)
+    {
+        $prj = $request->project;
+        $sql = new Pluf_SQL('project=%s AND title=%s',
+                            array($prj->id, $match[2]));
+        $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
+        if ($resources->count() != 1) {
+            return new Pluf_HTTP_Response_NotFound($request);
+        }
+        $resource = $resources[0];
+        $revision = $resource->get_current_revision();
+
+        // grab the old revision if requested.
+        if (isset($request->GET['rev']) and preg_match('/^[0-9]+$/', $request->GET['rev'])) {
+            $revision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_ResourceRevision',
+                                                      $request->GET['rev']);
+            if ($oldrev->wikiresource != $resource->id or $oldrev->is_head == true) {
+                return new Pluf_HTTP_Response_NotFound($request);
+            }
+        }
+        $pagerevs = $revision->getPageRevisions();
+        $title = $resource->title;
+        $false = Pluf_DB_BooleanToDb(false, $resource->getDbConnection());
+        $revs = $resource->get_revisions_list(array('order' => 'creation_dtime DESC',
+                                                    'filter' => 'is_head='.$false));
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/viewResource.html',
+            array(
+                'page_title' => $title,
+                'resource' => $resource,
+                'rev' => $revision,
+                'revs' => $revs,
+                'pagerevs' => $pagerevs,
+            ),
+            $request);
+    }
+
+
+    /**
+     * Returns a bytestream to the given raw resource revision
+     */
+    public $rawResource_precond = array('IDF_Precondition::accessWiki');
+    public function rawResource($request, $match)
+    {
+        $prj = $request->project;
+        $rev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_ResourceRevision',
+                                             $match[2]);
+        $res = $rev->get_wikiresource();
+        if ($res->get_project()->id != $prj->id) {
+            return new Pluf_HTTP_Response_NotFound($request);
+        }
+
+        return new Pluf_HTTP_Response_File($rev->getFilePath(), $res->mime_type);
     }
 
     /**

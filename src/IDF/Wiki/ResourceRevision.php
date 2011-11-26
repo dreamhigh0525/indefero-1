@@ -138,8 +138,55 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
             $this->get_wikiresource()->id, $this->id, $this->get_wikiresource()->orig_file_ext);
     }
 
+    function getFileURL()
+    {
+        $prj = $this->get_wikiresource()->get_project();
+        return Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::rawResource',
+                                        array($prj->shortname, $this->id));
+    }
+
     function preDelete()
     {
         @unlink($this->getFilePath());
+    }
+
+    /**
+     * Returns the page revisions which contain references to this resource revision
+     */
+    function getPageRevisions()
+    {
+        $db =& Pluf::db();
+        $sql_results = $db->select(
+            'SELECT idf_wiki_pagerevision_id as id '.
+            'FROM '.Pluf::f('db_table_prefix', '').'idf_wiki_pagerevision_idf_wiki_resourcerevision_assoc '.
+            'WHERE idf_wiki_resourcerevision_id='.$this->id
+        );
+        $ids = array(0);
+        foreach ($sql_results as $id) {
+            $ids[] = $id['id'];
+        }
+        $ids = implode (',', $ids);
+
+        $sql = new Pluf_SQL('id IN ('.$ids.')');
+        return Pluf::factory('IDF_Wiki_PageRevision')
+            ->getList(array('filter' => $sql->gen()));
+    }
+
+    /**
+     * Renders the resource
+     */
+    function render()
+    {
+        $url = $this->getFileURL();
+        $resource = $this->get_wikiresource();
+        if (preg_match('#^image/(gif|jpeg|png|tiff)$#', $resource->mime_type)) {
+            return sprintf('<a href="%s"><img src="%s" alt="%s" /></a>', $url, $url, $resource->title);
+        }
+
+        if (preg_match('#^text/(xml|html|sgml|javascript|ecmascript|css)$#', $resource->mime_type)) {
+            return sprintf('<iframe src="%s" alt="%s"></iframe>', $url, $resource->title);
+        }
+
+        return __('Unable to render preview for this MIME type.');
     }
 }
