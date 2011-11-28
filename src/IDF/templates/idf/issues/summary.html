@@ -5,7 +5,7 @@
 {block body}
 {if $trackerEmpty}
     {aurl 'create_url', 'IDF_Views_Issue::create', array($project.shortname)}
-    <p>{blocktrans}The issue tracker is empty.<br />You can create your first issue <a href="{$create_url}">here</a>.{/blocktrans}</p>
+    <p>{blocktrans}The issue tracker is empty.<br /><a href="{$create_url}">Create your first issue</a>.{/blocktrans}</p>
 {else}
 <div class='issue-summary'>
 {foreach $tagStatistics as $key => $class}
