@@ -161,7 +161,7 @@ class IDF_Form_Admin_UserUpdate extends Pluf_Form
                           'label' => __('Staff'),
                           'initial' => $this->user->staff,
                           'widget' => 'Pluf_Form_Widget_CheckboxInput',
-                          'help_text' => __('If you give staff rights to a user, you really need to trust them.'),
+                          'help_text' => __('If you give staff rights to a user, you really need to trust him.'),
                           ));
         }
 

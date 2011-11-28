@@ -56,7 +56,7 @@ class IDF_Form_UserAccount  extends Pluf_Form
 
         $this->fields['email'] = new Pluf_Form_Field_Email(
                                       array('required' => true,
-                                            'label' => __('Your mail'),
+                                            'label' => __('Your email'),
                                             'initial' => $this->user->email,
                                             'help_text' => __('If you change your email address, an email will be sent to the new address to confirm it.'),
                                             ));
@@ -168,9 +168,9 @@ class IDF_Form_UserAccount  extends Pluf_Form
 
         $this->fields['secondary_mail'] = new Pluf_Form_Field_Email(
                                       array('required' => false,
-                                            'label' => __('Add a secondary mail address'),
+                                            'label' => __('Add a secondary email address'),
                                             'initial' => '',
-                                            'help_text' => __('You will get a mail to confirm that you own the address you specify.'),
+                                            'help_text' => __('You will get an email to confirm that you own the address you specify.'),
                                             ));
     }
 
