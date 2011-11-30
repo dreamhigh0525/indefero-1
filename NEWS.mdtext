@@ -8,6 +8,13 @@
 
 ## Translations
 
+# InDefero 1.2.1 - XXX XXX XX XX:XX:XX UTC 201X
+
+## Language and Translations
+
+- Multiple fixes to English source strings (fixes issues 763 and 766,
+  thanks to JP Fleury!)
+
 # InDefero 1.2 - Sun Nov 6 23:04:00 UTC 2011
 
 ATTENTION: You need Pluf [46b7f251](http://projects.ceondo.com/p/pluf/source/commit/46b7f251)

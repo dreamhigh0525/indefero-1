@@ -150,7 +150,7 @@ class IDF_Review_Patch extends Pluf_Model
         $ic = (in_array($review->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View review">Review %3$d</a>, %4$s'), $url, $ic, $review->id, Pluf_esc($review->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">review&nbsp;%d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">review %d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
         return Pluf_Template::markSafe($out);
     }
 
