@@ -95,7 +95,7 @@ class IDF_Views_Wiki
         $pag->action = array('IDF_Views_Wiki::listResources', array($prj->shortname));
         $pag->edit_action = array('IDF_Views_Wiki::viewResource', 'shortname', 'title');
         $pag->forced_where = new Pluf_SQL('project=%s', array($prj->id));
-        $pag->extra_classes = array('right', 'a-c', 'a-c', 'a-c');
+        $pag->extra_classes = array('right', 'a-c', 'left', 'a-c');
         $list_display = array(
             'title' => __('Resource Title'),
             'mime_type' => __('MIME type'),
@@ -347,7 +347,7 @@ class IDF_Views_Wiki
         if (isset($request->GET['rev']) and preg_match('/^[0-9]+$/', $request->GET['rev'])) {
             $revision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_ResourceRevision',
                                                       $request->GET['rev']);
-            if ($oldrev->wikiresource != $resource->id or $oldrev->is_head == true) {
+            if ($revision->wikiresource != $resource->id or $revision->is_head == true) {
                 return new Pluf_HTTP_Response_NotFound($request);
             }
         }
@@ -382,7 +382,12 @@ class IDF_Views_Wiki
             return new Pluf_HTTP_Response_NotFound($request);
         }
 
-        return new Pluf_HTTP_Response_File($rev->getFilePath(), $res->mime_type);
+        $response = new Pluf_HTTP_Response_File($rev->getFilePath(), $res->mime_type);
+        if (isset($request->GET['attachment']) && $request->GET['attachment']) {
+            $response->headers['Content-Disposition'] =
+                'attachment; filename="'.$res->title.'.'.$rev->fileext.'"';
+        }
+        return $response;
     }
 
     /**
@@ -425,7 +430,7 @@ class IDF_Views_Wiki
     }
 
     /**
-     * View a documentation page.
+     * Update a documentation page.
      */
     public $updatePage_precond = array('IDF_Precondition::accessWiki',
                                        'Pluf_Precondition::loginRequired');
@@ -471,6 +476,54 @@ class IDF_Views_Wiki
                                                      'rev' => $revision,
                                                      'form' => $form,
                                                      'preview' => $preview,
+                                                     ),
+                                               $request);
+    }
+
+    /**
+     * Update a documentation resource.
+     */
+    public $updateResource_precond = array('IDF_Precondition::accessWiki',
+                                           'Pluf_Precondition::loginRequired');
+    public function updateResource($request, $match)
+    {
+        $prj = $request->project;
+        // Find the page
+        $sql = new Pluf_SQL('project=%s AND title=%s',
+                            array($prj->id, $match[2]));
+        $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
+        if ($resources->count() != 1) {
+            return new Pluf_HTTP_Response_NotFound($request);
+        }
+        $resource = $resources[0];
+        $title = sprintf(__('Update %s'), $resource->title);
+        $revision = $resource->get_current_revision();
+        $params = array('project' => $prj,
+                        'user' => $request->user,
+                        'resource' => $resource);
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_WikiResourceUpdate(array_merge($request->POST, $request->FILES),
+                                                    $params);
+            if ($form->isValid()) {
+                $page = $form->save();
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                                array($prj->shortname, $resource->title));
+                $request->user->setMessage(sprintf(__('The resource <a href="%s">%s</a> has been updated.'),
+                                                   $url, Pluf_esc($resource->title)));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listResources',
+                                                array($prj->shortname));
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $form = new IDF_Form_WikiResourceUpdate(null, $params);
+        }
+
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/updateResource.html',
+                                               array(
+                                                     'page_title' => $title,
+                                                     'resource' => $resource,
+                                                     'rev' => $revision,
+                                                     'form' => $form,
                                                      ),
                                                $request);
     }

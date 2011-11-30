@@ -8,7 +8,7 @@
 
 {block body}
 {if !$rev.is_head}
-{ashowuser 'submitter', $oldrev.get_submitter(), $request}{aurl 'url', 'IDF_Views_Wiki::viewResource', array($project.shortname, $resource.title)}
+{ashowuser 'submitter', $rev.get_submitter(), $request}{aurl 'url', 'IDF_Views_Wiki::viewResource', array($project.shortname, $resource.title)}
 <div class="old-rev">
 <p>{blocktrans}You are looking at an old revision of the resource 
 <a href="{$url}">{$resource.title}</a>. This revision was created
@@ -21,9 +21,11 @@ by {$submitter}.{/blocktrans}</p>
 
 <p class="preview">{$rev.render()|unsafe}</p>
 
+{aurl 'url', 'IDF_Views_Wiki::rawResource', array($project.shortname, $rev.id), array('attachment' => 1)}
 <ul>
 <li>{trans 'File size'}: {$rev.filesize|size}</li>
 <li>{trans 'MIME type'}: {$resource.mime_type}</li>
+<li><a href="{$url}">{trans 'Download this file'}</a></li>
 </ul>
 {if ($isOwner or $isAdmin) and !$rev.is_head}{aurl 'url', 'IDF_Views_Wiki::deleteResourceRev', array($project.shortname, $rev.id)}
 <p class="delp"><a href="{$url}" title="{trans 'Delete this revision'}"><img src="{media '/idf/img/trash.png'}" style="vertical-align: text-bottom;" alt="{trans 'Trash'}" /></a> <a href="{$url}">{trans 'Delete this revision'}</a></p>

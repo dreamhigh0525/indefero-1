@@ -70,6 +70,14 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
                                   'default' => 0,
                                   'verbose' => __('file size in bytes'),
                                   ),
+                            'fileext' =>
+                            array(
+                                  'type' => 'Pluf_DB_Field_Varchar',
+                                  'blank' => false,
+                                  'size' => 10,
+                                  'verbose' => __('File extension'),
+                                  'help_text' => __('The file extension of the uploaded resource.'),
+                                  ),
                             'submitter' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
@@ -105,6 +113,25 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
         return '';
     }
 
+    function preDelete()
+    {
+        // if we kill off a head revision, ensure that we either mark a previous
+        // revision as head or kill off the resource record as well
+        if ($this->is_head) {
+            $sql = new Pluf_SQL('wikiresource=%s and id!=%s', array($this->wikiresource, $this->id));
+            $revs = Pluf::factory('IDF_Wiki_ResourceRevision')->getList(array('filter'=>$sql->gen(), 'order'=>'id DESC'));
+            if ($revs->count() > 0) {
+                $previous = $revs[0];
+                $previous->is_head = true;
+                $previous->update();
+            } else {
+                $this->get_wikiresource()->delete();
+            }
+        }
+
+        @unlink($this->getFilePath());
+    }
+
     function preSave($create=false)
     {
         if ($this->id == '') {
@@ -135,7 +162,7 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
     function getFilePath()
     {
         return sprintf(Pluf::f('upload_path').'/'.$this->get_wikiresource()->get_project()->shortname.'/wiki/res/%d/%d.%s',
-            $this->get_wikiresource()->id, $this->id, $this->get_wikiresource()->orig_file_ext);
+            $this->get_wikiresource()->id, $this->id, $this->fileext);
     }
 
     function getFileURL()
@@ -143,11 +170,6 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
         $prj = $this->get_wikiresource()->get_project();
         return Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::rawResource',
                                         array($prj->shortname, $this->id));
-    }
-
-    function preDelete()
-    {
-        @unlink($this->getFilePath());
     }
 
     /**

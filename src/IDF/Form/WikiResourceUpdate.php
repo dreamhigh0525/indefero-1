@@ -22,68 +22,55 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Create a new resource.
+ * Update a documentation page.
  *
- * This create a new resource and the corresponding revision.
+ * This add a corresponding revision.
  *
  */
-class IDF_Form_WikiResourceCreate extends Pluf_Form
+class IDF_Form_WikiResourceUpdate extends Pluf_Form
 {
     public $user = null;
     public $project = null;
+    public $page = null;
     public $show_full = false;
+
 
     public function initFields($extra=array())
     {
-        $this->project = $extra['project'];
+        $this->resource = $extra['resource'];
         $this->user = $extra['user'];
-        $initname = (!empty($extra['name'])) ? $extra['name'] : __('ResourceName');
+        $this->project = $extra['project'];
 
-        $this->fields['title'] = new Pluf_Form_Field_Varchar(
-                                      array('required' => true,
-                                            'label' => __('Resource title'),
-                                            'initial' => $initname,
-                                            'widget_attrs' => array(
-                                                       'maxlength' => 200,
-                                                       'size' => 67,
-                                                                    ),
-                                            'help_text' => __('The resource name must contains only letters, digits and the dash (-) character.'),
-                                            ));
         $this->fields['summary'] = new Pluf_Form_Field_Varchar(
                                       array('required' => true,
-                                            'label' => __('Description'),
-                                            'help_text' => __('This one line description is displayed in the list of resources.'),
+                                        'label' => __('Description'),
+                                        'help_text' => __('This one line description is displayed in the list of resources.'),
+                                        'initial' => $this->resource->summary,
+                                        'widget_attrs' => array(
+                                                   'maxlength' => 200,
+                                                   'size' => 67,
+                                                                ),
+                                        ));
+        $this->fields['file'] = new Pluf_Form_Field_File(
+                                      array('required' => true,
+                                            'label' => __('File'),
+                                            'initial' => '',
+                                            'max_size' => Pluf::f('max_upload_size', 2097152),
+                                            'move_function_params' => array('upload_path' => $this->getTempUploadPath(),
+                                            'upload_path_create' => true,
+                                            'upload_overwrite' => true),
+                                            ));
+
+        $this->fields['comment'] = new Pluf_Form_Field_Varchar(
+                                      array('required' => true,
+                                            'label' => __('Comment'),
+                                            'help_text' => __('One line to describe the changes you made.'),
                                             'initial' => '',
                                             'widget_attrs' => array(
                                                        'maxlength' => 200,
                                                        'size' => 67,
                                                                     ),
                                             ));
-
-        $this->fields['file'] = new Pluf_Form_Field_File(
-                                     array('required' => true,
-                                           'label' => __('File'),
-                                           'initial' => '',
-                                           'max_size' => Pluf::f('max_upload_size', 2097152),
-                                           'move_function_params' => array('upload_path' => $this->getTempUploadPath(),
-                                           'upload_path_create' => true,
-                                           'upload_overwrite' => true),
-                                           ));
-    }
-
-    public function clean_title()
-    {
-        $title = $this->cleaned_data['title'];
-        if (preg_match('/[^a-zA-Z0-9\-]/', $title)) {
-            throw new Pluf_Form_Invalid(__('The title contains invalid characters.'));
-        }
-        $sql = new Pluf_SQL('project=%s AND title=%s',
-                            array($this->project->id, $title));
-        $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
-        if ($resources->count() > 0) {
-            throw new Pluf_Form_Invalid(__('A resource with this title already exists.'));
-        }
-        return $title;
     }
 
     public function clean_file()
@@ -94,6 +81,20 @@ class IDF_Form_WikiResourceCreate extends Pluf_Form
         if (!preg_match('/\.('.$extra.'png|jpg|jpeg|gif|bmp|psd|tif|aiff|asf|avi|bz2|css|doc|eps|gz|jar|mdtext|mid|mov|mp3|mpg|ogg|pdf|ppt|ps|qt|ra|ram|rm|rtf|sdd|sdw|sit|sxi|sxw|swf|tgz|txt|wav|xls|xml|war|wmv|zip)$/i', $this->cleaned_data['file'])) {
             @unlink($this->getTempUploadPath().$this->cleaned_data['file']);
             throw new Pluf_Form_Invalid(__('For security reasons, you cannot upload a file with this extension.'));
+        }
+
+        list($mimeType, , $extension) = IDF_FileUtil::getMimeType($this->getTempUploadPath().$this->cleaned_data['file']);
+        if ($this->resource->mime_type != $mimeType) {
+            throw new Pluf_Form_Invalid(sprintf(
+                __('The mime type of the uploaded file "%s" does not match the mime type of this resource "%s"'),
+                $mimeType, $this->resource->mime_type
+            ));
+        }
+        $this->cleaned_data['fileext'] = $extension;
+
+        if (md5_file($this->getTempUploadPath().$this->cleaned_data['file']) ===
+            md5_file($this->resource->get_current_revision()->getFilePath())) {
+            throw new Pluf_Form_Invalid(__('The current version of the resource and the uploaded file are equal.'));
         }
         return $this->cleaned_data['file'];
     }
@@ -124,42 +125,33 @@ class IDF_Form_WikiResourceCreate extends Pluf_Form
         }
 
         $tempFile = $this->getTempUploadPath().$this->cleaned_data['file'];
-        list($mimeType, , $extension) = IDF_FileUtil::getMimeType($tempFile);
 
-        // create the resource
-        $resource = new IDF_Wiki_Resource();
-        $resource->project = $this->project;
-        $resource->submitter = $this->user;
-        $resource->summary = trim($this->cleaned_data['summary']);
-        $resource->title = trim($this->cleaned_data['title']);
-        $resource->mime_type = $mimeType;
-        $resource->create();
+        $this->resource->summary = trim($this->cleaned_data['summary']);
+        $this->resource->update();
 
-        // add the first revision
+        // add the new revision
         $rev = new IDF_Wiki_ResourceRevision();
-        $rev->wikiresource = $resource;
+        $rev->wikiresource = $this->resource;
         $rev->submitter = $this->user;
-        $rev->summary = __('Initial resource creation');
+        $rev->summary = $this->cleaned_data['comment'];
         $rev->filesize = filesize($tempFile);
-        $rev->fileext = $extension;
+        $rev->fileext = $this->cleaned_data['fileext'];
         $rev->create();
 
         $finalFile = $rev->getFilePath();
-        if (!@mkdir(dirname($finalFile), 0755, true)) {
+        if (!is_dir(dirname($finalFile))) {
             @unlink($tempFile);
             $rev->delete();
-            $resource->delete();
-            throw new Exception('could not create final resource path');
+            throw new Exception('resource path does not exist');
         }
 
         if (!@rename($tempFile, $finalFile)) {
             @unlink($tempFile);
             $rev->delete();
-            $resource->delete();
             throw new Exception('could not move resource to final location');
         }
 
-        return $resource;
+        return $this->resource;
     }
 
     private function getTempUploadPath()
