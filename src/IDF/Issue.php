@@ -211,7 +211,7 @@ class IDF_Issue extends Pluf_Model
         $ic = (in_array($this->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View issue">Issue %3$d</a>, %4$s'), $url, $ic, $this->id, Pluf_esc($this->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">issue %d</a>, by %s'), $url, $ic, $this->id, $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Creation of <a href="%1$s" class="%2$s">issue %3$d</a>, by %4$s'), $url, $ic, $this->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -221,7 +221,7 @@ class IDF_Issue extends Pluf_Model
             .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                       array($request->project->shortname,
                                             $this->id));
-        $title = sprintf(__('%s: Issue %d created - %s'),
+        $title = sprintf(__('%1$s: Issue %2$d created - %3$s'),
                          $request->project->name,
                          $this->id, $this->summary);
         $cts = $this->get_comments_list(array('order' => 'id ASC',
@@ -287,7 +287,7 @@ class IDF_Issue extends Pluf_Model
             foreach ($to_email as $email_lang) {
                 Pluf_Translation::loadSetLocale($email_lang[1]);
                 $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                       sprintf(__('Issue %s - %s (%s)'),
+                                       sprintf(__('Issue %1$s - %2$s (%3$s)'),
                                                $this->id, $this->summary, $prj->shortname));
                 $tmpl = new Pluf_Template('idf/issues/issue-created-email.txt');
                 $email->addTextMessage($tmpl->render($context));
@@ -333,7 +333,7 @@ class IDF_Issue extends Pluf_Model
                 }
                 Pluf_Translation::loadSetLocale($email_lang[1]);
                 $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                       sprintf(__('Updated Issue %s - %s (%s)'),
+                                       sprintf(__('Updated Issue %1$s - %2$s (%3$s)'),
                                                $this->id, $this->summary, $prj->shortname));
                 $tmpl = new Pluf_Template('idf/issues/issue-updated-email.txt');
                 $email->addTextMessage($tmpl->render($context));

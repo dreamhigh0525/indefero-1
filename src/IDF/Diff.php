@@ -184,12 +184,12 @@ class IDF_Diff
             $added = $added[0] + $added[1];
             $leftwidth = 0;
             if ($added > 0)
-                $leftwidth = ((ceil(log10($added)) + 1) * 8) + 12;
+                $leftwidth = ((ceil(log10($added)) + 1) * 8) + 17;
 
             $removed = $removed[0] + $removed[1];
             $rightwidth = 0;
             if ($removed > 0)
-                $rightwidth = ((ceil(log10($removed)) + 1) * 8) + 12;
+                $rightwidth = ((ceil(log10($removed)) + 1) * 8) + 17;
 
             // we need to correct the width of a single column a little
             // to take less space and to hide the empty one
@@ -411,11 +411,11 @@ class IDF_Diff
 
         $leftwidth = 1;
         if ($max_lineno_left > 0)
-            $leftwidth = ((ceil(log10($max_lineno_left)) + 1) * 8) + 12;
+            $leftwidth = ((ceil(log10($max_lineno_left)) + 1) * 8) + 17;
 
         $rightwidth = 1;
         if ($max_lineno_right > 0)
-            $rightwidth = ((ceil(log10($max_lineno_right)) + 1) * 8) + 12;
+            $rightwidth = ((ceil(log10($max_lineno_right)) + 1) * 8) + 17;
 
         $inner_linecounts_left =
           '<table class="diff-linecounts">' ."\n".

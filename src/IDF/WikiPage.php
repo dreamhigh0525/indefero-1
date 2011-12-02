@@ -195,7 +195,7 @@ class IDF_WikiPage extends Pluf_Model
         $user = $stag->start($this->get_submitter(), $request, '', false);
         $out .= sprintf(__('<a href="%1$s" title="View page">%2$s</a>, %3$s'), $url, Pluf_esc($this->title), Pluf_esc($this->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s">page %s</a>, by %s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%1$s">page %2$s</a>, by %3$s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>'; 
         return Pluf_Template::markSafe($out);
     }
 
@@ -205,7 +205,7 @@ class IDF_WikiPage extends Pluf_Model
             .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', 
                                       array($request->project->shortname,
                                             $this->title));
-        $title = sprintf(__('%s: Documentation page %s added - %s'),
+        $title = sprintf(__('%1$s: Documentation page %2$s added - %3$s'),
                          $request->project->name,
                          $this->title, $this->summary);
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);

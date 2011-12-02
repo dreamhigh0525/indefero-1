@@ -341,19 +341,19 @@ class IDF_Views_Issue
         if (count($ctags) == 0) $ctags[] = 0;
         switch ($match[3]) {
         case 'submit':
-            $titleFormat = __('%s %s Submitted %s Issues');
+            $titleFormat = __('%1$s %2$s Submitted %3$s Issues');
             $f_sql = new Pluf_SQL('project=%s AND submitter=%s AND status IN ('.implode(', ', $otags).')', array($prj->id, $user->id));
             break;
         case 'submitclosed':
-            $titleFormat = __('%s %s Closed Submitted %s Issues');
+            $titleFormat = __('%1$s %2$s Closed Submitted %3$s Issues');
             $f_sql = new Pluf_SQL('project=%s AND submitter=%s AND status IN ('.implode(', ', $ctags).')', array($prj->id, $user->id));
             break;
         case 'ownerclosed':
-            $titleFormat = __('%s %s Closed Working %s Issues');
+            $titleFormat = __('%1$s %2$s Closed Working %3$s Issues');
             $f_sql = new Pluf_SQL('project=%s AND owner=%s AND status IN ('.implode(', ', $ctags).')', array($prj->id, $user->id));
             break;
         default:
-            $titleFormat = __('%s %s Working %s Issues');
+            $titleFormat = __('%1$s %2$s Working %3$s Issues');
             $f_sql = new Pluf_SQL('project=%s AND owner=%s AND status IN ('.implode(', ', $otags).')', array($prj->id, $user->id));
             break;
         }
@@ -430,7 +430,7 @@ class IDF_Views_Issue
                                                 array($prj->shortname, $issue->id));
                 $issue->notify($request->conf);
                 if ($api) return $issue;
-                $request->user->setMessage(sprintf(__('<a href="%s">Issue %d</a> has been created.'), $url, $issue->id));
+                $request->user->setMessage(sprintf(__('<a href="%1$s">Issue %2$d</a> has been created.'), $url, $issue->id));
                 return new Pluf_HTTP_Response_Redirect($url);
             }
         } else {
@@ -601,7 +601,7 @@ class IDF_Views_Issue
 
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                         array($prj->shortname, $issue->id));
-        $title = Pluf_Template::markSafe(sprintf(__('Issue <a href="%s">%d</a>: %s'), $url, $issue->id, $issue->summary));
+        $title = Pluf_Template::markSafe(sprintf(__('Issue <a href="%1$s">%2$d</a>: %3$s'), $url, $issue->id, $issue->summary));
         $form = false; // The form is available only if logged in.
         $starred = false;
         $closed = in_array($issue->status, $prj->getTagIdsByStatus('closed'));
@@ -625,7 +625,7 @@ class IDF_Views_Issue
                     $issue->notify($request->conf, false);
                     $comments = $issue->get_comments_list(array('order' => 'id DESC'));
                     $url .= '#ic' . $comments[0]->id;
-                    $request->user->setMessage(sprintf(__('<a href="%s">Issue %d</a> has been updated.'), $url, $issue->id));
+                    $request->user->setMessage(sprintf(__('<a href="%1$s">Issue %2$d</a> has been updated.'), $url, $issue->id));
                     return new Pluf_HTTP_Response_Redirect($url);
                 }
             } else {

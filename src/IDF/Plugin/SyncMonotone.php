@@ -306,7 +306,7 @@ class IDF_Plugin_SyncMonotone
         }
         catch (Exception $e) {
             $this->_diagnoseProblem(sprintf(
-                __('Could not parse usher configuration in "%s": %s'),
+                __('Could not parse usher configuration in "%1$s": %2$s'),
                 $usher_config, $e->getMessage()
             ));
         }
@@ -522,7 +522,7 @@ class IDF_Plugin_SyncMonotone
         }
         catch (Exception $e) {
             $this->_diagnoseProblem(sprintf(
-                __('Could not parse usher configuration in "%s": %s'),
+                __('Could not parse usher configuration in "%1$s": %2$s'),
                 $usher_config, $e->getMessage()
             ));
         }
@@ -596,7 +596,7 @@ class IDF_Plugin_SyncMonotone
                 }
                 catch (Exception $e) {
                     $this->_diagnoseProblem(sprintf(
-                        __('Could not parse read-permissions for project "%s": %s'),
+                        __('Could not parse read-permissions for project "%1$s": %2$s'),
                         $shortname, $e->getMessage()
                     ));
                 }
@@ -715,7 +715,7 @@ class IDF_Plugin_SyncMonotone
                 }
                 catch (Exception $e) {
                     $this->_diagnoseProblem(sprintf(
-                        __('Could not parse read-permissions for project "%s": %s'),
+                        __('Could not parse read-permissions for project "%1$s": %2$s'),
                         $shortname, $e->getMessage()
                     ));
                 }

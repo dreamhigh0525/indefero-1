@@ -201,7 +201,7 @@ class IDF_Upload extends Pluf_Model
         $out .= sprintf(__('<a href="%1$s" title="View download">Download %2$d</a>, %3$s'), $url, $this->id, Pluf_esc($this->summary)).'</td>';
         $out .= '</tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Addition of <a href="%s">download %d</a>, by %s'), $url, $this->id, $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Addition of <a href="%1$s">download %2$d</a>, by %3$s'), $url, $this->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -211,7 +211,7 @@ class IDF_Upload extends Pluf_Model
             .Pluf_HTTP_URL_urlForView('IDF_Views_Download::view',
                                       array($request->project->shortname,
                                             $this->id));
-        $title = sprintf(__('%s: Download %d added - %s'),
+        $title = sprintf(__('%1$s: Download %2$d added - %3$s'),
                          $request->project->name,
                          $this->id, $this->summary);
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
@@ -253,7 +253,7 @@ class IDF_Upload extends Pluf_Model
         foreach ($addresses as $address) {
             $email = new Pluf_Mail(Pluf::f('from_email'),
                                    $address,
-                                   sprintf(__('New download - %s (%s)'),
+                                   sprintf(__('New download - %1$s (%2$s)'),
                                            $this->summary,
                                            $this->get_project()->shortname));
             $email->addTextMessage($text_email);

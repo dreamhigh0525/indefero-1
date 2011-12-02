@@ -150,7 +150,7 @@ class IDF_Review_Patch extends Pluf_Model
         $ic = (in_array($review->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View review">Review %3$d</a>, %4$s'), $url, $ic, $review->id, Pluf_esc($review->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%s" class="%s">review %d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
+<div class="helptext right">'.sprintf(__('Creation of <a href="%1$s" class="%2$s">review %3$d</a>, by %4$s'), $url, $ic, $review->id, $user).'</div></td></tr>'; 
         return Pluf_Template::markSafe($out);
     }
 
@@ -160,7 +160,7 @@ class IDF_Review_Patch extends Pluf_Model
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view', 
                                         array($request->project->shortname,
                                               $review->id));
-        $title = sprintf(__('%s: Creation of Review %d - %s'),
+        $title = sprintf(__('%1$s: Creation of Review %2$d - %3$s'),
                          Pluf_esc($request->project->name),
                          $review->id, Pluf_esc($review->summary));
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
@@ -201,7 +201,7 @@ class IDF_Review_Patch extends Pluf_Model
         foreach ($addresses as $address) {
             $email = new Pluf_Mail(Pluf::f('from_email'), 
                                    $address,
-                                   sprintf(__('New Code Review %s - %s (%s)'),
+                                   sprintf(__('New Code Review %1$s - %2$s (%3$s)'),
                                            $this->get_review()->id, 
                                            $this->get_review()->summary, 
                                            $this->get_review()->get_project()->shortname));
