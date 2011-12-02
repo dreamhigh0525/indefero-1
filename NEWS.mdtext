@@ -1,5 +1,10 @@
 # InDefero 1.2.1 - XXX XXX XX XX:XX:XX UTC 201X
 
+## Bugfixes
+
+- The diff view now renders properly in Firefox when a minimum font size
+  is configured or the user zooms the web page (fixes issue 773)
+
 ## Language and Translations
 
 - Multiple fixes to English source strings (fixes issues 763, 766, and 772,

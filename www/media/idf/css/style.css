@@ -652,7 +652,7 @@ table.diff-contents {
 
 table.diff-linecounts tr,
 table.diff-contents tr {
-  height: 18px;
+  height: 22px;
 }
 
 table.diff-linecounts tr {
@@ -664,8 +664,9 @@ table.diff-linecounts tr:first-child {
 }
 
 table.diff-linecounts td {
+  line-height: 12px;
   font-size: 90%;
-  padding: 1px 10px;
+  padding: 2px 10px;
   text-align: right;
   border-left: 1px solid #d3d7cf;
 }
