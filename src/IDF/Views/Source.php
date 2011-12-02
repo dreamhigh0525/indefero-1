@@ -302,7 +302,7 @@ class IDF_Views_Source
             throw new Exception('could not retrieve commit object for '. $commit);
         }
         $title = sprintf(__('%s Commit Details'), (string) $request->project);
-        $page_title = sprintf(__('%s Commit Details - %s'), (string) $request->project, $commit);
+        $page_title = sprintf(__('%1$s Commit Details - %2$s'), (string) $request->project, $commit);
         $rcommit = IDF_Commit::getOrAdd($cobject, $request->project);
         $diff = new IDF_Diff($cobject->diff, $scm->getDiffPathStripLevel());
         $cobject->diff = null;

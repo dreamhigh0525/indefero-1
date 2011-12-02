@@ -177,7 +177,7 @@ class IDF_IssueComment extends Pluf_Model
         }
         $out .= '</td></tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Comment on <a href="%s" class="%s">issue %d</a>, by %s'), $url, $ic, $issue->id, $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Comment on <a href="%1$s" class="%2$s">issue %3$d</a>, by %4$s'), $url, $ic, $issue->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -188,7 +188,7 @@ class IDF_IssueComment extends Pluf_Model
             .Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                       array($request->project->shortname,
                                             $issue->id));
-        $title = sprintf(__('%s: Comment on issue %d - %s'),
+        $title = sprintf(__('%1$s: Comment on issue %2$d - %3$s'),
                          Pluf_esc($request->project->name),
                          $issue->id, Pluf_esc($issue->summary));
         $url .= '#ic'.$this->id;

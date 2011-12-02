@@ -235,7 +235,7 @@ class IDF_Commit extends Pluf_Model
 </tr>
 <tr class="extra">
 <td colspan="2">
-<div class="helptext right">'.sprintf(__('Commit %s, by %s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Commit %1$s, by %2$s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -326,7 +326,7 @@ class IDF_Commit extends Pluf_Model
         foreach ($addresses as $address) {
             $email = new Pluf_Mail(Pluf::f('from_email'),
                                    $address,
-                                   sprintf(__('New Commit %s - %s (%s)'),
+                                   sprintf(__('New Commit %1$s - %2$s (%3$s)'),
                                            $this->scm_id, $this->summary,
                                            $this->get_project()->shortname));
             $email->addTextMessage($text_email);

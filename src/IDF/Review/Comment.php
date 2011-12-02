@@ -138,7 +138,7 @@ class IDF_Review_Comment extends Pluf_Model
         $ic = (in_array($review->status, $request->project->getTagIdsByStatus('closed'))) ? 'issue-c' : 'issue-o';
         $out .= sprintf(__('<a href="%1$s" class="%2$s" title="View review">Review %3$d</a>, %4$s'), $url, $ic, $review->id, Pluf_esc($review->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Update of <a href="%s" class="%s">review %d</a>, by %s'), $url, $ic, $review->id, $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Update of <a href="%1$s" class="%2$s">review %3$d</a>, by %4$s'), $url, $ic, $review->id, $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -148,7 +148,7 @@ class IDF_Review_Comment extends Pluf_Model
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($request->project->shortname,
                                               $review->id));
-        $title = sprintf(__('%s: Updated review %d - %s'),
+        $title = sprintf(__('%1$s: Updated review %2$d - %3$s'),
                          Pluf_esc($request->project->name),
                          $review->id, Pluf_esc($review->summary));
         $url .= '#ic'.$this->id;
@@ -213,7 +213,7 @@ class IDF_Review_Comment extends Pluf_Model
         foreach ($to_email as $email_lang) {
             Pluf_Translation::loadSetLocale($email_lang[1]);
             $email = new Pluf_Mail(Pluf::f('from_email'), $email_lang[0],
-                                   sprintf(__('Updated Code Review %s - %s (%s)'),
+                                   sprintf(__('Updated Code Review %1$s - %2$s (%3$s)'),
                                            $review->id, $review->summary, $prj->shortname));
 
             $email->addTextMessage($tmpl->render($context));

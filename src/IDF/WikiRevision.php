@@ -186,7 +186,7 @@ class IDF_WikiRevision extends Pluf_Model
         }
         $out .= '</td></tr>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Change of <a href="%s">%s</a>, by %s'), $url, Pluf_esc($page->title), $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Change of <a href="%1$s">%2$s</a>, by %3$s'), $url, Pluf_esc($page->title), $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -205,7 +205,7 @@ class IDF_WikiRevision extends Pluf_Model
                                           array($request->project->shortname,
                                                 $page->title));
         }
-        $title = sprintf(__('%s: Documentation page %s updated - %s'),
+        $title = sprintf(__('%1$s: Documentation page %2$s updated - %3$s'),
                          $request->project->name,
                          $page->title, $page->summary);
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
@@ -259,13 +259,13 @@ class IDF_WikiRevision extends Pluf_Model
                                              );
         if ($create) {
             $template = 'idf/wiki/wiki-created-email.txt';
-            $title = sprintf(__('New Documentation Page %s - %s (%s)'),
+            $title = sprintf(__('New Documentation Page %1$s - %2$s (%3$s)'),
                              $this->get_wikipage()->title,
                              $this->get_wikipage()->summary,
                              $this->get_wikipage()->get_project()->shortname);
         } else {
             $template = 'idf/wiki/wiki-updated-email.txt';
-            $title = sprintf(__('Documentation Page Changed %s - %s (%s)'),
+            $title = sprintf(__('Documentation Page Changed %1$s - %2$s (%3$s)'),
                              $this->get_wikipage()->title,
                              $this->get_wikipage()->summary,
                              $this->get_wikipage()->get_project()->shortname);
