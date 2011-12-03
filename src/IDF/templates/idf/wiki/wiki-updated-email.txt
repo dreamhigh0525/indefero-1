@@ -18,4 +18,4 @@
 {$rev.content}
 
 --
-{trans 'Documentation page:'} {$url_base}{url 'IDF_Views_Wiki::view', array($project.shortname, $page.title)}
+{trans 'Documentation page:'} {$url_base}{url 'IDF_Views_Wiki::viewPage', array($project.shortname, $page.title)}
