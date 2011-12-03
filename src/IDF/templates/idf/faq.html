@@ -5,6 +5,7 @@
 <li><a href="#q-keyboard">{trans 'What are the keyboard shortcuts?'}</a></li>
 <li><a href="#q-duplicate">{trans 'How to mark an issue as duplicate?'}</a></li>
 <li><a href="#q-mugshot">{trans 'How can I display my head next to my comments?'}</a></li>
+<li><a href="#q-wiki">{trans 'How can I embed images and other resources in my documentation pages?'}</a></li>
 <li><a href="#q-archive-format">{trans 'What is this "Upload Archive" functionality about?'}</a></li>
 <li><a href="#q-api">{trans 'What is the API and how is it used?'}</a></li>
 </ul>
@@ -40,7 +41,9 @@
 
 {blocktrans}<p>This is simple:</p>
 <ol>
-<li>Write in the comments "This is a duplicate of issue 123", change 123 with the corresponding issue number.</li>
+<li>Write in the comments "This is a duplicate of issue 123" or - if you are a member of the crew -
+directly add the "duplicates" relation with the value "123" below the comment field. Change "123"
+with the corresponding issue number.</li>
 <li>Change the status of the current issue to <em>Duplicate</em>.</li>
 <li>Submit the changes.</li>
 </ol>{/blocktrans}
@@ -49,6 +52,24 @@
 
 <p>{blocktrans}You need to create an account on <a href="http://en.gravatar.com/">Gravatar</a>, this takes about 5 minutes and is free.{/blocktrans}</p>
 
+<h2 id="q-wiki">{trans 'How can I embed images and other resources in my documentation pages?'}</h2>
+
+{blocktrans}
+<p>To embed any previously uploaded resource into your wiki page, you can use the <code>[!ResourceName]</code> syntax.</p>
+
+<p>The rendering of the resource can then be further fine-tuned:
+<ul>
+<li><code>[!ImageResource, align=right, width=200]</code> renders "ImageResource" right-aligned and scale its width to 200</li>
+<li><code>[!TextResource, align=center, width=300, height=300]</code> renders "TextResource" in a centered, 300 by 300 px iframe</li>
+<li><code>[!AnyResource, preview=no]</code> does not render a preview of the resource, but only provides a download link (default for binary resources)</li>
+<li><code>[!BinaryResource, title=Download]</code> renders the download link of "BinaryResource" with an alternative title</li>
+</ul>
+</p>
+
+Resources are versioned, just like wiki pages. If you update a resource, old wiki pages still show the state of the resource
+at the time when the wiki page was edited. If you specifically want to update a resource on a page, you therefor need to update
+the resource at first and then also the page where it is referenced, otherwise the change won't be visible until the next regular edit. 
+{/blocktrans}
 
 <h2 id="q-archive-format">{trans 'What is this "Upload Archive" functionality about?'}</h2>
 
