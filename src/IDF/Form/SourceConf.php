@@ -53,7 +53,6 @@ class IDF_Form_SourceConf extends Pluf_Form
                     array('required' => false,
                           'label' => __('Webhook URL'),
                           'initial' => $this->conf->getVal('webhook_url', ''),
-                          'help_text' => sprintf(__('Learn more about the <a href="%s">post-commit webhooks</a>.'), $url),
                           'widget_attrs' => array('size' => 35),
                           ));
 
