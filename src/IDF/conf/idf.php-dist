@@ -119,7 +119,7 @@ $cfg['time_zone'] = 'Europe/Berlin';
 # Configure which languages should be available in your forge.
 # If you want to enable an additional language, ensure that the
 # language file in question resides in 'src/IDF/locale'.
-$cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
+$cfg['languages'] = array('en', 'fr', 'de', 'es_ES', 'ru');
 
 
 # ---------------------------------------------------------------------------- #

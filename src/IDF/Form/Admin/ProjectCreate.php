@@ -206,7 +206,7 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                         $mtn_master_branch)) {
             throw new Pluf_Form_Invalid(__(
                 'The master branch is empty or contains illegal characters, '.
-                'please use only letters, digits, dashs and dots as separators.'
+                'please use only letters, digits, dashes and dots as separators.'
             ));
         }
 

@@ -34,7 +34,7 @@
 <td>
 {if $form.f.terms.errors}{$form.f.terms.fieldErrors}{/if}
 {$form.f.terms|unsafe} <strong>{$form.f.terms.labelTag}</strong><br />
-<span class="helptext">{blocktrans}Read the <a id="showterms" href="#theterms">terms and conditions</a> &ndash; basically <em>"Please be nice, we respect you"</em>.{/blocktrans}</span>
+<span class="helptext">{blocktrans}Read the <a id="showterms" href="#theterms">terms and conditions</a> – basically <em>"Please be nice, we respect you"</em>.{/blocktrans}</span>
 </td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@
 <div class="issue-submit-info">
 <p>{trans 'Be sure to provide a valid email address, as we are sending a validation link by email.'}</p>
 {aurl 'url', 'IDF_Views::passwordRecoveryAsk'}
-<p>{blocktrans}If you have just forgotten your login information, then there is no need to create a new account. Just go <a href="{$url}">here</a> to recover your login name and password.{/blocktrans}</p>
+<p>{blocktrans}If you have just forgotten your login information, then there is no need to create a new account. You can just <a href="{$url}">recover your login name and password</a>.{/blocktrans}</p>
 <p><strong>{trans 'Did you know?'}</strong><br />
 {aurl 'url', 'IDF_Views::faq'}
 {blocktrans}With your account, you will able to participate in the life of all the projects hosted here. Participating in a software project must be fun, so if you have troubles, you can <a href="{$url}">let us know about your issues at anytime</a>!{/blocktrans}</p>

@@ -67,7 +67,7 @@ class IDF_Project extends Pluf_Model
                                   'blank' => false,
                                   'size' => 50,
                                   'verbose' => __('short name'),
-                                  'help_text' => __('Used in the url to access the project, must be short with only letters and numbers.'),
+                                  'help_text' => __('Used in the URL to access the project, must be short with only letters and numbers.'),
                                   'unique' => true,
                                   ),
                             'shortdesc' =>
@@ -84,7 +84,7 @@ class IDF_Project extends Pluf_Model
                                   'blank' => false,
                                   'size' => 250,
                                   'verbose' => __('description'),
-                                  'help_text' => __('The description can be extended using the markdown syntax.'),
+                                  'help_text' => __('The description can be extended using the Markdown syntax.'),
                                   ),
                             'private' =>
                             array(

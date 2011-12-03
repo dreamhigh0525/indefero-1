@@ -86,7 +86,7 @@ class IDF_Form_WikiResourceUpdate extends Pluf_Form
         list($mimeType, , $extension) = IDF_FileUtil::getMimeType($this->getTempUploadPath().$this->cleaned_data['file']);
         if ($this->resource->mime_type != $mimeType) {
             throw new Pluf_Form_Invalid(sprintf(
-                __('The mime type of the uploaded file "%s" does not match the mime type of this resource "%s"'),
+                __('The mime type of the uploaded file "%1$s" does not match the mime type of this resource "%2$s"'),
                 $mimeType, $this->resource->mime_type
             ));
         }

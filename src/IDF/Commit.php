@@ -235,7 +235,7 @@ class IDF_Commit extends Pluf_Model
 </tr>
 <tr class="extra">
 <td colspan="2">
-<div class="helptext right">'.sprintf(__('Commit&nbsp;%s, by %s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Commit %1$s, by %2$s'), '<a href="'.$url.'" class="mono">'.$this->scm_id.'</a>', $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -334,7 +334,7 @@ class IDF_Commit extends Pluf_Model
             // commits are usually not updated, therefor we do not
             // distinguish between create and update here
             $tplfile = 'idf/source/commit-created-email.txt';
-            $subject = __('New commit %s - %s (%s)');
+            $subject = __('New Commit %1$s - %2$s (%3$s)');
 
             $tmpl = new Pluf_Template($tplfile);
             $text_email = $tmpl->render($context);

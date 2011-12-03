@@ -219,7 +219,8 @@ class IDF_Views_Wiki
                 $page = $form->save();
                 $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                                     array($prj->shortname, $page->title));
-                $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been created.'), $urlpage, Pluf_esc($page->title)));
+                $request->user->setMessage(sprintf(__('The page <a href="%1$s">%2$s</a> has been created.'),
+                                           $urlpage, Pluf_esc($page->title)));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -261,7 +262,7 @@ class IDF_Views_Wiki
                 $resource = $form->save();
                 $urlresource = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
                                                         array($prj->shortname, $resource->title));
-                $request->user->setMessage(sprintf(__('The resource <a href="%s">%s</a> has been created.'), $urlresource, Pluf_esc($resource->title)));
+                $request->user->setMessage(sprintf(__('The resource <a href="%1$s">%2$s</a> has been created.'), $urlresource, Pluf_esc($resource->title)));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listResources',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -457,7 +458,8 @@ class IDF_Views_Wiki
                 $page = $form->save();
                 $urlpage = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
                                                     array($prj->shortname, $page->title));
-                $request->user->setMessage(sprintf(__('The page <a href="%s">%s</a> has been updated.'), $urlpage, Pluf_esc($page->title)));
+                $request->user->setMessage(sprintf(__('The page <a href="%1$s">%2$s</a> has been updated.'),
+                                           $urlpage, Pluf_esc($page->title)));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listPages',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -508,7 +510,7 @@ class IDF_Views_Wiki
                 $page = $form->save();
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
                                                 array($prj->shortname, $resource->title));
-                $request->user->setMessage(sprintf(__('The resource <a href="%s">%s</a> has been updated.'),
+                $request->user->setMessage(sprintf(__('The resource <a href="%1$s">%2$s</a> has been updated.'),
                                                    $url, Pluf_esc($resource->title)));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::listResources',
                                                 array($prj->shortname));

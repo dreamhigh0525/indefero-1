@@ -62,11 +62,11 @@ pot-update: pluf_path
 	fi
 	touch src/IDF/locale/idf.pot;
 	# Extract string
-	@cd src; php $(PLUF_PATH)/extracttemplates.php IDF/conf/idf.php IDF/gettexttemplates
+	@cd src; php "$(PLUF_PATH)/extracttemplates.php" IDF/conf/idf.php IDF/gettexttemplates
 	@cd src; for phpfile in `find . -iname "*.php"`; do \
 		printf "Parsing file : "$$phpfile"\n"; \
 		xgettext -o idf.pot -p ./IDF/locale/ --from-code=UTF-8 -j \
-			--keyword --keyword=__ --keyword=_n:1,2 -L PHP $$phpfile ; \
+			--keyword --keyword=__ --keyword=_n:1,2 -L PHP "$$phpfile" ; \
 		done
 	#	Remove tmp folder
 	rm -Rf src/IDF/gettexttemplates
@@ -76,7 +76,7 @@ pot-update: pluf_path
 po-update: pluf_path
 	@for pofile in `ls src/IDF/locale/*/idf.po`; do \
 		printf "Updating file : "$$pofile"\n"; \
-		msgmerge -v -U $$pofile src/IDF/locale/idf.pot; \
+		msgmerge -v -U "$$pofile" src/IDF/locale/idf.pot; \
 		printf "\n"; \
 	done
 
@@ -144,7 +144,7 @@ po-stats:
 		--pretty=format:%h`.zip
 
 db-install:
-	@cd src && php $(PLUF_PATH)/migrate.php --conf=IDF/conf/idf.php -a -d -i
+	@cd src && php "$(PLUF_PATH)/migrate.php" --conf=IDF/conf/idf.php -a -d -i
 
 db-update:
-	@cd src && php $(PLUF_PATH)/migrate.php --conf=IDF/conf/idf.php -a -d
+	@cd src && php "$(PLUF_PATH)/migrate.php" --conf=IDF/conf/idf.php -a -d

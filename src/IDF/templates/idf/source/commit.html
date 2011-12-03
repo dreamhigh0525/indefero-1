@@ -44,7 +44,7 @@
 <tr><td><span class="scm-action patched" title="{trans 'modified'}">M</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $filename)}">{$filename}</a>{if !empty($diff.files[$filename])}{assign $ndiff = count($diff.files[$filename]['chunks'])} (<a href="#diff-{$filename|md5}">{blocktrans $ndiff}{$ndiff} diff{plural}{$ndiff} diffs{/blocktrans}</a>){/if}</td></tr>
 {/foreach}
 {foreach $changes.properties as $filename => $properties}
-<tr><td><span class="scm-action property-changed" title="{trans 'properies changed'}">P</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $filename)}">{$filename}</a>
+<tr><td><span class="scm-action property-changed" title="{trans 'properties changed'}">P</span></td><td><a href="{url 'IDF_Views_Source::tree', array($project.shortname, $commit, $filename)}">{$filename}</a>
 <table class="properties">
 {foreach $properties as $key => $value}
 <tr><td>{$key}</td>

@@ -95,7 +95,7 @@ class IDF_Form_UploadArchive extends Pluf_Form
                 else $count[$class] += 1;
                 if (in_array($class, $onemax) and $count[$class] > 1) {
                     throw new Pluf_Form_Invalid(
-                       sprintf(__('You cannot provide more than label from the %s class to a download (%s).'), $class, $name)
+                       sprintf(__('You cannot provide more than label from the %1$s class to a download (%2$s).'), $class, $name)
                     );
                 }
             }

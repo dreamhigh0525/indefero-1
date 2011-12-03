@@ -158,7 +158,7 @@ class IDF_Form_WikiPageUpdate extends Pluf_Form
             else $count[$class] += 1;
             if (in_array($class, $onemax) and $count[$class] > 1) {
                 if (!isset($this->errors['label'.$i])) $this->errors['label'.$i] = array();
-                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to a page.'), $class);
+                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than one label from the %s class to a page.'), $class);
                 throw new Pluf_Form_Invalid(__('You provided an invalid label.'));
             }
         }

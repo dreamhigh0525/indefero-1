@@ -3,11 +3,11 @@
 {block body}
 <div class="issue-prev-next">
 {if $previous_issue_id}
-<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $previous_issue_id)}" title="{if $closed}{trans 'Click here to view the previous closed issue'}{else}{trans 'Click here to view the previous open issue'}{/if}">Previous issue</a>
+<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $previous_issue_id)}" title="{if $closed}{trans 'View the previous closed issue'}{else}{trans 'View the previous open issue'}{/if}">Previous issue</a>
 {/if}
 {if $previous_issue_id and $next_issue_id} - {/if}
 {if $next_issue_id}
-<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $next_issue_id)}" title="{if $closed}{trans 'Click here to view the next closed issue'}{else}{trans 'Click here to view the next open issue'}{/if}">Next issue</a>
+<a href="{url 'IDF_Views_Issue::view', array($project.shortname, $next_issue_id)}" title="{if $closed}{trans 'View the next closed issue'}{else}{trans 'View the next open issue'}{/if}">Next issue</a>
 {/if}
 </div>
 {assign $i = 0}
@@ -190,6 +190,7 @@
 {if count($related_issues) > 0}
 {foreach $related_issues as $verb => $rel_issues}
 <p>
+{assign $verb = __($verb)}
 <strong>{blocktrans}This issue {$verb}{/blocktrans}</strong><br />
   {foreach $rel_issues as $rel_issue}
      <span class="label">
