@@ -123,8 +123,7 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
 
     function preDelete()
     {
-        // if we kill off a head revision, ensure that we either mark a previous
-        // revision as head or kill off the resource record as well
+        // if we kill off a head revision, ensure that we either mark a previous revision as head
         if ($this->is_head) {
             $sql = new Pluf_SQL('wikiresource=%s and id!=%s', array($this->wikiresource, $this->id));
             $revs = Pluf::factory('IDF_Wiki_ResourceRevision')->getList(array('filter'=>$sql->gen(), 'order'=>'id DESC'));
@@ -132,8 +131,6 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
                 $previous = $revs[0];
                 $previous->is_head = true;
                 $previous->update();
-            } else {
-                $this->get_wikiresource()->delete();
             }
         }
 
