@@ -82,6 +82,40 @@ class IDF_Views_Admin
     }
 
     /**
+     * Administrate the labels of a project.
+     */
+    public $projectLabels_precond = array('Pluf_Precondition::staffRequired');
+    public function projectLabels($request, $match)
+    {
+        $title = __('Project Labels');
+        $forge = IDF_Forge::instance();
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_Admin_LabelConf($request->POST);
+            if ($form->isValid()) {
+                $forge->setProjectLabels($form->cleaned_data['project_labels']);
+                $request->user->setMessage(__('The label configuration has been saved.'));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Admin::projectLabels');
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $params = array();
+            if (($labels = $forge->getProjectLabels(false)) !== false) {
+                $params['project_labels'] = $labels;
+            }
+            if (count($params) == 0) {
+                $params = null; //Nothing in the db, so new form.
+            }
+            $form = new IDF_Form_Admin_LabelConf($params);
+        }
+        return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/labels.html',
+                                               array(
+                                                   'page_title' => $title,
+                                                   'form' => $form,
+                                                   ),
+                                               $request);
+    }
+
+    /**
      * Edition of a project.
      *
      * One cannot switch from one source backend to another.

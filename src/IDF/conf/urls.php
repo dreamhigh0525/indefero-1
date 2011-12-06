@@ -478,6 +478,11 @@ $ctl[] = array('regex' => '#^/admin/projects/(\d+)/$#',
                'model' => 'IDF_Views_Admin',
                'method' => 'projectUpdate');
 
+$ctl[] = array('regex' => '#^/admin/projects/labels/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Admin',
+               'method' => 'projectLabels');
+
 $ctl[] = array('regex' => '#^/admin/projects/create/$#',
                'base' => $base,
                'model' => 'IDF_Views_Admin',
