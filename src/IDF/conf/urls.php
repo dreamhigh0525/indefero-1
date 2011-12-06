@@ -332,7 +332,7 @@ $ctl[] = array('regex' => '#^/p/([\-\w]+)/page/(.*)/$#',
                'model' => 'IDF_Views_Wiki',
                'method' => 'viewPage');
 
-$ctl[] = array('regex' => '#^/p/([\-\w]+)/resouce/(.*)/$#',
+$ctl[] = array('regex' => '#^/p/([\-\w]+)/resource/(.*)/$#',
                'base' => $base,
                'model' => 'IDF_Views_Wiki',
                'method' => 'viewResource');

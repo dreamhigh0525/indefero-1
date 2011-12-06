@@ -297,12 +297,13 @@ class IDF_Views_Wiki
             return new Pluf_HTTP_Response_NotFound($request);
         }
         $page = $pages[0];
-        $oldrev = false;
+        $revision = $page->get_current_revision();
+
         // We grab the old revision if requested.
         if (isset($request->GET['rev']) and preg_match('/^[0-9]+$/', $request->GET['rev'])) {
-            $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision',
+            $revision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision',
                                                     $request->GET['rev']);
-            if ($oldrev->wikipage != $page->id or $oldrev->is_head == true) {
+            if ($revision->wikipage != $page->id) {
                 return new Pluf_HTTP_Response_NotFound($request);
             }
         }
@@ -311,7 +312,6 @@ class IDF_Views_Wiki
         $tags = $page->get_tags_list();
         $dep = Pluf_Model_InArray($dtag, $tags);
         $title = $page->title;
-        $revision = $page->get_current_revision();
         $false = Pluf_DB_BooleanToDb(false, $page->getDbConnection());
         $revs = $page->get_revisions_list(array('order' => 'creation_dtime DESC',
                                                 'filter' => 'is_head='.$false));
@@ -319,7 +319,6 @@ class IDF_Views_Wiki
                                                array(
                                                      'page_title' => $title,
                                                      'page' => $page,
-                                                     'oldrev' => $oldrev,
                                                      'rev' => $revision,
                                                      'revs' => $revs,
                                                      'tags' => $tags,
@@ -348,7 +347,7 @@ class IDF_Views_Wiki
         if (isset($request->GET['rev']) and preg_match('/^[0-9]+$/', $request->GET['rev'])) {
             $revision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_ResourceRevision',
                                                       $request->GET['rev']);
-            if ($revision->wikiresource != $resource->id or $revision->is_head == true) {
+            if ($revision->wikiresource != $resource->id) {
                 return new Pluf_HTTP_Response_NotFound($request);
             }
         }

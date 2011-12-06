@@ -137,6 +137,8 @@ class IDF_Wiki_PageRevision extends Pluf_Model
 
     function postSave($create=false)
     {
+        $prj = $this->get_wikipage()->get_project();
+
         if ($create) {
             // Check if more than one revision for this page. We do
             // not want to insert the first revision in the timeline
@@ -146,8 +148,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
             $sql = new Pluf_SQL('wikipage=%s', array($this->wikipage));
             $rev = Pluf::factory('IDF_Wiki_PageRevision')->getList(array('filter'=>$sql->gen()));
             if ($rev->count() > 1) {
-                IDF_Timeline::insert($this, $this->get_wikipage()->get_project(),
-                                     $this->get_submitter());
+                IDF_Timeline::insert($this, $prj, $this->get_submitter());
                 foreach ($rev as $r) {
                     if ($r->id != $this->id and $r->is_head) {
                         $r->is_head = false;
@@ -158,6 +159,24 @@ class IDF_Wiki_PageRevision extends Pluf_Model
             $page = $this->get_wikipage();
             $page->update(); // Will update the modification timestamp.
             IDF_Search::index($page);
+        }
+
+        // remember the resource revisions used in this page revision
+        if ($this->is_head) {
+            preg_match_all('#\[\[!([A-Za-z0-9\-]+)[^\]]*\]\]#im', $this->content, $matches, PREG_PATTERN_ORDER);
+            if (count($matches) > 1 && count($matches[1]) > 0) {
+                foreach ($matches[1] as $resourceName) {
+                    $sql = new Pluf_SQL('project=%s AND title=%s',
+                                        array($prj->id, $resourceName));
+                    $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
+                    if ($resources->count() == 0)
+                        continue;
+
+                    $current_revision = $resources[0]->get_current_revision();
+                    $current_revision->setAssoc($this);
+                    $this->setAssoc($current_revision);
+                }
+            }
         }
     }
 

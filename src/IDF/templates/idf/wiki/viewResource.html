@@ -30,7 +30,9 @@ by {$submitter}.{/blocktrans}</p>
 <li>{trans 'MIME type'}: {$resource.mime_type}</li>
 <li><a href="{$rev.getRawURL(true)}">{trans 'Download this file'}</a></li>
 </ul>
-{if ($isOwner or $isAdmin) and !$rev.is_head}{aurl 'url', 'IDF_Views_Wiki::deleteResourceRev', array($project.shortname, $rev.id)}
+
+{if !$rev.is_head and ($isOwner or $isAdmin)}
+{aurl 'url', 'IDF_Views_Wiki::deleteResourceRev', array($project.shortname, $rev.id)}
 <p class="delp"><a href="{$url}" title="{trans 'Delete this revision'}"><img src="{media '/idf/img/trash.png'}" style="vertical-align: text-bottom;" alt="{trans 'Trash'}" /></a> <a href="{$url}">{trans 'Delete this revision'}</a></p>
 {/if}
 

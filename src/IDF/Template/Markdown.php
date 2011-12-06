@@ -130,8 +130,10 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
             if (isset($this->request->GET['rev']) and preg_match('/^[0-9]+$/', $this->request->GET['rev'])) {
                 $pageRevision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision',
                                                               $this->request->GET['rev']);
-                if ($pageRevision->wikipage != $pages[0]->id) {
-                    return '<span title="'.__('This revision of the resource is no longer available.').'">'.$match.'</span>';
+                // this is actually an invariant since we came so far looking at
+                // and rendering the old revision already
+                if ($pageRevision == null) {
+                    throw new Exception('page revision with id '.$this->request->GET['rev'].' not found');
                 }
             }
 
@@ -140,6 +142,9 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
             $resourceRevision = Pluf::factory('IDF_Wiki_ResourceRevision')->getOne(
                 array('filter' => $sql->gen(), 'view' => 'join_pagerevision'));
 
+            if ($resourceRevision == null) {
+                return '<span title="'.__('This revision of the resource is no longer available.').'">'.$match.'</span>';
+            }
         }
 
         $validOpts = array(
