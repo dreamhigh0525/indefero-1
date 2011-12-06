@@ -99,6 +99,14 @@ class IDF_Wiki_PageRevision extends Pluf_Model
                                   'type' => 'normal',
                                   ),
                             );
+        $table = $this->_con->pfx.'idf_wiki_pagerevision_idf_wiki_resourcerevision_assoc';
+        $this->_a['views'] = array(
+            'join_pagerevision' =>
+                array(
+                    'join' => 'LEFT JOIN '.$table
+                             .' ON idf_wiki_pagerevision_id=id',
+            ),
+        );
     }
 
     function changedRevision()

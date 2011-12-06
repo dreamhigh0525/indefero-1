@@ -101,6 +101,14 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
                                   'verbose' => __('creation date'),
                                   ),
                             );
+        $table = $this->_con->pfx.'idf_wiki_pagerevision_idf_wiki_resourcerevision_assoc';
+        $this->_a['views'] = array(
+            'join_pagerevision' =>
+                array(
+                    'join' => 'LEFT JOIN '.$table
+                             .' ON idf_wiki_resourcerevision_id=id',
+                ),
+        );
     }
 
     function __toString()
@@ -165,11 +173,22 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
             $this->get_wikiresource()->id, $this->id, $this->fileext);
     }
 
-    function getFileURL()
+    function getViewURL()
     {
         $prj = $this->get_wikiresource()->get_project();
+        $resource = $this->get_wikiresource();
+        return Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                        array($prj->shortname, $resource->title),
+                                        array('rev' => $this->id));
+    }
+
+    function getRawURL($attachment = false)
+    {
+        $query = $attachment ? array('attachment' => 1) : array();
+        $prj = $this->get_wikiresource()->get_project();
         return Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::rawResource',
-                                        array($prj->shortname, $this->id));
+                                        array($prj->shortname, $this->id),
+                                        $query);
     }
 
     /**
@@ -195,20 +214,78 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
     }
 
     /**
-     * Renders the resource
+     * Renders the resource with the given view options, including a link to the resource' detail page
      */
-    function render()
+    function render($opts = array())
     {
-        $url = $this->getFileURL();
+        // give some reasonable defaults
+        $opts = array_merge(array(
+            'align' => 'left',
+            'width' => '',
+            'height' => '',
+            'preview' => 'yes', // if possible
+            'title' => '',
+        ), $opts);
+
+        $attrs  = array('class="resource-container"');
+        $styles = array();
+        if (!empty($opts['align'])) {
+            switch ($opts['align']) {
+                case 'left':
+                    $styles[] = 'float: left';
+                    $styles[] = 'margin-right: 10px';
+                    break;
+                case 'center':
+                    $styles[] = 'margin: 0 auto 0 auto';
+                    break;
+                case 'right':
+                    $styles[] = 'float: right';
+                    $styles[] = 'margin-left: 10px';
+                    break;
+            }
+        }
+        if (!empty($opts['width'])) {
+            $styles[] = 'width:'.$opts['width'];
+        }
+        if (!empty($opts['height'])) {
+            $styles[] = 'height:'.$opts['height'];
+        }
+
+        $raw = $this->renderRaw();
+        $viewUrl = $this->getViewURL();
+        $download = '';
+        $html = '<div class="resource-container" style="'.implode(';', $styles).'">';
+        if ($opts['preview'] == 'yes' && !empty($raw)) {
+            $html .= '<div class="preview">'.$raw.'</div>'."\n";
+        } else {
+            $rawUrl = $this->getRawURL(true);
+            $download = '<a href="'.$rawUrl.'" class="download" title="'.sprintf(__('Download (%s)'), Pluf_Utils::prettySize($this->filesize)).'"></a>';
+        }
         $resource = $this->get_wikiresource();
+        $title = $opts['title'];
+        if (empty($title)) {
+            $title = $resource->title.' - '.$resource->mime_type.' - '.Pluf_Utils::prettySize($this->filesize);
+        }
+        $html .= '<div class="title">'.$download.'<a href="'.$viewUrl.'" title="'.__('View resource details').'">'.$title.'</a></div>'."\n";
+        $html .= '</div>';
+        return $html;
+    }
+
+    /**
+     * Renders a raw version of the resource, without any possibilities of formatting or the like
+     */
+    function renderRaw()
+    {
+        $resource = $this->get_wikiresource();
+        $url = $this->getRawURL();
         if (preg_match('#^image/(gif|jpeg|png|tiff)$#', $resource->mime_type)) {
-            return sprintf('<a href="%s"><img src="%s" alt="%s" /></a>', $url, $url, $resource->title);
+            return sprintf('<img src="%s" alt="%s" />', $url, $resource->title);
         }
 
         if (preg_match('#^text/(xml|html|sgml|javascript|ecmascript|css)$#', $resource->mime_type)) {
             return sprintf('<iframe src="%s" alt="%s"></iframe>', $url, $resource->title);
         }
 
-        return __('Unable to render preview for this MIME type.');
+        return '';
     }
 }
