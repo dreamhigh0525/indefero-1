@@ -20,6 +20,9 @@ or newer to properly run this version of Indefero!
 
 ## New Features
 
+- It is now possible to upload and embed resources like images or text
+  files into wiki pages. If no preview for a resource's mime type is
+  available, than a download link is provided for it instead.
 - The notification system has been overhauled; it is now possible to configure
   what kind of user group, project administrators, members and / or additional
   mail addresses are notified about updates in a certain section, such as 
