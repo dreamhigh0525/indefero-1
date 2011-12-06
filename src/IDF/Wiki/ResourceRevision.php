@@ -282,7 +282,7 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
             return sprintf('<img src="%s" alt="%s" />', $url, $resource->title);
         }
 
-        if (preg_match('#^text/(xml|html|sgml|javascript|ecmascript|css)$#', $resource->mime_type)) {
+        if (preg_match('#^text/(plain|xml|html|sgml|javascript|ecmascript|css)$#', $resource->mime_type)) {
             return sprintf('<iframe src="%s" alt="%s"></iframe>', $url, $resource->title);
         }
 
