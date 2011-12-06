@@ -430,6 +430,44 @@ class IDF_Views_Wiki
     }
 
     /**
+     * Remove a revision of a resource.
+     */
+    public $deleteResourceRev_precond = array('IDF_Precondition::accessWiki',
+                                              'IDF_Precondition::projectMemberOrOwner');
+    public function deleteResourceRev($request, $match)
+    {
+        $prj = $request->project;
+        $oldrev = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_ResourceRevision', $match[2]);
+        $resource = $oldrev->get_wikiresource();
+        $prj->inOr404($resource);
+        if ($oldrev->is_head == true) {
+            return new Pluf_HTTP_Response_NotFound($request);
+        }
+        if ($request->method == 'POST') {
+            $oldrev->delete();
+            $request->user->setMessage(__('The old revision has been deleted.'));
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                            array($prj->shortname, $resource->title));
+            return new Pluf_HTTP_Response_Redirect($url);
+        }
+
+        $title = sprintf(__('Delete Old Revision of %s'), $resource->title);
+        $revision = $resource->get_current_revision();
+        $false = Pluf_DB_BooleanToDb(false, $resource->getDbConnection());
+        $revs = $resource->get_revisions_list(array('order' => 'creation_dtime DESC',
+                                                    'filter' => 'is_head='.$false));
+        return Pluf_Shortcuts_RenderToResponse('idf/wiki/deleteResourceRev.html',
+                                               array(
+                                                     'page_title' => $title,
+                                                     'resource' => $resource,
+                                                     'oldrev' => $oldrev,
+                                                     'rev' => $revision,
+                                                     'revs' => $revs,
+                                                     ),
+                                               $request);
+    }
+
+    /**
      * Update a documentation page.
      */
     public $updatePage_precond = array('IDF_Precondition::accessWiki',
