@@ -134,6 +134,18 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
                                             ));
 
+        for ($i=1;$i<7;$i++) {
+            $this->fields['label'.$i] = new Pluf_Form_Field_Varchar(
+                                            array('required' => false,
+                                                  'label' => __('Labels'),
+                                                  'initial' => '',
+                                                  'widget_attrs' => array(
+                                                  'maxlength' => 50,
+                                                  'size' => 20,
+                                                ),
+            ));
+        }
+
         $projects = array('--' => '--');
         foreach (Pluf::factory('IDF_Project')->getList(array('order' => 'name ASC')) as $proj) {
             $projects[$proj->name] = $proj->shortname;
@@ -290,11 +302,29 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
         if (!$this->isValid()) {
             throw new Exception(__('Cannot save the model from an invalid form.'));
         }
+
+        // Add a tag for each label
+        $tagids = array();
+        for ($i=1;$i<7;$i++) {
+            if (strlen($this->cleaned_data['label'.$i]) > 0) {
+                if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
+                    list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
+                    list($class, $name) = array(trim($class), trim($name));
+                } else {
+                    $class = 'Other';
+                    $name = trim($this->cleaned_data['label'.$i]);
+                }
+                $tag = IDF_Tag::addGlobal($name, $class);
+                $tagids[] = $tag->id;
+            }
+        }
+
         $project = new IDF_Project();
         $project->name = $this->cleaned_data['name'];
         $project->shortname = $this->cleaned_data['shortname'];
         $project->shortdesc = $this->cleaned_data['shortdesc'];
 
+        $tagids = array();
         if ($this->cleaned_data['template'] != '--') {
             // Find the template project
             $sql = new Pluf_SQL('shortname=%s',
@@ -302,11 +332,32 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
             $tmpl = Pluf::factory('IDF_Project')->getOne(array('filter' => $sql->gen()));
             $project->private = $tmpl->private;
             $project->description = $tmpl->description;
+
+            foreach ($tmpl->get_tags_list() as $tag) {
+                $tagids[] = $tag->id;
+            }
         } else {
             $project->private = $this->cleaned_data['private_project'];
             $project->description = __('Click on the Project Management tab to set the description of your project.');
+
+            // Add a tag for each label
+            for ($i=1;$i<7;$i++) {
+                if (strlen($this->cleaned_data['label'.$i]) > 0) {
+                    if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
+                        list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
+                        list($class, $name) = array(trim($class), trim($name));
+                    } else {
+                        $class = 'Other';
+                        $name = trim($this->cleaned_data['label'.$i]);
+                    }
+                    $tag = IDF_Tag::addGlobal($name, $class);
+                    $tagids[] = $tag->id;
+                }
+            }
         }
         $project->create();
+        $project->batchAssoc('IDF_Tag', $tagids);
+
         $conf = new IDF_Conf();
         $conf->setProject($project);
         $keys = array('scm', 'svn_remote_url', 'svn_username',

@@ -58,6 +58,27 @@ class IDF_Form_ProjectConf extends Pluf_Form
                                                                  'initial' => $conf->getVal('external_project_url'),
         ));
 
+        $tags = $this->project->get_tags_list();
+        for ($i=1;$i<7;$i++) {
+            $initial = '';
+            if (isset($tags[$i-1])) {
+                if ($tags[$i-1]->class != 'Other') {
+                    $initial = (string) $tags[$i-1];
+                } else {
+                    $initial = $tags[$i-1]->name;
+                }
+            }
+            $this->fields['label'.$i] = new Pluf_Form_Field_Varchar(
+                array('required' => false,
+                      'label' => __('Labels'),
+                      'initial' => $initial,
+                      'widget_attrs' => array(
+                      'maxlength' => 50,
+                      'size' => 20,
+                ),
+            ));
+        }
+
         // Logo part
         $upload_path = Pluf::f('upload_path', false);
         if (false === $upload_path) {
@@ -148,10 +169,27 @@ class IDF_Form_ProjectConf extends Pluf_Form
 
     public function save($commit=true)
     {
+        // Add a tag for each label
+        $tagids = array();
+        for ($i=1;$i<7;$i++) {
+            if (strlen($this->cleaned_data['label'.$i]) > 0) {
+                if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
+                    list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
+                    list($class, $name) = array(trim($class), trim($name));
+                } else {
+                    $class = 'Other';
+                    $name = trim($this->cleaned_data['label'.$i]);
+                }
+                $tag = IDF_Tag::addGlobal($name, $class);
+                $tagids[] = $tag->id;
+            }
+        }
+
         // Basic part
         $this->project->name = $this->cleaned_data['name'];
         $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->description = $this->cleaned_data['description'];
+        $this->project->batchAssoc('IDF_Tag', $tagids);
         $this->project->update();
 
         $conf = $this->project->getConf();

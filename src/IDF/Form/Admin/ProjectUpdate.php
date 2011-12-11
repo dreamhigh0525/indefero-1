@@ -70,6 +70,26 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                                 ));
         }
 
+        $tags = $this->project->get_tags_list();
+        for ($i=1;$i<7;$i++) {
+            $initial = '';
+            if (isset($tags[$i-1])) {
+                if ($tags[$i-1]->class != 'Other') {
+                    $initial = (string) $tags[$i-1];
+                } else {
+                    $initial = $tags[$i-1]->name;
+                }
+            }
+            $this->fields['label'.$i] = new Pluf_Form_Field_Varchar(
+                                    array('required' => false,
+                                          'label' => __('Labels'),
+                                          'initial' => $initial,
+                                          'widget_attrs' => array(
+                                          'maxlength' => 50,
+                                          'size' => 20,
+                                          ),
+            ));
+        }
         $this->fields['owners'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('Project owners'),
@@ -132,9 +152,28 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
         if (!$this->isValid()) {
             throw new Exception(__('Cannot save the model from an invalid form.'));
         }
+
+        // Add a tag for each label
+        $tagids = array();
+        for ($i=1;$i<7;$i++) {
+            if (strlen($this->cleaned_data['label'.$i]) > 0) {
+                if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
+                    list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
+                    list($class, $name) = array(trim($class), trim($name));
+                } else {
+                    $class = 'Other';
+                    $name = trim($this->cleaned_data['label'.$i]);
+                }
+                $tag = IDF_Tag::addGlobal($name, $class);
+                $tagids[] = $tag->id;
+            }
+        }
+        $this->project->batchAssoc('IDF_Tag', $tagids);
+
         IDF_Form_MembersConf::updateMemberships($this->project,
                                                 $this->cleaned_data);
         $this->project->membershipsUpdated();
+
         $this->project->name = $this->cleaned_data['name'];
         $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->update();

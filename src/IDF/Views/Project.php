@@ -311,13 +311,17 @@ class IDF_Views_Project
         }
 
         $logo = $prj->getConf()->getVal('logo');
+        $arrays = self::autoCompleteArrays();
         return Pluf_Shortcuts_RenderToResponse('idf/admin/summary.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'form' => $form,
-                                                     'project' => $prj,
-                                                     'logo' => $logo,
-                                                     ),
+                                               array_merge(
+                                                   array(
+                                                         'page_title' => $title,
+                                                         'form' => $form,
+                                                         'project' => $prj,
+                                                         'logo' => $logo,
+                                                         ),
+                                                   $arrays
+                                               ),
                                                $request);
     }
 
@@ -615,5 +619,37 @@ class IDF_Views_Project
                                                      'hook_request_method' => $hook_request_method,
                                                      ),
                                                $request);
+    }
+
+    /**
+     * Create the autocomplete arrays for the little AJAX stuff.
+     */
+    public static function autoCompleteArrays()
+    {
+        $forge = IDF_Forge::instance();
+        $labels = $forge->getProjectLabels(IDF_Form_Admin_LabelConf::init_project_labels);
+
+        $auto = array('auto_labels' => '');
+        $auto_raw = array('auto_labels' => $labels);
+        foreach ($auto_raw as $key => $st) {
+            $st = preg_split("/\015\012|\015|\012/", $st, -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($st as $s) {
+                $v = '';
+                $d = '';
+                $_s = explode('=', $s, 2);
+                if (count($_s) > 1) {
+                    $v = trim($_s[0]);
+                    $d = trim($_s[1]);
+                } else {
+                    $v = trim($_s[0]);
+                }
+                $auto[$key] .= sprintf('{ name: "%s", to: "%s" }, ',
+                Pluf_esc($d),
+                Pluf_esc($v));
+            }
+            $auto[$key] = substr($auto[$key], 0, -2);
+        }
+
+        return $auto;
     }
 }

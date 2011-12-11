@@ -86,6 +86,13 @@ class IDF_Project extends Pluf_Model
                                   'verbose' => __('description'),
                                   'help_text' => __('The description can be extended using the Markdown syntax.'),
                                   ),
+                            'tags' =>
+                            array(
+                                  'type' => 'Pluf_DB_Field_Manytomany',
+                                  'blank' => true,
+                                  'model' => 'IDF_Tag',
+                                  'verbose' => __('labels'),
+                                  ),
                             'private' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Integer',

@@ -140,12 +140,16 @@ class IDF_Views_Admin
         } else {
             $form = new IDF_Form_Admin_ProjectUpdate(null, $params);
         }
+        $arrays = IDF_Views_Project::autoCompleteArrays();
         return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/update.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'project' => $project,
-                                                     'form' => $form,
-                                                     ),
+                                               array_merge(
+                                                   array(
+                                                         'page_title' => $title,
+                                                         'project' => $project,
+                                                         'form' => $form,
+                                                         ),
+                                                   $arrays
+                                               ),
                                                $request);
     }
 
@@ -173,12 +177,17 @@ class IDF_Views_Admin
             $form = new IDF_Form_Admin_ProjectCreate(null, $extra);
         }
         $base = Pluf::f('url_base').Pluf::f('idf_base').'/p/';
+
+        $arrays = IDF_Views_Project::autoCompleteArrays();
         return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/create.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'form' => $form,
-                                                     'base_url' => $base,
-                                                     ),
+                                               array_merge(
+                                                   array(
+                                                         'page_title' => $title,
+                                                         'form' => $form,
+                                                         'base_url' => $base,
+                                                         ),
+                                                   $arrays
+                                               ),
                                                $request);
     }
 
