@@ -25,7 +25,7 @@
 </td>
 </tr>
 <tr>
-<th><strong>{$form.f.external_project_url.labelTag}:</strong></th>
+<th>{$form.f.external_project_url.labelTag}:</th>
 <td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
 {$form.f.external_project_url|unsafe}
 </td>
@@ -48,7 +48,7 @@
 </td>
 </tr>
 <tr>
-<th><strong>{trans 'Current logo'}:</strong></th>
+<th>{trans 'Current logo'}:</th>
 <td>
 {if $logo}
 <img src="{url 'IDF_Views_Project::logo', array($project.shortname)}" alt="{trans 'Project logo'}" />
@@ -58,14 +58,14 @@
 </td>
 </tr>
 <tr>
-<th><strong>{$form.f.logo.labelTag}:</strong></th>
+<th>{$form.f.logo.labelTag}:</th>
 <td>{if $form.f.logo.errors}{$form.f.logo.fieldErrors}{/if}
 {$form.f.logo|unsafe}
 </td>
 </tr>
 {if $logo}
 <tr>
-<th><strong>{$form.f.logo_remove.labelTag}:</strong></th>
+<th>{$form.f.logo_remove.labelTag}:</th>
 <td>{if $form.f.logo_remove.errors}{$form.f.logo_remove.fieldErrors}{/if}
 {$form.f.logo_remove|unsafe}
 </td>
