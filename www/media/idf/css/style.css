@@ -799,6 +799,10 @@ table.download {
 /**
  * Wiki
  */
+#wiki-content p {
+  clear: both;
+}
+
 p.desc {
   background-color: #eeeeec;
   -moz-border-radius: 3px;
