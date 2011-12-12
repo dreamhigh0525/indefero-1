@@ -452,7 +452,6 @@ class IDF_Views_Wiki
         }
 
         $title = sprintf(__('Delete Old Revision of %s'), $resource->title);
-        $revision = $resource->get_current_revision();
         $false = Pluf_DB_BooleanToDb(false, $resource->getDbConnection());
         $revs = $resource->get_revisions_list(array('order' => 'creation_dtime DESC',
                                                     'filter' => 'is_head='.$false));
@@ -461,7 +460,6 @@ class IDF_Views_Wiki
                                                      'page_title' => $title,
                                                      'resource' => $resource,
                                                      'oldrev' => $oldrev,
-                                                     'rev' => $revision,
                                                      'revs' => $revs,
                                                      ),
                                                $request);

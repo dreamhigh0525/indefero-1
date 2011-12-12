@@ -21,16 +21,16 @@
 
 <p class="desc">{$resource.summary}</p>
 
-{assign $preview = $rev.renderRaw()}
+{assign $preview = $oldrev.renderRaw()}
 {if $preview == ''}
   {assign $preview = __('Unable to render preview for this MIME type.')}
 {/if}
 <p class="preview">{$preview|unsafe}</p>
 
 <ul>
-<li>{trans 'File size'}: {$rev.filesize|size}</li>
+<li>{trans 'File size'}: {$oldrev.filesize|size}</li>
 <li>{trans 'MIME type'}: {$resource.mime_type}</li>
-<li><a href="{$rev.getRawURL(true)}">{trans 'Download this file'}</a></li>
+<li><a href="{$oldrev.getRawURL(true)}">{trans 'Download this file'}</a></li>
 </ul>
 {/block}
 
@@ -38,8 +38,8 @@
 {block context}
 {assign $submitter = $resource.get_submitter()}
 <p><strong>{trans 'Created:'}</strong> <span class="nobrk">{$resource.creation_dtime|dateago}</span><br /><span class="nobrk">{blocktrans}by {$submitter}{/blocktrans}</span></p>
-{if $rev.creation_dtime != $resource.creation_dtime}<p>{assign $submitter = $rev.get_submitter()}
-<strong>{trans 'Updated:'}</strong> <span class="nobrk">{$rev.creation_dtime|dateago}</span><br /><span class="nobrk">{blocktrans}by {$submitter}{/blocktrans}</span></p>{/if}
+{if $oldrev.creation_dtime != $resource.creation_dtime}<p>{assign $submitter = $oldrev.get_submitter()}
+<strong>{trans 'Updated:'}</strong> <span class="nobrk">{$oldrev.creation_dtime|dateago}</span><br /><span class="nobrk">{blocktrans}by {$submitter}{/blocktrans}</span></p>{/if}
 {if $revs.count() > 0}
 <p><strong>{trans 'Old Revisions'}</strong></p>
 <ul>{foreach $revs as $old}
