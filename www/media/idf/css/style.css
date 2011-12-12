@@ -799,10 +799,6 @@ table.download {
 /**
  * Wiki
  */
-#wiki-content p {
-  clear: both;
-}
-
 p.desc {
   background-color: #eeeeec;
   -moz-border-radius: 3px;
@@ -935,6 +931,10 @@ ol > li {
 .resource-container {
   border: 1px solid #EEE;
   padding: 5px;
+}
+
+.resource-container + * {
+  clear: both;
 }
 
 .resource-container .preview {
