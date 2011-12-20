@@ -218,7 +218,7 @@ class IDF_Wiki_Page extends Pluf_Model
                              'create' => true,
                              'date' => $date)
                                                      );
-        $tmpl = new Pluf_Template('idf/wiki/feedfragment.xml');
+        $tmpl = new Pluf_Template('idf/wiki/feedfragment-page.xml');
         return $tmpl->render($context);
     }
 }

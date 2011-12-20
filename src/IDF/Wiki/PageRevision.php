@@ -137,7 +137,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
 
     function postSave($create=false)
     {
-        $prj = $this->get_wikipage()->get_project();
+        $page = $this->get_wikipage();
 
         if ($create) {
             // Check if more than one revision for this page. We do
@@ -148,7 +148,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
             $sql = new Pluf_SQL('wikipage=%s', array($this->wikipage));
             $rev = Pluf::factory('IDF_Wiki_PageRevision')->getList(array('filter'=>$sql->gen()));
             if ($rev->count() > 1) {
-                IDF_Timeline::insert($this, $prj, $this->get_submitter());
+                IDF_Timeline::insert($this, $page->get_project(), $this->get_submitter());
                 foreach ($rev as $r) {
                     if ($r->id != $this->id and $r->is_head) {
                         $r->is_head = false;
@@ -156,10 +156,10 @@ class IDF_Wiki_PageRevision extends Pluf_Model
                     }
                 }
             }
-            $page = $this->get_wikipage();
-            $page->update(); // Will update the modification timestamp.
-            IDF_Search::index($page);
         }
+
+        IDF_Search::index($page);
+        $page->update(); // Will update the modification timestamp.
 
         // remember the resource revisions used in this page revision
         if ($this->is_head) {
@@ -183,9 +183,11 @@ class IDF_Wiki_PageRevision extends Pluf_Model
     public function timelineFragment($request)
     {
         $page = $this->get_wikipage();
-        $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
-                                        array($request->project->shortname,
-                                              $page->title));
+        $url = Pluf::f('url_base')
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
+                                      array($request->project->shortname,
+                                            $page->title),
+                                      array('rev' => $this->id));
         $out = "\n".'<tr class="log"><td><a href="'.$url.'">'.
             Pluf_esc(Pluf_Template_dateAgo($this->creation_dtime, 'without')).
             '</a></td><td>';
@@ -220,18 +222,12 @@ class IDF_Wiki_PageRevision extends Pluf_Model
     public function feedFragment($request)
     {
         $page = $this->get_wikipage();
-        if (!$this->is_head) {
-            $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
-                                          array($request->project->shortname,
-                                                $page->title),
-                                          array('rev' => $this->id));
-        } else {
-            $url = Pluf::f('url_base')
-                .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
-                                          array($request->project->shortname,
-                                                $page->title));
-        }
+        $url = Pluf::f('url_base')
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage',
+                                      array($request->project->shortname,
+                                            $page->title),
+                                      array('rev' => $this->id));
+
         $title = sprintf(__('%1$s: Documentation page %2$s updated - %3$s'),
                          $request->project->name,
                          $page->title, $page->summary);
@@ -245,7 +241,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
                              'create' => false,
                              'date' => $date)
                                                      );
-        $tmpl = new Pluf_Template('idf/wiki/feedfragment.xml');
+        $tmpl = new Pluf_Template('idf/wiki/feedfragment-page.xml');
         return $tmpl->render($context);
     }
 

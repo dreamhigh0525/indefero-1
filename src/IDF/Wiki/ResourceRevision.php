@@ -135,6 +135,7 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
         }
 
         @unlink($this->getFilePath());
+        IDF_Timeline::remove($this);
     }
 
     function preSave($create=false)
@@ -147,10 +148,13 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
 
     function postSave($create=false)
     {
+        $resource = $this->get_wikiresource();
+
         if ($create) {
             $sql = new Pluf_SQL('wikiresource=%s', array($this->wikiresource));
             $rev = Pluf::factory('IDF_Wiki_ResourceRevision')->getList(array('filter'=>$sql->gen()));
             if ($rev->count() > 1) {
+                IDF_Timeline::insert($this, $resource->get_project(), $this->get_submitter());
                 foreach ($rev as $r) {
                     if ($r->id != $this->id and $r->is_head) {
                         $r->is_head = false;
@@ -158,10 +162,10 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
                     }
                 }
             }
-            // update the modification timestamp
-            $resource = $this->get_wikiresource();
-            $resource->update();
         }
+
+        // update the modification timestamp
+        $resource->update();
     }
 
     function getFilePath()
@@ -284,5 +288,53 @@ class IDF_Wiki_ResourceRevision extends Pluf_Model
         }
 
         return '';
+    }
+
+
+    public function timelineFragment($request)
+    {
+        $resource = $this->get_wikiresource();
+        $url = Pluf::f('url_base')
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                      array($request->project->shortname,
+                                            $resource->title),
+                                      array('rev' => $this->id));
+
+        $out = "\n".'<tr class="log"><td><a href="'.$url.'">'.
+            Pluf_esc(Pluf_Template_dateAgo($this->creation_dtime, 'without')).
+            '</a></td><td>';
+        $stag = new IDF_Template_ShowUser();
+        $user = $stag->start($this->get_submitter(), $request, '', false);
+        $out .= sprintf(__('<a href="%1$s" title="View resource">%2$s</a>, %3$s'), $url, Pluf_esc($resource->title), Pluf_esc($this->summary));
+        $out .= '</td></tr>';
+        $out .= "\n".'<tr class="extra"><td colspan="2">
+<div class="helptext right">'.sprintf(__('Change of <a href="%1$s">%2$s</a>, by %3$s'), $url, Pluf_esc($resource->title), $user).'</div></td></tr>';
+        return Pluf_Template::markSafe($out);
+    }
+
+    public function feedFragment($request)
+    {
+        $resource = $this->get_wikiresource();
+        $url = Pluf::f('url_base')
+            .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
+                                      array($request->project->shortname,
+                                            $resource->title),
+                                      array('rev' => $this->id));
+
+        $title = sprintf(__('%1$s: Documentation resource %2$s updated - %3$s'),
+                         $request->project->name,
+                         $resource->title, $resource->summary);
+        $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
+        $context = new Pluf_Template_Context_Request(
+            $request,
+            array('url' => $url,
+                  'title' => $title,
+                  'resource' => $resource,
+                  'rev' => $this,
+                  'create' => false,
+                  'date' => $date)
+        );
+        $tmpl = new Pluf_Template('idf/wiki/feedfragment-resource.xml');
+        return $tmpl->render($context);
     }
 }

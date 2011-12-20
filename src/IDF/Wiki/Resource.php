@@ -175,7 +175,7 @@ class IDF_Wiki_Resource extends Pluf_Model
         $user = $stag->start($this->get_submitter(), $request, '', false);
         $out .= sprintf(__('<a href="%1$s" title="View resource">%2$s</a>, %3$s'), $url, Pluf_esc($this->title), Pluf_esc($this->summary)).'</td>';
         $out .= "\n".'<tr class="extra"><td colspan="2">
-<div class="helptext right">'.sprintf(__('Creation of <a href="%1$s">page %2$s</a>, by %3$s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>';
+<div class="helptext right">'.sprintf(__('Creation of <a href="%1$s">resource %2$s</a>, by %3$s'), $url, Pluf_esc($this->title), $user).'</div></td></tr>';
         return Pluf_Template::markSafe($out);
     }
 
@@ -185,7 +185,7 @@ class IDF_Wiki_Resource extends Pluf_Model
             .Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewResource',
                                       array($request->project->shortname,
                                             $this->title));
-        $title = sprintf(__('%1$s: Documentation page %2$s added - %3$s'),
+        $title = sprintf(__('%1$s: Documentation resource %2$s added - %3$s'),
                          $request->project->name,
                          $this->title, $this->summary);
         $date = Pluf_Date::gmDateToGmString($this->creation_dtime);
@@ -193,12 +193,12 @@ class IDF_Wiki_Resource extends Pluf_Model
                        $request,
                        array('url' => $url,
                              'title' => $title,
-                             'page' => $this,
+                             'resource' => $this,
                              'rev' => $this->get_current_revision(),
                              'create' => true,
                              'date' => $date)
-                                                     );
-        $tmpl = new Pluf_Template('idf/wiki/feedfragment.xml');
+        );
+        $tmpl = new Pluf_Template('idf/wiki/feedfragment-resource.xml');
         return $tmpl->render($context);
     }
 }
