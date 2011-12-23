@@ -22,6 +22,7 @@
 # ***** END LICENSE BLOCK ***** */
 
 $m = array();
+$m['IDF_ProjectActivity'] = array('relate_to' => array('IDF_Project'));
 $m['IDF_Tag'] = array('relate_to' => array('IDF_Project'),
                       'relate_to_many' => array('IDF_Project'));
 $m['IDF_Issue'] = array('relate_to' => array('IDF_Project', 'Pluf_User', 'IDF_Tag'),

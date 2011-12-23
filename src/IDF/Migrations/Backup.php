@@ -34,6 +34,7 @@ function IDF_Migrations_Backup_run($folder, $name=null)
 {
     $models = array(
                     'IDF_Project',
+                    'IDF_ProjectActivity',
                     'IDF_Tag',
                     'IDF_Issue',
                     'IDF_IssueComment',
@@ -83,6 +84,7 @@ function IDF_Migrations_Backup_restore($folder, $name)
 {
     $models = array(
                     'IDF_Project',
+                    'IDF_ProjectActivity',
                     'IDF_Tag',
                     'IDF_Issue',
                     'IDF_IssueComment',

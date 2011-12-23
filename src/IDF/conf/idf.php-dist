@@ -515,5 +515,34 @@ $cfg['idf_strong_key_check'] = false;
 # should really change the other end of your web hooks!
 $cfg['webhook_processing'] = 'compat';
 
+# If IDF recalculates the activity index of the forge's projects, it does so
+# by looking at the created and updated items in a particular tab / section
+# for each project.
+#
+# You can now edit the weights that are applied to the calculation for each
+# section in order to give other things more precendence. For example, if you
+# do not use the documentation part to a great extent in most of your projects,
+# you can weight this section lower and get an overall better activity value.
+#
+# If a section is removed, then activity in this section is neglected during
+# the calculation. The same is true in case a section is disabled in the
+# project administration.
+$cfg['activity_section_weights'] = array(
+    'source'    => 4,
+    'issues'    => 2,
+    'wiki'      => 2,
+    'downloads' => 1,
+    'review'    => 1,
+);  
+
+# Here you can define the timespan in days how long the activity calculation
+# process should look into the history to get meaningful activity values for
+# each project.
+#
+# If you have many low-profile projects in your forge, i.e. projects that only
+# record very little activity, then it might be a good idea to bump this value
+# high enough to show a proper activity index for those projects as well.
+$cfg['activity_lookback'] = 7;
+
 return $cfg;
 

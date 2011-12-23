@@ -31,6 +31,7 @@ function IDF_Migrations_Install_setup($params=null)
 {
     $models = array(
                     'IDF_Project',
+                    'IDF_ProjectActivity',
                     'IDF_Tag',
                     'IDF_Issue',
                     'IDF_IssueComment',
@@ -112,6 +113,7 @@ function IDF_Migrations_Install_teardown($params=null)
                     'IDF_Issue',
                     'IDF_Tag',
                     'IDF_Commit',
+                    'IDF_ProjectActivity',
                     'IDF_Project',
                     'IDF_EmailAddress',
                     'IDF_IssueRelation',
