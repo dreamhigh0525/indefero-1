@@ -119,7 +119,7 @@ class IDF_Scm_Monotone_Stdio implements IDF_Scm_Monotone_IStdio
         $remote_db_access = Pluf::f('mtn_db_access', 'remote') == 'remote';
 
         $cmd = Pluf::f('idf_exec_cmd_prefix', '') .
-               Pluf::f('mtn_path', 'mtn') . ' ';
+               escapeshellarg(Pluf::f('mtn_path', 'mtn')) . ' ';
 
         $opts = Pluf::f('mtn_opts', array());
         foreach ($opts as $opt) {
