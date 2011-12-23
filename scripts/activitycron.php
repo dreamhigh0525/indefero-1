@@ -25,6 +25,13 @@
  * This script recalculates the "project activity" for all of the
  * forge's projects for the given date.
  * If no date is given, yesterday's date is used.
+ *
+ * This script should run once a day. You can configure its behaviour
+ * with $cfg['activity_section_weights'] and $cfg['activity_lookback'].
+ *
+ * If the script runs more than once with the same date argument,
+ * previously recorded project activity values are replaced with the
+ * newly created ones.
  */
 
 require dirname(__FILE__).'/../src/IDF/conf/path.php';
