@@ -1,0 +1,54 @@
+{extends "idf/gadmin/forge/base.html"}
+
+{block docclass}yui-t3{assign $inIndex=true}{/block}
+
+{block body}
+<form method="post" action=".">
+<table class="form" summary="">
+<colgroup>
+    <col width="20" />
+    <col width="*" />
+</colgroup>
+<tr>
+<td>{$form.f.enabled|unsafe}</td>
+<td>
+{$form.f.enabled.labelTag}
+{if $form.f.enabled.errors}{$form.f.enabled.fieldErrors}{/if}
+</td>
+</tr>
+<tr>
+<td colspan="2">
+{if $form.f.content.errors}{$form.f.content.fieldErrors}{/if}
+{$form.f.content|unsafe}
+</td>
+<tr>
+<td colspan="2">
+<input type="submit" value="{trans 'Save Changes'}" name="submit" />
+</td>
+</tr>
+</table>
+</form>
+<script type="text/javascript" charset="utf-8">
+// <!-- {literal}
+  $(document).ready(function() {
+	var handler = function() {
+	  if ($(this).is(':checked')) {
+        $('#id_content').removeAttr('readonly');
+      } else {
+        $('#id_content').attr('readonly', 'readonly');
+      }
+    };
+    $('#id_enabled').bind('click', handler);
+    handler.call($('#id_enabled'));			 
+  });
+// {/literal} --> 
+</script>
+{/block}
+
+{block context}
+<div class="issue-submit-info">
+<p>{blocktrans}You can define a custom forge start page that is displayed instead of the standard project listing.{/blocktrans}</p>
+</div>
+{/block}
+
+

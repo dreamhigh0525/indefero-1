@@ -36,19 +36,40 @@ class IDF_Views
      */
     public function index($request, $match)
     {
-        // TODO: add a switch here later on to determine whether the project list
-        //       or a custom start page should be displayed
-        $match = array('', 'all', 'name');
-        return $this->listProjects($request, $match);
+        $forge = IDF_Forge::instance();
+        if (!$forge->isCustomForgePageEnabled()) {
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views::listProjects');
+            return new Pluf_HTTP_Response_Redirect($url);
+        }
+
+        return Pluf_Shortcuts_RenderToResponse('idf/index.html',
+                                                array('page_title' => __('Welcome'),
+                                                      'content' => $forge->getCustomForgePageContent(),
+                                                ),
+                                                $request);
     }
 
     /**
-     * List all the projects managed by InDefero.
+     * List all projects unfiltered
      *
-     * Only the public projects are listed or the private with correct
-     * rights.
+     * @param unknown_type $request
+     * @param unknown_type $match
+     * @return Pluf_HTTP_Response
      */
     public function listProjects($request, $match)
+    {
+        $match = array('', 'all', 'name');
+        return $this->listProjectsByLabel($request, $match);
+    }
+
+    /**
+     * List projects, optionally filtered by label
+     *
+     * @param unknown_type $request
+     * @param unknown_type $match
+     * @return Pluf_HTTP_Response
+     */
+    public function listProjectsByLabel($request, $match)
     {
         list(, $tagId, $order) = $match;
 

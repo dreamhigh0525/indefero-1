@@ -85,6 +85,7 @@ class IDF_Middleware
                               'issuetext' => 'IDF_Template_IssueComment',
                               'timeline' => 'IDF_Template_TimelineFragment',
                               'markdown' => 'IDF_Template_Markdown',
+                              'markdown_forge' => 'IDF_Template_MarkdownForge',
                               'showuser' => 'IDF_Template_ShowUser',
                               'ashowuser' => 'IDF_Template_AssignShowUser',
                               'appversion' => 'IDF_Template_AppVersion',
@@ -102,6 +103,7 @@ class IDF_Middleware
 
 function IDF_Middleware_ContextPreProcessor($request)
 {
+    $forge = IDF_Forge::instance();
     $c = array();
     $c['request'] = $request;
     $c['isAdmin'] = ($request->user->administrator or $request->user->staff);
@@ -115,6 +117,7 @@ function IDF_Middleware_ContextPreProcessor($request)
     }
     $c['usherConfigured'] = Pluf::f("mtn_usher_conf", null) !== null;
     $c['allProjects'] = IDF_Views::getProjects($request->user);
+    $c['customForgePageEnabled'] = $forge->isCustomForgePageEnabled();
     return $c;
 }
 

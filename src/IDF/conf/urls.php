@@ -29,10 +29,15 @@ $ctl[] = array('regex' => '#^/$#',
                'model' => 'IDF_Views',
                'method' => 'index');
 
-$ctl[] = array('regex' => '#^/label/(\w+)/(\w+)/$#',
+$ctl[] = array('regex' => '#^/projects/$#',
                'base' => $base,
                'model' => 'IDF_Views',
                'method' => 'listProjects');
+
+$ctl[] = array('regex' => '#^/projects/label/(\w+)/(\w+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views',
+               'method' => 'listProjectsByLabel');
 
 $ctl[] = array('regex' => '#^/login/$#',
                'base' => $base,
@@ -472,6 +477,11 @@ $ctl[] = array('regex' => '#^/api/$#',
                'method' => 'projectIndex');
 
 // ---------- FORGE ADMIN --------------------------------
+
+$ctl[] = array('regex' => '#^/admin/forge/$#',
+               'base' => $base,
+               'model' => 'IDF_Views_Admin',
+               'method' => 'forge');
 
 $ctl[] = array('regex' => '#^/admin/projects/$#',
                'base' => $base,

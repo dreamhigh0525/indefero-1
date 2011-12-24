@@ -70,4 +70,20 @@ class IDF_Forge
         }
         return $tags;
     }
+
+    public function setCustomForgePageEnabled($enabled) {
+        $this->conf->setVal('custom_forge_page_enabled', $enabled);
+    }
+
+    public function isCustomForgePageEnabled($default = false) {
+        return $this->conf->getVal('custom_forge_page_enabled', $default);
+    }
+
+    public function getCustomForgePageContent($default = '') {
+        return $this->conf->getVal('custom_forge_page_content', $default);
+    }
+
+    public function setCustomForgePageContent($content) {
+        $this->conf->setVal('custom_forge_page_content', $content);
+    }
 }

@@ -1,7 +1,5 @@
 {extends "idf/base-simple.html"}
 {block docclass}yui-t2{/block}
-{block tabhome} class="active"{/block}
-{block subtabs}<a href="{url 'IDF_Views::index'}" class="active">{trans 'Projects'}</a>{/block}
 {block body}
 {if $projects.count() == 0}
 <p>{trans 'No projects managed with InDefero were found.'}</p>
@@ -41,7 +39,7 @@
     {if count($tags) == 0}{trans 'n/a'}{else}
         {foreach $p.get_tags_list() as $idx => $label}
             {if $idx != 0}, {/if}
-            <a class="label" href="{url 'IDF_Views::listProjects', array($label->id, $order)}">{$label}</a>
+            <a class="label" href="{url 'IDF_Views::listProjectsByLabel', array($label->id, $order)}">{$label}</a>
         {/foreach}
     {/if}
     </p>
@@ -58,11 +56,11 @@
     <dl class="tagscloud smaller">{foreach $projectLabels as $class => $labels}
         <dt class="label">{$class}</dt>
         {foreach $labels as $idx => $label}
-            <dd><a href="{url 'IDF_Views::listProjects', array($label->id, $order)}" class="label" title="{blocktrans $label.project_count}1 project{plural}{$label.project_count} projects{/blocktrans}">{$label.name}{if $idx != count($labels) - 1},{/if}</a></dd>
+            <dd><a href="{url 'IDF_Views::listProjectsByLabel', array($label->id, $order)}" class="label" title="{blocktrans $label.project_count}1 project{plural}{$label.project_count} projects{/blocktrans}">{$label.name}{if $idx != count($labels) - 1},{/if}</a></dd>
         {/foreach}
     {/foreach}</dl>
     {if $tag}
-        <p class="smaller"><a href="{url 'IDF_Views::listProjects', array('all', $order)}">
+        <p class="smaller"><a href="{url 'IDF_Views::listProjectsByLabel', array('all', $order)}">
             {blocktrans}Remove filter for {$tag}{/blocktrans}</a></p>
     {/if}
 {/if}
@@ -72,10 +70,10 @@
 {assign $labelPart = 'all'}
 {if $tag}{assign $labelPart = $tag->id}{/if}
 <p class="smaller">
-{if $order != 'name'}<a href="{url 'IDF_Views::listProjects', array($labelPart, 'name')}">{/if}
+{if $order != 'name'}<a href="{url 'IDF_Views::listProjectsByLabel', array($labelPart, 'name')}">{/if}
 {trans 'By name'}{if $order != 'name'}</a>{/if} 
  &ndash;
-{if $order != 'activity'}<a href="{url 'IDF_Views::listProjects', array($labelPart, 'activity')}">{/if}
+{if $order != 'activity'}<a href="{url 'IDF_Views::listProjectsByLabel', array($labelPart, 'activity')}">{/if}
 {trans 'By activity'}{if $order != 'activity'}</a>{/if} 
 </p>
 <br />
