@@ -1214,27 +1214,58 @@ span.scm-action.property-changed {
 }
 
 /*
- *  Project list on index
+ *  Project list
  */
-div.p-list-img {
+div.p-list-prj {
+  width: 24em;
+  min-height: 5em;
   float: left;
-  height: 32px;
-  margin-top: .5em;
+  margin: 0 1em 0.5em 0;
 }
 
-div.p-list-prj {
+div.p-list-prj div.logo {
   float: left;
-  margin: .5em 0 .5em .8em;
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+
+div.p-list-prj div.logo img {
+  max-width: 32px;
+  max-height: 32px;
+}
+
+div.p-list-prj div.logo .private {
+  top: 18px;
+  right: -3px;
+  position: absolute;
+}
+
+div.p-list-prj div.logo .activity {
+  height: 4px;
+  width: 32px;
+  margin-top: 5px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: #E6E6E6;
+}
+
+div.p-list-prj div.logo .activity .bar {
+  background: #A5E26A;
+  height: 100%;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 
 div.p-list-prj p {
-  margin: 0px;
+  margin: 0;
+  margin-left: 42px;
 }
 
-div.p-list-private {
-  bottom: 16px;
-  right: -3px;
-  position: relative;
+div.p-list-prj .smaller {
+  font-size: 85%;
 }
 
 a.external-link {

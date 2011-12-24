@@ -100,7 +100,27 @@ class IDF_Project extends Pluf_Model
                                   'verbose' => __('private'),
                                   'default' => 0,
                                   ),
-                                  );
+                            'current_activity' =>
+                            array(
+                                  'type' => 'Pluf_DB_Field_Foreignkey',
+                                  'model' => 'IDF_ProjectActivity',
+                                  'blank' => true,
+                                  'verbose' => __('current project activity'),
+                                  ),
+                            );
+        $table = $this->_con->pfx.'idf_projectactivities';
+        $this->_a['views'] = array(
+            'join_activities' =>
+                array(
+                    'join' => 'LEFT JOIN '.$table
+                             .' ON current_activity='.$table.'.id',
+                    'select' => $this->getSelect().', date, value',
+                    'props' => array(
+                        'date' => 'current_activity_date',
+                        'value' => 'current_activity_value'
+                    ),
+                ),
+        );
     }
 
 

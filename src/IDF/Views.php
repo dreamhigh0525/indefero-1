@@ -32,18 +32,28 @@ Pluf::loadFunction('Pluf_Shortcuts_GetFormForModel');
 class IDF_Views
 {
     /**
+     * The index view.
+     */
+    public function index($request, $match)
+    {
+        // TODO: add a switch here later on to determine whether the project list
+        //       or a custom start page should be displayed
+        return $this->listProjects($request, $match);
+    }
+
+    /**
      * List all the projects managed by InDefero.
      *
      * Only the public projects are listed or the private with correct
      * rights.
      */
-    public function index($request, $match, $api=false)
+    public function listProjects($request, $match, $api=false)
     {
         $projects = self::getProjects($request->user);
         $stats = self::getProjectsStatistics($projects);
 
         if ($api == true) return $projects;
-        return Pluf_Shortcuts_RenderToResponse('idf/index.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/listProjects.html',
                                                array('page_title' => __('Projects'),
                                                      'projects' => $projects,
                                                      'stats' => new Pluf_Template_ContextVars($stats)),
@@ -334,34 +344,40 @@ class IDF_Views
     {
         $db =& Pluf::db();
         $false = Pluf_DB_BooleanToDb(false, $db);
-        if ($user->isAnonymous()) {
-            $sql = sprintf('%s=%s', $db->qn('private'), $false);
-            return Pluf::factory('IDF_Project')->getList(array('filter'=> $sql,
-                                                               'order' => 'name ASC'));
-        }
-        if ($user->administrator) {
-            return Pluf::factory('IDF_Project')->getList(array('order' => 'name ASC'));
-        }
-        // grab the list of projects where the user is admin, member
-        // or authorized
-        $perms = array(
-                       Pluf_Permission::getFromString('IDF.project-member'),
-                       Pluf_Permission::getFromString('IDF.project-owner'),
-                       Pluf_Permission::getFromString('IDF.project-authorized-user')
-                       );
-        $sql = new Pluf_SQL("model_class='IDF_Project' AND owner_class='Pluf_User' AND owner_id=%s AND negative=".$false, $user->id);
-        $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $sql->gen()));
+        $sql = new Pluf_SQL(1);
 
-        $sql = sprintf('%s=%s', $db->qn('private'), $false);
-        if ($rows->count() > 0) {
-            $ids = array();
-            foreach ($rows as $row) {
-                $ids[] = $row->model_id;
+        if ($user->isAnonymous())
+        {
+            $authSql = new Pluf_SQL('private=%s', $false);
+            $sql->SAnd($authSql);
+        } else
+        if (!$user->administrator) {
+            // grab the list of projects where the user is admin,
+            // member or authorized
+            $perms = array(
+                Pluf_Permission::getFromString('IDF.project-member'),
+                Pluf_Permission::getFromString('IDF.project-owner'),
+                Pluf_Permission::getFromString('IDF.project-authorized-user')
+            );
+            $permSql = new Pluf_SQL("model_class='IDF_Project' AND owner_class='Pluf_User' AND owner_id=%s AND negative=".$false, $user->id);
+            $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $permSql->gen()));
+
+            $authSql = new Pluf_SQL('private=%s', $false);
+            if ($rows->count() > 0) {
+                $ids = array();
+                foreach ($rows as $row) {
+                    $ids[] = $row->model_id;
+                }
+                $authSql->SOr(new Pluf_SQL(sprintf('id IN (%s)', implode(', ', $ids))));
             }
-            $sql .= sprintf(' OR id IN (%s)', implode(', ', $ids));
+            $sql->SAnd($authSql);
         }
-        return Pluf::factory('IDF_Project')->getList(array('filter' => $sql,
-                                                           'order' => 'name ASC'));
+
+        return Pluf::factory('IDF_Project')->getList(array(
+            'filter'=> $sql->gen(),
+            'view' => 'join_activities',
+            'order' => 'name ASC'
+        ));
     }
 
     /**

@@ -29,7 +29,7 @@
  * JSON instead of HTML.
  *
  * A special precondition is used to set the $request->user from the
- * _login, _hash and _salt parameters. 
+ * _login, _hash and _salt parameters.
  */
 class IDF_Views_Api
 {
@@ -90,17 +90,16 @@ class IDF_Views_Api
      * List all the projects
      */
     public $projectIndex_precond = array('IDF_Precondition::apiSetUser');
-    
+
     public function projectIndex($request, $match)
     {
-        $view = new IDF_Views();
-        $projects = $view->index($request, $match, true);
-        
+        $projects = IDF_Views::getProjects($request->user);
+
         $data = array();
         foreach ($projects as $p) {
             $data[] = array("shortname" => $p->shortname, "name" => $p->name, "shortdesc" => $p->shortdesc, "private" => $p->private);
         }
-        
+
         $out = array();
         $out['message'] = 'success';
         $out['projects'] = $data;

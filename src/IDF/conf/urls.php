@@ -29,6 +29,11 @@ $ctl[] = array('regex' => '#^/$#',
                'model' => 'IDF_Views',
                'method' => 'index');
 
+$ctl[] = array('regex' => '#^/label/(\d+)/$#',
+               'base' => $base,
+               'model' => 'IDF_Views',
+               'method' => 'listProjects');
+
 $ctl[] = array('regex' => '#^/login/$#',
                'base' => $base,
                'model' => 'IDF_Views',
