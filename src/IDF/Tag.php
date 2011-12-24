@@ -75,6 +75,18 @@ class IDF_Tag extends Pluf_Model
                                   ),
                             );
 
+        $table = $this->_con->pfx.'idf_project_idf_tag_assoc';
+        $this->_a['views'] = array(
+            'join_projects' =>
+                array(
+                'join' => 'LEFT JOIN '.$table
+                        .' ON idf_tag_id=id',
+                'select' => $this->getSelect().',COUNT(idf_project_id) as project_count',
+                'group' => 'idf_tag_id',
+                'props' => array('project_count' => 'project_count'),
+                ),
+        );
+
         $this->_a['idx'] =  array(
                                   'lcname_idx' =>
                                   array(

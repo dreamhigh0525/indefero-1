@@ -29,7 +29,7 @@ $ctl[] = array('regex' => '#^/$#',
                'model' => 'IDF_Views',
                'method' => 'index');
 
-$ctl[] = array('regex' => '#^/label/(\d+)/$#',
+$ctl[] = array('regex' => '#^/label/(\w+)/(\w+)/$#',
                'base' => $base,
                'model' => 'IDF_Views',
                'method' => 'listProjects');

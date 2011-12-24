@@ -38,9 +38,9 @@
     <p class="smaller">{trans 'Labels:'}
     {assign $tags = $p.get_tags_list()}
     {if count($tags) == 0}{trans 'n/a'}{else}
-        {foreach $p.get_tags_list() as $idx => $tag}
+        {foreach $p.get_tags_list() as $idx => $label}
             {if $idx != 0}, {/if}
-            <a class="label" href="{url 'IDF_Views::listProjects', array($tag->id)}">{$tag}</a>
+            <a class="label" href="{url 'IDF_Views::listProjects', array($label->id, $order)}">{$label}</a>
         {/foreach}
     {/if}
     </p>
@@ -48,18 +48,46 @@
 {/foreach}
 {/if}
 {/block}
+
 {block context}
-<div id="stats" class="issue-submit-info">
-<h3 class="a-c">{trans 'Forge statistics'}</h3>
-<table>
-<tr><td class="right">{trans 'Projects:'}</td><td>{$stats.projects}</td></tr>
-<tr><td class="right">{trans 'Members:'}</td><td>{$stats.members}</td></tr>
-<tr><td class="right">{trans 'Issues:'}</td><td>{$stats.issues}</td></tr>
-<tr><td class="right">{trans 'Commits:'}</td><td>{$stats.commits}</td></tr>
-<tr><td class="right">{trans 'Documentations:'}</td><td>{$stats.docpages}</td></tr>
-<tr><td class="right">{trans 'Downloads:'}</td><td>{$stats.downloads}</td></tr>
-<tr><td class="right">{trans 'Code reviews:'}</td><td>{$stats.reviews}</td></tr>
-</table>
-</div>
+<strong>{trans 'Filter projects by label'}</strong>
+{if count($projectLabels) == 0}
+<p class="smaller">{trans 'No projects with labels found.'}</p>
+{else}
+    <dl class="tagscloud smaller">{foreach $projectLabels as $class => $labels}
+        <dt class="label">{$class}</dt>
+        {foreach $labels as $idx => $label}
+            <dd><a href="{url 'IDF_Views::listProjects', array($label->id, $order)}" class="label" title="{blocktrans $label.project_count}1 project{plural}{$label.project_count} projects{/blocktrans}">{$label.name}{if $idx != count($labels) - 1},{/if}</a></dd>
+        {/foreach}
+    {/foreach}</dl>
+    {if $tag}
+        <p class="smaller"><a href="{url 'IDF_Views::listProjects', array('all', $order)}">
+            {blocktrans}Remove filter for {$tag}{/blocktrans}</a></p>
+    {/if}
+{/if}
+<br />
+
+<strong>{trans 'Order'}</strong>
+{assign $labelPart = 'all'}
+{if $tag}{assign $labelPart = $tag->id}{/if}
+<p class="smaller">
+{if $order != 'name'}<a href="{url 'IDF_Views::listProjects', array($labelPart, 'name')}">{/if}
+{trans 'By name'}{if $order != 'name'}</a>{/if} 
+ &ndash;
+{if $order != 'activity'}<a href="{url 'IDF_Views::listProjects', array($labelPart, 'activity')}">{/if}
+{trans 'By activity'}{if $order != 'activity'}</a>{/if} 
+</p>
+<br />
+
+<strong>{trans 'Filtered project stats'}</strong>
+<dl class="statistics smaller">
+<dt>{trans 'Members:'}</dt><dd>{$stats.members}</dd>
+<dt>{trans 'Issues:'}</dt><dd>{$stats.issues}</dd>
+<dt>{trans 'Commits:'}</dt><dd>{$stats.commits}</dd>
+<dt>{trans 'Documentations:'}</dt><dd>{$stats.docpages}</dd>
+<dt>{trans 'Downloads:'}</dt><dd>{$stats.downloads}</dd>
+<dt>{trans 'Code reviews:'}</dt><dd>{$stats.reviews}</dd>
+</dl>
 {/block}
+
 {block foot}<div id="branding">Powered by <a href="http://www.indefero.net" title="InDefero, bug tracking and more">InDefero</a>,<br />a <a href="http://www.ceondo.com">Céondo Ltd</a> initiative.</div>{/block}

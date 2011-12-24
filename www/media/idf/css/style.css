@@ -213,23 +213,37 @@ span.px-header-title a, span.px-header-title a:link, span.px-header-title a:visi
   color: #000;
 }
 
-/**
- * Issue
- */
-#tagscloud dl {
-  margin: 0;
+dl.tagscloud,
+dl.statistics {
+    margin: 0;
+    margin-bottom: 1em;
 }
 
-#tagscloud dt {
+dl.tagscloud dt {
   margin-top: .5em;
   font-weight: bold;
 }
 
-#tagscloud dd {
+dl.tagscloud dd {
   margin: 0;
   display: inline;
 }
 
+dl.statistics dt {
+  margin-top: .5em;
+  font-style: italic;
+}
+
+dl.statistics dd {
+  margin: 0;
+  float: right;
+  margin-top: -1.2em;
+  margin-right: 2em;
+}
+
+/**
+ * Issue
+ */
 a.issue-c {
   text-decoration: line-through;
 }

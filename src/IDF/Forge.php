@@ -51,4 +51,23 @@ class IDF_Forge
     public function setProjectLabels($labels) {
         $this->conf->setVal('project_labels', $labels);
     }
+
+    public function getProjectLabelsWithCounts() {
+        $sql = new Pluf_SQL('project=0');
+        $tagList = Pluf::factory('IDF_Tag')->getList(array(
+            'filter' => $sql->gen(),
+            'view' => 'join_projects',
+            'order' => 'class ASC, lcname ASC'
+        ));
+
+        $tags = array();
+        foreach ($tagList as $tag) {
+            // group by class
+            if (!array_key_exists($tag->class, $tags)) {
+                $tags[$tag->class] = array();
+            }
+            $tags[$tag->class][] = $tag;
+        }
+        return $tags;
+    }
 }

@@ -38,6 +38,7 @@ class IDF_Views
     {
         // TODO: add a switch here later on to determine whether the project list
         //       or a custom start page should be displayed
+        $match = array('', 'all', 'name');
         return $this->listProjects($request, $match);
     }
 
@@ -47,15 +48,30 @@ class IDF_Views
      * Only the public projects are listed or the private with correct
      * rights.
      */
-    public function listProjects($request, $match, $api=false)
+    public function listProjects($request, $match)
     {
-        $projects = self::getProjects($request->user);
-        $stats = self::getProjectsStatistics($projects);
+        list(, $tagId, $order) = $match;
 
-        if ($api == true) return $projects;
+        $tag = false;
+        if ($tagId !== 'all') {
+            $tag = Pluf::factory('IDF_Tag')->get($match[1]);
+            // ignore non-global tags
+            if ($tag !== false && $tag->project > 0) {
+                $tag = false;
+            }
+        }
+        $order = in_array($order, array('name', 'activity')) ? $order : 'name';
+
+        $projects = self::getProjects($request->user, $tag, $order);
+        $stats = self::getProjectsStatistics($projects);
+        $projectLabels = IDF_Forge::instance()->getProjectLabelsWithCounts();
+
         return Pluf_Shortcuts_RenderToResponse('idf/listProjects.html',
                                                array('page_title' => __('Projects'),
                                                      'projects' => $projects,
+                                                     'projectLabels' => $projectLabels,
+                                                     'tag' => $tag,
+                                                     'order' => $order,
                                                      'stats' => new Pluf_Template_ContextVars($stats)),
                                                $request);
     }
@@ -335,16 +351,20 @@ class IDF_Views
     }
 
     /**
-     * Returns a list of projects accessible for the user.
+     * Returns a list of projects accessible for the user and optionally filtered by tag.
      *
      * @param Pluf_User
+     * @param IDF_Tag
      * @return ArrayObject IDF_Project
      */
-    public static function getProjects($user)
+    public static function getProjects($user, $tag = false, $order = 'name')
     {
         $db =& Pluf::db();
         $false = Pluf_DB_BooleanToDb(false, $db);
         $sql = new Pluf_SQL(1);
+        if ($tag !== false) {
+            $sql->SAnd(new Pluf_SQL('idf_tag_id=%s', $tag->id));
+        }
 
         if ($user->isAnonymous())
         {
@@ -373,10 +393,14 @@ class IDF_Views
             $sql->SAnd($authSql);
         }
 
+        $orderTypes = array(
+            'name' => 'name ASC',
+            'activity' => 'value DESC, name ASC',
+        );
         return Pluf::factory('IDF_Project')->getList(array(
             'filter'=> $sql->gen(),
-            'view' => 'join_activities',
-            'order' => 'name ASC'
+            'view' => 'join_activities_and_tags',
+            'order' => $orderTypes[$order],
         ));
     }
 
@@ -397,16 +421,13 @@ class IDF_Views
 
         // Count for each projects
         foreach ($projects as $p) {
-            $pstats = $p->getStats ();
+            $pstats = $p->getStats();
             $forgestats['downloads'] += $pstats['downloads'];
             $forgestats['reviews'] += $pstats['reviews'];
             $forgestats['issues'] += $pstats['issues'];
             $forgestats['docpages'] += $pstats['docpages'];
             $forgestats['commits'] += $pstats['commits'];
         }
-
-        // Count projects
-        $forgestats['projects'] = count($projects);
 
         // Count members
         $sql = new Pluf_SQL('first_name != %s', array('---'));

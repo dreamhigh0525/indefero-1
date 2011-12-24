@@ -108,13 +108,15 @@ class IDF_Project extends Pluf_Model
                                   'verbose' => __('current project activity'),
                                   ),
                             );
-        $table = $this->_con->pfx.'idf_projectactivities';
+        $activityTable = $this->_con->pfx.'idf_projectactivities';
+        $tagTable = $this->_con->pfx.'idf_project_idf_tag_assoc';
         $this->_a['views'] = array(
-            'join_activities' =>
+            'join_activities_and_tags' =>
                 array(
-                    'join' => 'LEFT JOIN '.$table
-                             .' ON current_activity='.$table.'.id',
+                    'join' => 'LEFT JOIN '.$activityTable.' ON current_activity='.$activityTable.'.id '
+                             .'LEFT JOIN '.$tagTable.' ON idf_project_id='.$this->getSqlTable().'.id',
                     'select' => $this->getSelect().', date, value',
+                    'group' => $this->getSqlTable().'.id',
                     'props' => array(
                         'date' => 'current_activity_date',
                         'value' => 'current_activity_value'
