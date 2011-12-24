@@ -95,7 +95,7 @@ class IDF_ActivityTaxonomy
         $value = 0;
         foreach ($sectionWeights as $section => $weight) {
             // skip closed / non-existant sections
-            if ($conf->getVal($section.'_access_rights', 'none') === 'none')
+            if ($conf->getVal($section.'_access_rights') === 'none')
                 continue;
 
             if (!array_key_exists($section, $sectionClasses))
