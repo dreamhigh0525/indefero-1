@@ -69,9 +69,9 @@ class IDF_ProjectActivity extends Pluf_Model
     {
         $prj = $this->get_project();
         $sql = new Pluf_SQL('project=%s', array($prj->id));
-        $latest = Pluf::factory('IDF_ProjectActivity')->getOne(array('filter' => $sql->gen(), 'order' => 'date desc'));
-        if ($prj->current_activity != $latest->id) {
-            $prj->current_activity = $latest;
+        $list = Pluf::factory('IDF_ProjectActivity')->getList(array('filter' => $sql->gen(), 'order' => 'date desc'));
+        if (count($list) > 0 && $prj->current_activity != $list[0]->id) {
+            $prj->current_activity = $list[0];
             $prj->update();
         }
     }
