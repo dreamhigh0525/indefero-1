@@ -23,7 +23,8 @@
         </div>
         {/if}
         {if $p.current_activity_value}
-        <div class="activity" title="{trans 'Project activity'}"><div class="bar" style="width: {$p.current_activity_value * 100}%"></div></div>
+        {assign $activity = $p.current_activity_value * 100}
+        <div class="activity" title="{blocktrans}Project activity: {$activity}%{/blocktrans}"><div class="bar" style="width: {$activity}%"></div></div>
         {/if}
     </div>
     <p>
