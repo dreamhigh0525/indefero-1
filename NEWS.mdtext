@@ -1,6 +1,6 @@
 # InDefero 1.3 - xxx xxx xx xx:xx 2011 UTC
 
-The development of this version of Indefero has partially been sponsored
+The development of this version of Indefero has been sponsored
 by the friendly folks from Scilab <http://www.scilab.org/>!
 
 ATTENTION: You need Pluf [4121ca4](http://projects.ceondo.com/p/pluf/source/commit/4121ca4)
@@ -29,14 +29,27 @@ or newer to properly run this version of Indefero!
   issues, downloads, reviews, and so on. We now also ensure that notification
   emails for one object are uniquely identifyable to support a grouped view
   in email clients that support that. (fixes issues  334, 452, and 480)
-- Projects can get an external project URL configured that is displayed as
-  linkable icon right beside the project name (if available)
-- It is now possible to configure a web hook that informs an external URL about
-  new and updated downloads for a specific project, similar to the available 
-  post-commit web hook
+- Indefero can now be configured to record activity metrics for all projects
+  in a forge. This needs a special cron job named 'activitycron.php` 
+  (under `scripts`) that is run on a regular basis. The metrics can be
+  fine-tuned via `activity_section_weights` and `activity_lookback` in
+  `idf.php` and the result is visible as green bar in the project list view.
+- The forge's project list has been overhauled - its now possible to attach
+  labels on projects and to filter and order the project list by various
+  criteria. Additionally, projects can now get an external project URL
+  configured that is displayed as linkable icon right beside the project name
+  (if available)
+- Forge administrators can furthermore configure an alternative entry page
+  for the forge that is displayed instead of the plain project list. This
+  page accepts standard Markdown syntax and has support for the new
+  `projectlist` macro that allows the (partial) inline rendering of the
+  known global project list. 
+- It is now also possible to configure a web hook that informs an external
+  URL about new and updated downloads for a specific project, similar to the
+  available post-commit web hook.
 - One can now upload multiple files at once by using a special archive format
   which Indefero processes in the background and for which individual upload
-  records are created
+  records are created.
 
 ## Bugfixes
 
