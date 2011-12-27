@@ -46,9 +46,6 @@ class IDF_Template_MarkdownForge extends Pluf_Template_Tag
         if (!in_array($macro, $known_macros)) {
             return $matches[0];
         }
-        if (empty($opts)) {
-            $opts = array();
-        }
         $callbackName = 'callback'.ucfirst(strtolower($macro)).'Macro';
         return $this->callbackProjectlistMacro($opts);
     }
