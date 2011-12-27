@@ -340,7 +340,11 @@ a.label {
  white-space: nowrap;
 }
 
-hr { visibility: hidden; }
+hr {
+  height: 1px;
+  border: 0;
+  background: #e6e6e6;
+}
 
 hr.attach {
   visibility: visible;
