@@ -60,12 +60,18 @@ class IDF_Forge
             'order' => 'class ASC, lcname ASC'
         ));
 
+        $maxProjectCount = 0;
+        foreach ($tagList as $tag) {
+            $maxProjectCount = max($maxProjectCount, $tag->project_count);
+        }
+
         $tags = array();
         foreach ($tagList as $tag) {
             // group by class
             if (!array_key_exists($tag->class, $tags)) {
                 $tags[$tag->class] = array();
             }
+            $tag->rel_project_count = $tag->project_count / (double) $maxProjectCount;
             $tags[$tag->class][] = $tag;
         }
         return $tags;
