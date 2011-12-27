@@ -6,7 +6,7 @@
 <a href="{url 'IDF_Views::listProjects', array('all', 'name')}" class="active">{trans 'Projects'}</a>
 {/block}
 {block body}
-{markdown_forge $content}
+{markdown_forge $content, $request}
 {/block}
 
 {block context}{/block}

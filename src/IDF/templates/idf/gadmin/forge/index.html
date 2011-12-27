@@ -46,8 +46,19 @@
 {/block}
 
 {block context}
+{assign $eurl = 'http://michelf.com/projects/php-markdown/extra/'}
+{assign $burl = 'http://daringfireball.net/projects/markdown/syntax'}
 <div class="issue-submit-info">
-<p>{blocktrans}You can define a custom forge start page that is displayed instead of the standard project listing.{/blocktrans}</p>
+{blocktrans}
+<p><strong>Instructions:</strong></p>
+<p>You can set up a custom forge page that is used as entry page for the forge instead of the plain project listing. This page is then also accessible via the 'Home' link in main menu bar.</p>
+<p>The content of the page can use the <a href="{$burl}">Markdown syntax</a> with the <a href="{$eurl}"><em>Extra</em> extension</a>.</p>
+<p>Additionally, the following macros are available:<br />
+<ul>
+<li><code>{literal}{{/literal}projectlist, label=..., order=(name|activity), limit=...}</code> - Renders a project list that can optionally be filtered by label, ordered by 'name' or 'activity' and / or limited to a specific number of projects.</li>
+</ul>
+</p>
+{/blocktrans}
 </div>
 {/block}
 
