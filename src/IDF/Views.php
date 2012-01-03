@@ -409,7 +409,7 @@ class IDF_Views
                 foreach ($rows as $row) {
                     $ids[] = $row->model_id;
                 }
-                $authSql->SOr(new Pluf_SQL(sprintf('id IN (%s)', implode(', ', $ids))));
+                $authSql->SOr(new Pluf_SQL(sprintf($db->pfx.'idf_projects.id IN (%s)', implode(', ', $ids))));
             }
             $sql->SAnd($authSql);
         }
