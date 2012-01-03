@@ -244,6 +244,7 @@ class IDF_Upload extends Pluf_Model
             $tags[] = $tag->class.':'.$tag->name;
         }
 
+        $submitter = $this->get_submitter();
         $payload = array(
             'to_send' => array(
                 'project' => $project->shortname,
@@ -253,7 +254,8 @@ class IDF_Upload extends Pluf_Model
                 'filename' => $this->file,
                 'filesize' => $this->filesize,
                 'md5sum' => $this->md5,
-                'submitter' => $this->get_submitter()->login,
+                'submitter_login' => $submitter->login,
+                'submitter_email' => $submitter->email,
                 'tags' => $tags,
             ),
             'project_id' => $project->id,
