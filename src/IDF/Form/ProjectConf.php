@@ -193,16 +193,14 @@ class IDF_Form_ProjectConf extends Pluf_Form
         $this->project->update();
 
         $conf = $this->project->getConf();
-        $keys = array('logo', 'external_project_url');
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $this->cleaned_data)) {
-                if (!empty($this->cleaned_data[$key])) {
-                    $conf->setVal($key, $this->cleaned_data[$key]);
-                }
-                else {
-                    $conf->delVal($key);
-                }
-            }
+        if (!empty($this->cleaned_data['logo'])) {
+            $conf->setVal('logo', $this->cleaned_data['logo']);
+        }
+        if (!empty($this->cleaned_data['external_project_url'])) {
+            $conf->setVal('external_project_url', $this->cleaned_data['external_project_url']);
+        }
+        else {
+            $conf->delVal('external_project_url');
         }
 
         if ($this->cleaned_data['logo_remove'] === true) {
