@@ -102,6 +102,12 @@ class IDF_Form_UploadArchiveHelper
                 }
             }
 
+            // FIXME: remove this once we allow more than six labels everywhere
+            if (count($entry['labels']) > 6) {
+                throw new Pluf_Form_Invalid(
+                    sprintf(__('The entry %s in the manifest has more than the six allowed labels set.'), $entry['name']));
+            }
+
             $this->entries[$entry['name']] = $entry;
         }
 
