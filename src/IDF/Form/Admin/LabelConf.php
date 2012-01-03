@@ -44,4 +44,19 @@ License:GPL = Applications with GPL license
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
                                             ));
     }
+
+    public function clean_project_labels()
+    {
+        $labels = preg_split("/\s*\n\s*/", $this->cleaned_data['project_labels'], -1, PREG_SPLIT_NO_EMPTY);
+        for ($i=0; $i<count($labels); ++$i) {
+            $labels[$i] = trim($labels[$i]);
+            if (!preg_match('/^[\w-]+(:[\w-]+)?(\s*=\s*[^=]+)?$/', $labels[$i])) {
+                throw new Pluf_Form_Invalid(sprintf(
+                   __('The label "%s" is invalid: A label must only consist of alphanumeric '.
+                      'characters and dashes, and can optionally contain a ":" with a group prefix.'),
+                $labels[$i]));
+            }
+        }
+        return implode("\n", $labels);
+    }
 }
