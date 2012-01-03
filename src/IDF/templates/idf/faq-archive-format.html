@@ -6,6 +6,7 @@
 <ul>
 <li><a href="#q-motivation">Motivation</a></li>
 <li><a href="#q-manifest">The manifest format</a></li>
+<li><a href="#q-notes">Final notes</a></li>
 </ul>
 
 <h2 id="q-motivation">Motivation</h2>
@@ -103,6 +104,12 @@ this procedure.</li>
 
 If no existing file is found for the <code>replaces</code> tag, then this is completely ignored.
 </p>
+
+<h2 id="q-notes">Final notes</h2>
+
+<p>Any file in the archive that is not enlisted in the manifest is ignored during
+the upload process, so ensure that your <code>manifest.xml</code> contains all the file names (case
+sensitive) you want to be processed.</p> 
 {/block}
 
 {block context}
