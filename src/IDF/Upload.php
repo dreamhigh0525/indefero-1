@@ -253,6 +253,7 @@ class IDF_Upload extends Pluf_Model
                 'filename' => $this->file,
                 'filesize' => $this->filesize,
                 'md5sum' => $this->md5,
+                'submitter' => $this->get_submitter()->login,
                 'tags' => $tags,
             ),
             'project_id' => $project->id,
