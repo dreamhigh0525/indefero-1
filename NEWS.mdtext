@@ -4,6 +4,9 @@
 
 ## Bugfixes
 
+- Ensure that IDF does not break UTF-8 encoded strings when
+  shortening them for view rendering (issue 785)
+
 ## Documentation
 
 ## Translations
