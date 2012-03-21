@@ -34,6 +34,7 @@ function IDF_Migrations_Backup_run($folder, $name=null)
 {
     $models = array(
                     'IDF_Project',
+                    'IDF_ProjectActivity',
                     'IDF_Tag',
                     'IDF_Issue',
                     'IDF_IssueComment',
@@ -43,8 +44,10 @@ function IDF_Migrations_Backup_run($folder, $name=null)
                     'IDF_IssueFile',
                     'IDF_Commit',
                     'IDF_Timeline',
-                    'IDF_WikiPage',
-                    'IDF_WikiRevision',
+                    'IDF_Wiki_Page',
+                    'IDF_Wiki_PageRevision',
+                    'IDF_Wiki_Resource',
+                    'IDF_Wiki_ResourceRevision',
                     'IDF_Review',
                     'IDF_Review_Patch',
                     'IDF_Review_Comment',
@@ -81,6 +84,7 @@ function IDF_Migrations_Backup_restore($folder, $name)
 {
     $models = array(
                     'IDF_Project',
+                    'IDF_ProjectActivity',
                     'IDF_Tag',
                     'IDF_Issue',
                     'IDF_IssueComment',
@@ -90,8 +94,10 @@ function IDF_Migrations_Backup_restore($folder, $name)
                     'IDF_IssueFile',
                     'IDF_Commit',
                     'IDF_Timeline',
-                    'IDF_WikiPage',
-                    'IDF_WikiRevision',
+                    'IDF_Wiki_Resource',
+                    'IDF_Wiki_ResourceRevision',
+                    'IDF_Wiki_Page',
+                    'IDF_Wiki_PageRevision',
                     'IDF_Review',
                     'IDF_Review_Patch',
                     'IDF_Review_Comment',

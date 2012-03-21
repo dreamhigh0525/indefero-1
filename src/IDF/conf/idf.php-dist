@@ -119,7 +119,7 @@ $cfg['time_zone'] = 'Europe/Berlin';
 # Configure which languages should be available in your forge.
 # If you want to enable an additional language, ensure that the
 # language file in question resides in 'src/IDF/locale'.
-$cfg['languages'] = array('en', 'fr', 'de', 'es_ES');
+$cfg['languages'] = array('en', 'fr', 'de', 'es_ES', 'ru');
 
 
 # ---------------------------------------------------------------------------- #
@@ -494,6 +494,55 @@ $cfg['idf_strong_key_check'] = false;
 # The php.ini upload_max_filesize and post_max_size configuration setting will
 # always have precedence.
 # $cfg['max_upload_size'] = 2097152; // Size in bytes
+
+# If a download archive is uploaded, the size of the archive is limited to 20MB.
+# The php.ini upload_max_filesize and post_max_size configuration setting will
+# always have precedence.
+# $cfg['max_upload_archive_size'] = 20971520; // Size in bytes
+
+# Older versions of Indefero submitted a POST request to a configured
+# post-commit web hook when new revisions arrived, whereas a PUT request
+# would have been more appropriate.  Also, the payload's HMAC digest was
+# submitted as value of the HTTP header 'Post-Commit-Hook-Hmac' during
+# such a request.  Since newer versions of Indefero use the same authentication
+# mechanism (based on the same secret key) for other web hooks of the same
+# project as well, the name of this HTTP header was no longer appropriate 
+# and as such changed to simply 'Web-Hook-Hmac'.
+#
+# Setting the following configuration option to 'compat' now restores the
+# old behaviour in both cases. Please notice however that this compatibility
+# option is likely to go away in the next major version of Indefero, so you
+# should really change the other end of your web hooks!
+$cfg['webhook_processing'] = 'compat';
+
+# If IDF recalculates the activity index of the forge's projects, it does so
+# by looking at the created and updated items in a particular tab / section
+# for each project.
+#
+# You can now edit the weights that are applied to the calculation for each
+# section in order to give other things more precendence. For example, if you
+# do not use the documentation part to a great extent in most of your projects,
+# you can weight this section lower and get an overall better activity value.
+#
+# If a section is removed, then activity in this section is neglected during
+# the calculation. The same is true in case a section is disabled in the
+# project administration.
+$cfg['activity_section_weights'] = array(
+    'source'    => 4,
+    'issues'    => 2,
+    'wiki'      => 2,
+    'downloads' => 1,
+    'review'    => 1,
+);  
+
+# Here you can define the timespan in days how long the activity calculation
+# process should look into the history to get meaningful activity values for
+# each project.
+#
+# If you have many low-profile projects in your forge, i.e. projects that only
+# record very little activity, then it might be a good idea to bump this value
+# high enough to show a proper activity index for those projects as well.
+$cfg['activity_lookback'] = 7;
 
 return $cfg;
 

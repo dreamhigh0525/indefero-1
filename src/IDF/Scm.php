@@ -497,5 +497,10 @@ class IDF_Scm
     {
         return 0;
     }
+
+    public function repository($request, $match)
+    {
+        throw new Exception('This repository does not support web based repository access');
+    }
 }
 

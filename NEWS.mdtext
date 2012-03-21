@@ -1,4 +1,76 @@
-# InDefero 1.2 - xxx xxx xx xx:xx 2011 UTC
+# InDefero 1.3 - xxx xxx xx xx:xx 2011 UTC
+
+The development of this version of Indefero has been sponsored
+by the friendly folks from Scilab <http://www.scilab.org/>!
+
+ATTENTION: You need Pluf [4121ca4](http://projects.ceondo.com/p/pluf/source/commit/4121ca4)
+or newer to properly run this version of Indefero!
+
+## Changes
+
+- Indefero's post-commit web hook now by default issues HTTP PUT instead of
+  HTTP POST requests and carries the authentication digest in the new
+  `Web-Hook-Hmac` header.  The old behaviour can be re-enabled by setting the
+  `$cfg['webhook_processing']` flag to "compat", we urge you to change the
+  implementations of this web hook as this setting is likely to be removed
+  in future versions of Indefero.
+- Indefero now needs PHP's zip module which is not enabled by default.
+- Existing email notifications now have to be explicitely activated in the
+  project's administrative area.
+
+## New Features
+
+- It is now possible to upload and embed resources like images or text
+  files into wiki pages. If no preview for a resource's mime type is
+  available, than a download link is provided for it instead.
+- The notification system has been overhauled; it is now possible to configure
+  what kind of user group, project administrators, members and / or additional
+  mail addresses are notified about updates in a certain section, such as 
+  issues, downloads, reviews, and so on. We now also ensure that notification
+  emails for one object are uniquely identifyable to support a grouped view
+  in email clients that support that. (fixes issues  334, 452, and 480)
+- Indefero can now be configured to record activity metrics for all projects
+  in a forge. This needs a special cron job named 'activitycron.php` 
+  (under `scripts`) that is run on a regular basis. The metrics can be
+  fine-tuned via `activity_section_weights` and `activity_lookback` in
+  `idf.php` and the result is visible as green bar in the project list view.
+- The forge's project list has been overhauled - its now possible to attach
+  labels on projects and to filter and order the project list by various
+  criteria. Additionally, projects can now get an external project URL
+  configured that is displayed as linkable icon right beside the project name
+  (if available)
+- Forge administrators can furthermore configure an alternative entry page
+  for the forge that is displayed instead of the plain project list. This
+  page accepts standard Markdown syntax and has support for the new
+  `projectlist` macro that allows the (partial) inline rendering of the
+  known global project list. 
+- It is now also possible to configure a web hook that informs an external
+  URL about new and updated downloads for a specific project, similar to the
+  available post-commit web hook.
+- One can now upload multiple files at once by using a special archive format
+  which Indefero processes in the background and for which individual upload
+  records are created.
+
+## Bugfixes
+
+- Ensure that IDF does not break UTF-8 encoded strings when
+  shortening them for view rendering (issue 785)
+- Indefero no longer confuses a non-owner of an issue with a notification that
+  a particular ticket has been opened and assigned to him (fixes issue 562)
+
+# InDefero 1.2.1 - XXX XXX XX XX:XX:XX UTC 201X
+
+## Bugfixes
+
+- The diff view now renders properly in Firefox when a minimum font size
+  is configured or the user zooms the web page (fixes issue 773)
+
+## Language and Translations
+
+- Multiple fixes to English source strings (fixes issues 763, 766, and 772,
+  thanks to JP Fleury!)
+
+# InDefero 1.2 - Sun Nov 6 23:04:00 UTC 2011
 
 ATTENTION: You need Pluf [46b7f251](http://projects.ceondo.com/p/pluf/source/commit/46b7f251)
 or newer to properly run this version of Indefero!
@@ -50,9 +122,13 @@ or newer to properly run this version of Indefero!
   middle (issue 697)
 - Indefero now sends the MD5 checksum as HTTP header when downloading a file from the
   download area; additionally, a unneeded redirect has been removed (issue 716)
-- Avatar URL generation use correctly the configuration (issue 732)
 - Source links without a specific revision did not work due to a wrong regex
   (issue 730)
+- Avatar URL generation use correctly the configuration (issue 732)
+- The SyncGit plugin no longer fails to remove a non-existing post-update hook
+  on repository creation (issue 752)
+- When uploading a project logo, an existing uploaded file with the same name
+  no longer leads to an error, but is simple overwritten (fixes issue 740)
 - The error detection and reporting in the SyncMonotone plugin has been improved
 - The branch links users of the Subversion frontend get when they enter a wrong
   revision are fixed; this list is now also only displayed (for any SCM) if
@@ -70,6 +146,11 @@ or newer to properly run this version of Indefero!
 - The documentation on the setup of the monotone plugin has been improved.
 
 ## Translations
+
+- The Russian translation has been enabled by default (thanks for all the great
+  work, Denis Kot and Litew!)
+- Brazilian Portuguese translation started (thanks to Pedro Kiefer!)
+- Turkish translation started (thanks to Ozan!)
 
 # InDefero 1.1.2 - Thu May 26 07:42:25 2011 UTC
 

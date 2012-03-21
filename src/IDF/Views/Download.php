@@ -205,7 +205,8 @@ class IDF_Views_Download
         $path = $upload->getFullPath();
         $mime = IDF_FileUtil::getMimeType($path);
         $render = new Pluf_HTTP_Response_File($path, $mime[0]);
-        $render->headers["Content-MD5"] = $upload->md5;
+        $render->headers['Content-MD5'] = $upload->md5;
+        $render->headers['Content-Disposition'] = 'attachment; filename="'.$upload->file.'"';
         return $render;
     }
 
@@ -224,11 +225,11 @@ class IDF_Views_Download
     }
 
     /**
-     * Submit a new file for download.
+     * Create a new file for download.
      */
-    public $submit_precond = array('IDF_Precondition::accessDownloads',
+    public $create_precond = array('IDF_Precondition::accessDownloads',
                                    'IDF_Precondition::projectMemberOrOwner');
-    public function submit($request, $match)
+    public function create($request, $match)
     {
         $prj = $request->project;
         $title = __('New Download');
@@ -250,12 +251,45 @@ class IDF_Views_Download
                                         array('project' => $prj,
                                               'user' => $request->user));
         }
-        return Pluf_Shortcuts_RenderToResponse('idf/downloads/submit.html',
+        return Pluf_Shortcuts_RenderToResponse('idf/downloads/create.html',
                                                array(
                                                      'auto_labels' => self::autoCompleteArrays($prj),
                                                      'page_title' => $title,
                                                      'form' => $form,
                                                      ),
+                                               $request);
+    }
+
+    /**
+     * Create new downloads from an uploaded archive.
+     */
+    public $createFromArchive_precond = array('IDF_Precondition::accessDownloads',
+                                              'IDF_Precondition::projectMemberOrOwner');
+    public function createFromArchive($request, $match)
+    {
+        $prj = $request->project;
+        $title = __('New Downloads from Archive');
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_UploadArchive(array_merge($request->POST, $request->FILES),
+                                               array('project' => $prj,
+                                                     'user' => $request->user));
+            if ($form->isValid()) {
+                $upload = $form->save();
+                $request->user->setMessage(__('The archive has been uploaded and processed.'));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Download::index',
+                                                array($prj->shortname));
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $form = new IDF_Form_UploadArchive(null,
+                                               array('project' => $prj,
+                                                     'user' => $request->user));
+        }
+        return Pluf_Shortcuts_RenderToResponse('idf/downloads/createFromArchive.html',
+                                               array(
+                                                     'page_title' => $title,
+                                                     'form' => $form,
+                                                    ),
                                                $request);
     }
 

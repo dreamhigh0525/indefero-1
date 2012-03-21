@@ -53,6 +53,13 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                             'widget_attrs' => array('size' => '35'),
                                             ));
 
+        $this->fields['external_project_url'] = new Pluf_Form_Field_Varchar(
+                                array('required' => false,
+                                      'label' => __('External URL'),
+                                      'widget_attrs' => array('size' => '35'),
+                                      'initial' => $conf->getVal('external_project_url'),
+        ));
+
         if ($this->project->getConf()->getVal('scm') == 'mtn') {
             $this->fields['mtn_master_branch'] = new Pluf_Form_Field_Varchar(
                                           array('required' => false,
@@ -63,6 +70,26 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
                                                 ));
         }
 
+        $tags = $this->project->get_tags_list();
+        for ($i=1;$i<7;$i++) {
+            $initial = '';
+            if (isset($tags[$i-1])) {
+                if ($tags[$i-1]->class != 'Other') {
+                    $initial = (string) $tags[$i-1];
+                } else {
+                    $initial = $tags[$i-1]->name;
+                }
+            }
+            $this->fields['label'.$i] = new Pluf_Form_Field_Varchar(
+                                    array('required' => false,
+                                          'label' => __('Labels'),
+                                          'initial' => $initial,
+                                          'widget_attrs' => array(
+                                          'maxlength' => 50,
+                                          'size' => 20,
+                                          ),
+            ));
+        }
         $this->fields['owners'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
                                             'label' => __('Project owners'),
@@ -115,22 +142,52 @@ class IDF_Form_Admin_ProjectUpdate extends Pluf_Form
         return IDF_Form_MembersConf::checkBadLogins($this->cleaned_data['members']);
     }
 
+    public function clean_external_project_url()
+    {
+        return IDF_Form_ProjectConf::checkWebURL($this->cleaned_data['external_project_url']);
+    }
+
     public function save($commit=true)
     {
         if (!$this->isValid()) {
             throw new Exception(__('Cannot save the model from an invalid form.'));
         }
+
+        // Add a tag for each label
+        $tagids = array();
+        for ($i=1;$i<7;$i++) {
+            if (strlen($this->cleaned_data['label'.$i]) > 0) {
+                if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
+                    list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
+                    list($class, $name) = array(trim($class), trim($name));
+                } else {
+                    $class = 'Other';
+                    $name = trim($this->cleaned_data['label'.$i]);
+                }
+                $tag = IDF_Tag::addGlobal($name, $class);
+                $tagids[] = $tag->id;
+            }
+        }
+        $this->project->batchAssoc('IDF_Tag', $tagids);
+
         IDF_Form_MembersConf::updateMemberships($this->project,
                                                 $this->cleaned_data);
         $this->project->membershipsUpdated();
+
         $this->project->name = $this->cleaned_data['name'];
         $this->project->shortdesc = $this->cleaned_data['shortdesc'];
         $this->project->update();
 
-        $keys = array('mtn_master_branch');
+        $conf = $this->project->getConf();
+        $keys = array('mtn_master_branch', 'external_project_url');
         foreach ($keys as $key) {
-            if (!empty($this->cleaned_data[$key])) {
-                $this->project->getConf()->setVal($key, $this->cleaned_data[$key]);
+            if (array_key_exists($key, $this->cleaned_data)) {
+                if (!empty($this->cleaned_data[$key])) {
+                    $conf->setVal($key, $this->cleaned_data[$key]);
+                }
+                else {
+                    $conf->delVal($key);
+                }
             }
         }
     }

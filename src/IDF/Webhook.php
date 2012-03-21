@@ -31,22 +31,28 @@
 class IDF_Webhook
 {
     /**
-     * Perform the POST request given the webhook payload.
+     * Perform the request given the webhook payload.
      *
      * @param array Payload
      * @return bool Success or error
      */
-    public static function postNotification($payload)
+    public static function processNotification($payload)
     {
         $data = json_encode($payload['to_send']);
+        $sign_header = 'Web-Hook-Hmac';
+        // use the old signature header if we're asked for
+        if (Pluf::f('webhook_processing', '') === 'compat') {
+            $sign_header = 'Post-Commit-Hook-Hmac';
+        }
         $sign = hash_hmac('md5', $data, $payload['authkey']);
         $params = array('http' => array(
-                      'method' => 'POST',
+                      // fall-back to POST for old queue items
+                      'method' => empty($payload['method']) ? 'POST' : $payload['method'],
                       'content' => $data,
                       'user_agent' => 'Indefero Hook Sender (http://www.indefero.net)',
-                      'max_redirects' => 0, 
+                      'max_redirects' => 0,
                       'timeout' => 15,
-                      'header'=> 'Post-Commit-Hook-Hmac: '.$sign."\r\n"
+                      'header'=> $sign_header.': '.$sign."\r\n"
                                 .'Content-Type: application/json'."\r\n",
                                         )
                         );
@@ -61,7 +67,7 @@ class IDF_Webhook
         if (!isset($meta['wrapper_data'][0]) or $meta['timed_out']) {
             return false;
         }
-        if (0 === strpos($meta['wrapper_data'][0], 'HTTP/1.1 2') or 
+        if (0 === strpos($meta['wrapper_data'][0], 'HTTP/1.1 2') or
             0 === strpos($meta['wrapper_data'][0], 'HTTP/1.1 3')) {
             return true;
         }
@@ -76,11 +82,11 @@ class IDF_Webhook
     public static function process($sender, &$params)
     {
         $item = $params['item'];
-        if ($item->type != 'new_commit') {
+        if (!in_array($item->type, array('new_commit', 'upload'))) {
             // We do nothing.
             return;
         }
-        if (isset($params['res']['IDF_Webhook::process']) and 
+        if (isset($params['res']['IDF_Webhook::process']) and
             $params['res']['IDF_Webhook::process'] == true) {
             // Already processed.
             return;
@@ -90,7 +96,7 @@ class IDF_Webhook
             return;
         }
         // We have either to retry or to push for the first time.
-        $res = self::postNotification($item->payload);
+        $res = self::processNotification($item->payload);
         if ($res) {
             $params['res']['IDF_Webhook::process'] = true;
         } elseif ($item->trials >= 9) {

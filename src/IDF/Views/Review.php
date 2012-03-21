@@ -91,7 +91,7 @@ class IDF_Views_Review
                 $review = $form->save();
                 $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                                  array($prj->shortname, $review->id));
-                $request->user->setMessage(sprintf(__('The <a href="%s">code review %d</a> has been created.'), $urlr, $review->id));
+                $request->user->setMessage(sprintf(__('The <a href="%1$s">code review %2$d</a> has been created.'), $urlr, $review->id));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index',
                                                 array($prj->shortname));
                 return new Pluf_HTTP_Response_Redirect($url);
@@ -137,7 +137,7 @@ class IDF_Views_Review
         $prj->inOr404($review);
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($prj->shortname, $review->id));
-        $title = Pluf_Template::markSafe(sprintf(__('Review <a href="%s">%d</a>: %s'), $url, $review->id, $review->summary));
+        $title = Pluf_Template::markSafe(sprintf(__('Review <a href="%1$s">%2$d</a>: %3$s'), $url, $review->id, $review->summary));
 
         $patches = $review->get_patches_list();
         $patch = $patches[0];
@@ -157,7 +157,7 @@ class IDF_Views_Review
                 $review = $patch->get_review();
                 $urlr = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                                  array($prj->shortname, $review->id));
-                $request->user->setMessage(sprintf(__('Your <a href="%s">code review %d</a> has been published.'), $urlr, $review->id));
+                $request->user->setMessage(sprintf(__('Your <a href="%1$s">code review %2$d</a> has been published.'), $urlr, $review->id));
                 $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::index',
                                                 array($prj->shortname));
                 $review_comment->notify($request->conf);

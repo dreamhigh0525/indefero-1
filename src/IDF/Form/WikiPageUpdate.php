@@ -27,13 +27,13 @@
  * This add a corresponding revision.
  *
  */
-class IDF_Form_WikiUpdate extends Pluf_Form
+class IDF_Form_WikiPageUpdate extends Pluf_Form
 {
     public $user = null;
     public $project = null;
     public $page = null;
     public $show_full = false;
-    
+
 
     public function initFields($extra=array())
     {
@@ -118,9 +118,9 @@ class IDF_Form_WikiUpdate extends Pluf_Form
         if (preg_match('/[^a-zA-Z0-9\-]/', $title)) {
             throw new Pluf_Form_Invalid(__('The title contains invalid characters.'));
         }
-        $sql = new Pluf_SQL('project=%s AND title=%s', 
+        $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($this->project->id, $title));
-        $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
+        $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() > 0 and $pages[0]->id != $this->page->id) {
             throw new Pluf_Form_Invalid(__('A page with this title already exists.'));
         }
@@ -148,7 +148,7 @@ class IDF_Form_WikiUpdate extends Pluf_Form
             $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
             if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
                 list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)), 
+                list($class, $name) = array(mb_strtolower(trim($class)),
                                             trim($name));
             } else {
                 $class = 'other';
@@ -158,7 +158,7 @@ class IDF_Form_WikiUpdate extends Pluf_Form
             else $count[$class] += 1;
             if (in_array($class, $onemax) and $count[$class] > 1) {
                 if (!isset($this->errors['label'.$i])) $this->errors['label'.$i] = array();
-                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to a page.'), $class);
+                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than one label from the %s class to a page.'), $class);
                 throw new Pluf_Form_Invalid(__('You provided an invalid label.'));
             }
         }
@@ -229,7 +229,7 @@ class IDF_Form_WikiUpdate extends Pluf_Form
         }
         $this->page->update();
         // add the new revision
-        $rev = new IDF_WikiRevision();
+        $rev = new IDF_Wiki_PageRevision();
         $rev->wikipage = $this->page;
         $rev->content = $this->cleaned_data['content'];
         $rev->submitter = $this->user;

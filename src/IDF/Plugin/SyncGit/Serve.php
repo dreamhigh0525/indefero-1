@@ -210,22 +210,23 @@ class IDF_Plugin_SyncGit_Serve
         // Indefero's one.
         $p = realpath(dirname(__FILE__).'/../../../../scripts/git-post-update');
         $p = Pluf::f('idf_plugin_syncgit_post_update', $p);
-        if (!@unlink($fullpath.'/hooks/post-update')) {
+        $post_update_hook = $fullpath.'/hooks/post-update';
+        if (file_exists($post_update_hook) && !@unlink($post_update_hook)) {
             Pluf_Log::warn(array('IDF_Plugin_Git_Serve::initRepository', 
                                  'post-update hook removal error.', 
-                                 $fullpath.'/hooks/post-update'));
+                                 $post_update_hook));
             return;
         }
         $out = array();
         $res = 0;
         exec(sprintf(Pluf::f('idf_exec_cmd_prefix', '').'ln -s %s %s', 
                      escapeshellarg($p), 
-                     escapeshellarg($fullpath.'/hooks/post-update')),
+                     escapeshellarg($post_update_hook)),
              $out, $res);
         if ($res != 0) {
             Pluf_Log::warn(array('IDF_Plugin_Git_Serve::initRepository', 
                                  'post-update hook creation error.', 
-                                 $fullpath.'/hooks/post-update'));
+                                 $post_update_hook));
             return;
         }
         Pluf_Log::debug(array('IDF_Plugin_Git_Serve::initRepository', 

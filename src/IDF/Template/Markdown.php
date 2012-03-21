@@ -55,8 +55,17 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
         $text = IDF_Template_safePregReplace('#\[\[([A-Za-z0-9\-]+)\]\]#im',
 					     array($this, 'callbackWikiPageNoName'),
 					     $text);
+
         $filter = new IDF_Template_MarkdownPrefilter();
-        echo $filter->go(Pluf_Text_MarkDown_parse($text));
+        $text = $filter->go(Pluf_Text_MarkDown_parse($text));
+
+        // Replace [[!ResourceName]] with corresponding HTML for the resource;
+        // we need to do that after the HTML filtering as we'd otherwise be unable to use
+        // certain HTML elements, such as iframes, that are used to display text content
+        // FIXME: no support for escaping yet in place
+        echo IDF_Template_safePregReplace('#\[\[!([A-Za-z0-9\-]+)(?:,\s*([^\]]+))?\]\]#im',
+                                          array($this, 'callbackWikiResource'),
+                                          $text);
     }
 
     function callbackWikiPageNoName($m)
@@ -69,15 +78,99 @@ class IDF_Template_Markdown extends Pluf_Template_Tag
     {
         $sql = new Pluf_SQL('project=%s AND title=%s',
                             array($this->project->id, $m[2]));
-        $pages = Pluf::factory('IDF_WikiPage')->getList(array('filter'=>$sql->gen()));
+        $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
         if ($pages->count() != 1 and $this->request->rights['hasWikiAccess']
             and !$this->request->user->isAnonymous()) {
-            return '<img style="vertical-align: text-bottom;" alt=" " src="'.Pluf::f('url_media').'/idf/img/add.png" /><a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::create', array($this->project->shortname), array('name'=>$m[2])).'" title="'.__('Create this documentation page').'">'.$m[1].'</a>';
+            return '<img style="vertical-align: text-bottom;" alt=" " src="'.Pluf::f('url_media').'/idf/img/add.png" /><a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::createPage', array($this->project->shortname), array('name'=>$m[2])).'" title="'.__('Create this documentation page').'">'.$m[1].'</a>';
         }
         if (!$this->request->rights['hasWikiAccess'] or $pages->count() == 0) {
             return $m[1];
         }
-        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::view', array($this->project->shortname, $pages[0]->title)).'" title="'.Pluf_esc($pages[0]->summary).'">'.$m[1].'</a>';
+        return '<a href="'.Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::viewPage', array($this->project->shortname, $pages[0]->title)).'" title="'.Pluf_esc($pages[0]->summary).'">'.$m[1].'</a>';
+    }
+
+    function callbackWikiResource($m)
+    {
+        @list($match, $resourceName, $opts) = $m;
+
+        if (!$this->request->rights['hasWikiAccess']) {
+            return '<span title="'.__('You are not allowed to access the wiki.').'">'.$match.'</span>';
+        }
+
+        $sql = new Pluf_SQL('project=%s AND title=%s',
+                            array($this->project->id, $resourceName));
+        $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
+
+        if ($resources->count() == 0) {
+            if ($this->request->user->isAnonymous()) {
+                return '<span title="'.__('The wiki resource has not been found.').'">'.$match.'</span>';
+            }
+
+            $url = Pluf_HTTP_URL_urlForView('IDF_Views_Wiki::createResource',
+                                            array($this->project->shortname),
+                                            array('name' => $resourceName));
+            return '<img style="vertical-align: text-bottom;" alt=" " src="'.Pluf::f('url_media').'/idf/img/add.png" />'.
+                   '<a href="'.$url.'" title="'.__('The wiki resource has not been found. Create it!').'">'.$match.'</a>';
+        }
+
+        // by default, render the most recent revision
+        $resourceRevision = $resources[0]->get_current_revision();
+
+        list($urlConf, $urlMatches) = $this->request->view;
+
+        // if we currently look at an existing wiki page, look up its name and find the proper resource (if any)
+        if ($urlConf['model'] == 'IDF_Views_Wiki' && $urlConf['method'] == 'viewPage') {
+            $sql = new Pluf_SQL('project=%s AND title=%s',
+                                array($this->project->id, $urlMatches[2]));
+            $pages = Pluf::factory('IDF_Wiki_Page')->getList(array('filter'=>$sql->gen()));
+            if ($pages->count() == 0) throw new Exception('page not found');
+            $pageRevision = $pages[0]->get_current_revision();
+
+            // if we look at an old version of the page, figure out the resource version back then
+            if (isset($this->request->GET['rev']) and preg_match('/^[0-9]+$/', $this->request->GET['rev'])) {
+                $pageRevision = Pluf_Shortcuts_GetObjectOr404('IDF_Wiki_PageRevision',
+                                                              $this->request->GET['rev']);
+                // this is actually an invariant since we came so far looking at
+                // and rendering the old revision already
+                if ($pageRevision == null) {
+                    throw new Exception('page revision with id '.$this->request->GET['rev'].' not found');
+                }
+            }
+
+            $sql = new Pluf_SQL('wikiresource=%s AND idf_wiki_pagerevision_id=%s',
+                                array($resources[0]->id, $pageRevision->id));
+            $resourceRevision = Pluf::factory('IDF_Wiki_ResourceRevision')->getOne(
+                array('filter' => $sql->gen(), 'view' => 'join_pagerevision'));
+
+            if ($resourceRevision == null) {
+                return '<span title="'.__('This revision of the resource is no longer available.').'">'.$match.'</span>';
+            }
+        }
+
+        $validOpts = array(
+            'align' => '/^(left|right|center)$/',
+            'width' => '/^\d+(%|px|em)?$/',
+            'height' => '/^\d+(%|px|em)?$/',
+            'preview' => '/^yes|no$/',
+            'title' => '/.+/',
+        );
+
+        $parsedOpts = array();
+        // FIXME: no support for escaping yet in place
+        $opts = preg_split('/\s*,\s*/', $opts, -1, PREG_SPLIT_NO_EMPTY);
+        foreach ((array)@$opts as $opt)
+        {
+            list($key, $value) = preg_split('/\s*=\s*/', $opt, 2);
+            if (!array_key_exists($key, $validOpts)) {
+                continue;
+            }
+            if (!preg_match($validOpts[$key], $value)) {
+                continue;
+            }
+            $parsedOpts[$key] = $value;
+        }
+
+        return $resourceRevision->render($parsedOpts);
     }
 
     function callbackEmbeddedDoc($m)

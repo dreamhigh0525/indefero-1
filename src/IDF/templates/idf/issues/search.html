@@ -22,11 +22,11 @@
 <a href="{$open_url}" class="label"><strong>{$tag.class}:</strong>{$tag.name}</a></p>{/blocktrans}
 {else}
 {* yes, this is duplicated from tags-cloud.html, but the code there cannot be easily overridden *}
-<div id="tagscloud" class="smaller"><dl>{foreach $all_tags as $class => $labels}
+<dl class="tagscloud smaller">{foreach $all_tags as $class => $labels}
 <dt class="label">{$class}</dt>
 {foreach $labels as $idx => $label}
 {aurl 'url', 'IDF_Views_Issue::searchLabel', array($project.shortname, $label.id, $status), array('q'=> $query)}
 <dd><a href="{$url}" class="label">{$label.name}{if $idx != count($labels) - 1},{/if}</a></dd>
-{/foreach}{/foreach}</dl></p>
+{/foreach}{/foreach}</dl>
 {/if}
 {/block}

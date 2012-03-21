@@ -1,5 +1,5 @@
 {extends "idf/wiki/base.html"}
-{block docclass}yui-t2{/block}
+{block docclass}yui-t2{assign $inCreatePage = true}{/block}
 {block body}
 
 {if $preview}
@@ -10,7 +10,7 @@
 
 {if $form.errors}
 <div class="px-message-error">
-<p>{trans 'The form contains some errors. Please correct them to update the page.'}</p>
+<p>{trans 'The form contains some errors. Please correct them to create the page.'}</p>
 {if $form.get_top_errors}
 {$form.render_top_errors|unsafe}
 {/if}
@@ -18,7 +18,7 @@
 {/if}
 
 <form method="post" enctype="multipart/form-data" action="." >
-<table class="form" summary="">{if $isOwner or $isMember}
+<table class="form" summary="">
 <tr>
 <th><strong>{$form.f.title.labelTag}:</strong></th>
 <td>{if $form.f.title.errors}{$form.f.title.fieldErrors}{/if}
@@ -32,18 +32,11 @@
 {$form.f.summary|unsafe}<br />
 <span class="helptext">{$form.f.summary.help_text}</span>
 </td>
-</tr>{/if}
+</tr>
 <tr>
 <th><strong>{$form.f.content.labelTag}:</strong></th>
 <td>{if $form.f.content.errors}{$form.f.content.fieldErrors}{/if}
 {$form.f.content|unsafe}
-</td>
-</tr>
-<tr>
-<th><strong>{$form.f.comment.labelTag}:</strong></th>
-<td>{if $form.f.comment.errors}{$form.f.comment.fieldErrors}{/if}
-{$form.f.comment|unsafe}<br />
-<span class="helptext">{$form.f.comment.help_text}</span>
 </td>
 </tr>{if $isOwner or $isMember}
 <tr>
@@ -56,10 +49,7 @@
 </tr>{/if}
 <tr>
 <td>&nbsp;</td>
-<td>{* float left is a fix for Firefox < 3.5 *}
-<span style="float: left;"><input type="submit" value="{trans 'Preview'}" name="preview" /> &nbsp; <input type="submit" value="{trans 'Update Page'}" name="submit" /> | <a href="{url 'IDF_Views_Wiki::view', array($project.shortname, $page.title)}">{trans 'Cancel'}</a></span>{if $isOwner or $isAdmin or $isMember}
-{aurl 'url', 'IDF_Views_Wiki::delete', array($project.shortname, $page.id)}
-<span class="dellink"><a href="{$url}" title="{trans 'Delete this page'}"><img src="{media '/idf/img/trash.png'}" style="vertical-align: text-bottom;" alt="{trans 'Trash'}" /></a> <a href="{$url}" title="{trans 'Delete this page'}">{trans 'Delete this page'}</a></span>{/if}
+<td><input type="submit" value="{trans 'Preview'}" name="preview" /> &nbsp; <input type="submit" value="{trans 'Create Page'}" name="submit" /> | <a href="{url 'IDF_Views_Wiki::listPages', array($project.shortname)}">{trans 'Cancel'}</a>
 </td>
 </tr>
 </table>
@@ -71,5 +61,8 @@
 </div>
 {/block}
 {block javascript}
+<script type="text/javascript">
+document.getElementById('id_title').focus()
+</script>
 {include 'idf/wiki/js-autocomplete.html'}{/block}
 

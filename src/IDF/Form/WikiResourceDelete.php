@@ -27,16 +27,16 @@
  * This is a hard delete of the page and the revisions.
  *
  */
-class IDF_Form_WikiDelete extends Pluf_Form
+class IDF_Form_WikiResourceDelete extends Pluf_Form
 {
-    protected $page = null;
+    protected $resource = null;
 
     public function initFields($extra=array())
     {
-        $this->page = $extra['page'];
+        $this->resource = $extra['resource'];
         $this->fields['confirm'] = new Pluf_Form_Field_Boolean(
                                       array('required' => true,
-                                            'label' => __('Yes, I understand that the page and all its revisions will be deleted.'),
+                                            'label' => __('Yes, I understand that the resource and all its revisions will be deleted.'),
                                             'initial' => '',
                                             ));
     }
@@ -58,7 +58,7 @@ class IDF_Form_WikiDelete extends Pluf_Form
         if (!$this->isValid()) {
             throw new Exception(__('Cannot save the model from an invalid form.'));
         }
-        $this->page->delete();
+        $this->resource->delete();
         return true;
     }
 }

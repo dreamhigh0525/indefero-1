@@ -37,6 +37,12 @@
 </td>
 </tr>
 <tr>
+<th>{$form.f.external_project_url.labelTag}:</th>
+<td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
+{$form.f.external_project_url|unsafe}
+</td>
+</tr>
+<tr>
 <th><strong>{$form.f.scm.labelTag}:</strong></th>
 <td>{if $form.f.scm.errors}{$form.f.scm.fieldErrors}{/if}
 {$form.f.scm|unsafe}
@@ -75,6 +81,17 @@
 </td>
 </tr>
 <tr class="no-template">
+<th>{$form.f.label1.labelTag}:</th>
+<td>
+{if $form.f.label1.errors}{$form.f.label1.fieldErrors}{/if}{$form.f.label1|unsafe}
+{if $form.f.label2.errors}{$form.f.label2.fieldErrors}{/if}{$form.f.label2|unsafe}<br />
+{if $form.f.label3.errors}{$form.f.label3.fieldErrors}{/if}{$form.f.label3|unsafe}
+{if $form.f.label4.errors}{$form.f.label4.fieldErrors}{/if}{$form.f.label4|unsafe}<br />
+{if $form.f.label5.errors}{$form.f.label5.fieldErrors}{/if}{$form.f.label5|unsafe}
+{if $form.f.label6.errors}{$form.f.label6.fieldErrors}{/if}{$form.f.label6|unsafe}
+</td>
+</tr>
+<tr class="no-template">
 <th><strong>{$form.f.owners.labelTag}:</strong></th>
 <td>
 {if $form.f.owners.errors}{$form.f.owners.fieldErrors}{/if}
@@ -103,7 +120,7 @@
 </tr>
 </table>
 </form>
-
+{include 'idf/project/js-autocomplete.html'}{/block}
 {/block}
 
 {block context}
@@ -151,7 +168,7 @@ $(document).ready(function() {
         }
 
     });
-    // Hide if not svn
+    // Hide if not templated
     if ($("#id_template option:selected").val() == "--") {
         $(".no-template").show();
     } else {

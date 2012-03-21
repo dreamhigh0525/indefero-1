@@ -32,20 +32,40 @@ Pluf::loadFunction('Pluf_Shortcuts_GetFormForModel');
 class IDF_Views_Admin
 {
     /**
-     * Home page of the administration.
-     *
-     * It should provide an overview of the forge status.
+     * Start page of the administration.
      */
-    public $home_precond = array('Pluf_Precondition::staffRequired');
-    public function home($request, $match)
+    public $forge_precond = array('Pluf_Precondition::staffRequired');
+    public function forge($request, $match)
     {
         $title = __('Forge Management');
-        return Pluf_Shortcuts_RenderToResponse('idf/gadmin/home.html',
+        $forge = IDF_Forge::instance();
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_Admin_ForgeConf($request->POST);
+            if ($form->isValid()) {
+                $forge->setCustomForgePageEnabled($form->cleaned_data['enabled']);
+                $forge->setCustomForgePageContent($form->cleaned_data['content']);
+                $request->user->setMessage(__('The forge configuration has been saved.'));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Admin::forge');
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $params = array();
+            $params['enabled'] = $forge->isCustomForgePageEnabled();
+            if (($content = $forge->getCustomForgePageContent(false)) !== false) {
+                $params['content'] = $content;
+            }
+            if (count($params) == 0) {
+                $params = null; //Nothing in the db, so new form.
+            }
+            $form = new IDF_Form_Admin_ForgeConf($params);
+        }
+        return Pluf_Shortcuts_RenderToResponse('idf/gadmin/forge/index.html',
                                                array(
-                                                     'page_title' => $title,
-                                                     ),
+                                                   'page_title' => $title,
+                                                   'form' => $form,
+                                                   ),
                                                $request);
-    }
+            }
 
     /**
      * Projects overview.
@@ -82,6 +102,40 @@ class IDF_Views_Admin
     }
 
     /**
+     * Administrate the labels of a project.
+     */
+    public $projectLabels_precond = array('Pluf_Precondition::staffRequired');
+    public function projectLabels($request, $match)
+    {
+        $title = __('Project Labels');
+        $forge = IDF_Forge::instance();
+        if ($request->method == 'POST') {
+            $form = new IDF_Form_Admin_LabelConf($request->POST);
+            if ($form->isValid()) {
+                $forge->setProjectLabels($form->cleaned_data['project_labels']);
+                $request->user->setMessage(__('The label configuration has been saved.'));
+                $url = Pluf_HTTP_URL_urlForView('IDF_Views_Admin::projectLabels');
+                return new Pluf_HTTP_Response_Redirect($url);
+            }
+        } else {
+            $params = array();
+            if (($labels = $forge->getProjectLabels(false)) !== false) {
+                $params['project_labels'] = $labels;
+            }
+            if (count($params) == 0) {
+                $params = null; //Nothing in the db, so new form.
+            }
+            $form = new IDF_Form_Admin_LabelConf($params);
+        }
+        return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/labels.html',
+                                               array(
+                                                   'page_title' => $title,
+                                                   'form' => $form,
+                                                   ),
+                                               $request);
+    }
+
+    /**
      * Edition of a project.
      *
      * One cannot switch from one source backend to another.
@@ -106,12 +160,16 @@ class IDF_Views_Admin
         } else {
             $form = new IDF_Form_Admin_ProjectUpdate(null, $params);
         }
+        $arrays = IDF_Views_Project::autoCompleteArrays();
         return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/update.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'project' => $project,
-                                                     'form' => $form,
-                                                     ),
+                                               array_merge(
+                                                   array(
+                                                         'page_title' => $title,
+                                                         'project' => $project,
+                                                         'form' => $form,
+                                                         ),
+                                                   $arrays
+                                               ),
                                                $request);
     }
 
@@ -139,12 +197,17 @@ class IDF_Views_Admin
             $form = new IDF_Form_Admin_ProjectCreate(null, $extra);
         }
         $base = Pluf::f('url_base').Pluf::f('idf_base').'/p/';
+
+        $arrays = IDF_Views_Project::autoCompleteArrays();
         return Pluf_Shortcuts_RenderToResponse('idf/gadmin/projects/create.html',
-                                               array(
-                                                     'page_title' => $title,
-                                                     'form' => $form,
-                                                     'base_url' => $base,
-                                                     ),
+                                               array_merge(
+                                                   array(
+                                                         'page_title' => $title,
+                                                         'form' => $form,
+                                                         'base_url' => $base,
+                                                         ),
+                                                   $arrays
+                                               ),
                                                $request);
     }
 

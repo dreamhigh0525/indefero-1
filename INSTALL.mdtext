@@ -6,9 +6,15 @@ the installation of InDefero by itself.
 
 ## PHP modules for indefero
 
-Indefero need the GD module for PHP. It's named "php5-gd" in debian.
+Indefero needs additional PHP modules to function correctly, namely
 
-    $ apt-get install php5-gd
+ - gd (for graphic operations)
+ - zip (for upload archive processing)
+
+The package names of these modules might vary between distributions,
+for Debian they are
+
+    $ apt-get install php5-gd php5-zip
 
 ## Recommended Layout of the Files
 

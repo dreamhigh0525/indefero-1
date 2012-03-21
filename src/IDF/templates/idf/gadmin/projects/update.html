@@ -25,6 +25,12 @@
 <span class="helptext">{$form.f.shortdesc.help_text}</span>
 </td>
 </tr>
+<tr>
+<th>{$form.f.external_project_url.labelTag}:</th>
+<td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
+{$form.f.external_project_url|unsafe}
+</td>
+</tr>
 {if $project.getConf().getVal('scm') == 'mtn'}
 <tr class="mtn-form">
 <th><strong>{$form.f.mtn_master_branch.labelTag}:</strong></th>
@@ -34,6 +40,17 @@
 </td>
 </tr>
 {/if}
+<tr>
+<th>{$form.f.label1.labelTag}:</th>
+<td>
+{if $form.f.label1.errors}{$form.f.label1.fieldErrors}{/if}{$form.f.label1|unsafe}
+{if $form.f.label2.errors}{$form.f.label2.fieldErrors}{/if}{$form.f.label2|unsafe}<br />
+{if $form.f.label3.errors}{$form.f.label3.fieldErrors}{/if}{$form.f.label3|unsafe}
+{if $form.f.label4.errors}{$form.f.label4.fieldErrors}{/if}{$form.f.label4|unsafe}<br />
+{if $form.f.label5.errors}{$form.f.label5.fieldErrors}{/if}{$form.f.label5|unsafe}
+{if $form.f.label6.errors}{$form.f.label6.fieldErrors}{/if}{$form.f.label6|unsafe}
+</td>
+</tr>
 <tr>
 <th><strong>{$form.f.owners.labelTag}:</strong></th>
 <td>
@@ -60,7 +77,9 @@
 </tr>
 </table>
 </form>
+{include 'idf/project/js-autocomplete.html'}{/block}
 {/block}
+
 {block context}
 <div class="issue-submit-info">
 {blocktrans}

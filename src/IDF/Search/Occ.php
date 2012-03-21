@@ -22,7 +22,7 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Storage of the occurence of the words.
+ * Storage of the occurrence of the words.
  */
 class IDF_Search_Occ extends Pluf_Model
 {
@@ -30,7 +30,7 @@ class IDF_Search_Occ extends Pluf_Model
 
     function init()
     {
-        $this->_a['verbose'] = __('occurence');
+        $this->_a['verbose'] = __('occurrence');
         $this->_a['table'] = 'idf_search_occs';
         $this->_a['model'] = 'IDF_Search_Occ';
         $this->_a['cols'] = array(
@@ -72,13 +72,13 @@ class IDF_Search_Occ extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Integer',
                                   'blank' => false,
-                                  'verbose' => __('occurences'),
+                                  'verbose' => __('occurrences'),
                                   ),
                             'pondocc' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Float',
                                   'blank' => false,
-                                  'verbose' => __('ponderated occurence'),
+                                  'verbose' => __('ponderated occurrence'),
                                   ),
                             );
         $this->_a['idx'] = array(                           

@@ -41,12 +41,11 @@
 <tr>
 <th>{$form.f.webhook_url.labelTag}:</th>
 <td>{if $form.f.webhook_url.errors}{$form.f.webhook_url.fieldErrors}{/if}
-{$form.f.webhook_url|unsafe}<br>
-
+{$form.f.webhook_url|unsafe}<br />
 </td>
 </tr>
 <tr>
-<th>{trans 'Post-commit authentication key:'}</th>
+<th>{trans 'Web-Hook authentication key:'}</th>
 <td>{$hookkey}
 </td>
 </tr>
@@ -68,26 +67,26 @@
 <br>
 <div class="issue-submit-info">
 
-{blocktrans}<p>The webhook URL setting specifies a URL to which a HTTP POST
-request is sent after each repository commit. If this field is empty,
-notifications are disabled.</p>
+{blocktrans}<p>The webhook URL setting specifies an URL to which a HTTP 
+<strong>{$hook_request_method}</strong> request is sent after each repository
+commit. If this field is empty, notifications are disabled.</p>
 
 <p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for example:</p>
 
 <ul>
-<li>http://domain.com/commit</li>
-<li>http://domain.com/commit?my%20param</li>
+<li><code>http://domain.com/commit</code></li>
+<li><code>http://domain.com/commit?my%20param</code></li>
 </ul>
 
 <p>In addition, the URL may contain the following "%" notation, which
 will be replaced with specific project values for each commit:</p>
 
 <ul>
-<li>%p - project name</li>
-<li>%r - revision number</li>
+<li><code>%p</code> - project name</li>
+<li><code>%r</code> - revision number</li>
 </ul>
 
 <p>For example, committing revision 123 to project 'my-project' with
-post-commit URL http://mydomain.com/%p/%r would send a request to
-http://mydomain.com/my-project/123.</p>{/blocktrans}</div>
+post-commit URL <code>http://mydomain.com/%p/%r</code> would send a request to
+<code>http://mydomain.com/my-project/123</code>.</p>{/blocktrans}</div>
 {/block}

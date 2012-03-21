@@ -1,50 +1,16 @@
 {extends "idf/base-simple.html"}
-{block docclass}yui-t2{/block}
+{block docclass}yui-t7{/block}
 {block tabhome} class="active"{/block}
-{block subtabs}<a href="{url 'IDF_Views::index'}" class="active">{trans 'Projects'}</a>{/block}
+{block subtabs}
+<a href="{url 'IDF_Views::index'}" class="active">{trans 'Home'}</a> |
+<a href="{url 'IDF_Views::listProjects', array('all', 'name')}" class="active">{trans 'Projects'}</a>
+{/block}
 {block body}
-{if $projects.count() == 0}
-<p>{trans 'No projects managed with InDefero were found.'}</p>
-{if $isAdmin}
-{aurl 'url', 'IDF_Views_Admin::projectCreate'}
-<p><a href="{$url}"><img style="vertical-align: text-bottom;" src="{media '/idf/img/add.png'}" alt="+" align="bottom" /></a> <a href="{$url}">{trans 'Create Project'}</a></p>{/if}
-{else}
-{foreach $projects as $p}
-<div class="p-list-img">
-    <a href="{url 'IDF_Views_Project::home', array($p.shortname)}">
-    <img src="{url 'IDF_Views_Project::logo', array($p.shortname)}" alt="{trans 'Project logo'}" />
-    </a>
-    {if $p.private}
-    <div class="p-list-private">
-        <a href="{url 'IDF_Views_Project::home', array($p.shortname)}">
-            <img style="float:right" src="{media '/idf/img/lock.png'}" alt="{trans 'Private project'}" />
-        </a>
-    </div>
-    {/if}
-</div>
-<div class="p-list-prj">
-    <p>
-        <a href="{url 'IDF_Views_Project::home', array($p.shortname)}"><strong>{$p}</strong></a>
-        {if $p.private} - {trans 'Private project'}{/if}
-    </p>
-    <p>{$p.shortdesc}</p>
-</div>
-<div style="clear: both"></div>
-{/foreach}
-{/if}
-{/block}
-{block context}
-<div id="stats" class="issue-submit-info">
-<h3 class="a-c">{trans 'Forge statistics'}</h3>
-<table>
-<tr><td class="right">{trans 'Projects:'}</td><td>{$stats.projects}</td></tr>
-<tr><td class="right">{trans 'Members:'}</td><td>{$stats.members}</td></tr>
-<tr><td class="right">{trans 'Issues:'}</td><td>{$stats.issues}</td></tr>
-<tr><td class="right">{trans 'Commits:'}</td><td>{$stats.commits}</td></tr>
-<tr><td class="right">{trans 'Documentations:'}</td><td>{$stats.docpages}</td></tr>
-<tr><td class="right">{trans 'Downloads:'}</td><td>{$stats.downloads}</td></tr>
-<tr><td class="right">{trans 'Code reviews:'}</td><td>{$stats.reviews}</td></tr>
-</table>
+<div class="forge-page">
+{markdown_forge $content, $request}
 </div>
 {/block}
+
+{block context}{/block}
+
 {block foot}<div id="branding">Powered by <a href="http://www.indefero.net" title="InDefero, bug tracking and more">InDefero</a>,<br />a <a href="http://www.ceondo.com">Céondo Ltd</a> initiative.</div>{/block}

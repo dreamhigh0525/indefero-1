@@ -918,4 +918,82 @@ class IDF_Scm_Git extends IDF_Scm
         }
         return false;
     }
+
+    public function repository($request, $match)
+    {
+        // authenticate: authenticate connection through "extra" password
+        if (isset($_SERVER['HTTP_AUTHORIZATION']) && $_SERVER['HTTP_AUTHORIZATION'] != '')
+            list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':' , base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+
+        if (isset($_SERVER['PHP_AUTH_USER'])) {
+            $sql = new Pluf_SQL('login=%s', array($_SERVER['PHP_AUTH_USER']));
+            $users = Pluf::factory('Pluf_User')->getList(array('filter'=>$sql->gen()));
+            if ((count($users) == 1) && ($users[0]->active)) {
+                $user = $users[0];
+                $realkey = substr(sha1($user->password.Pluf::f('secret_key')), 0, 8);
+                if ($_SERVER['PHP_AUTH_PW'] == $realkey) {
+                    $request->user = $user;
+                }
+            }
+        }
+
+        if (IDF_Precondition::accessSource($request) !== true) {
+            $response = new Pluf_HTTP_Response("");
+            $response->status_code = 401;
+            $response->headers['WWW-Authenticate']='Basic realm="git for '.$this->project.'"';
+            return $response;
+        }
+
+        $path = $match[2];
+ 
+        // update files before delivering them
+        if (($path == 'objects/info/pack') || ($path == 'info/refs')) {
+            $cmd = sprintf(Pluf::f('idf_exec_cmd_prefix', '').
+                       'GIT_DIR=%s '.Pluf::f('git_path', 'git').' update-server-info -f',
+                       escapeshellarg($this->repo));
+            self::shell_exec('IDF_Scm_Git::repository', $cmd);
+        }
+
+        // smart HTTP discovery
+        if (($path == 'info/refs') &&
+          (array_key_exists('service', $request->GET))){
+            $service = $request->GET["service"];
+            switch ($service) {
+            case 'git-upload-pack':
+            case 'git-receive-pack':
+                $content = sprintf('%04x',strlen($service)+15).
+                         '# service='.$service."\n0000";
+                $content .= self::shell_exec('IDF_Scm_Git::repository',
+                         $service.' --stateless-rpc --advertise-refs '.
+                         $this->repo);
+                $response = new Pluf_HTTP_Response($content,
+                         'application/x-'.$service.'-advertisement');
+                return $response;
+            default:
+                throw new Exception('unknown service: '.$service);
+            }
+        }
+
+        switch($path) {
+        // smart HTTP RPC
+        case 'git-upload-pack':
+        case 'git-receive-pack':
+            $response = new Pluf_HTTP_Response_CommandPassThru($path.
+                   ' --stateless-rpc '.$this->repo,
+                   'application/x-'.$path.'-result');
+            $response->addStdin('php://input');
+            return $response;
+
+        // regular file
+        default:
+            // make sure we're inside the repo hierarchy (ie. no break-out)
+            if (is_file($this->repo.'/'.$path) &&
+              strpos(realpath($this->repo.'/'.$path), $this->repo.'/') == 0) {
+                return new Pluf_HTTP_Response_File($this->repo.'/'.$path,
+                       'application/octet-stream');
+            } else {
+                return new Pluf_HTTP_Response_NotFound($request);
+            }
+        }
+    }
 }

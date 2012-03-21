@@ -107,7 +107,7 @@ class IDF_Form_RegisterConfirmation extends Pluf_Form
             throw new Pluf_Form_Invalid($error);
         }
         if ($users[0]->active) {
-            throw new Pluf_Form_Invalid(__('This account has already been confirmed. Maybe should you try to recover your password using the help link.'));
+            throw new Pluf_Form_Invalid(sprintf(__('This account has already been confirmed. Maybe should you try to <a href="%s">recover your password</a>.'), Pluf_HTTP_URL_urlForView('IDF_Views::passwordRecoveryAsk')));
         }
         $this->_user_id = $email_id[1];
         return $this->cleaned_data['key'];

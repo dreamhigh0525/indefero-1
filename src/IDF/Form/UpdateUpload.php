@@ -96,7 +96,7 @@ class IDF_Form_UpdateUpload extends Pluf_Form
             $this->cleaned_data['label'.$i] = trim($this->cleaned_data['label'.$i]);
             if (strpos($this->cleaned_data['label'.$i], ':') !== false) {
                 list($class, $name) = explode(':', $this->cleaned_data['label'.$i], 2);
-                list($class, $name) = array(mb_strtolower(trim($class)), 
+                list($class, $name) = array(mb_strtolower(trim($class)),
                                             trim($name));
             } else {
                 $class = 'other';
@@ -106,7 +106,7 @@ class IDF_Form_UpdateUpload extends Pluf_Form
             else $count[$class] += 1;
             if (in_array($class, $onemax) and $count[$class] > 1) {
                 if (!isset($this->errors['label'.$i])) $this->errors['label'.$i] = array();
-                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than label from the %s class to an issue.'), $class);
+                $this->errors['label'.$i][] = sprintf(__('You cannot provide more than one label from the %s class to an issue.'), $class);
                 throw new Pluf_Form_Invalid(__('You provided an invalid label.'));
             }
         }
@@ -146,6 +146,9 @@ class IDF_Form_UpdateUpload extends Pluf_Form
         $this->upload->modif_dtime = gmdate('Y-m-d H:i:s');
         $this->upload->update();
         $this->upload->batchAssoc('IDF_Tag', $tags);
+
+        // Send the notification
+        $this->upload->notify($this->project->getConf(), false);
         /**
          * [signal]
          *
@@ -166,7 +169,7 @@ class IDF_Form_UpdateUpload extends Pluf_Form
          *
          */
         $params = array('upload' => $this->upload);
-        Pluf_Signal::send('IDF_Upload::update', 
+        Pluf_Signal::send('IDF_Upload::update',
                           'IDF_Form_UpdateUpload', $params);
         return $this->upload;
     }

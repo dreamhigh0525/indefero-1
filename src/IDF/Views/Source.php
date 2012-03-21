@@ -132,6 +132,12 @@ class IDF_Views_Source
                                                $request);
     }
 
+    public function repository($request, $match)
+    {
+        $scm = IDF_Scm::get($request->project);
+        return $scm->repository($request, $match);
+    }
+
     public $treeBase_precond = array('IDF_Precondition::accessSource',
                                      'IDF_Views_Source_Precondition::scmAvailable',
                                      'IDF_Views_Source_Precondition::revisionValid');
@@ -302,7 +308,7 @@ class IDF_Views_Source
             throw new Exception('could not retrieve commit object for '. $commit);
         }
         $title = sprintf(__('%s Commit Details'), (string) $request->project);
-        $page_title = sprintf(__('%s Commit Details - %s'), (string) $request->project, $commit);
+        $page_title = sprintf(__('%1$s Commit Details - %2$s'), (string) $request->project, $commit);
         $rcommit = IDF_Commit::getOrAdd($cobject, $request->project);
         $diff = new IDF_Diff($cobject->diff, $scm->getDiffPathStripLevel());
         $cobject->diff = null;
@@ -506,12 +512,12 @@ function IDF_Views_Source_PrettySizeSimple($size)
 function IDF_Views_Source_ShortenString($string, $length)
 {
     $ellipse = "...";
-    $length = max(strlen($ellipse) + 2, $length);
+    $length = max(mb_strlen($ellipse) + 2, $length);
     $preflen = ceil($length / 10);
 
     if (mb_strlen($string) < $length)
         return $string;
 
-    return substr($string, 0, $preflen).$ellipse.
-           substr($string, -($length - $preflen - mb_strlen($ellipse)));
+    return mb_substr($string, 0, $preflen).$ellipse.
+           mb_substr($string, -($length - $preflen - mb_strlen($ellipse)));
 }

@@ -42,16 +42,16 @@ class IDF_Tag extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
                                   //It is automatically added.
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
                                   'blank' => false,
                                   'verbose' => __('project'),
                                   ),
-                            'class' => 
+                            'class' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',
                                   'blank' => false,
@@ -59,13 +59,13 @@ class IDF_Tag extends Pluf_Model
                                   'verbose' => __('tag class'),
                                   'help_text' => __('The class of the tag.'),
                                   ),
-                            'name' => 
+                            'name' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',
                                   'blank' => false,
                                   'verbose' => __('name'),
                                   ),
-                            'lcname' => 
+                            'lcname' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Varchar',
                                   'blank' => false,
@@ -74,6 +74,18 @@ class IDF_Tag extends Pluf_Model
                                   'help_text' => __('Lower case version of the name for fast searching.'),
                                   ),
                             );
+
+        $table = $this->_con->pfx.'idf_project_idf_tag_assoc';
+        $this->_a['views'] = array(
+            'join_projects' =>
+                array(
+                'join' => 'LEFT JOIN '.$table
+                        .' ON idf_tag_id=id',
+                'select' => $this->getSelect().',COUNT(idf_project_id) as project_count',
+                'group' => 'idf_tag_id',
+                'props' => array('project_count' => 'project_count'),
+                ),
+        );
 
         $this->_a['idx'] =  array(
                                   'lcname_idx' =>
@@ -95,7 +107,7 @@ class IDF_Tag extends Pluf_Model
     }
 
     /**
-     * Add a tag if not already existing.
+     * Add a project-specific tag if not already existing.
      *
      * @param string Name of the tag.
      * @param IDF_Project Project of the tag.
@@ -107,7 +119,7 @@ class IDF_Tag extends Pluf_Model
         $class = trim($class);
         $name = trim($name);
         $gtag = new IDF_Tag();
-        $sql = new Pluf_SQL('class=%s AND lcname=%s AND project=%s', 
+        $sql = new Pluf_SQL('class=%s AND lcname=%s AND project=%s',
                             array($class, mb_strtolower($name), $project->id));
         $tags = $gtag->getList(array('filter' => $sql->gen()));
         if ($tags->count() < 1) {
@@ -116,6 +128,32 @@ class IDF_Tag extends Pluf_Model
             $tag->name = $name;
             $tag->class = $class;
             $tag->project = $project;
+            $tag->create();
+            return $tag;
+        }
+        return $tags[0];
+    }
+
+    /**
+     * Add a global tag if not already existing
+     *
+     * @param string Name of the tag.
+     * @param string Class of the tag (IDF_TAG_DEFAULT_CLASS)
+     * @return IDF_Tag The tag.
+     */
+    public static function addGlobal($name, $class=IDF_TAG_DEFAULT_CLASS)
+    {
+        $class = trim($class);
+        $name = trim($name);
+        $gtag = new IDF_Tag();
+        $sql = new Pluf_SQL('class=%s AND lcname=%s AND project=0',
+                            array($class, mb_strtolower($name)));
+        $tags = $gtag->getList(array('filter' => $sql->gen()));
+        if ($tags->count() < 1) {
+            // create a new tag
+            $tag = new IDF_Tag();
+            $tag->name = $name;
+            $tag->class = $class;
             $tag->create();
             return $tag;
         }

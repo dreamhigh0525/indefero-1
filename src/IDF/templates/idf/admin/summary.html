@@ -25,13 +25,30 @@
 </td>
 </tr>
 <tr>
+<th>{$form.f.external_project_url.labelTag}:</th>
+<td>{if $form.f.external_project_url.errors}{$form.f.external_project_url.fieldErrors}{/if}
+{$form.f.external_project_url|unsafe}
+</td>
+</tr>
+<tr>
 <th><strong>{$form.f.description.labelTag}:</strong></th>
 <td>{if $form.f.description.errors}{$form.f.description.fieldErrors}{/if}
 {$form.f.description|unsafe}
 </td>
 </tr>
 <tr>
-<th><strong>{trans 'Current logo'}:</strong></th>
+<th>{$form.f.label1.labelTag}:</th>
+<td>
+{if $form.f.label1.errors}{$form.f.label1.fieldErrors}{/if}{$form.f.label1|unsafe}
+{if $form.f.label2.errors}{$form.f.label2.fieldErrors}{/if}{$form.f.label2|unsafe}
+{if $form.f.label3.errors}{$form.f.label3.fieldErrors}{/if}{$form.f.label3|unsafe}<br />
+{if $form.f.label4.errors}{$form.f.label4.fieldErrors}{/if}{$form.f.label4|unsafe}
+{if $form.f.label5.errors}{$form.f.label5.fieldErrors}{/if}{$form.f.label5|unsafe}
+{if $form.f.label6.errors}{$form.f.label6.fieldErrors}{/if}{$form.f.label6|unsafe}
+</td>
+</tr>
+<tr>
+<th>{trans 'Current logo'}:</th>
 <td>
 {if $logo}
 <img src="{url 'IDF_Views_Project::logo', array($project.shortname)}" alt="{trans 'Project logo'}" />
@@ -41,14 +58,14 @@
 </td>
 </tr>
 <tr>
-<th><strong>{$form.f.logo.labelTag}:</strong></th>
+<th>{$form.f.logo.labelTag}:</th>
 <td>{if $form.f.logo.errors}{$form.f.logo.fieldErrors}{/if}
 {$form.f.logo|unsafe}
 </td>
 </tr>
 {if $logo}
 <tr>
-<th><strong>{$form.f.logo_remove.labelTag}:</strong></th>
+<th>{$form.f.logo_remove.labelTag}:</th>
 <td>{if $form.f.logo_remove.errors}{$form.f.logo_remove.fieldErrors}{/if}
 {$form.f.logo_remove|unsafe}
 </td>
@@ -60,6 +77,7 @@
 </td>
 </table>
 </form>
+{include 'idf/project/js-autocomplete.html'}{/block}
 {/block}
 
 {block context}

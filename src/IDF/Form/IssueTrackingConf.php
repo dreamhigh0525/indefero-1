@@ -130,7 +130,7 @@ duplicates, is duplicated by';
 
         $this->fields['labels_issue_one_max'] = new Pluf_Form_Field_Varchar(
                                       array('required' => false,
-                                            'label' => __('Each issue may have at most one label with each of these classes'),
+                                            'label' => __('Each issue may have at most one label with each of these classes.'),
                                             'initial' => self::init_one_max,
                                             'widget_attrs' => array('size' => 60),
                                             ));
@@ -139,7 +139,7 @@ duplicates, is duplicated by';
                                       array('required' => true,
                                             'label' => __('Issue relations'),
                                             'initial' => self::init_relations,
-                                            'help_text' => __('You can define bidirectional relations like "is related to" or "blocks, is blocked by".'),
+                                            'help_text' => __('You can define bidirectional relations like "is related to" or "blocks, is blocked by". For standard relations pre-configured translations exist, new relations should however be defined in a language that is understood by all project members.'),
                                             'widget_attrs' => array('rows' => 7,
                                                                     'cols' => 75),
                                             'widget' => 'Pluf_Form_Widget_TextareaInput',
