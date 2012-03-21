@@ -2,6 +2,14 @@
 
 {block docclass}yui-t2{assign $inSummaryIssues=true}{/block}
 
+{block context}
+<p><a>
+<p><a href="{url 'IDF_Views_Issue::index', array($project.shortname)}">{blocktrans}View all open issues.{/blocktrans}</a></p>
+{if !$user.isAnonymous()}
+    <p><a href="{url 'IDF_Views_Issue::create', array($project.shortname)}">{blocktrans}Create an issue.{/blocktrans}</a></p>
+{/if}
+{/block}
+
 {block body}
 {if $trackerEmpty}
     {aurl 'create_url', 'IDF_Views_Issue::create', array($project.shortname)}

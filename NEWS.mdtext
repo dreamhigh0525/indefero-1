@@ -53,6 +53,8 @@ or newer to properly run this version of Indefero!
 
 ## Bugfixes
 
+- Ensure that IDF does not break UTF-8 encoded strings when
+  shortening them for view rendering (issue 785)
 - Indefero no longer confuses a non-owner of an issue with a notification that
   a particular ticket has been opened and assigned to him (fixes issue 562)
 

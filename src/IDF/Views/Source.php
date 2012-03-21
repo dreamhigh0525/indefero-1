@@ -512,12 +512,12 @@ function IDF_Views_Source_PrettySizeSimple($size)
 function IDF_Views_Source_ShortenString($string, $length)
 {
     $ellipse = "...";
-    $length = max(strlen($ellipse) + 2, $length);
+    $length = max(mb_strlen($ellipse) + 2, $length);
     $preflen = ceil($length / 10);
 
     if (mb_strlen($string) < $length)
         return $string;
 
-    return substr($string, 0, $preflen).$ellipse.
-           substr($string, -($length - $preflen - mb_strlen($ellipse)));
+    return mb_substr($string, 0, $preflen).$ellipse.
+           mb_substr($string, -($length - $preflen - mb_strlen($ellipse)));
 }
