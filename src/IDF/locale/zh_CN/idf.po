@@ -1,38 +1,42 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # William MARTIN <wysman@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
-"POT-Creation-Date: 2011-10-31 01:11+0100\n"
+"POT-Creation-Date: 2012-03-22 01:16+0100\n"
 "PO-Revision-Date: 2011-10-31 00:19+0000\n"
 "Last-Translator: tommyd <me@thomaskeller.biz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: IDF/Commit.php:55 IDF/Conf.php:54 IDF/Issue.php:52 IDF/Review.php:65
-#: IDF/Search/Occ.php:69 IDF/Tag.php:52 IDF/Upload.php:49 IDF/WikiPage.php:54
+#: IDF/Commit.php:55 IDF/Conf.php:54 IDF/Issue.php:52
+#: IDF/ProjectActivity.php:49 IDF/Review.php:65 IDF/Search/Occ.php:69
+#: IDF/Tag.php:52 IDF/Upload.php:49 IDF/Wiki/Page.php:54
+#: IDF/Wiki/Resource.php:56
 msgid "project"
 msgstr "项目"
 
 #: IDF/Commit.php:63 IDF/Issue.php:67 IDF/IssueComment.php:65
 #: IDF/IssueFile.php:57 IDF/IssueRelation.php:69 IDF/Review/Comment.php:69
-#: IDF/Review.php:80 IDF/Upload.php:91 IDF/WikiPage.php:78
-#: IDF/WikiRevision.php:79
+#: IDF/Review.php:80 IDF/Upload.php:91 IDF/Wiki/Page.php:78
+#: IDF/Wiki/PageRevision.php:79 IDF/Wiki/Resource.php:88
+#: IDF/Wiki/ResourceRevision.php:86
 msgid "submitter"
 msgstr "上传者"
 
 #: IDF/Commit.php:87 IDF/Issue.php:60 IDF/Review/Patch.php:60
-#: IDF/Review.php:73 IDF/Upload.php:57 IDF/WikiPage.php:70
-#: IDF/WikiRevision.php:65
+#: IDF/Review.php:73 IDF/Upload.php:57 IDF/Wiki/Page.php:70
+#: IDF/Wiki/PageRevision.php:65 IDF/Wiki/Resource.php:80
+#: IDF/Wiki/ResourceRevision.php:63
 msgid "summary"
 msgstr "摘要"
 
@@ -43,25 +47,26 @@ msgstr "修改日志"
 #: IDF/Commit.php:100 IDF/Issue.php:105 IDF/IssueComment.php:79
 #: IDF/IssueFile.php:96 IDF/IssueRelation.php:75 IDF/Review/Comment.php:90
 #: IDF/Review/FileComment.php:75 IDF/Review/Patch.php:87 IDF/Review.php:108
-#: IDF/Upload.php:112 IDF/WikiPage.php:100 IDF/WikiRevision.php:92
+#: IDF/Upload.php:112 IDF/Wiki/Page.php:100 IDF/Wiki/PageRevision.php:92
+#: IDF/Wiki/Resource.php:95 IDF/Wiki/ResourceRevision.php:101
 msgid "creation date"
 msgstr "创建日期"
 
 #: IDF/Commit.php:238
 #, php-format
-msgid "Commit&nbsp;%s, by %s"
+msgid "Commit %1$s, by %2$s"
 msgstr ""
 
-#: IDF/Commit.php:329
+#: IDF/Commit.php:337
 #, php-format
-msgid "New Commit %s - %s (%s)"
+msgid "New Commit %1$s - %2$s (%3$s)"
 msgstr ""
 
 #: IDF/Conf.php:61 IDF/Gconf.php:73
 msgid "key"
 msgstr "键"
 
-#: IDF/Conf.php:67 IDF/Gconf.php:79
+#: IDF/Conf.php:67 IDF/Gconf.php:79 IDF/ProjectActivity.php:62
 msgid "value"
 msgstr "值"
 
@@ -81,33 +86,57 @@ msgstr "用户"
 msgid "email"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:38 IDF/Views/Project.php:587
+#: IDF/Form/Admin/ForgeConf.php:34
+msgid "Custom forge page enabled"
+msgstr ""
+
+#: IDF/Form/Admin/ForgeConf.php:39 IDF/Form/WikiPageCreate.php:80
+#: IDF/Form/WikiPageUpdate.php:72
+msgid "Content"
+msgstr "内容"
+
+#: IDF/Form/Admin/LabelConf.php:40
+#, fuzzy
+msgid "Predefined project labels"
+msgstr "预定义问题标签"
+
+#: IDF/Form/Admin/LabelConf.php:55
+#, php-format
+msgid ""
+"The label \"%s\" is invalid: A label must only consist of alphanumeric "
+"characters and dashes, and can optionally contain a \":\" with a group "
+"prefix."
+msgstr ""
+
+#: IDF/Form/Admin/ProjectCreate.php:38 IDF/Views/Project.php:600
 msgid "git"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:39 IDF/Views/Project.php:588
+#: IDF/Form/Admin/ProjectCreate.php:39 IDF/Views/Project.php:601
 msgid "Subversion"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:40 IDF/Views/Project.php:589
+#: IDF/Form/Admin/ProjectCreate.php:40 IDF/Views/Project.php:602
 msgid "mercurial"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:41 IDF/Views/Project.php:590
+#: IDF/Form/Admin/ProjectCreate.php:41 IDF/Views/Project.php:603
 msgid "monotone"
 msgstr ""
 
 #: IDF/Form/Admin/ProjectCreate.php:49 IDF/Form/Admin/ProjectUpdate.php:44
-#: IDF/Form/ProjectConf.php:38 IDF/Views/Admin.php:66 IDF/Views/Admin.php:210
+#: IDF/Form/ProjectConf.php:39 IDF/Views/Admin.php:86 IDF/Views/Admin.php:273
 msgid "Name"
 msgstr "名字"
 
-#: IDF/Form/Admin/ProjectCreate.php:55 IDF/Form/TabsConf.php:77
+#: IDF/Form/Admin/ProjectCreate.php:55 IDF/Form/TabsConf.php:101
 #: IDF/gettexttemplates/idf/base-full.html.php:5
+#: IDF/gettexttemplates/idf/base-full.html~.php:5
 #: IDF/gettexttemplates/idf/base.html.php:5
-#: IDF/gettexttemplates/idf/index.html.php:7
-#: IDF/gettexttemplates/idf/index.html.php:8
-#: IDF/gettexttemplates/idf/main-menu.html.php:8
+#: IDF/gettexttemplates/idf/base.html~.php:5
+#: IDF/gettexttemplates/idf/main-menu.html.php:9
+#: IDF/gettexttemplates/idf/project-list.html.php:5
+#: IDF/gettexttemplates/idf/project-list.html.php:7
 msgid "Private project"
 msgstr "私有项目"
 
@@ -130,105 +159,122 @@ msgstr ""
 msgid "A one line description of the project."
 msgstr "项目简单描述"
 
-#: IDF/Form/Admin/ProjectCreate.php:77
+#: IDF/Form/Admin/ProjectCreate.php:77 IDF/Form/Admin/ProjectUpdate.php:58
+#: IDF/Form/ProjectConf.php:56
+msgid "External URL"
+msgstr ""
+
+#: IDF/Form/Admin/ProjectCreate.php:84
 msgid "Repository type"
 msgstr "仓库类型"
 
-#: IDF/Form/Admin/ProjectCreate.php:85
+#: IDF/Form/Admin/ProjectCreate.php:92
 msgid "Remote Subversion repository"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:92 IDF/Form/SourceConf.php:40
+#: IDF/Form/Admin/ProjectCreate.php:99 IDF/Form/SourceConf.php:40
 msgid "Repository username"
 msgstr "仓库用户名称"
 
-#: IDF/Form/Admin/ProjectCreate.php:99 IDF/Form/SourceConf.php:47
+#: IDF/Form/Admin/ProjectCreate.php:106 IDF/Form/SourceConf.php:47
 msgid "Repository password"
 msgstr "仓库用户密码"
 
-#: IDF/Form/Admin/ProjectCreate.php:106 IDF/Form/Admin/ProjectUpdate.php:59
+#: IDF/Form/Admin/ProjectCreate.php:113 IDF/Form/Admin/ProjectUpdate.php:66
 msgid "Master branch"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:109 IDF/Form/Admin/ProjectUpdate.php:62
+#: IDF/Form/Admin/ProjectCreate.php:116 IDF/Form/Admin/ProjectUpdate.php:69
 msgid ""
 "This should be a world-wide unique identifier for your project. A reverse "
 "DNS notation like \"com.my-domain.my-project\" is a good idea."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:114 IDF/Form/Admin/ProjectUpdate.php:68
+#: IDF/Form/Admin/ProjectCreate.php:121 IDF/Form/Admin/ProjectUpdate.php:95
 #: IDF/Form/MembersConf.php:46 IDF/Form/TabsConf.php:53
+#: IDF/Form/TabsConf.php:72
 msgid "Project owners"
 msgstr "项目所有者"
 
-#: IDF/Form/Admin/ProjectCreate.php:123 IDF/Form/Admin/ProjectUpdate.php:76
+#: IDF/Form/Admin/ProjectCreate.php:130 IDF/Form/Admin/ProjectUpdate.php:103
 #: IDF/Form/MembersConf.php:54 IDF/Form/TabsConf.php:52
+#: IDF/Form/TabsConf.php:78
 msgid "Project members"
 msgstr "项目成员"
 
-#: IDF/Form/Admin/ProjectCreate.php:136
+#: IDF/Form/Admin/ProjectCreate.php:140 IDF/Form/Admin/ProjectUpdate.php:85
+#: IDF/Form/IssueCreate.php:168 IDF/Form/IssueUpdate.php:164
+#: IDF/Form/ProjectConf.php:73 IDF/Form/UpdateUpload.php:71
+#: IDF/Form/Upload.php:70 IDF/Form/WikiPageCreate.php:93
+#: IDF/Form/WikiPageUpdate.php:104
+msgid "Labels"
+msgstr "标签"
+
+#: IDF/Form/Admin/ProjectCreate.php:155
 msgid "Project template"
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:138
+#: IDF/Form/Admin/ProjectCreate.php:157
 msgid ""
 "Use the given project to initialize the new project. Access rights and "
 "general configuration will be taken from the template project."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:185
+#: IDF/Form/Admin/ProjectCreate.php:204
 msgid ""
 "Only a remote repository available through HTTP or HTTPS is allowed. For "
 "example \"http://somewhere.com/svn/trunk\"."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:201
+#: IDF/Form/Admin/ProjectCreate.php:220 IDF/Form/Admin/ProjectUpdate.php:117
 msgid ""
 "The master branch is empty or contains illegal characters, please use only "
-"letters, digits, dashs and dots as separators."
+"letters, digits, dashes and dots as separators."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:211 IDF/Form/Admin/ProjectUpdate.php:101
+#: IDF/Form/Admin/ProjectCreate.php:230 IDF/Form/Admin/ProjectUpdate.php:128
 msgid "This master branch is already used. Please select another one."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:222
+#: IDF/Form/Admin/ProjectCreate.php:241
 msgid ""
 "This shortname contains illegal characters, please use only letters, digits "
 "and dash (-)."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:225
+#: IDF/Form/Admin/ProjectCreate.php:244
 msgid "The shortname cannot start with the dash (-) character."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:228
+#: IDF/Form/Admin/ProjectCreate.php:247
 msgid "The shortname cannot end with the dash (-) character."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:233
+#: IDF/Form/Admin/ProjectCreate.php:252
 msgid "This shortname is already used. Please select another one."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:279 IDF/Form/Admin/ProjectDelete.php:78
-#: IDF/Form/Admin/ProjectUpdate.php:121 IDF/Form/Admin/UserCreate.php:106
+#: IDF/Form/Admin/ProjectCreate.php:303 IDF/Form/Admin/ProjectDelete.php:78
+#: IDF/Form/Admin/ProjectUpdate.php:153 IDF/Form/Admin/UserCreate.php:106
 #: IDF/Form/Admin/UserUpdate.php:191 IDF/Form/IssueCreate.php:338
 #: IDF/Form/IssueUpdate.php:329 IDF/Form/MembersConf.php:64
 #: IDF/Form/Password.php:76 IDF/Form/Register.php:112
 #: IDF/Form/ReviewCreate.php:187 IDF/Form/ReviewFileComment.php:143
-#: IDF/Form/TabsConf.php:98 IDF/Form/UpdateUpload.php:126
-#: IDF/Form/Upload.php:148 IDF/Form/UserAccount.php:216
-#: IDF/Form/UserChangeEmail.php:80 IDF/Form/WikiCreate.php:167
-#: IDF/Form/WikiDelete.php:59 IDF/Form/WikiUpdate.php:178
+#: IDF/Form/TabsConf.php:122 IDF/Form/UpdateUpload.php:126
+#: IDF/Form/Upload.php:149 IDF/Form/UploadArchive.php:137
+#: IDF/Form/UserAccount.php:216 IDF/Form/UserChangeEmail.php:80
+#: IDF/Form/WikiPageCreate.php:167 IDF/Form/WikiPageDelete.php:59
+#: IDF/Form/WikiPageUpdate.php:178 IDF/Form/WikiResourceCreate.php:123
+#: IDF/Form/WikiResourceDelete.php:59 IDF/Form/WikiResourceUpdate.php:124
 msgid "Cannot save the model from an invalid form."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectCreate.php:295
+#: IDF/Form/Admin/ProjectCreate.php:341
 msgid ""
 "Click on the Project Management tab to set the description of your project."
 msgstr "在项目管理里管理项目描述"
 
-#: IDF/Form/Admin/ProjectCreate.php:363
+#: IDF/Form/Admin/ProjectCreate.php:426
 msgid "This project is not available."
 msgstr ""
 
@@ -250,12 +296,6 @@ msgstr ""
 msgid "Sorry, you really need to backup your data before deletion."
 msgstr ""
 
-#: IDF/Form/Admin/ProjectUpdate.php:90
-msgid ""
-"The master branch is empty or contains illegal characters, please use only "
-"letters, digits, dashes and dots as separators."
-msgstr ""
-
 #: IDF/Form/Admin/UserCreate.php:37 IDF/Form/Admin/UserUpdate.php:38
 #: IDF/Form/RegisterConfirmation.php:50 IDF/Form/UserAccount.php:40
 msgid "First name"
@@ -272,8 +312,8 @@ msgstr ""
 
 #: IDF/Form/Admin/UserCreate.php:60
 msgid ""
-"The login must be between 3 and 15 characters long and contains only letters"
-" and digits."
+"The login must be between 3 and 15 characters long and contains only letters "
+"and digits."
 msgstr "账号必须是3至15位的字母或数字组成的字符串"
 
 #: IDF/Form/Admin/UserCreate.php:69 IDF/Form/Admin/UserUpdate.php:57
@@ -339,10 +379,11 @@ msgid "Confirm password"
 msgstr "确认密码"
 
 #: IDF/Form/Admin/UserUpdate.php:100 IDF/Form/IssueCreate.php:66
-#: IDF/Form/ProjectConf.php:47 IDF/Form/ReviewCreate.php:54
+#: IDF/Form/ProjectConf.php:48 IDF/Form/ReviewCreate.php:54
 #: IDF/Form/UpdateUpload.php:51 IDF/Form/Upload.php:49
-#: IDF/Form/UserAccount.php:101 IDF/Form/WikiCreate.php:70
-#: IDF/Form/WikiUpdate.php:60
+#: IDF/Form/UserAccount.php:101 IDF/Form/WikiPageCreate.php:70
+#: IDF/Form/WikiPageUpdate.php:60 IDF/Form/WikiResourceCreate.php:54
+#: IDF/Form/WikiResourceUpdate.php:46 IDF/Views/Wiki.php:102
 msgid "Description"
 msgstr "描述"
 
@@ -376,15 +417,15 @@ msgstr ""
 msgid "Tick this to delete the custom avatar."
 msgstr ""
 
-#: IDF/Form/Admin/UserUpdate.php:161 IDF/Views/Admin.php:211
+#: IDF/Form/Admin/UserUpdate.php:161 IDF/Views/Admin.php:274
 msgid "Staff"
 msgstr "工作人员"
 
 #: IDF/Form/Admin/UserUpdate.php:164
-msgid "If you give staff rights to a user, you really need to trust them."
+msgid "If you give staff rights to a user, you really need to trust him."
 msgstr ""
 
-#: IDF/Form/Admin/UserUpdate.php:172 IDF/Views/Admin.php:213
+#: IDF/Form/Admin/UserUpdate.php:172 IDF/Views/Admin.php:276
 msgid "Active"
 msgstr "激活"
 
@@ -419,11 +460,11 @@ msgstr ""
 #: IDF/Form/ReviewCreate.php:45 IDF/Form/ReviewFileComment.php:73
 #: IDF/Form/UpdateUpload.php:42 IDF/Form/Upload.php:40
 #: IDF/gettexttemplates/idf/issues/base.html.php:3 IDF/Views/Download.php:65
-#: IDF/Views/Download.php:313 IDF/Views/Issue.php:62 IDF/Views/Issue.php:218
-#: IDF/Views/Issue.php:299 IDF/Views/Issue.php:388 IDF/Views/Issue.php:540
-#: IDF/Views/Issue.php:763 IDF/Views/Issue.php:822 IDF/Views/Review.php:58
-#: IDF/Views/User.php:83 IDF/Views/Wiki.php:62 IDF/Views/Wiki.php:107
-#: IDF/Views/Wiki.php:148
+#: IDF/Views/Download.php:347 IDF/Views/Issue.php:62 IDF/Views/Issue.php:221
+#: IDF/Views/Issue.php:302 IDF/Views/Issue.php:391 IDF/Views/Issue.php:543
+#: IDF/Views/Issue.php:766 IDF/Views/Issue.php:825 IDF/Views/Review.php:58
+#: IDF/Views/User.php:83 IDF/Views/Wiki.php:62 IDF/Views/Wiki.php:145
+#: IDF/Views/Wiki.php:186
 msgid "Summary"
 msgstr "摘要"
 
@@ -438,9 +479,9 @@ msgstr "添加附件"
 
 #: IDF/Form/IssueCreate.php:99 IDF/Form/IssueUpdate.php:89
 #: IDF/Form/ReviewCreate.php:103 IDF/Form/ReviewFileComment.php:83
-#: IDF/Views/Issue.php:63 IDF/Views/Issue.php:219 IDF/Views/Issue.php:301
-#: IDF/Views/Issue.php:389 IDF/Views/Issue.php:541 IDF/Views/Issue.php:764
-#: IDF/Views/Issue.php:823 IDF/Views/Review.php:59 IDF/Views/User.php:84
+#: IDF/Views/Issue.php:63 IDF/Views/Issue.php:222 IDF/Views/Issue.php:304
+#: IDF/Views/Issue.php:392 IDF/Views/Issue.php:544 IDF/Views/Issue.php:767
+#: IDF/Views/Issue.php:826 IDF/Views/Review.php:59 IDF/Views/User.php:84
 msgid "Status"
 msgstr "状态"
 
@@ -453,26 +494,19 @@ msgstr "所有者"
 msgid "This issue"
 msgstr ""
 
-#: IDF/Form/IssueCreate.php:168 IDF/Form/IssueUpdate.php:164
-#: IDF/Form/UpdateUpload.php:71 IDF/Form/Upload.php:70
-#: IDF/Form/WikiCreate.php:93 IDF/Form/WikiUpdate.php:104
-msgid "Labels"
-msgstr "标签"
-
 #: IDF/Form/IssueCreate.php:210
 msgid "You cannot add a label with the \"Status\" prefix to an issue."
 msgstr ""
 
 #: IDF/Form/IssueCreate.php:211 IDF/Form/IssueCreate.php:218
-#: IDF/Form/UpdateUpload.php:110 IDF/Form/Upload.php:120
-#: IDF/Form/WikiCreate.php:151 IDF/Form/WikiUpdate.php:162
+#: IDF/Form/UpdateUpload.php:110 IDF/Form/Upload.php:121
+#: IDF/Form/WikiPageCreate.php:151 IDF/Form/WikiPageUpdate.php:162
 msgid "You provided an invalid label."
 msgstr ""
 
 #: IDF/Form/IssueCreate.php:217 IDF/Form/UpdateUpload.php:109
-#: IDF/Form/Upload.php:119
 #, php-format
-msgid "You cannot provide more than label from the %s class to an issue."
+msgid "You cannot provide more than one label from the %s class to an issue."
 msgstr ""
 
 #: IDF/Form/IssueCreate.php:228 IDF/Form/IssueUpdate.php:194
@@ -541,7 +575,8 @@ msgid ""
 msgstr ""
 
 #: IDF/Form/IssueTrackingConf.php:133
-msgid "Each issue may have at most one label with each of these classes"
+#, fuzzy
+msgid "Each issue may have at most one label with each of these classes."
 msgstr "每个问题必须包含的标签"
 
 #: IDF/Form/IssueTrackingConf.php:140
@@ -551,11 +586,13 @@ msgstr ""
 #: IDF/Form/IssueTrackingConf.php:142
 msgid ""
 "You can define bidirectional relations like \"is related to\" or \"blocks, "
-"is blocked by\"."
+"is blocked by\". For standard relations pre-configured translations exist, "
+"new relations should however be defined in a language that is understood by "
+"all project members."
 msgstr ""
 
 #: IDF/Form/IssueUpdate.php:56 IDF/Form/ReviewFileComment.php:45
-#: IDF/Form/WikiUpdate.php:82
+#: IDF/Form/WikiPageUpdate.php:82 IDF/Form/WikiResourceUpdate.php:66
 msgid "Comment"
 msgstr "评论"
 
@@ -594,8 +631,8 @@ msgstr ""
 
 #: IDF/Form/PasswordInputKey.php:50 IDF/Form/PasswordReset.php:89
 msgid ""
-"We are sorry but this validation key is not valid. Maybe you should directly"
-" copy/paste it from your validation email."
+"We are sorry but this validation key is not valid. Maybe you should directly "
+"copy/paste it from your validation email."
 msgstr ""
 
 #: IDF/Form/PasswordInputKey.php:61 IDF/Form/PasswordReset.php:100
@@ -636,32 +673,36 @@ msgid ""
 "activate it."
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:42
+#: IDF/Form/ProjectConf.php:43
 msgid "Short Description"
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:58
+#: IDF/Form/ProjectConf.php:85
 msgid "The \"upload_path\" configuration variable was not set."
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:63
+#: IDF/Form/ProjectConf.php:90
 msgid "Update the logo"
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:65
+#: IDF/Form/ProjectConf.php:92
 msgid "The logo must be a picture with a size of 32 by 32."
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:75
+#: IDF/Form/ProjectConf.php:103
 msgid "Remove the current logo"
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:111
+#: IDF/Form/ProjectConf.php:139
 msgid "Could not determine the size of the uploaded picture."
 msgstr ""
 
-#: IDF/Form/ProjectConf.php:115
+#: IDF/Form/ProjectConf.php:143
 msgid "The picture must have a size of 32 by 32."
+msgstr ""
+
+#: IDF/Form/ProjectConf.php:164
+msgid "The entered URL is invalid. Only http and https URLs are allowed."
 msgstr ""
 
 #: IDF/Form/Register.php:41
@@ -674,7 +715,7 @@ msgid ""
 "and digits."
 msgstr ""
 
-#: IDF/Form/Register.php:53
+#: IDF/Form/Register.php:53 IDF/Form/UserAccount.php:59
 msgid "Your email"
 msgstr "你的Email"
 
@@ -688,15 +729,14 @@ msgstr "同意注册协议"
 
 #: IDF/Form/Register.php:88
 msgid ""
-"We know, this is boring, but you need to agree with the terms and "
-"conditions."
+"We know, this is boring, but you need to agree with the terms and conditions."
 msgstr ""
 
 #: IDF/Form/Register.php:97
 #, php-format
 msgid ""
-"The email \"%s\" is already used. If you need to, click on the help link to "
-"recover your password."
+"The email \"%1$s\" is already used. If you need to, you can <a href=\"%2$s"
+"\">recover your password</a>."
 msgstr ""
 
 #: IDF/Form/Register.php:148
@@ -720,9 +760,10 @@ msgid ""
 msgstr ""
 
 #: IDF/Form/RegisterConfirmation.php:110
+#, php-format
 msgid ""
-"This account has already been confirmed. Maybe should you try to recover "
-"your password using the help link."
+"This account has already been confirmed. Maybe should you try to <a href=\"%s"
+"\">recover your password</a>."
 msgstr ""
 
 #: IDF/Form/ReviewCreate.php:74
@@ -765,43 +806,48 @@ msgstr ""
 msgid "This field is required."
 msgstr ""
 
-#: IDF/Form/SourceConf.php:56
+#: IDF/Form/SourceConf.php:54 IDF/Form/UploadConf.php:70
 msgid "Webhook URL"
 msgstr ""
 
-#: IDF/Form/SourceConf.php:58
-#, php-format
-msgid "Learn more about the <a href=\"%s\">post-commit web hooks</a>."
-msgstr ""
-
 #: IDF/Form/TabsConf.php:38 IDF/gettexttemplates/idf/admin/base.html.php:4
-#: IDF/gettexttemplates/idf/base-full.html.php:7
-#: IDF/gettexttemplates/idf/base.html.php:7
+#: IDF/gettexttemplates/idf/base-full.html.php:8
+#: IDF/gettexttemplates/idf/base-full.html~.php:7
+#: IDF/gettexttemplates/idf/base.html.php:8
+#: IDF/gettexttemplates/idf/base.html~.php:7
 #: IDF/gettexttemplates/idf/downloads/base.html.php:3
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:14
 #: IDF/Views/Project.php:97
 msgid "Downloads"
 msgstr "下载列表"
 
-#: IDF/Form/TabsConf.php:39 IDF/gettexttemplates/idf/base-full.html.php:11
-#: IDF/gettexttemplates/idf/base.html.php:11
+#: IDF/Form/TabsConf.php:39 IDF/gettexttemplates/idf/base-full.html.php:12
+#: IDF/gettexttemplates/idf/base-full.html~.php:11
+#: IDF/gettexttemplates/idf/base.html.php:12
+#: IDF/gettexttemplates/idf/base.html~.php:11
 msgid "Code Review"
 msgstr "代码审核"
 
 #: IDF/Form/TabsConf.php:40 IDF/gettexttemplates/idf/admin/base.html.php:5
-#: IDF/gettexttemplates/idf/base-full.html.php:8
-#: IDF/gettexttemplates/idf/base.html.php:8
+#: IDF/gettexttemplates/idf/base-full.html.php:9
+#: IDF/gettexttemplates/idf/base-full.html~.php:8
+#: IDF/gettexttemplates/idf/base.html.php:9
+#: IDF/gettexttemplates/idf/base.html~.php:8
 msgid "Documentation"
 msgstr "文档"
 
 #: IDF/Form/TabsConf.php:41 IDF/gettexttemplates/idf/admin/base.html.php:7
-#: IDF/gettexttemplates/idf/base-full.html.php:10
-#: IDF/gettexttemplates/idf/base.html.php:10
+#: IDF/gettexttemplates/idf/base-full.html.php:11
+#: IDF/gettexttemplates/idf/base-full.html~.php:10
+#: IDF/gettexttemplates/idf/base.html.php:11
+#: IDF/gettexttemplates/idf/base.html~.php:10
 msgid "Source"
 msgstr "源代码"
 
-#: IDF/Form/TabsConf.php:42 IDF/gettexttemplates/idf/base-full.html.php:9
-#: IDF/gettexttemplates/idf/base.html.php:9
+#: IDF/Form/TabsConf.php:42 IDF/gettexttemplates/idf/base-full.html.php:10
+#: IDF/gettexttemplates/idf/base-full.html~.php:9
+#: IDF/gettexttemplates/idf/base.html.php:10
+#: IDF/gettexttemplates/idf/base.html~.php:9
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:17
 msgid "Issues"
 msgstr "问题跟踪"
@@ -818,20 +864,104 @@ msgstr "登录用户"
 msgid "Closed"
 msgstr "已关闭"
 
-#: IDF/Form/TabsConf.php:83
+#: IDF/Form/TabsConf.php:84
+#, fuzzy
+msgid "Others"
+msgstr "其它"
+
+#: IDF/Form/TabsConf.php:107
 msgid "Extra authorized users"
 msgstr "允许访问用户(客户列表)"
 
-#: IDF/Form/Upload.php:59 IDF/gettexttemplates/idf/source/git/tree.html.php:6
+#: IDF/Form/Upload.php:59 IDF/Form/WikiResourceCreate.php:65
+#: IDF/Form/WikiResourceUpdate.php:56
+#: IDF/gettexttemplates/idf/source/git/tree.html.php:6
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:6
 #: IDF/gettexttemplates/idf/source/mtn/tree.html.php:7
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:7
-#: IDF/Views/Download.php:64 IDF/Views/Download.php:312
+#: IDF/Views/Download.php:64 IDF/Views/Download.php:346
 msgid "File"
 msgstr "文件"
 
-#: IDF/Form/Upload.php:86
+#: IDF/Form/Upload.php:87 IDF/Form/WikiResourceCreate.php:96
+#: IDF/Form/WikiResourceUpdate.php:83
 msgid "For security reasons, you cannot upload a file with this extension."
+msgstr ""
+
+#: IDF/Form/Upload.php:120
+#, php-format
+msgid "You cannot provide more than one label from the %s class to a download."
+msgstr ""
+
+#: IDF/Form/UploadArchive.php:41
+#, fuzzy
+msgid "Archive file"
+msgstr "归档"
+
+#: IDF/Form/UploadArchive.php:67
+#, php-format
+msgid ""
+"For security reasons, you cannot upload a file (%s) with this extension."
+msgstr ""
+
+#: IDF/Form/UploadArchive.php:98
+#, php-format
+msgid ""
+"You cannot provide more than label from the %1$s class to a download (%2$s)."
+msgstr ""
+
+#: IDF/Form/UploadArchive.php:109
+#, php-format
+msgid ""
+"A file with the name \"%s\" has already been uploaded and is not marked to "
+"be replaced."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:41
+msgid "The archive does not exist."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:48
+#, php-format
+msgid "The archive could not be read (code %d)."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:53
+msgid "The archive does not contain a manifest.xml."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:61
+#, php-format
+msgid "The archive's manifest is invalid: %s"
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:77
+#, php-format
+msgid "The entry %d in the manifest is missing a file name."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:82
+#, php-format
+msgid "The entry %d in the manifest is missing a summary."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:86
+msgid "The manifest must not reference itself."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:91
+#, php-format
+msgid "The entry %s in the manifest does not exist in the archive."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:96
+#, php-format
+msgid "The entry %s in the manifest is referenced more than once."
+msgstr ""
+
+#: IDF/Form/UploadArchiveHelper.php:108
+#, php-format
+msgid "The entry %s in the manifest has more than the six allowed labels set."
 msgstr ""
 
 #: IDF/Form/UploadConf.php:53
@@ -841,10 +971,6 @@ msgstr "预定义下载标签"
 #: IDF/Form/UploadConf.php:62
 msgid "Each download may have at most one label with each of these classes"
 msgstr "每个下载必须包含的标签"
-
-#: IDF/Form/UserAccount.php:59
-msgid "Your mail"
-msgstr "你的Email"
 
 #: IDF/Form/UserAccount.php:61
 msgid ""
@@ -863,11 +989,11 @@ msgid ""
 msgstr ""
 
 #: IDF/Form/UserAccount.php:171
-msgid "Add a secondary mail address"
+msgid "Add a secondary email address"
 msgstr ""
 
 #: IDF/Form/UserAccount.php:173
-msgid "You will get a mail to confirm that you own the address you specify."
+msgid "You will get an email to confirm that you own the address you specify."
 msgstr ""
 
 #: IDF/Form/UserAccount.php:200
@@ -888,8 +1014,7 @@ msgstr ""
 
 #: IDF/Form/UserAccount.php:363
 msgid ""
-"Please check the key as it does not appear to be a valid monotone public "
-"key."
+"Please check the key as it does not appear to be a valid monotone public key."
 msgstr ""
 
 #: IDF/Form/UserAccount.php:371
@@ -902,8 +1027,8 @@ msgstr ""
 
 #: IDF/Form/UserChangeEmail.php:63
 msgid ""
-"The validation key is not valid. Please copy/paste it from your confirmation"
-" email."
+"The validation key is not valid. Please copy/paste it from your confirmation "
+"email."
 msgstr ""
 
 #: IDF/Form/WikiConf.php:49
@@ -912,11 +1037,10 @@ msgstr "预定义文档页面标签"
 
 #: IDF/Form/WikiConf.php:58
 msgid ""
-"Each documentation page may have at most one label with each of these "
-"classes"
+"Each documentation page may have at most one label with each of these classes"
 msgstr "每个文档必须包含的标签"
 
-#: IDF/Form/WikiCreate.php:38
+#: IDF/Form/WikiPageCreate.php:38
 msgid ""
 "# Introduction\n"
 "\n"
@@ -932,54 +1056,95 @@ msgid ""
 "* Links to other [[WikiPage]].\n"
 msgstr ""
 
-#: IDF/Form/WikiCreate.php:57
+#: IDF/Form/WikiPageCreate.php:57
 msgid "PageName"
 msgstr "页面名称"
 
-#: IDF/Form/WikiCreate.php:60 IDF/Form/WikiUpdate.php:50
+#: IDF/Form/WikiPageCreate.php:60 IDF/Form/WikiPageUpdate.php:50
 msgid "Page title"
 msgstr "标题"
 
-#: IDF/Form/WikiCreate.php:66 IDF/Form/WikiUpdate.php:56
+#: IDF/Form/WikiPageCreate.php:66 IDF/Form/WikiPageUpdate.php:56
 msgid ""
 "The page name must contains only letters, digits and the dash (-) character."
 msgstr "标题只能包含字母、数字和连接号（-）"
 
-#: IDF/Form/WikiCreate.php:71 IDF/Form/WikiUpdate.php:61
+#: IDF/Form/WikiPageCreate.php:71 IDF/Form/WikiPageUpdate.php:61
 msgid "This one line description is displayed in the list of pages."
 msgstr "描述显示在文档列表页面"
 
-#: IDF/Form/WikiCreate.php:80 IDF/Form/WikiUpdate.php:72
-msgid "Content"
-msgstr "内容"
-
-#: IDF/Form/WikiCreate.php:108 IDF/Form/WikiUpdate.php:119
+#: IDF/Form/WikiPageCreate.php:108 IDF/Form/WikiPageUpdate.php:119
+#: IDF/Form/WikiResourceCreate.php:78
 msgid "The title contains invalid characters."
 msgstr ""
 
-#: IDF/Form/WikiCreate.php:114 IDF/Form/WikiUpdate.php:125
+#: IDF/Form/WikiPageCreate.php:114 IDF/Form/WikiPageUpdate.php:125
 msgid "A page with this title already exists."
 msgstr ""
 
-#: IDF/Form/WikiCreate.php:150 IDF/Form/WikiUpdate.php:161
+#: IDF/Form/WikiPageCreate.php:150 IDF/Form/WikiPageUpdate.php:161
 #, php-format
-msgid "You cannot provide more than label from the %s class to a page."
+msgid "You cannot provide more than one label from the %s class to a page."
 msgstr ""
 
-#: IDF/Form/WikiCreate.php:200
+#: IDF/Form/WikiPageCreate.php:200
 msgid "Initial page creation"
 msgstr ""
 
-#: IDF/Form/WikiDelete.php:39
+#: IDF/Form/WikiPageDelete.php:39
 msgid "Yes, I understand that the page and all its revisions will be deleted."
 msgstr ""
 
-#: IDF/Form/WikiDelete.php:50
+#: IDF/Form/WikiPageDelete.php:50 IDF/Form/WikiResourceDelete.php:50
 msgid "You need to confirm the deletion."
 msgstr ""
 
-#: IDF/Form/WikiUpdate.php:83
+#: IDF/Form/WikiPageUpdate.php:83 IDF/Form/WikiResourceUpdate.php:67
 msgid "One line to describe the changes you made."
+msgstr ""
+
+#: IDF/Form/WikiResourceCreate.php:40
+msgid "ResourceName"
+msgstr ""
+
+#: IDF/Form/WikiResourceCreate.php:44
+msgid "Resource title"
+msgstr ""
+
+#: IDF/Form/WikiResourceCreate.php:50
+#, fuzzy
+msgid ""
+"The resource name must contains only letters, digits and the dash (-) "
+"character."
+msgstr "标题只能包含字母、数字和连接号（-）"
+
+#: IDF/Form/WikiResourceCreate.php:55 IDF/Form/WikiResourceUpdate.php:47
+#, fuzzy
+msgid "This one line description is displayed in the list of resources."
+msgstr "描述显示在文档列表页面"
+
+#: IDF/Form/WikiResourceCreate.php:84
+msgid "A resource with this title already exists."
+msgstr ""
+
+#: IDF/Form/WikiResourceCreate.php:142
+msgid "Initial resource creation"
+msgstr ""
+
+#: IDF/Form/WikiResourceDelete.php:39
+msgid ""
+"Yes, I understand that the resource and all its revisions will be deleted."
+msgstr ""
+
+#: IDF/Form/WikiResourceUpdate.php:89
+#, php-format
+msgid ""
+"The mime type of the uploaded file \"%1$s\" does not match the mime type of "
+"this resource \"%2$s\""
+msgstr ""
+
+#: IDF/Form/WikiResourceUpdate.php:97
+msgid "The current version of the resource and the uploaded file are equal."
 msgstr ""
 
 #: IDF/Gconf.php:60 IDF/Search/Occ.php:56
@@ -1009,24 +1174,65 @@ msgstr "访问权限与提醒"
 #: IDF/gettexttemplates/idf/admin/downloads.html.php:3
 #: IDF/gettexttemplates/idf/admin/issue-tracking.html.php:3
 #: IDF/gettexttemplates/idf/admin/wiki.html.php:3
+#: IDF/gettexttemplates/idf/gadmin/projects/labels.html.php:3
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
 "<p>List one status value per line in desired sort-order.</p>\n"
-"<p>Optionally, use an equals-sign to document the meaning of each status value.</p>\n"
+"<p>Optionally, use an equals-sign to document the meaning of each status "
+"value.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>提示：</strong></p>\n"
 "<p>List one status value per line in desired sort-order.</p>\n"
-"<p>Optionally, use an equals-sign to document the meaning of each status value.</p>\n"
+"<p>Optionally, use an equals-sign to document the meaning of each status "
+"value.</p>\n"
 
 #: IDF/gettexttemplates/idf/admin/downloads.html.php:8
+msgid ""
+"<p>The webhook URL setting specifies an URL to which a HTTP <strong>PUT</"
+"strong>\n"
+"request is sent after a new download has been added or to which a HTTP "
+"<strong>POST</strong>\n"
+"request is sent after an existing download has been updated.\n"
+"If this field is empty, notifications are disabled.</p>\n"
+"\n"
+"<p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for "
+"example:</p>\n"
+"\n"
+"<ul>\n"
+"<li><code>http://domain.com/upload</code></li>\n"
+"<li><code>http://domain.com/upload?my%20param</code></li>\n"
+"</ul>\n"
+"\n"
+"<p>In addition, the URL may contain the following \"%\" notation, which\n"
+"will be replaced with specific project values for each download:</p>\n"
+"\n"
+"<ul>\n"
+"<li><code>%p</code> - project name</li>\n"
+"<li><code>%d</code> - download id</li>\n"
+"</ul>\n"
+"\n"
+"<p>For example, updating download 123 of project 'my-project' with\n"
+"web hook URL <code>http://mydomain.com/%p/%d</code> would send a POST "
+"request to\n"
+"<code>http://mydomain.com/my-project/123</code>.</p>"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/admin/downloads.html.php:31
+#: IDF/gettexttemplates/idf/admin/source.html.php:30
+msgid "Web-Hook authentication key:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/admin/downloads.html.php:32
 #: IDF/gettexttemplates/idf/admin/issue-tracking.html.php:8
 #: IDF/gettexttemplates/idf/admin/members.html.php:13
 #: IDF/gettexttemplates/idf/admin/source.html.php:31
 #: IDF/gettexttemplates/idf/admin/summary.html.php:11
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:15
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:12
 #: IDF/gettexttemplates/idf/admin/wiki.html.php:8
+#: IDF/gettexttemplates/idf/gadmin/forge/index.html.php:13
+#: IDF/gettexttemplates/idf/gadmin/projects/labels.html.php:8
 msgid "Save Changes"
 msgstr "保存更改"
 
@@ -1035,12 +1241,14 @@ msgstr "保存更改"
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>Specify each person by its login. Each person must have already registered with the given login.</p>\n"
+"<p>Specify each person by its login. Each person must have already "
+"registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>提示：</strong></p>\n"
-"<p>Specify each person by its login. Each person must have already registered with the given login.</p>\n"
+"<p>Specify each person by its login. Each person must have already "
+"registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 
 #: IDF/gettexttemplates/idf/admin/members.html.php:8
@@ -1049,43 +1257,51 @@ msgstr ""
 msgid ""
 "\n"
 "<p><strong>Notes:</strong></p>\n"
-"<p>A project owner may make any change to this project, including removing other project owners. You need to be carefull when you give owner rights.</p>\n"
-"<p>A project member will not have access to the administration area but will have more options available in the use of the project.</p>\n"
+"<p>A project owner may make any change to this project, including removing "
+"other project owners. You need to be carefull when you give owner rights.</"
+"p>\n"
+"<p>A project member will not have access to the administration area but will "
+"have more options available in the use of the project.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>提示：</strong></p>\n"
-"<p>A project owner may make any change to this project, including removing other project owners. You need to be carefull when you give owner rights.</p>\n"
-"<p>A project member will not have access to the administration area but will have more options available in the use of the project.</p>\n"
+"<p>A project owner may make any change to this project, including removing "
+"other project owners. You need to be carefull when you give owner rights.</"
+"p>\n"
+"<p>A project member will not have access to the administration area but will "
+"have more options available in the use of the project.</p>\n"
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:3
-msgid ""
-"You can find here the current repository configuration of your project."
+msgid "You can find here the current repository configuration of your project."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:4
 msgid ""
-"<p>The webhook URL setting specifies a URL to which a HTTP POST\n"
-"request is sent after each repository commit. If this field is empty,\n"
-"notifications are disabled.</p>\n"
+"<p>The webhook URL setting specifies an URL to which a HTTP \n"
+"<strong>%%hook_request_method%%</strong> request is sent after each "
+"repository\n"
+"commit. If this field is empty, notifications are disabled.</p>\n"
 "\n"
-"<p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for example:</p>\n"
+"<p>Only properly-escaped <strong>HTTP</strong> URLs are supported, for "
+"example:</p>\n"
 "\n"
 "<ul>\n"
-"<li>http://domain.com/commit</li>\n"
-"<li>http://domain.com/commit?my%20param</li>\n"
+"<li><code>http://domain.com/commit</code></li>\n"
+"<li><code>http://domain.com/commit?my%20param</code></li>\n"
 "</ul>\n"
 "\n"
 "<p>In addition, the URL may contain the following \"%\" notation, which\n"
 "will be replaced with specific project values for each commit:</p>\n"
 "\n"
 "<ul>\n"
-"<li>%p - project name</li>\n"
-"<li>%r - revision number</li>\n"
+"<li><code>%p</code> - project name</li>\n"
+"<li><code>%r</code> - revision number</li>\n"
 "</ul>\n"
 "\n"
 "<p>For example, committing revision 123 to project 'my-project' with\n"
-"post-commit URL http://mydomain.com/%p/%r would send a request to\n"
-"http://mydomain.com/my-project/123.</p>"
+"post-commit URL <code>http://mydomain.com/%p/%r</code> would send a request "
+"to\n"
+"<code>http://mydomain.com/my-project/123</code>.</p>"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:26
@@ -1106,20 +1322,18 @@ msgstr "仓库地址:"
 msgid "Repository size:"
 msgstr "仓库使用空间:"
 
-#: IDF/gettexttemplates/idf/admin/source.html.php:30
-msgid "Post-commit authentication key:"
-msgstr ""
-
 #: IDF/gettexttemplates/idf/admin/summary.html.php:3
 #, php-format
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The description of the project can be improved using the <a href=\"%%url%%\">Markdown syntax</a>.</p>\n"
+"<p>The description of the project can be improved using the <a href=\"%%url%%"
+"\">Markdown syntax</a>.</p>\n"
 msgstr ""
 "\n"
 "<p><strong>提示：</strong></p>\n"
-"<p>The description of the project can be improved using the <a href=\"%%url%%\">Markdown syntax</a>.</p>\n"
+"<p>The description of the project can be improved using the <a href=\"%%url%%"
+"\">Markdown syntax</a>.</p>\n"
 
 #: IDF/gettexttemplates/idf/admin/summary.html.php:7
 msgid ""
@@ -1132,9 +1346,11 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/admin/summary.html.php:9
 #: IDF/gettexttemplates/idf/base-full.html.php:4
+#: IDF/gettexttemplates/idf/base-full.html~.php:4
 #: IDF/gettexttemplates/idf/base.html.php:4
-#: IDF/gettexttemplates/idf/index.html.php:6
-#: IDF/gettexttemplates/idf/main-menu.html.php:7
+#: IDF/gettexttemplates/idf/base.html~.php:4
+#: IDF/gettexttemplates/idf/main-menu.html.php:8
+#: IDF/gettexttemplates/idf/project-list.html.php:4
 msgid "Project logo"
 msgstr ""
 
@@ -1144,66 +1360,78 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:3
 msgid ""
-"\n"
-"Only project members and admins have write access to the source.<br />\n"
-"If you restrict the access to the source, anonymous access is<br />\n"
-"not provided and the users must authenticate themselves with their<br />\n"
-"password or SSH key."
+"This section allows you to configure project tabs access rights and "
+"notifications."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:8
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:4
 msgid ""
-"You can configure here the project tabs access rights and notification "
-"emails."
+"Tab access controls whether a single user can navigate into a particular "
+"section of your project via the main menu or automatically generated object "
+"links."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:9
-#, php-format
-msgid ""
-"Notification emails will be sent from the <strong>%%from_email%%</strong> "
-"address, if you send the email to a mailing list, you may need to register "
-"this email address. Multiple email addresses must be separated through "
-"commas (','). If you do not want to send emails for a given type of changes,"
-" simply leave the corresponding field empty."
-msgstr ""
-
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:10
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:5
 msgid ""
 "If you mark a project as private, only the project members and "
 "administrators, together with the extra authorized users you provide will "
-"have access to the project. You will still be able to define further access "
-"rights for the different tabs but the \"Open to all\" and \"Signed in "
-"users\" will default to authorized users only."
+"have access to the project as a whole. You will still be able to define "
+"further access rights for the different tabs but the \"Open to all\" and "
+"\"Signed in users\" will default to authorized users only."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:11
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:6
+#, fuzzy
 msgid ""
-"Specify each person by its login. Each person must have already registered "
-"with the given login. Separate the logins with commas and/or new lines."
+"For the extra authorized user list, specify each person by its login. Each "
+"person must have already registered with the given login. Separate the "
+"logins with commas and/or new lines."
+msgstr ""
+"\n"
+"<p><strong>提示：</strong></p>\n"
+"<p>Specify each person by its login. Each person must have already "
+"registered with the given login.</p>\n"
+"<p>Separate the logins with commas and/or new lines.</p>\n"
+
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:7
+msgid ""
+"Only project members and admins have write access to the source. If you "
+"restrict the access to the source, anonymous access is not provided and the "
+"users must authenticate themselves with their password or SSH key."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:12
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:8
+#, php-format
+msgid ""
+"Here you can configure who should be notified about changes in a particular "
+"section. You can also configure additional addresses, like the one of a "
+"mailing list, that should be notified. (Keep in mind that you might have to "
+"register the sender address <strong>%%from_email%%</strong> to let the "
+"mailing list actually accept notification emails.) Multiple email addresses "
+"must be separated through commas (',')."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:9
 msgid ""
 "The form contains some errors. Please correct them to update the access "
 "rights."
 msgstr ""
 
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:10
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:13
 msgid "Access Rights"
 msgstr "访问权限"
 
+#: IDF/gettexttemplates/idf/admin/tabs.html.php:11
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:14
-msgid "Notification Email"
+#, fuzzy
+msgid "Notifications"
 msgstr "提醒Email"
 
-#: IDF/gettexttemplates/idf/admin/tabs.html.php:16
-#: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:17
-#: IDF/gettexttemplates/idf/gadmin/users/update.html.php:15
-msgid "Instructions:"
-msgstr "提示："
-
 #: IDF/gettexttemplates/idf/base-full.html.php:3
+#: IDF/gettexttemplates/idf/base-full.html~.php:3
 #: IDF/gettexttemplates/idf/base.html.php:3
+#: IDF/gettexttemplates/idf/base.html~.php:3
 #, php-format
 msgid ""
 "<a href=\"%%url%%\">Sign in or create your account</a> to create issues or "
@@ -1212,54 +1440,61 @@ msgstr "<a href=\"%%url%%\">登录</a> 以便提交问题或评论"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:6
 #: IDF/gettexttemplates/idf/base.html.php:6
+#: IDF/gettexttemplates/idf/project-list.html.php:6
+msgid "External link to project"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/base-full.html.php:7
+#: IDF/gettexttemplates/idf/base-full.html~.php:6
+#: IDF/gettexttemplates/idf/base.html.php:7
+#: IDF/gettexttemplates/idf/base.html~.php:6
 msgid "Project Home"
 msgstr "项目首页"
 
-#: IDF/gettexttemplates/idf/base-full.html.php:12
-#: IDF/gettexttemplates/idf/base.html.php:12
+#: IDF/gettexttemplates/idf/base-full.html.php:13
+#: IDF/gettexttemplates/idf/base-full.html~.php:12
+#: IDF/gettexttemplates/idf/base.html.php:13
+#: IDF/gettexttemplates/idf/base.html~.php:12
 msgid "Project Management"
 msgstr "管理"
 
 #: IDF/gettexttemplates/idf/downloads/base.html.php:4
 #: IDF/gettexttemplates/idf/downloads/index.html.php:4
-#: IDF/Views/Download.php:234
+#: IDF/Views/Download.php:235
 msgid "New Download"
 msgstr "上传"
 
-#: IDF/gettexttemplates/idf/downloads/delete.html.php:3
-msgid ""
-"<strong>Attention!</strong> If you want to delete a specific version of your"
-" software, maybe, someone is depending on this specific version to run his "
-"systems. Are you sure, you will not affect anybody when removing this file?"
-msgstr ""
+#: IDF/gettexttemplates/idf/downloads/base.html.php:5
+#, fuzzy
+msgid "Upload Archive"
+msgstr "归档"
 
-#: IDF/gettexttemplates/idf/downloads/delete.html.php:4
+#: IDF/gettexttemplates/idf/downloads/create.html.php:3
+msgid ""
+"Each file must have a distinct name and file contents\n"
+"cannot be changed, so be sure to include release numbers in each file\n"
+"name."
+msgstr ""
+"每个文件名称都必须唯一用且内容不能修改<br />因此请确保文件版本号包含在文件名"
+"中"
+
+#: IDF/gettexttemplates/idf/downloads/create.html.php:6
 #, php-format
 msgid ""
-"Instead of deleting the file, you could <a href=\"%%url%%\">mark it as "
-"deprecated</a>."
+"You can use the <a href=\"%%url%%\">Markdown syntax</a> for the description."
+msgstr "你可以在描述中使用 <a href=\"%%url%%\">Markdown 语法</a>"
+
+#: IDF/gettexttemplates/idf/downloads/create.html.php:7
+msgid "The form contains some errors. Please correct them to submit the file."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/downloads/delete.html.php:5
-#: IDF/gettexttemplates/idf/downloads/view.html.php:4
-#: IDF/gettexttemplates/idf/issues/attachment.html.php:4
-#: IDF/gettexttemplates/idf/issues/view.html.php:7
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:7
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:8
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:4
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:5
-#: IDF/gettexttemplates/idf/wiki/view.html.php:8
-#: IDF/gettexttemplates/idf/wiki/view.html.php:9
-#, php-format
-msgid "by %%submitter%%"
-msgstr ""
+#: IDF/gettexttemplates/idf/downloads/create.html.php:8
+msgid "Submit File"
+msgstr "提交文件"
 
-#: IDF/gettexttemplates/idf/downloads/delete.html.php:6
-msgid "Delete File"
-msgstr "删除文件"
-
+#: IDF/gettexttemplates/idf/downloads/create.html.php:9
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:8
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:7
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:9
 #: IDF/gettexttemplates/idf/downloads/view.html.php:9
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:21
 #: IDF/gettexttemplates/idf/gadmin/projects/update.html.php:16
@@ -1277,12 +1512,86 @@ msgstr "删除文件"
 #: IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:5
 #: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:5
 #: IDF/gettexttemplates/idf/user/passrecovery.html.php:7
-#: IDF/gettexttemplates/idf/wiki/create.html.php:7
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:10
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:7
-#: IDF/gettexttemplates/idf/wiki/update.html.php:7
+#: IDF/gettexttemplates/idf/wiki/createPage.html.php:7
+#: IDF/gettexttemplates/idf/wiki/createResource.html.php:9
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:7
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:10
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:9
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:9
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:7
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:5
 msgid "Cancel"
 msgstr "取消"
+
+#: IDF/gettexttemplates/idf/downloads/create.html.php:10
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:9
+#: IDF/gettexttemplates/idf/register/inputkey.html.php:6
+#: IDF/gettexttemplates/idf/user/changeemail.html.php:6
+#: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:6
+msgid "Instructions"
+msgstr "提示"
+
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:3
+msgid ""
+"The archive must include a <code>manifest.xml</code> file with meta "
+"information about the\n"
+"files to process inside the archive. All processed files must be unique or "
+"replace existing files explicitely."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:5
+#, php-format
+msgid ""
+"You can learn more about the archive format <a href=\"%%url%%\">here</a>."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:6
+msgid ""
+"The form contains some errors. Please correct them to submit the archive."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:7
+#, fuzzy
+msgid "Submit Archive"
+msgstr "提交文件"
+
+#: IDF/gettexttemplates/idf/downloads/delete.html.php:3
+msgid ""
+"<strong>Attention!</strong> If you want to delete a specific version of your "
+"software, maybe, someone is depending on this specific version to run his "
+"systems. Are you sure, you will not affect anybody when removing this file?"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/delete.html.php:4
+#, php-format
+msgid ""
+"Instead of deleting the file, you could <a href=\"%%url%%\">mark it as "
+"deprecated</a>."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/delete.html.php:5
+#: IDF/gettexttemplates/idf/downloads/view.html.php:4
+#: IDF/gettexttemplates/idf/issues/attachment.html.php:4
+#: IDF/gettexttemplates/idf/issues/view.html.php:7
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:4
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:5
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:7
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:8
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:6
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:7
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:6
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:7
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:8
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:9
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:6
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:7
+#, php-format
+msgid "by %%submitter%%"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/downloads/delete.html.php:6
+msgid "Delete File"
+msgstr "删除文件"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:8
 #: IDF/gettexttemplates/idf/downloads/view.html.php:14
@@ -1293,38 +1602,46 @@ msgstr "上传时间："
 #: IDF/gettexttemplates/idf/downloads/view.html.php:15
 #: IDF/gettexttemplates/idf/issues/view.html.php:29
 #: IDF/gettexttemplates/idf/review/view.html.php:27
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:12
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:9
-#: IDF/gettexttemplates/idf/wiki/view.html.php:15
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:9
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:12
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:14
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:14
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:15
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:17
 msgid "Updated:"
 msgstr "更新："
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:10
 #: IDF/gettexttemplates/idf/downloads/view.html.php:16
 #: IDF/gettexttemplates/idf/gadmin/projects/index.html.php:6
-#: IDF/gettexttemplates/idf/index.html.php:15
+#: IDF/gettexttemplates/idf/listProjects.html.php:17
 msgid "Downloads:"
 msgstr "下载："
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:11
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:7
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:7
 #: IDF/gettexttemplates/idf/downloads/view.html.php:17
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:6
+#: IDF/gettexttemplates/idf/issues/feedfragment.xml~.php:6
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:9
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:10
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:15
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:11
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:16
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:10
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:15
 #: IDF/gettexttemplates/idf/issues/view.html.php:21
 #: IDF/gettexttemplates/idf/issues/view.html.php:33
+#: IDF/gettexttemplates/idf/project-list.html.php:8
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:6
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:9
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:13
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:13
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:10
-#: IDF/gettexttemplates/idf/wiki/view.html.php:16
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:10
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:13
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:16
 #: IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:7
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:9
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:12
-#: IDF/IssueComment.php:157 IDF/WikiRevision.php:175
+#: IDF/IssueComment.php:157 IDF/Wiki/PageRevision.php:204
 msgid "Labels:"
 msgstr "标签"
 
@@ -1333,8 +1650,10 @@ msgid "A new file is available for download:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:4
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:4
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:5
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:5
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:6
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:5
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:4
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:8
 #: IDF/gettexttemplates/idf/source/commit-created-email.txt.php:4
@@ -1344,8 +1663,10 @@ msgid "Hello,"
 msgstr "你好，"
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:5
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:5
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:6
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:6
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:7
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:6
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:5
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:9
 #: IDF/gettexttemplates/idf/source/commit-created-email.txt.php:6
@@ -1355,19 +1676,26 @@ msgid "Project:"
 msgstr "项目："
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:6
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:6
 msgid "Submitted by:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:8
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:8
 msgid "Download:"
 msgstr "下载："
 
 #: IDF/gettexttemplates/idf/downloads/download-created-email.txt.php:9
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:9
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:10
 #: IDF/gettexttemplates/idf/review/view.html.php:31
 #: IDF/gettexttemplates/idf/user/public.html.php:4
 msgid "Description:"
 msgstr "描述："
+
+#: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:3
+msgid "A file download was updated:"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/downloads/feedfragment.xml.php:3
 msgid "Details"
@@ -1381,34 +1709,6 @@ msgstr ""
 #: IDF/gettexttemplates/idf/downloads/index.html.php:5
 msgid "Number of files:"
 msgstr "文件数目："
-
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:3
-msgid ""
-"Each file must have a distinct name and file contents\n"
-"cannot be changed, so be sure to include release numbers in each file\n"
-"name."
-msgstr "每个文件名称都必须唯一用且内容不能修改<br />因此请确保文件版本号包含在文件名中"
-
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:6
-#, php-format
-msgid ""
-"You can use the <a href=\"%%url%%\">Markdown syntax</a> for the description."
-msgstr "你可以在描述中使用 <a href=\"%%url%%\">Markdown 语法</a>"
-
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:7
-msgid "The form contains some errors. Please correct them to submit the file."
-msgstr ""
-
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:8
-msgid "Submit File"
-msgstr "提交文件"
-
-#: IDF/gettexttemplates/idf/downloads/submit.html.php:10
-#: IDF/gettexttemplates/idf/register/inputkey.html.php:6
-#: IDF/gettexttemplates/idf/user/changeemail.html.php:6
-#: IDF/gettexttemplates/idf/user/passrecovery-inputkey.html.php:6
-msgid "Instructions"
-msgstr "提示"
 
 #: IDF/gettexttemplates/idf/downloads/view.html.php:3
 msgid ""
@@ -1439,8 +1739,10 @@ msgstr "删除此文件"
 
 #: IDF/gettexttemplates/idf/downloads/view.html.php:11
 #: IDF/gettexttemplates/idf/gadmin/projects/update.html.php:18
-#: IDF/gettexttemplates/idf/wiki/update.html.php:9
-#: IDF/gettexttemplates/idf/wiki/view.html.php:12
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:9
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:7
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:12
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:12
 msgid "Trash"
 msgstr "回收"
 
@@ -1449,15 +1751,17 @@ msgid "Delete this file"
 msgstr "删除此文件"
 
 #: IDF/gettexttemplates/idf/faq-api.html.php:3
-#: IDF/gettexttemplates/idf/faq.html.php:34
+#: IDF/gettexttemplates/idf/faq-archive-format.html.php:3
+#: IDF/gettexttemplates/idf/faq.html.php:65
 msgid "Here we are, just to help you."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/faq-api.html.php:4
-#: IDF/gettexttemplates/idf/faq.html.php:35
-#: IDF/gettexttemplates/idf/gadmin/base.html.php:3
-#: IDF/gettexttemplates/idf/index.html.php:3 IDF/Views/Admin.php:57
-#: IDF/Views.php:47
+#: IDF/gettexttemplates/idf/faq-archive-format.html.php:4
+#: IDF/gettexttemplates/idf/faq.html.php:66
+#: IDF/gettexttemplates/idf/gadmin/base.html.php:4
+#: IDF/gettexttemplates/idf/index.html.php:4 IDF/Views/Admin.php:77
+#: IDF/Views.php:91
 msgid "Projects"
 msgstr "项目列表"
 
@@ -1465,137 +1769,224 @@ msgstr "项目列表"
 msgid ""
 "<p>This is simple:</p>\n"
 "<ol>\n"
-"<li>Write in the comments \"This is a duplicate of issue 123\", change 123 with the corresponding issue number.</li>\n"
+"<li>Write in the comments \"This is a duplicate of issue 123\" or - if you "
+"are a member of the crew -\n"
+"directly add the \"duplicates\" relation with the value \"123\" below the "
+"comment field. Change \"123\"\n"
+"with the corresponding issue number.</li>\n"
 "<li>Change the status of the current issue to <em>Duplicate</em>.</li>\n"
 "<li>Submit the changes.</li>\n"
 "</ol>"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:9
+#: IDF/gettexttemplates/idf/faq.html.php:11
 msgid ""
-"You need to create an account on <a "
-"href=\"http://en.gravatar.com/\">Gravatar</a>, this takes about 5 minutes "
-"and is free."
+"You need to create an account on <a href=\"http://en.gravatar.com/"
+"\">Gravatar</a>, this takes about 5 minutes and is free."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:10
+#: IDF/gettexttemplates/idf/faq.html.php:12
+msgid ""
+"\n"
+"<p>To embed any previously uploaded resource into your wiki page, you can "
+"use the <code>[[!ResourceName]]</code> syntax.</p>\n"
+"\n"
+"<p>The rendering of the resource can then be further fine-tuned:\n"
+"<ul>\n"
+"<li><code>[[!ImageResource, align=right, width=200]]</code> renders "
+"\"ImageResource\" right-aligned and scale its width to 200</li>\n"
+"<li><code>[[!TextResource, align=center, width=300, height=300]]</code> "
+"renders \"TextResource\" in a centered, 300 by 300 px iframe</li>\n"
+"<li><code>[[!AnyResource, preview=no]]</code> does not render a preview of "
+"the resource, but only provides a download link (default for binary "
+"resources)</li>\n"
+"<li><code>[[!BinaryResource, title=Download]]</code> renders the download "
+"link of \"BinaryResource\" with an alternative title</li>\n"
+"</ul>\n"
+"</p>\n"
+"\n"
+"Resources are versioned, just like wiki pages. If you update a resource, old "
+"wiki pages still show the state of the resource\n"
+"at the time when the wiki page was edited. If you specifically want to "
+"update a resource on a page, you therefor need to update\n"
+"the resource at first and then also the page where it is referenced, "
+"otherwise the change won't be visible until the next regular edit. \n"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/faq.html.php:28
+msgid ""
+"<p>If you have to publish many files at once for a new release, it is a very "
+"tedious task\n"
+"to upload them one after another and enter meta information like a summary, "
+"a description or additional\n"
+"labels for each of them.</p>\n"
+"<p>InDefero therefore supports a special archive format that is basically a "
+"standard zip file which comes with\n"
+"some meta information. These meta information are kept in a special manifest "
+"file, which is distinctly kept from\n"
+"the rest of the files in the archive that should be published.</p>\n"
+"<p>Once this archive has been uploaded, InDefero reads in the meta "
+"information, unpacks the other files from\n"
+"the archive and creates new individual downloads for each of them.</p>"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/faq.html.php:36
+#, fuzzy, php-format
+msgid "<a href=\"%%url%%\">Learn more about the archive format</a>."
+msgstr "<a href=\"%%url%%\">更新你的账户</a>"
+
+#: IDF/gettexttemplates/idf/faq.html.php:37
 msgid ""
 "The API (Application Programming Interface) is used to interact with "
 "InDefero with another program. For example, this can be used to create a "
 "desktop program to submit new tickets easily."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:11
+#: IDF/gettexttemplates/idf/faq.html.php:38
 #, php-format
 msgid "<a href=\"%%url%%\">Learn more about the API</a>."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:12
-#: IDF/gettexttemplates/idf/faq.html.php:16
+#: IDF/gettexttemplates/idf/faq.html.php:39
+#: IDF/gettexttemplates/idf/faq.html.php:45
 msgid "What are the keyboard shortcuts?"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:13
-#: IDF/gettexttemplates/idf/faq.html.php:31
+#: IDF/gettexttemplates/idf/faq.html.php:40
+#: IDF/gettexttemplates/idf/faq.html.php:60
 msgid "How to mark an issue as duplicate?"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:14
-#: IDF/gettexttemplates/idf/faq.html.php:32
+#: IDF/gettexttemplates/idf/faq.html.php:41
+#: IDF/gettexttemplates/idf/faq.html.php:61
 msgid "How can I display my head next to my comments?"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:15
-#: IDF/gettexttemplates/idf/faq.html.php:33
+#: IDF/gettexttemplates/idf/faq.html.php:42
+#: IDF/gettexttemplates/idf/faq.html.php:62
+msgid "How can I embed images and other resources in my documentation pages?"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/faq.html.php:43
+#: IDF/gettexttemplates/idf/faq.html.php:63
+msgid "What is this \"Upload Archive\" functionality about?"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/faq.html.php:44
+#: IDF/gettexttemplates/idf/faq.html.php:64
 msgid "What is the API and how is it used?"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:17
+#: IDF/gettexttemplates/idf/faq.html.php:46
 msgid "<kbd>Shift+h</kbd>: This help page."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:18
+#: IDF/gettexttemplates/idf/faq.html.php:47
 msgid "If you are in a project, you have the following shortcuts:"
 msgstr "如果你在一个项目中，你有以下快捷方式："
 
-#: IDF/gettexttemplates/idf/faq.html.php:19
+#: IDF/gettexttemplates/idf/faq.html.php:48
 msgid "<kbd>Shift+u</kbd>: Project updates."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:20
+#: IDF/gettexttemplates/idf/faq.html.php:49
 msgid "<kbd>Shift+d</kbd>: Downloads."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:21
+#: IDF/gettexttemplates/idf/faq.html.php:50
 msgid "<kbd>Shift+o</kbd>: Documentation."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:22
+#: IDF/gettexttemplates/idf/faq.html.php:51
 msgid "<kbd>Shift+a</kbd>: Create a new issue."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:23
+#: IDF/gettexttemplates/idf/faq.html.php:52
 msgid "<kbd>Shift+i</kbd>: List of open issues."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:24
+#: IDF/gettexttemplates/idf/faq.html.php:53
 msgid "<kbd>Shift+m</kbd>: The issues you submitted."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:25
+#: IDF/gettexttemplates/idf/faq.html.php:54
 msgid "<kbd>Shift+w</kbd>: The issues assigned to you."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:26
+#: IDF/gettexttemplates/idf/faq.html.php:55
 msgid "<kbd>Shift+s</kbd>: Source."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:27
+#: IDF/gettexttemplates/idf/faq.html.php:56
 msgid "You also have the standard access keys:"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:28
+#: IDF/gettexttemplates/idf/faq.html.php:57
 msgid "<kbd>Alt+1</kbd>: Home."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:29
+#: IDF/gettexttemplates/idf/faq.html.php:58
 msgid "<kbd>Alt+2</kbd>: Skip the menus."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/faq.html.php:30
+#: IDF/gettexttemplates/idf/faq.html.php:59
 msgid "<kbd>Alt+4</kbd>: Search (when available)."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/gadmin/base.html.php:4
+#: IDF/gettexttemplates/idf/gadmin/base.html.php:3
+msgid "Forge"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/gadmin/base.html.php:5
 msgid "People"
 msgstr "用户列表"
 
-#: IDF/gettexttemplates/idf/gadmin/base.html.php:5
+#: IDF/gettexttemplates/idf/gadmin/base.html.php:6
 msgid "Usher"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/gadmin/home.html.php:3
-msgid "You have here access to the administration of the forge."
+#: IDF/gettexttemplates/idf/gadmin/forge/base.html.php:3
+msgid "Frontpage"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/gadmin/home.html.php:4
-#: IDF/gettexttemplates/idf/project/home.html.php:3
-#: IDF/gettexttemplates/idf/project/timeline.html.php:4
-msgid "Welcome"
-msgstr "欢迎"
+#: IDF/gettexttemplates/idf/gadmin/forge/index.html.php:3
+#, php-format
+msgid ""
+"\n"
+"<p><strong>Instructions:</strong></p>\n"
+"<p>You can set up a custom forge page that is used as entry page for the "
+"forge instead of the plain project listing. This page is then also "
+"accessible via the 'Home' link in main menu bar.</p>\n"
+"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</"
+"a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
+"<p>Additionally, the following macros are available:<br />\n"
+"<ul>\n"
+"<li><code>&#x7b;projectlist, label=..., order=(name|activity), limit=...}</"
+"code> - Renders a project list that can optionally be filtered by label, "
+"ordered by 'name' or 'activity' and / or limited to a specific number of "
+"projects.</li>\n"
+"</ul>\n"
+"</p>\n"
+msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:3
-#: IDF/gettexttemplates/idf/main-menu.html.php:6
+#: IDF/gettexttemplates/idf/main-menu.html.php:7
 msgid "Project List"
 msgstr "项目列表"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:4
+#: IDF/Views/Admin.php:110
+#, fuzzy
+msgid "Project Labels"
+msgstr "项目列表"
+
+#: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:5
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:16
-#: IDF/gettexttemplates/idf/index.html.php:5 IDF/Views/Admin.php:128
+#: IDF/gettexttemplates/idf/listProjects.html.php:6 IDF/Views/Admin.php:186
 msgid "Create Project"
 msgstr "创建项目"
 
-#: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:5
+#: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:6
 msgid "Change Project Details"
 msgstr "修改项目摘要"
 
@@ -1607,14 +1998,15 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:4
 msgid ""
-"<strong>Once you have defined the repository type, you cannot change "
-"it</strong>."
+"<strong>Once you have defined the repository type, you cannot change it</"
+"strong>."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:5
 msgid ""
 "\n"
-"<p>Specify each person by its login. Each person must have already registered with the given login.</p>\n"
+"<p>Specify each person by its login. Each person must have already "
+"registered with the given login.</p>\n"
 "<p>Separate the logins with commas and/or new lines.</p>\n"
 msgstr ""
 
@@ -1626,6 +2018,11 @@ msgstr ""
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:15
 msgid "Provide at least one owner for the project or use a template."
 msgstr ""
+
+#: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:17
+#: IDF/gettexttemplates/idf/gadmin/users/update.html.php:15
+msgid "Instructions:"
+msgstr "提示："
 
 #: IDF/gettexttemplates/idf/gadmin/projects/delete.html.php:3
 #, php-format
@@ -1692,7 +2089,8 @@ msgstr "仓库："
 
 #: IDF/gettexttemplates/idf/gadmin/projects/index.html.php:5
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:11
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:17
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:18
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:16
 msgid "Attachments:"
 msgstr "附件："
 
@@ -1728,7 +2126,7 @@ msgid "You will be asked to confirm."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/users/base.html.php:3
-#: IDF/Views/Admin.php:201
+#: IDF/Views/Admin.php:264
 msgid "User List"
 msgstr "用户列表"
 
@@ -1821,15 +2219,17 @@ msgid "Configured servers"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/base.html.php:4
-#: IDF/Views/Admin.php:358
+#: IDF/Views/Admin.php:421
 msgid "Usher control"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:3
+#: IDF/gettexttemplates/idf/gadmin/usher/connections.html~.php:3
 msgid "address"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/connections.html.php:4
+#: IDF/gettexttemplates/idf/gadmin/usher/connections.html~.php:4
 msgid "port"
 msgstr ""
 
@@ -1859,6 +2259,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/control.html.php:8
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:11
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:11
 msgid "Status explanation"
 msgstr ""
 
@@ -1881,63 +2282,78 @@ msgid ""
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:3
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:3
 msgid "server name"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:4 IDF/Issue.php:99
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:4
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:4 IDF/Issue.php:99
 #: IDF/Review.php:102
 msgid "status"
 msgstr "状态"
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:5
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:5
 msgid "action"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:6
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:6
 msgid "No monotone servers configured."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:7
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:7
 msgid "stop"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:8
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:8
 msgid "start"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:9
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:9
 msgid "kill"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:10
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:10
 msgid "active connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:12
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:12
 msgid "remote server without open connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:13
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:13
 msgid "server with n open connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:14
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:14
 msgid "local server running, without open connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:15
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:15
 msgid "local server not running, waiting for connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:16
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:16
 msgid "local server is about to stop, n connections still open"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:17
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:17
 msgid "local server not running, not accepting connections"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/gadmin/usher/index.html.php:18
+#: IDF/gettexttemplates/idf/gadmin/usher/index.html~.php:18
 msgid "usher is shut down, not running and not accepting connections"
 msgstr ""
 
@@ -1946,36 +2362,9 @@ msgstr ""
 msgid "Personal project feed for %%user%%."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/index.html.php:4
-msgid "No projects managed with InDefero were found."
-msgstr "没有合适项目"
-
-#: IDF/gettexttemplates/idf/index.html.php:9
-msgid "Forge statistics"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:10
-msgid "Projects:"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:11
-msgid "Members:"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:12
-msgid "Issues:"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:13
-msgid "Commits:"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:14
-msgid "Documentations:"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/index.html.php:16
-msgid "Code reviews:"
+#: IDF/gettexttemplates/idf/index.html.php:3
+#: IDF/gettexttemplates/idf/main-menu.html.php:6
+msgid "Home"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:3
@@ -1986,6 +2375,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:5
 #: IDF/gettexttemplates/idf/review/view.html.php:35
 #: IDF/gettexttemplates/idf/source/commit.html.php:23
+#: IDF/gettexttemplates/idf/source/commit.html~.php:22
 #: IDF/gettexttemplates/idf/source/git/file.html.php:6
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:11
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:6
@@ -2001,15 +2391,21 @@ msgstr "归档"
 #: IDF/gettexttemplates/idf/source/mercurial/file.html.php:7
 #: IDF/gettexttemplates/idf/source/mtn/file.html.php:8
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:8
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:12
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:12
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:10
 msgid "Download this file"
 msgstr "下载此文件"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:7
 #: IDF/gettexttemplates/idf/issues/view.html.php:28
 #: IDF/gettexttemplates/idf/review/view.html.php:26
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:11
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:8
-#: IDF/gettexttemplates/idf/wiki/view.html.php:14
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:8
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:11
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:13
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:13
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:14
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:16
 msgid "Created:"
 msgstr "创建："
 
@@ -2035,7 +2431,7 @@ msgid "New Issue"
 msgstr "新问题"
 
 #: IDF/gettexttemplates/idf/issues/base.html.php:8
-#: IDF/gettexttemplates/idf/wiki/base.html.php:6
+#: IDF/gettexttemplates/idf/wiki/base.html.php:9
 msgid "Search"
 msgstr "搜索"
 
@@ -2047,10 +2443,12 @@ msgstr "返回问题"
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
+"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
+"a></p>\n"
 msgstr ""
 "<p><strong>开放的问题:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>已关闭的问题:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>\n"
+"<p><strong>已关闭的问题:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></"
+"p>\n"
 
 #: IDF/gettexttemplates/idf/issues/by-label.html.php:7
 msgid "Label:"
@@ -2062,12 +2460,14 @@ msgstr "完成率："
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:3
 msgid ""
-"<p>When you submit the issue do not forget to provide the following information:</p>\n"
+"<p>When you submit the issue do not forget to provide the following "
+"information:</p>\n"
 "<ul>\n"
 "<li>The steps to reproduce the problem.</li>\n"
 "<li>The version of the software and your operating system.</li>\n"
 "<li>Any information that can help the developers to solve the issue.</li>\n"
-"<li><strong>Do not provide any password or confidential information!</strong></li>\n"
+"<li><strong>Do not provide any password or confidential information!</"
+"strong></li>\n"
 "</ul>"
 msgstr ""
 "<p>提交的问题是，不要忘记提供以下资料：</p>\n"
@@ -2078,16 +2478,15 @@ msgstr ""
 "</ul>"
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:10
-msgid ""
-"The form contains some errors. Please correct them to submit the issue."
+msgid "The form contains some errors. Please correct them to submit the issue."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/create.html.php:11
 #: IDF/gettexttemplates/idf/issues/create.html.php:13
 #: IDF/gettexttemplates/idf/issues/view.html.php:24
 #: IDF/gettexttemplates/idf/issues/view.html.php:26
-#: IDF/gettexttemplates/idf/wiki/create.html.php:5
-#: IDF/gettexttemplates/idf/wiki/update.html.php:5
+#: IDF/gettexttemplates/idf/wiki/createPage.html.php:5
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:5
 msgid "Preview"
 msgstr "预览"
 
@@ -2108,7 +2507,9 @@ msgid "Attach another file"
 msgstr "其它附件"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:3
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:12
+#: IDF/gettexttemplates/idf/issues/feedfragment.xml~.php:3
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:13
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:12
 #: IDF/gettexttemplates/idf/issues/view.html.php:18
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:3
 #: IDF/gettexttemplates/idf/review/view.html.php:38
@@ -2119,9 +2520,12 @@ msgid "Summary:"
 msgstr "摘要："
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:4
+#: IDF/gettexttemplates/idf/issues/feedfragment.xml~.php:4
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:7
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:7
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:13
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:8
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:14
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:7
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:13
 #: IDF/gettexttemplates/idf/issues/view.html.php:19
 #: IDF/gettexttemplates/idf/issues/view.html.php:30
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:4
@@ -2132,7 +2536,9 @@ msgid "Status:"
 msgstr "状态"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:5
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:14
+#: IDF/gettexttemplates/idf/issues/feedfragment.xml~.php:5
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:15
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:14
 #: IDF/gettexttemplates/idf/issues/view.html.php:20
 #: IDF/gettexttemplates/idf/issues/view.html.php:31
 #: IDF/gettexttemplates/idf/review/feedfragment.xml.php:5
@@ -2141,7 +2547,7 @@ msgid "Owner:"
 msgstr "所有者"
 
 #: IDF/gettexttemplates/idf/issues/feedfragment.xml.php:7
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:16
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:17
 #: IDF/gettexttemplates/idf/issues/view.html.php:22 IDF/IssueComment.php:159
 msgid "Relations:"
 msgstr ""
@@ -2152,44 +2558,60 @@ msgstr ""
 #, php-format
 msgid ""
 "<p><strong>Open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
+"<p><strong>Closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</"
+"a></p>"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:3
-msgid ""
-"A new issue has been created and assigned\n"
-"to you:"
+#, fuzzy
+msgid "A new issue has been created and assigned to you:"
+msgstr "有一个新问题需要你来处理："
+
+#: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:4
+#, fuzzy
+msgid "A new issue has been created:"
 msgstr "有一个新问题需要你来处理："
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:8
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:8
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:9
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:8
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:7
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:11
 msgid "Reported by:"
 msgstr "报告人："
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:12
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:18
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:19
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:17
 msgid "Issue:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:3
-msgid "The following issue has been updated:"
+#, fuzzy
+msgid "The following issue you are owning has been updated:"
 msgstr "你关注的问题更新了："
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:4
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:3
+msgid "The following issue has been updated:"
+msgstr "你关注的问题更新了："
+
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:5
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:4
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:4
 #, php-format
 msgid "By %%who%%, %%c.creation_dtime%%:"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:9
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:10
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:9
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:8
 #: IDF/gettexttemplates/idf/review/review-updated-email.txt.php:12
 msgid "URL:"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:11
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:12
+#: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:11
 msgid "Comments (last first):"
 msgstr ""
 
@@ -2197,47 +2619,71 @@ msgstr ""
 #, php-format
 msgid ""
 "\n"
-"<p><strong>Found open issues:</strong> <a href=\"%%open_url%%\">%%open%%</a></p>\n"
-"<p><strong>Found closed issues:</strong> <a href=\"%%closed_url%%\">%%closed%%</a></p>"
+"<p><strong>Found open issues:</strong> <a href=\"%%open_url%%\">%%open%%</"
+"a></p>\n"
+"<p><strong>Found closed issues:</strong> <a href=\"%%closed_url%%\">%%closed"
+"%%</a></p>"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/search.html.php:6
 #, php-format
 msgid ""
 "<p><strong>Label:</strong>\n"
-"<a href=\"%%open_url%%\" class=\"label\"><strong>%%tag.class%%:</strong>%%tag.name%%</a></p>"
+"<a href=\"%%open_url%%\" class=\"label\"><strong>%%tag.class%%:</strong>"
+"%%tag.name%%</a></p>"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:3
-#, php-format
-msgid ""
-"The issue tracker is empty.<br />You can create your first issue <a "
-"href=\"%%create_url%%\">here</a>."
+msgid "View all open issues."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:4
+#, fuzzy
+msgid "Create an issue."
+msgstr "添加用户"
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:5
+#, php-format
+msgid ""
+"The issue tracker is empty.<br /><a href=\"%%create_url%%\">Create your "
+"first issue</a>."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/issues/summary.html.php:6
+#: IDF/gettexttemplates/idf/issues/summary.html~.php:4
 #, php-format
 msgid "Unresolved: By %%key%%"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/issues/summary.html.php:5
+#: IDF/gettexttemplates/idf/issues/summary.html.php:7
+#: IDF/gettexttemplates/idf/issues/summary.html~.php:5
 msgid "Status Summary"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/issues/summary.html.php:6
+#: IDF/gettexttemplates/idf/issues/summary.html.php:8
+#: IDF/gettexttemplates/idf/issues/summary.html~.php:6
 msgid "Unresolved: By Assignee"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/issues/summary.html~.php:3
+#, php-format
+msgid ""
+"The issue tracker is empty.<br />You can create your first issue <a href="
+"\"%%create_url%%\">here</a>."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:3
 #, php-format
-msgid "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
+msgid ""
+"See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
 msgid_plural ""
 "See the <a href=\"%%submit_closed_url%%\">%%nb_submit_closed%% closed</a>."
 msgstr[0] ""
 
 #: IDF/gettexttemplates/idf/issues/userIssues.html.php:4
 #, php-format
-msgid "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
+msgid ""
+"See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgid_plural ""
 "See the <a href=\"%%owner_closed_url%%\">%%nb_owner_closed%% closed</a>."
 msgstr[0] ""
@@ -2263,7 +2709,8 @@ msgstr "由 %%submitter%%, 报告于 %%c.creation_dtime%%"
 msgid ""
 "Comment <a href=\"%%url%%\">%%i%%</a> by %%submitter%%, %%c.creation_dtime%%"
 msgstr ""
-"评论 <a href=\"%%url%%\">%%i%%</a> 由 %%submitter%%, 发表于 %%c.creation_dtime%%"
+"评论 <a href=\"%%url%%\">%%i%%</a> 由 %%submitter%%, 发表于 %%c."
+"creation_dtime%%"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:5
 #, php-format
@@ -2296,19 +2743,19 @@ msgid "Add this issue to your watch list"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:12
-msgid "Click here to view the previous closed issue"
+msgid "View the previous closed issue"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:13
-msgid "Click here to view the previous open issue"
+msgid "View the previous open issue"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:14
-msgid "Click here to view the next closed issue"
+msgid "View the next closed issue"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:15
-msgid "Click here to view the next open issue"
+msgid "View the next open issue"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:16
@@ -2320,8 +2767,7 @@ msgid "view"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:23
-msgid ""
-"The form contains some errors. Please correct them to change the issue."
+msgid "The form contains some errors. Please correct them to change the issue."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:25
@@ -2332,12 +2778,72 @@ msgstr "提交修改"
 msgid "Followed by:"
 msgstr "关注："
 
-#: IDF/gettexttemplates/idf/login_form.html.php:3
+#: IDF/gettexttemplates/idf/listProjects.html.php:3
+#, fuzzy, php-format
+msgid "1 project"
+msgid_plural "%%label.project_count%% projects"
+msgstr[0] "项目"
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:4
 #, php-format
-msgid ""
-"If you don't have an account yet, you can create one <a "
-"href=\"%%url%%\">here</a>."
+msgid "Remove filter for %%tag%%"
 msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:5
+msgid "No projects managed with InDefero were found."
+msgstr "没有合适项目"
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:7
+msgid "Filter projects by label"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:8
+#, fuzzy
+msgid "No projects with labels found."
+msgstr "没有项目"
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:9
+msgid "Order"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:10
+#, fuzzy
+msgid "By name"
+msgstr "名称"
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:11
+msgid "By activity"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:12
+msgid "Filtered project stats"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:13
+msgid "Members:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:14
+msgid "Issues:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:15
+msgid "Commits:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:16
+msgid "Documentations:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/listProjects.html.php:18
+msgid "Code reviews:"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/login_form.html.php:3
+#, fuzzy, php-format
+msgid ""
+"You can <a href=\"%%url%%\">create an account</a> if you don't have one yet."
+msgstr "你可以在描述中使用 <a href=\"%%url%%\">Markdown 语法</a>"
 
 #: IDF/gettexttemplates/idf/login_form.html.php:4
 msgid "What is your account information?"
@@ -2369,8 +2875,10 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:3
 #, php-format
-msgid "Welcome, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
-msgstr "欢迎，<strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>"
+msgid ""
+"Welcome, <strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>."
+msgstr ""
+"欢迎，<strong><a class=\"userw\" href=\"%%url%%\">%%user%%</a></strong>"
 
 #: IDF/gettexttemplates/idf/main-menu.html.php:4
 msgid "Sign Out"
@@ -2380,21 +2888,26 @@ msgstr "退出"
 msgid "Sign in or create your account"
 msgstr "登录或创建新用户"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:9 IDF/Views/Admin.php:42
+#: IDF/gettexttemplates/idf/main-menu.html.php:10 IDF/Views/Admin.php:40
 msgid "Forge Management"
 msgstr "系统管理"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:10
+#: IDF/gettexttemplates/idf/main-menu.html.php:11
 msgid "Help and accessibility features"
 msgstr "帮助和辅助功能"
 
-#: IDF/gettexttemplates/idf/main-menu.html.php:11
+#: IDF/gettexttemplates/idf/main-menu.html.php:12
 #: IDF/gettexttemplates/idf/source/git/tree.html.php:14
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:14
 #: IDF/gettexttemplates/idf/source/mtn/tree.html.php:15
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:13
 msgid "Help"
 msgstr "帮助"
+
+#: IDF/gettexttemplates/idf/project/home.html.php:3
+#: IDF/gettexttemplates/idf/project/timeline.html.php:4 IDF/Views.php:46
+msgid "Welcome"
+msgstr "欢迎"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:4
 #: IDF/gettexttemplates/idf/project/timeline.html.php:5
@@ -2406,23 +2919,32 @@ msgid "Featured Downloads"
 msgstr "特色下载"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:6
-#: IDF/gettexttemplates/idf/project/home.html.php:8
+#, fuzzy
+msgid "Show more featured downloads"
+msgstr "特色下载"
+
+#: IDF/gettexttemplates/idf/project/home.html.php:7
+#: IDF/gettexttemplates/idf/project/home.html.php:10
 msgid "show more..."
 msgstr "显示更多..."
 
-#: IDF/gettexttemplates/idf/project/home.html.php:7
+#: IDF/gettexttemplates/idf/project/home.html.php:8
 msgid "Featured Documentation"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/project/home.html.php:9
+msgid "Show more featured documentation"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/project/home.html.php:11
 msgid "Development Team"
 msgstr "开发团队"
 
-#: IDF/gettexttemplates/idf/project/home.html.php:10
+#: IDF/gettexttemplates/idf/project/home.html.php:12
 msgid "Admins"
 msgstr "管理员"
 
-#: IDF/gettexttemplates/idf/project/home.html.php:11
+#: IDF/gettexttemplates/idf/project/home.html.php:13
 msgid "Happy Crew"
 msgstr "成员"
 
@@ -2449,6 +2971,14 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/project/timeline.html.php:10
 msgid "Atom feed"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/project-list.html.php:3
+msgid "Project activity: %%activity%%%"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/project-list.html.php:9
+msgid "n/a"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/register/confirmation-email.txt.php:3
@@ -2499,40 +3029,41 @@ msgstr ""
 #: IDF/gettexttemplates/idf/register/confirmation.html.php:8
 #: IDF/gettexttemplates/idf/user/passrecovery.html.php:8
 msgid ""
-"This is the last step, but just <strong>be sure to have the cookies "
-"enabled</strong> to log in afterwards."
+"This is the last step, but just <strong>be sure to have the cookies enabled</"
+"strong> to log in afterwards."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/register/index.html.php:3
+#, fuzzy
 msgid ""
-"Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> "
-"&ndash; basically <em>\"Please be nice, we respect you\"</em>."
+"Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> – "
+"basically <em>\"Please be nice, we respect you\"</em>."
 msgstr ""
-"阅读 <a id=\"showterms\" href=\"#theterms\">注册协议</a> &ndash; jerry "
-"<em>\"请善用此系统\"</em>."
+"阅读 <a id=\"showterms\" href=\"#theterms\">注册协议</a> &ndash; jerry <em>"
+"\"请善用此系统\"</em>."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:4
 #, php-format
 msgid ""
 "If you have just forgotten your login information, then there is no need to "
-"create a new account. Just go <a href=\"%%url%%\">here</a> to recover your "
-"login name and password."
+"create a new account. You can just <a href=\"%%url%%\">recover your login "
+"name and password</a>."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
 #, php-format
 msgid ""
 "With your account, you will able to participate in the life of all the "
-"projects hosted here. Participating in a software project must be fun, so if"
-" you have troubles, you can <a href=\"%%url%%\">let us know about your "
-"issues at anytime</a>!"
+"projects hosted here. Participating in a software project must be fun, so if "
+"you have troubles, you can <a href=\"%%url%%\">let us know about your issues "
+"at anytime</a>!"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/register/index.html.php:6
 msgid "Oops, please check the provided login and email address to register."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/register/index.html.php:7 IDF/Views.php:90
+#: IDF/gettexttemplates/idf/register/index.html.php:7 IDF/Views.php:137
 msgid "Create Your Account"
 msgstr "注册"
 
@@ -2584,22 +3115,24 @@ msgstr "添加代码审核"
 msgid ""
 "<p>To start a code review, you need to provide:</p>\n"
 "<ul>\n"
-"<li>A commit or revision of the current code in the repository from which you started your work.</li>\n"
-"<li>A patch describing your changes with respect to the reference commit.</li>\n"
-"<li><strong>Check your patch does not provide any password or confidential information!</strong></li>\n"
+"<li>A commit or revision of the current code in the repository from which "
+"you started your work.</li>\n"
+"<li>A patch describing your changes with respect to the reference commit.</"
+"li>\n"
+"<li><strong>Check your patch does not provide any password or confidential "
+"information!</strong></li>\n"
 "</ul>"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/review/create.html.php:9
 msgid ""
-"The form contains some errors. Please correct them to submit the code "
-"review."
+"The form contains some errors. Please correct them to submit the code review."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/review/create.html.php:10
 msgid ""
-"Select the commit against which you created your patch to be sure it applies"
-" correctly."
+"Select the commit against which you created your patch to be sure it applies "
+"correctly."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/review/review-created-email.txt.php:3
@@ -2653,6 +3186,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:18
 #: IDF/gettexttemplates/idf/source/commit.html.php:3
+#: IDF/gettexttemplates/idf/source/commit.html~.php:3
 #, php-format
 msgid "%%ndiff%% diff"
 msgid_plural "%%ndiff%% diffs"
@@ -2667,8 +3201,8 @@ msgstr[0] ""
 #: IDF/gettexttemplates/idf/review/view.html.php:20
 #, php-format
 msgid ""
-"Comment <a href=\"%%url%%\">%%i%%</a> by <a href=\"%%whourl%%\">%%who%%</a>,"
-" %%c.creation_dtime%%"
+"Comment <a href=\"%%url%%\">%%i%%</a> by <a href=\"%%whourl%%\">%%who%%</a>, "
+"%%c.creation_dtime%%"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:21
@@ -2692,17 +3226,20 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:28
 #: IDF/gettexttemplates/idf/source/commit.html.php:5
+#: IDF/gettexttemplates/idf/source/commit.html~.php:5
 msgid "Author:"
 msgstr "作者："
 
 #: IDF/gettexttemplates/idf/review/view.html.php:29
 #: IDF/gettexttemplates/idf/source/commit-created-email.txt.php:5
 #: IDF/gettexttemplates/idf/source/commit.html.php:7
+#: IDF/gettexttemplates/idf/source/commit.html~.php:7
 msgid "Commit:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/review/view.html.php:30
 #: IDF/gettexttemplates/idf/source/commit.html.php:8
+#: IDF/gettexttemplates/idf/source/commit.html~.php:8
 msgid "View corresponding source tree"
 msgstr ""
 
@@ -2720,6 +3257,7 @@ msgstr "文件："
 
 #: IDF/gettexttemplates/idf/review/view.html.php:36
 #: IDF/gettexttemplates/idf/source/commit.html.php:24
+#: IDF/gettexttemplates/idf/source/commit.html~.php:23
 msgid "Download the corresponding diff file"
 msgstr ""
 
@@ -2748,7 +3286,7 @@ msgstr "获取代码"
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:7
 #: IDF/gettexttemplates/idf/source/mtn/tree.html.php:8
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:8
-#: IDF/Views/Project.php:188
+#: IDF/Views/Project.php:190
 msgid "Age"
 msgstr "时间"
 
@@ -2766,6 +3304,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/source/changelog.html.php:6
 #: IDF/gettexttemplates/idf/source/commit.html.php:10
+#: IDF/gettexttemplates/idf/source/commit.html~.php:10
 msgid "View corresponding commit"
 msgstr ""
 
@@ -2797,37 +3336,47 @@ msgid "Commit details:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:4
+#: IDF/gettexttemplates/idf/source/commit.html~.php:4
 msgid "Date:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:6
+#: IDF/gettexttemplates/idf/source/commit.html~.php:6
 msgid "Branch:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:9
+#: IDF/gettexttemplates/idf/source/commit.html~.php:9
 msgid "Parents:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:11
+#: IDF/gettexttemplates/idf/source/commit.html~.php:11
 msgid "Message:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:12
-#: IDF/gettexttemplates/idf/wiki/feedfragment.xml.php:3
+#: IDF/gettexttemplates/idf/source/commit.html~.php:12
+#: IDF/gettexttemplates/idf/wiki/feedfragment-page.xml.php:3
+#: IDF/gettexttemplates/idf/wiki/feedfragment-resource.xml.php:3
 #: IDF/gettexttemplates/idf/wiki/wiki-updated-email.txt.php:10
 msgid "Changes:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:13
+#: IDF/gettexttemplates/idf/source/commit.html~.php:13
 msgid "deleted"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:14
 #: IDF/gettexttemplates/idf/source/commit.html.php:18
+#: IDF/gettexttemplates/idf/source/commit.html~.php:14
+#: IDF/gettexttemplates/idf/source/commit.html~.php:17
 msgid "full"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:15
+#: IDF/gettexttemplates/idf/source/commit.html~.php:15
 msgid "renamed"
 msgstr ""
 
@@ -2836,23 +3385,31 @@ msgid "copied"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:17
+#: IDF/gettexttemplates/idf/source/commit.html~.php:16
 msgid "added"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:19
+#: IDF/gettexttemplates/idf/source/commit.html~.php:18
 msgid "modified"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:20
-msgid "properies changed"
+msgid "properties changed"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:21
+#: IDF/gettexttemplates/idf/source/commit.html~.php:20
 msgid "removed"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:22
+#: IDF/gettexttemplates/idf/source/commit.html~.php:21
 msgid "File differences"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/source/commit.html~.php:19
+msgid "properies changed"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/disambiguate_revision.html.php:3
@@ -2961,9 +3518,8 @@ msgstr " %%project%% 项目使用 <strong>git</strong> 管理源代码"
 msgid ""
 "You may need to <a href=\"%%url%%\">provide your SSH key</a>. The "
 "synchronization of your SSH key can take a couple of minutes. You can learn "
-"more about <a "
-"href=\"http://www.google.com/search?q=public+ssh+key+authentication\">SSH "
-"key authentication</a>."
+"more about <a href=\"http://www.google.com/search?q=public+ssh+key"
+"+authentication\">SSH key authentication</a>."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/git/help.html.php:7
@@ -2995,7 +3551,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/source/mercurial/tree.html.php:9
 #: IDF/gettexttemplates/idf/source/mtn/tree.html.php:10
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:11
-#: IDF/Views/Download.php:66 IDF/Views/Download.php:314
+#: IDF/Views/Download.php:66 IDF/Views/Download.php:348
 msgid "Size"
 msgstr "大小"
 
@@ -3019,6 +3575,7 @@ msgid "or"
 msgstr "或"
 
 #: IDF/gettexttemplates/idf/source/invalid_revision.html.php:3
+#: IDF/gettexttemplates/idf/source/invalid_revision.html~.php:3
 #, php-format
 msgid ""
 "The branch or revision <b>%%commit%%</b> is not valid or does not exist\n"
@@ -3026,12 +3583,16 @@ msgid ""
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/invalid_revision.html.php:5
+#: IDF/gettexttemplates/idf/source/invalid_revision.html~.php:5
 #: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:5
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html~.php:5
 msgid "The following list shows all available branches:"
 msgstr ""
 
 #: IDF/gettexttemplates/idf/source/invalid_revision.html.php:6
+#: IDF/gettexttemplates/idf/source/invalid_revision.html~.php:6
 #: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:6
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html~.php:6
 #, php-format
 msgid ""
 "If this is a new repository, the reason for this error\n"
@@ -3079,6 +3640,7 @@ msgstr ""
 
 #: IDF/gettexttemplates/idf/source/svn/changelog.html.php:3
 #: IDF/gettexttemplates/idf/source/svn/commit.html.php:3
+#: IDF/gettexttemplates/idf/source/svn/commit.html~.php:3
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:9
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:14
 msgid "Revision:"
@@ -3086,6 +3648,7 @@ msgstr "版本:"
 
 #: IDF/gettexttemplates/idf/source/svn/changelog.html.php:4
 #: IDF/gettexttemplates/idf/source/svn/commit.html.php:4
+#: IDF/gettexttemplates/idf/source/svn/commit.html~.php:4
 #: IDF/gettexttemplates/idf/source/svn/file.html.php:10
 #: IDF/gettexttemplates/idf/source/svn/tree.html.php:15
 msgid "Switch"
@@ -3100,6 +3663,7 @@ msgid ""
 msgstr "%%project%% 项目使用 <strong>subversion</strong> 管理源代码"
 
 #: IDF/gettexttemplates/idf/source/svn/invalid_revision.html.php:3
+#: IDF/gettexttemplates/idf/source/svn/invalid_revision.html~.php:3
 #, php-format
 msgid ""
 "The revision <b>%%commit%%</b> is not valid or does not exist\n"
@@ -3245,9 +3809,9 @@ msgstr "恢复密码"
 
 #: IDF/gettexttemplates/idf/user/passrecovery-ask.html.php:6
 msgid ""
-"Provide either your login or email address, if a corresponding user is found"
-" in the database, we will send you an email with the details on how to reset"
-" your password."
+"Provide either your login or email address, if a corresponding user is found "
+"in the database, we will send you an email with the details on how to reset "
+"your password."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/user/passrecovery-email.txt.php:3
@@ -3322,61 +3886,136 @@ msgid "List Pages"
 msgstr "页面列表"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:4
-#: IDF/gettexttemplates/idf/wiki/index.html.php:4
-#: IDF/gettexttemplates/idf/wiki/search.html.php:3 IDF/Views/Wiki.php:173
+#, fuzzy
+msgid "List Resources"
+msgstr "%s 源代码配置"
+
+#: IDF/gettexttemplates/idf/wiki/base.html.php:5
+#: IDF/gettexttemplates/idf/wiki/listPages.html.php:4
+#: IDF/gettexttemplates/idf/wiki/search.html.php:3 IDF/Views/Wiki.php:211
 msgid "New Page"
 msgstr "新页面"
 
-#: IDF/gettexttemplates/idf/wiki/base.html.php:5
+#: IDF/gettexttemplates/idf/wiki/base.html.php:6
+#: IDF/gettexttemplates/idf/wiki/listResources.html.php:3
+#: IDF/Views/Wiki.php:256
+#, fuzzy
+msgid "New Resource"
+msgstr "新问题"
+
+#: IDF/gettexttemplates/idf/wiki/base.html.php:7
 msgid "Update This Page"
 msgstr "更新此页面"
 
-#: IDF/gettexttemplates/idf/wiki/create.html.php:3
-#: IDF/gettexttemplates/idf/wiki/update.html.php:3
+#: IDF/gettexttemplates/idf/wiki/base.html.php:8
+#, fuzzy
+msgid "Update This Resource"
+msgstr "更新此页面"
+
+#: IDF/gettexttemplates/idf/wiki/createPage.html.php:3
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:3
 msgid "Preview of the Page"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/create.html.php:4
+#: IDF/gettexttemplates/idf/wiki/createPage.html.php:4
+#: IDF/gettexttemplates/idf/wiki/createResource.html.php:7
 msgid "The form contains some errors. Please correct them to create the page."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/create.html.php:6
+#: IDF/gettexttemplates/idf/wiki/createPage.html.php:6
 msgid "Create Page"
 msgstr "创建页面"
 
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:3
-#, php-format
+#: IDF/gettexttemplates/idf/wiki/createResource.html.php:3
 msgid ""
-"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the page \n"
-"<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
-"by %%submitter%%."
+"\n"
+"Wiki resources are later addressed in wiki pages by their title, so ensure "
+"that you\n"
+"give your resource a unique and an easy to remember name.\n"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:6
-msgid ""
-"If you delete this old revision, it will be removed from the database and "
-"<strong>you will not be able to recover it</strong>."
-msgstr ""
+#: IDF/gettexttemplates/idf/wiki/createResource.html.php:8
+#, fuzzy
+msgid "Create Resource"
+msgstr "添加用户"
 
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:9
-msgid "Delete Revision"
-msgstr "删除版本"
-
-#: IDF/gettexttemplates/idf/wiki/delete.html.php:14
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:11
-#: IDF/gettexttemplates/idf/wiki/view.html.php:17
-msgid "Old Revisions"
-msgstr ""
-
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:3
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:3
 msgid ""
 "If you delete this documentation page, it will be removed from the database "
 "with all the associated revisions and <strong>you will not be able to "
 "recover it</strong>."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/deletepage.html.php:6
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:6
 msgid "Delete Page"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/deletePage.html.php:11
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:14
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:15
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:15
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:17
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:18
+msgid "Old Revisions"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:3
+#, php-format
+msgid ""
+"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the "
+"page \n"
+"<a href=\"%%url%%\">%%page.title%%</a>. This revision was created\n"
+"by %%submitter%%."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:6
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:5
+msgid ""
+"If you delete this old revision, it will be removed from the database and "
+"<strong>you will not be able to recover it</strong>."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/deletePageRev.html.php:9
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:8
+msgid "Delete Revision"
+msgstr "删除版本"
+
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:3
+msgid ""
+"If you delete this documentation resource, it will be removed from the "
+"database with all the associated revisions \n"
+"and <strong>you will not be able to recover it</strong>. Any documentation "
+"pages that reference this resource,\n"
+"will no longer be able to render it, but won't be deleted."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:8
+#, fuzzy
+msgid "Delete Resource"
+msgstr "删除版本"
+
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:10
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:10
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:8
+#, fuzzy
+msgid "File size"
+msgstr "文件大小"
+
+#: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:11
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:11
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:9
+#: IDF/Views/Wiki.php:101
+#, fuzzy
+msgid "MIME type"
+msgstr "类型"
+
+#: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:3
+#, php-format
+msgid ""
+"You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the "
+"resource \n"
+"<a href=\"%%url%%\">%%resource.title%%</a>. This revision was created by "
+"%%submitter%%."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/wiki/edit-info.html.php:3
@@ -3384,45 +4023,74 @@ msgstr ""
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
-"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
-"<p>Website addresses are automatically linked and you can link to another page in the documentation using double square brackets like that [[AnotherPage]].</p>\n"
-"<p>To directly include a file content from the repository, embrace its path with triple square brackets: [[[path/to/file.txt]]].</p>\n"
+"<p>The content of the page can use the <a href=\"%%burl%%\">Markdown syntax</"
+"a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n"
+"<p>Website addresses are automatically linked and you can link to another "
+"page in the documentation using double square brackets like that <code>"
+"[[AnotherPage]]</code>.</p>\n"
+"<p>If you want to embed uploaded resources, use the <code>[[!ResourceName]]</"
+"code> syntax for that. This is described more in detail <a href=\"%%furl%%#q-"
+"wiki\">in the FAQ.</a></p> \n"
+"<p>To directly include a file content from the repository, embrace its path "
+"with triple square brackets: <code>[[[my/file.txt]]]</code>.</p>\n"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/index.html.php:3
+#: IDF/gettexttemplates/idf/wiki/feedfragment-resource.xml.php:4
+msgid "Initial creation"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/listPages.html.php:3
 #, php-format
 msgid "See <a href=\"%%url%%\">the deprecated pages</a>."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/index.html.php:5
+#: IDF/gettexttemplates/idf/wiki/listPages.html.php:5
 msgid "Number of pages:"
 msgstr "文档数目："
+
+#: IDF/gettexttemplates/idf/wiki/listResources.html.php:4
+#, fuzzy
+msgid "Number of resources:"
+msgstr "用户数量："
 
 #: IDF/gettexttemplates/idf/wiki/search.html.php:4
 msgid "Pages found:"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/update.html.php:4
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:4
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:3
 msgid "The form contains some errors. Please correct them to update the page."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/update.html.php:6
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:6
 msgid "Update Page"
 msgstr "更新页面"
 
-#: IDF/gettexttemplates/idf/wiki/update.html.php:8
-#: IDF/gettexttemplates/idf/wiki/update.html.php:10
-#: IDF/gettexttemplates/idf/wiki/update.html.php:11
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:8
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:10
+#: IDF/gettexttemplates/idf/wiki/updatePage.html.php:11
 msgid "Delete this page"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/view.html.php:3
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:4
+#, fuzzy
+msgid "Update Resource"
+msgstr "更新用户"
+
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:6
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:8
+#: IDF/gettexttemplates/idf/wiki/updateResource.html.php:9
+#, fuzzy
+msgid "Delete this resource"
+msgstr "删除此项目"
+
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:3
 msgid ""
 "<strong>Attention!</strong> This page is marked as deprecated, \n"
 "use it as reference only if you are sure you need these specific information."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/view.html.php:5
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:5
 #, php-format
 msgid ""
 "You are looking at an old revision of the page \n"
@@ -3430,13 +4098,32 @@ msgid ""
 "by %%submitter%%."
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/view.html.php:10
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:10
 msgid "Table of Content"
 msgstr ""
 
-#: IDF/gettexttemplates/idf/wiki/view.html.php:11
-#: IDF/gettexttemplates/idf/wiki/view.html.php:13
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:11
+#: IDF/gettexttemplates/idf/wiki/viewPage.html.php:13
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:11
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:13
 msgid "Delete this revision"
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:3
+#, php-format
+msgid ""
+"You are looking at an old revision of the resource \n"
+"<a href=\"%%url%%\">%%resource.title%%</a>. This revision was created\n"
+"by %%submitter%%."
+msgstr ""
+
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:14
+#, fuzzy
+msgid "Page Usage"
+msgstr "页面名称"
+
+#: IDF/gettexttemplates/idf/wiki/viewResource.html.php:15
+msgid "This resource is not used on any pages yet."
 msgstr ""
 
 #: IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:3
@@ -3464,7 +4151,7 @@ msgstr ""
 msgid "owner"
 msgstr "所有者"
 
-#: IDF/Issue.php:84 IDF/WikiPage.php:86
+#: IDF/Issue.php:84 IDF/Wiki/Page.php:86
 msgid "interested users"
 msgstr ""
 
@@ -3473,38 +4160,40 @@ msgid ""
 "Interested users will get an email notification when the issue is changed."
 msgstr ""
 
-#: IDF/Issue.php:92 IDF/Review.php:95 IDF/Upload.php:99 IDF/WikiPage.php:94
+#: IDF/Issue.php:92 IDF/Project.php:94 IDF/Review.php:95 IDF/Upload.php:99
+#: IDF/Wiki/Page.php:94
 msgid "labels"
 msgstr "标签"
 
 #: IDF/Issue.php:111 IDF/IssueFile.php:102 IDF/Review.php:114
-#: IDF/Upload.php:118 IDF/WikiPage.php:106
+#: IDF/Upload.php:118 IDF/Wiki/Page.php:106 IDF/Wiki/Resource.php:101
 msgid "modification date"
 msgstr "修改日期"
 
 #: IDF/Issue.php:212 IDF/IssueComment.php:143
 #, php-format
-msgid "<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
+msgid ""
+"<a href=\"%1$s\" class=\"%2$s\" title=\"View issue\">Issue %3$d</a>, %4$s"
 msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"新问题\">问题 %3$d</a>, %4$s"
 
 #: IDF/Issue.php:214
-#, php-format
-msgid "Creation of <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
-msgstr ""
+#, fuzzy, php-format
+msgid "Creation of <a href=\"%1$s\" class=\"%2$s\">issue %3$d</a>, by %4$s"
+msgstr "评论 <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, 由 %s"
 
 #: IDF/Issue.php:224
-#, php-format
-msgid "%s: Issue %d created - %s"
+#, fuzzy, php-format
+msgid "%1$s: Issue %2$d created - %3$s"
 msgstr "%s: Issue %d created - %s"
 
-#: IDF/Issue.php:290
+#: IDF/Issue.php:307
 #, php-format
-msgid "Issue %s - %s (%s)"
+msgid "Issue %1$s - %2$s (%3$s)"
 msgstr ""
 
-#: IDF/Issue.php:336
+#: IDF/Issue.php:311
 #, php-format
-msgid "Updated Issue %s - %s (%s)"
+msgid "Updated Issue %1$s - %2$s (%3$s)"
 msgstr ""
 
 #: IDF/IssueComment.php:51 IDF/IssueRelation.php:47
@@ -3517,7 +4206,7 @@ msgid "comment"
 msgstr "评论"
 
 #: IDF/IssueComment.php:72 IDF/Review/Comment.php:75 IDF/Upload.php:63
-#: IDF/WikiRevision.php:85
+#: IDF/Wiki/PageRevision.php:85
 msgid "changes"
 msgstr "修改"
 
@@ -3526,13 +4215,13 @@ msgid "Serialized array of the changes in the issue."
 msgstr ""
 
 #: IDF/IssueComment.php:180
-#, php-format
-msgid "Comment on <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, by %s"
+#, fuzzy, php-format
+msgid "Comment on <a href=\"%1$s\" class=\"%2$s\">issue %3$d</a>, by %4$s"
 msgstr "评论 <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, 由 %s"
 
 #: IDF/IssueComment.php:191
 #, php-format
-msgid "%s: Comment on issue %d - %s"
+msgid "%1$s: Comment on issue %2$d - %3$s"
 msgstr ""
 
 #: IDF/IssueFile.php:64
@@ -3640,7 +4329,7 @@ msgstr ""
 
 #: IDF/Plugin/SyncMonotone.php:309 IDF/Plugin/SyncMonotone.php:525
 #, php-format
-msgid "Could not parse usher configuration in \"%s\": %s"
+msgid "Could not parse usher configuration in \"%1$s\": %2$s"
 msgstr ""
 
 #: IDF/Plugin/SyncMonotone.php:320
@@ -3685,7 +4374,7 @@ msgstr ""
 
 #: IDF/Plugin/SyncMonotone.php:599 IDF/Plugin/SyncMonotone.php:718
 #, php-format
-msgid "Could not parse read-permissions for project \"%s\": %s"
+msgid "Could not parse read-permissions for project \"%1$s\": %2$s"
 msgstr ""
 
 #: IDF/Plugin/SyncMonotone.php:643 IDF/Plugin/SyncMonotone.php:741
@@ -3722,7 +4411,7 @@ msgstr "短名称"
 
 #: IDF/Project.php:70
 msgid ""
-"Used in the url to access the project, must be short with only letters and "
+"Used in the URL to access the project, must be short with only letters and "
 "numbers."
 msgstr ""
 
@@ -3735,17 +4424,26 @@ msgid "description"
 msgstr "说明"
 
 #: IDF/Project.php:87
-msgid "The description can be extended using the markdown syntax."
+msgid "The description can be extended using the Markdown syntax."
 msgstr ""
 
-#: IDF/Project.php:93
+#: IDF/Project.php:100
 msgid "private"
 msgstr "私有"
 
-#: IDF/Project.php:130
+#: IDF/Project.php:108
+msgid "current project activity"
+msgstr ""
+
+#: IDF/Project.php:159
 #, php-format
 msgid "Project \"%s\" not found."
 msgstr ""
+
+#: IDF/ProjectActivity.php:56
+#, fuzzy
+msgid "date"
+msgstr "更新："
 
 #: IDF/Review/Comment.php:55 IDF/Review/Patch.php:80
 msgid "patch"
@@ -3757,22 +4455,23 @@ msgstr ""
 
 #: IDF/Review/Comment.php:139 IDF/Review/Patch.php:151
 #, php-format
-msgid "<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
+msgid ""
+"<a href=\"%1$s\" class=\"%2$s\" title=\"View review\">Review %3$d</a>, %4$s"
 msgstr ""
 
 #: IDF/Review/Comment.php:141
-#, php-format
-msgid "Update of <a href=\"%s\" class=\"%s\">review&nbsp;%d</a>, by %s"
-msgstr ""
+#, fuzzy, php-format
+msgid "Update of <a href=\"%1$s\" class=\"%2$s\">review %3$d</a>, by %4$s"
+msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"新问题\">问题 %3$d</a>, %4$s"
 
 #: IDF/Review/Comment.php:151
 #, php-format
-msgid "%s: Updated review %d - %s"
+msgid "%1$s: Updated review %2$d - %3$s"
 msgstr ""
 
-#: IDF/Review/Comment.php:216
+#: IDF/Review/Comment.php:222
 #, php-format
-msgid "Updated Code Review %s - %s (%s)"
+msgid "Updated Code Review %1$s - %2$s (%3$s)"
 msgstr ""
 
 #: IDF/Review/Patch.php:52
@@ -3784,18 +4483,18 @@ msgid "commit"
 msgstr ""
 
 #: IDF/Review/Patch.php:153
-#, php-format
-msgid "Creation of <a href=\"%s\" class=\"%s\">review&nbsp;%d</a>, by %s"
-msgstr ""
+#, fuzzy, php-format
+msgid "Creation of <a href=\"%1$s\" class=\"%2$s\">review %3$d</a>, by %4$s"
+msgstr "评论 <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, 由 %s"
 
 #: IDF/Review/Patch.php:163
 #, php-format
-msgid "%s: Creation of Review %d - %s"
+msgid "%1$s: Creation of Review %2$d - %3$s"
 msgstr ""
 
-#: IDF/Review/Patch.php:204
+#: IDF/Review/Patch.php:208
 #, php-format
-msgid "New Code Review %s - %s (%s)"
+msgid "New Code Review %1$s - %2$s (%3$s)"
 msgstr ""
 
 #: IDF/Scm/Git.php:309 IDF/Scm/Mercurial.php:199
@@ -3823,7 +4522,7 @@ msgid "Could not write client key \"%s\""
 msgstr ""
 
 #: IDF/Search/Occ.php:33
-msgid "occurence"
+msgid "occurrence"
 msgstr ""
 
 #: IDF/Search/Occ.php:49
@@ -3831,11 +4530,11 @@ msgid "word"
 msgstr ""
 
 #: IDF/Search/Occ.php:75
-msgid "occurences"
+msgid "occurrences"
 msgstr ""
 
 #: IDF/Search/Occ.php:81
-msgid "ponderated occurence"
+msgid "ponderated occurrence"
 msgstr ""
 
 #: IDF/Tag.php:59
@@ -3854,8 +4553,25 @@ msgstr ""
 msgid "Lower case version of the name for fast searching."
 msgstr ""
 
-#: IDF/Template/Markdown.php:75
+#: IDF/Template/Markdown.php:84
 msgid "Create this documentation page"
+msgstr ""
+
+#: IDF/Template/Markdown.php:97
+msgid "You are not allowed to access the wiki."
+msgstr ""
+
+#: IDF/Template/Markdown.php:106
+#, fuzzy
+msgid "The wiki resource has not been found."
+msgstr "项目更新成功"
+
+#: IDF/Template/Markdown.php:113
+msgid "The wiki resource has not been found. Create it!"
+msgstr ""
+
+#: IDF/Template/Markdown.php:146
+msgid "This revision of the resource is no longer available."
 msgstr ""
 
 #: IDF/Template/ShowUser.php:51
@@ -3878,7 +4594,7 @@ msgstr "文件"
 msgid "The path is relative to the upload path."
 msgstr ""
 
-#: IDF/Upload.php:78
+#: IDF/Upload.php:78 IDF/Wiki/ResourceRevision.php:71
 msgid "file size in bytes"
 msgstr ""
 
@@ -3897,144 +4613,160 @@ msgstr ""
 
 #: IDF/Upload.php:204
 #, php-format
-msgid "Addition of <a href=\"%s\">download&nbsp;%d</a>, by %s"
+msgid "Addition of <a href=\"%1$s\">download %2$d</a>, by %3$s"
 msgstr ""
 
 #: IDF/Upload.php:214
 #, php-format
-msgid "%s: Download %d added - %s"
+msgid "%1$s: Download %2$d added - %3$s"
 msgstr ""
 
-#: IDF/Upload.php:256
-#, php-format
-msgid "New download - %s (%s)"
+#: IDF/Upload.php:301
+#, fuzzy, php-format
+msgid "New download - %1$s (%2$s)"
 msgstr "上传 - %s (%s)"
 
-#: IDF/Views/Admin.php:60
+#: IDF/Upload.php:305
+#, fuzzy, php-format
+msgid "Updated download - %1$s (%2$s)"
+msgstr "上传 - %s (%s)"
+
+#: IDF/Views/Admin.php:47
+#, fuzzy
+msgid "The forge configuration has been saved."
+msgstr "下载配置保存成功"
+
+#: IDF/Views/Admin.php:80
 msgid "This table shows the projects in the forge."
 msgstr ""
 
-#: IDF/Views/Admin.php:65
+#: IDF/Views/Admin.php:85
 msgid "Short Name"
 msgstr "短名称"
 
-#: IDF/Views/Admin.php:67
+#: IDF/Views/Admin.php:87
 msgid "Repository Size"
 msgstr "仓库大小"
 
-#: IDF/Views/Admin.php:73
+#: IDF/Views/Admin.php:93
 msgid "No projects were found."
 msgstr "没有项目"
 
-#: IDF/Views/Admin.php:93 IDF/Views/Admin.php:251 IDF/Views/Wiki.php:310
+#: IDF/Views/Admin.php:116
+#, fuzzy
+msgid "The label configuration has been saved."
+msgstr "下载配置保存成功"
+
+#: IDF/Views/Admin.php:147 IDF/Views/Admin.php:314 IDF/Views/Wiki.php:484
+#: IDF/Views/Wiki.php:536
 #, php-format
 msgid "Update %s"
 msgstr "更新 %s"
 
-#: IDF/Views/Admin.php:101 IDF/Views/Project.php:302
+#: IDF/Views/Admin.php:155 IDF/Views/Project.php:304
 msgid "The project has been updated."
 msgstr "项目更新成功"
 
-#: IDF/Views/Admin.php:134
+#: IDF/Views/Admin.php:192
 msgid "The project has been created."
 msgstr "项目创建成功"
 
-#: IDF/Views/Admin.php:160
+#: IDF/Views/Admin.php:223
 #, php-format
 msgid "Delete %s Project"
 msgstr "删除 %s 项目"
 
-#: IDF/Views/Admin.php:167
+#: IDF/Views/Admin.php:230
 msgid "The project has been deleted."
 msgstr "项目删除成功"
 
-#: IDF/Views/Admin.php:197
+#: IDF/Views/Admin.php:260
 msgid "Not Validated User List"
 msgstr "未验证的用户"
 
-#: IDF/Views/Admin.php:205
+#: IDF/Views/Admin.php:268
 msgid "This table shows the users in the forge."
 msgstr ""
 
-#: IDF/Views/Admin.php:209
+#: IDF/Views/Admin.php:272
 msgid "login"
 msgstr "登录"
 
-#: IDF/Views/Admin.php:212
+#: IDF/Views/Admin.php:275
 msgid "Admin"
 msgstr "管理员"
 
-#: IDF/Views/Admin.php:214
+#: IDF/Views/Admin.php:277
 msgid "Last Login"
 msgstr "最后登录"
 
-#: IDF/Views/Admin.php:221
+#: IDF/Views/Admin.php:284
 msgid "No users were found."
 msgstr "没有合适用户"
 
-#: IDF/Views/Admin.php:258
+#: IDF/Views/Admin.php:321
 msgid "You do not have the rights to update this user."
 msgstr ""
 
-#: IDF/Views/Admin.php:276
+#: IDF/Views/Admin.php:339
 msgid "The user has been updated."
 msgstr ""
 
-#: IDF/Views/Admin.php:309
+#: IDF/Views/Admin.php:372
 #, php-format
 msgid "The user %s has been created."
 msgstr ""
 
-#: IDF/Views/Admin.php:316
+#: IDF/Views/Admin.php:379
 msgid "Add User"
 msgstr "添加用户"
 
-#: IDF/Views/Admin.php:332
+#: IDF/Views/Admin.php:395
 msgid "Usher management"
 msgstr ""
 
-#: IDF/Views/Admin.php:369
+#: IDF/Views/Admin.php:432
 msgid "Usher configuration has been reloaded"
 msgstr ""
 
-#: IDF/Views/Admin.php:373
+#: IDF/Views/Admin.php:436
 msgid "Usher has been shut down"
 msgstr ""
 
-#: IDF/Views/Admin.php:378
+#: IDF/Views/Admin.php:441
 msgid "Usher has been started up"
 msgstr ""
 
-#: IDF/Views/Admin.php:416
+#: IDF/Views/Admin.php:479
 #, php-format
 msgid "The server \"%s\" has been started"
 msgstr ""
 
-#: IDF/Views/Admin.php:420
+#: IDF/Views/Admin.php:483
 #, php-format
 msgid "The server \"%s\" has been stopped"
 msgstr ""
 
-#: IDF/Views/Admin.php:425
+#: IDF/Views/Admin.php:488
 #, php-format
 msgid "The server \"%s\" has been killed"
 msgstr ""
 
-#: IDF/Views/Admin.php:445
+#: IDF/Views/Admin.php:508
 #, php-format
 msgid "Open connections for \"%s\""
 msgstr ""
 
-#: IDF/Views/Admin.php:450
+#: IDF/Views/Admin.php:513
 #, php-format
 msgid "no connections for server \"%s\""
 msgstr ""
 
-#: IDF/Views/Admin.php:471
+#: IDF/Views/Admin.php:534
 msgid "Yes"
 msgstr "是"
 
-#: IDF/Views/Admin.php:471
+#: IDF/Views/Admin.php:534
 msgid "No"
 msgstr "不"
 
@@ -4047,11 +4779,11 @@ msgstr "%s 下载"
 msgid "This table shows the files to download."
 msgstr ""
 
-#: IDF/Views/Download.php:67 IDF/Views/Download.php:315
+#: IDF/Views/Download.php:67 IDF/Views/Download.php:349
 msgid "Uploaded"
 msgstr "上传时间"
 
-#: IDF/Views/Download.php:71 IDF/Views/Download.php:319
+#: IDF/Views/Download.php:71 IDF/Views/Download.php:353
 msgid "No downloads were found."
 msgstr "没有下载"
 
@@ -4074,17 +4806,27 @@ msgstr "删除下载 %s"
 msgid "The file has been deleted."
 msgstr ""
 
-#: IDF/Views/Download.php:243
+#: IDF/Views/Download.php:244
 #, php-format
 msgid "The <a href=\"%s\">file</a> has been uploaded."
 msgstr ""
 
-#: IDF/Views/Download.php:297
+#: IDF/Views/Download.php:271
+#, fuzzy
+msgid "New Downloads from Archive"
+msgstr "上传"
+
+#: IDF/Views/Download.php:278
+#, fuzzy
+msgid "The archive has been uploaded and processed."
+msgstr "项目更新成功"
+
+#: IDF/Views/Download.php:331
 #, php-format
 msgid "%1$s Downloads with Label %2$s"
 msgstr ""
 
-#: IDF/Views/Download.php:307
+#: IDF/Views/Download.php:341
 #, php-format
 msgid "This table shows the downloads with label %s."
 msgstr ""
@@ -4094,25 +4836,25 @@ msgstr ""
 msgid "%s Open Issues"
 msgstr "%s 开放的问题"
 
-#: IDF/Views/Issue.php:51 IDF/Views/Issue.php:379 IDF/Views/User.php:75
+#: IDF/Views/Issue.php:51 IDF/Views/Issue.php:382 IDF/Views/User.php:75
 msgid "This table shows the open issues."
 msgstr ""
 
-#: IDF/Views/Issue.php:61 IDF/Views/Issue.php:217 IDF/Views/Issue.php:298
-#: IDF/Views/Issue.php:387 IDF/Views/Issue.php:539 IDF/Views/Issue.php:762
-#: IDF/Views/Issue.php:821 IDF/Views/Review.php:57 IDF/Views/User.php:81
+#: IDF/Views/Issue.php:61 IDF/Views/Issue.php:220 IDF/Views/Issue.php:301
+#: IDF/Views/Issue.php:390 IDF/Views/Issue.php:542 IDF/Views/Issue.php:765
+#: IDF/Views/Issue.php:824 IDF/Views/Review.php:57 IDF/Views/User.php:81
 msgid "Id"
 msgstr "编号"
 
-#: IDF/Views/Issue.php:64 IDF/Views/Issue.php:220 IDF/Views/Issue.php:302
-#: IDF/Views/Issue.php:390 IDF/Views/Issue.php:542 IDF/Views/Issue.php:765
-#: IDF/Views/Issue.php:824 IDF/Views/Review.php:60 IDF/Views/User.php:85
+#: IDF/Views/Issue.php:64 IDF/Views/Issue.php:223 IDF/Views/Issue.php:305
+#: IDF/Views/Issue.php:393 IDF/Views/Issue.php:545 IDF/Views/Issue.php:768
+#: IDF/Views/Issue.php:827 IDF/Views/Review.php:60 IDF/Views/User.php:85
 msgid "Last Updated"
 msgstr "最后更新"
 
-#: IDF/Views/Issue.php:68 IDF/Views/Issue.php:224 IDF/Views/Issue.php:306
-#: IDF/Views/Issue.php:394 IDF/Views/Issue.php:546 IDF/Views/Issue.php:769
-#: IDF/Views/Issue.php:828
+#: IDF/Views/Issue.php:68 IDF/Views/Issue.php:227 IDF/Views/Issue.php:309
+#: IDF/Views/Issue.php:397 IDF/Views/Issue.php:549 IDF/Views/Issue.php:772
+#: IDF/Views/Issue.php:831
 msgid "No issues were found."
 msgstr "没有问题"
 
@@ -4120,142 +4862,142 @@ msgstr "没有问题"
 msgid "Not assigned"
 msgstr ""
 
-#: IDF/Views/Issue.php:146
+#: IDF/Views/Issue.php:149
 #, php-format
 msgid "Summary of tracked issues in %s."
 msgstr ""
 
-#: IDF/Views/Issue.php:191
+#: IDF/Views/Issue.php:194
 #, php-format
 msgid "Watch List: Closed Issues for %s"
 msgstr ""
 
-#: IDF/Views/Issue.php:192
+#: IDF/Views/Issue.php:195
 #, php-format
 msgid "This table shows the closed issues in your watch list for %s project."
 msgstr ""
 
-#: IDF/Views/Issue.php:197
+#: IDF/Views/Issue.php:200
 #, php-format
 msgid "Watch List: Open Issues for %s"
 msgstr ""
 
-#: IDF/Views/Issue.php:198
+#: IDF/Views/Issue.php:201
 #, php-format
 msgid "This table shows the open issues in your watch list for %s project."
 msgstr ""
 
-#: IDF/Views/Issue.php:274
+#: IDF/Views/Issue.php:277
 msgid "Watch List: Closed Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:275
+#: IDF/Views/Issue.php:278
 msgid "This table shows the closed issues in your watch list."
 msgstr ""
 
-#: IDF/Views/Issue.php:280
+#: IDF/Views/Issue.php:283
 msgid "Watch List: Open Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:281
+#: IDF/Views/Issue.php:284
 msgid "This table shows the open issues in your watch list."
 msgstr ""
 
-#: IDF/Views/Issue.php:300 IDF/Views/User.php:82
+#: IDF/Views/Issue.php:303 IDF/Views/User.php:82
 msgid "Project"
 msgstr "项目"
 
-#: IDF/Views/Issue.php:341
+#: IDF/Views/Issue.php:344
+#, fuzzy, php-format
+msgid "%1$s %2$s Submitted %3$s Issues"
+msgstr "发布的问题："
+
+#: IDF/Views/Issue.php:348
 #, php-format
-msgid "%s %s Submitted %s Issues"
+msgid "%1$s %2$s Closed Submitted %3$s Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:345
+#: IDF/Views/Issue.php:352
 #, php-format
-msgid "%s %s Closed Submitted %s Issues"
+msgid "%1$s %2$s Closed Working %3$s Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:349
+#: IDF/Views/Issue.php:356
 #, php-format
-msgid "%s %s Closed Working %s Issues"
+msgid "%1$s %2$s Working %3$s Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:353
-#, php-format
-msgid "%s %s Working %s Issues"
-msgstr ""
-
-#: IDF/Views/Issue.php:414
+#: IDF/Views/Issue.php:417
 msgid "Submit a new issue"
 msgstr "提交新问题"
 
-#: IDF/Views/Issue.php:430
+#: IDF/Views/Issue.php:433
 #, php-format
-msgid "<a href=\"%s\">Issue %d</a> has been created."
+msgid "<a href=\"%1$s\">Issue %2$d</a> has been created."
 msgstr ""
 
-#: IDF/Views/Issue.php:487
+#: IDF/Views/Issue.php:490
 #, php-format
 msgid "Search issues - %s"
 msgstr ""
 
-#: IDF/Views/Issue.php:489
+#: IDF/Views/Issue.php:492
 #, php-format
 msgid "Search closed issues - %s"
 msgstr ""
 
-#: IDF/Views/Issue.php:536
+#: IDF/Views/Issue.php:539
 msgid "This table shows the found issues."
 msgstr ""
 
-#: IDF/Views/Issue.php:601
-#, php-format
-msgid "Issue <a href=\"%s\">%d</a>: %s"
+#: IDF/Views/Issue.php:604
+#, fuzzy, php-format
+msgid "Issue <a href=\"%1$s\">%2$d</a>: %3$s"
 msgstr "问题 <a href=\"%s\">%d</a>: %s"
 
-#: IDF/Views/Issue.php:625
+#: IDF/Views/Issue.php:628
 #, php-format
-msgid "<a href=\"%s\">Issue %d</a> has been updated."
+msgid "<a href=\"%1$s\">Issue %2$d</a> has been updated."
 msgstr ""
 
-#: IDF/Views/Issue.php:715
+#: IDF/Views/Issue.php:718
 #, php-format
 msgid "View %s"
 msgstr "查看 %s"
 
-#: IDF/Views/Issue.php:742
+#: IDF/Views/Issue.php:745
 #, php-format
 msgid "%s Closed Issues"
 msgstr ""
 
-#: IDF/Views/Issue.php:752
+#: IDF/Views/Issue.php:755
 msgid "This table shows the closed issues."
-msgstr ""
-
-#: IDF/Views/Issue.php:795
-#, php-format
-msgid "%1$s Issues with Label %2$s"
 msgstr ""
 
 #: IDF/Views/Issue.php:798
 #, php-format
+msgid "%1$s Issues with Label %2$s"
+msgstr ""
+
+#: IDF/Views/Issue.php:801
+#, php-format
 msgid "%1$s Closed Issues with Label %2$s"
 msgstr ""
 
-#: IDF/Views/Issue.php:811
+#: IDF/Views/Issue.php:814
 #, php-format
 msgid "This table shows the issues with label %s."
 msgstr ""
 
-#: IDF/Views/Issue.php:934
+#: IDF/Views/Issue.php:937
 msgid "The issue has been removed from your watch list."
 msgstr ""
 
-#: IDF/Views/Issue.php:937
+#: IDF/Views/Issue.php:940
 msgid "The issue has been added to your watch list."
 msgstr ""
 
-#: IDF/Views/Issue.php:1035
+#: IDF/Views/Issue.php:1037
 msgid "On your watch list."
 msgstr ""
 
@@ -4271,74 +5013,76 @@ msgstr ""
 msgid "Reviews and Patches"
 msgstr ""
 
-#: IDF/Views/Project.php:178
+#: IDF/Views/Project.php:180
 msgid "This table shows the project updates."
 msgstr ""
 
-#: IDF/Views/Project.php:189
+#: IDF/Views/Project.php:191
 msgid "Change"
 msgstr "更改"
 
-#: IDF/Views/Project.php:193
+#: IDF/Views/Project.php:195
 msgid "No changes were found."
 msgstr "没有修改信息"
 
-#: IDF/Views/Project.php:294
+#: IDF/Views/Project.php:296
 #, php-format
 msgid "%s Project Summary"
 msgstr "%s 项目摘要"
 
-#: IDF/Views/Project.php:329
+#: IDF/Views/Project.php:335
 #, php-format
 msgid "%s Issue Tracking Configuration"
 msgstr "%s 问题跟踪配置"
 
-#: IDF/Views/Project.php:338
+#: IDF/Views/Project.php:344
 msgid "The issue tracking configuration has been saved."
 msgstr "问题跟踪配置保存成功"
 
-#: IDF/Views/Project.php:375
+#: IDF/Views/Project.php:381
 #, php-format
 msgid "%s Downloads Configuration"
 msgstr "%s 下载配置"
 
-#: IDF/Views/Project.php:384
+#: IDF/Views/Project.php:393
 msgid "The downloads configuration has been saved."
 msgstr "下载配置保存成功"
 
-#: IDF/Views/Project.php:418
+#: IDF/Views/Project.php:428
 #, php-format
 msgid "%s Documentation Configuration"
 msgstr "%s 文档配置"
 
-#: IDF/Views/Project.php:427
+#: IDF/Views/Project.php:437
 msgid "The documentation configuration has been saved."
 msgstr "文档配置保存成功"
 
-#: IDF/Views/Project.php:461
+#: IDF/Views/Project.php:471
 #, php-format
 msgid "%s Project Members"
 msgstr "%s 项目成员"
 
-#: IDF/Views/Project.php:470
+#: IDF/Views/Project.php:480
 msgid "The project membership has been saved."
 msgstr "项目成员保存成功"
 
-#: IDF/Views/Project.php:493
+#: IDF/Views/Project.php:503
 #, php-format
 msgid "%s Tabs Access Rights"
 msgstr "%s 访问权限"
 
-#: IDF/Views/Project.php:507
-msgid "The project tabs access rights have been saved."
+#: IDF/Views/Project.php:517
+#, fuzzy
+msgid ""
+"The project tabs access rights and notification settings have been saved."
 msgstr "项目访问权限保存成功"
 
-#: IDF/Views/Project.php:553
+#: IDF/Views/Project.php:566
 #, php-format
 msgid "%s Source"
 msgstr "%s 源代码配置"
 
-#: IDF/Views/Project.php:567
+#: IDF/Views/Project.php:580
 msgid "The project source configuration  has been saved."
 msgstr ""
 
@@ -4357,17 +5101,17 @@ msgstr "没有审核"
 
 #: IDF/Views/Review.php:94
 #, php-format
-msgid "The <a href=\"%s\">code review %d</a> has been created."
+msgid "The <a href=\"%1$s\">code review %2$d</a> has been created."
 msgstr ""
 
 #: IDF/Views/Review.php:140
-#, php-format
-msgid "Review <a href=\"%s\">%d</a>: %s"
-msgstr ""
+#, fuzzy, php-format
+msgid "Review <a href=\"%1$s\">%2$d</a>: %3$s"
+msgstr "问题 <a href=\"%s\">%d</a>: %s"
 
 #: IDF/Views/Review.php:160
 #, php-format
-msgid "Your <a href=\"%s\">code review %d</a> has been published."
+msgid "Your <a href=\"%1$s\">code review %2$d</a> has been published."
 msgstr ""
 
 #: IDF/Views/Source.php:40
@@ -4390,19 +5134,19 @@ msgstr ""
 msgid "%1$s %2$s Change Log"
 msgstr "%1$s %2$s 修改日志"
 
-#: IDF/Views/Source.php:147 IDF/Views/Source.php:228 IDF/Views/Source.php:356
+#: IDF/Views/Source.php:153 IDF/Views/Source.php:234 IDF/Views/Source.php:362
 #, php-format
 msgid "%1$s %2$s Source Tree"
 msgstr "%1$s %2$s 源码树"
 
-#: IDF/Views/Source.php:304
+#: IDF/Views/Source.php:310
 #, php-format
 msgid "%s Commit Details"
 msgstr ""
 
-#: IDF/Views/Source.php:305
+#: IDF/Views/Source.php:311
 #, php-format
-msgid "%s Commit Details - %s"
+msgid "%1$s Commit Details - %2$s"
 msgstr ""
 
 #: IDF/Views/User.php:59
@@ -4455,155 +5199,269 @@ msgstr "%s 文档"
 msgid "This table shows the documentation pages."
 msgstr ""
 
-#: IDF/Views/Wiki.php:61 IDF/Views/Wiki.php:106 IDF/Views/Wiki.php:147
+#: IDF/Views/Wiki.php:61 IDF/Views/Wiki.php:144 IDF/Views/Wiki.php:185
 msgid "Page Title"
 msgstr "标题"
 
-#: IDF/Views/Wiki.php:63 IDF/Views/Wiki.php:108 IDF/Views/Wiki.php:149
+#: IDF/Views/Wiki.php:63 IDF/Views/Wiki.php:103 IDF/Views/Wiki.php:146
+#: IDF/Views/Wiki.php:187
 msgid "Updated"
 msgstr ""
 
-#: IDF/Views/Wiki.php:67 IDF/Views/Wiki.php:153
+#: IDF/Views/Wiki.php:67 IDF/Views/Wiki.php:191
 msgid "No documentation pages were found."
 msgstr "没有文档"
 
-#: IDF/Views/Wiki.php:90
+#: IDF/Views/Wiki.php:88
+#, fuzzy, php-format
+msgid "%s Documentation Resources"
+msgstr "%s 文档"
+
+#: IDF/Views/Wiki.php:94
+msgid "This table shows the resources that can be used on documentation pages."
+msgstr ""
+
+#: IDF/Views/Wiki.php:100
+#, fuzzy
+msgid "Resource Title"
+msgstr "源码"
+
+#: IDF/Views/Wiki.php:107
+#, fuzzy
+msgid "No resources were found."
+msgstr "没有问题"
+
+#: IDF/Views/Wiki.php:128
 #, php-format
 msgid "Documentation Search - %s"
 msgstr ""
 
-#: IDF/Views/Wiki.php:101
+#: IDF/Views/Wiki.php:139
 msgid "This table shows the pages found."
 msgstr ""
 
-#: IDF/Views/Wiki.php:112
+#: IDF/Views/Wiki.php:150
 msgid "No pages were found."
 msgstr ""
 
-#: IDF/Views/Wiki.php:131
+#: IDF/Views/Wiki.php:169
 #, php-format
 msgid "%1$s Documentation Pages with Label %2$s"
 msgstr ""
 
-#: IDF/Views/Wiki.php:141
+#: IDF/Views/Wiki.php:179
 #, php-format
 msgid "This table shows the documentation pages with label %s."
 msgstr ""
 
-#: IDF/Views/Wiki.php:184
-#, php-format
-msgid "The page <a href=\"%s\">%s</a> has been created."
-msgstr ""
+#: IDF/Views/Wiki.php:222
+#, fuzzy, php-format
+msgid "The page <a href=\"%1$s\">%2$s</a> has been created."
+msgstr "项目创建成功"
 
-#: IDF/Views/Wiki.php:271
+#: IDF/Views/Wiki.php:265
+#, fuzzy, php-format
+msgid "The resource <a href=\"%1$s\">%2$s</a> has been created."
+msgstr "项目创建成功"
+
+#: IDF/Views/Wiki.php:409 IDF/Views/Wiki.php:448
 msgid "The old revision has been deleted."
 msgstr ""
 
-#: IDF/Views/Wiki.php:277
+#: IDF/Views/Wiki.php:415 IDF/Views/Wiki.php:454
 #, php-format
 msgid "Delete Old Revision of %s"
 msgstr ""
 
-#: IDF/Views/Wiki.php:322
-#, php-format
-msgid "The page <a href=\"%s\">%s</a> has been updated."
-msgstr ""
+#: IDF/Views/Wiki.php:496
+#, fuzzy, php-format
+msgid "The page <a href=\"%1$s\">%2$s</a> has been updated."
+msgstr "项目更新成功"
 
-#: IDF/Views/Wiki.php:360
+#: IDF/Views/Wiki.php:548
+#, fuzzy, php-format
+msgid "The resource <a href=\"%1$s\">%2$s</a> has been updated."
+msgstr "项目更新成功"
+
+#: IDF/Views/Wiki.php:583
 msgid "The documentation page has been deleted."
 msgstr ""
 
-#: IDF/Views/Wiki.php:368
+#: IDF/Views/Wiki.php:591
 #, php-format
 msgid "Delete Page %s"
 msgstr ""
 
-#: IDF/Views.php:126 IDF/Views.php:152
+#: IDF/Views/Wiki.php:623
+#, fuzzy
+msgid "The documentation resource has been deleted."
+msgstr "文档配置保存成功"
+
+#: IDF/Views/Wiki.php:631
+#, fuzzy, php-format
+msgid "Delete Resource %s"
+msgstr "删除版本"
+
+#: IDF/Views.php:173 IDF/Views.php:199
 msgid "Confirm Your Account Creation"
 msgstr ""
 
-#: IDF/Views.php:172
-msgid ""
-"Welcome! You can now participate in the life of your project of choice."
+#: IDF/Views.php:219
+msgid "Welcome! You can now participate in the life of your project of choice."
 msgstr ""
 
-#: IDF/Views.php:198 IDF/Views.php:222 IDF/Views.php:263
+#: IDF/Views.php:245 IDF/Views.php:269 IDF/Views.php:310
 msgid "Password Recovery"
 msgstr "找回密码"
 
-#: IDF/Views.php:242
+#: IDF/Views.php:289
 msgid ""
 "Welcome back! Next time, you can use your broswer options to remember the "
 "password."
 msgstr "欢迎回来！接下来，你可以使用浏览器记住你的密码"
 
-#: IDF/Views.php:284
+#: IDF/Views.php:331
 msgid "Here to Help You!"
 msgstr "希望这些能帮到你"
 
-#: IDF/Views.php:300
+#: IDF/Views.php:347
+msgid "InDefero Upload Archive Format"
+msgstr ""
+
+#: IDF/Views.php:363
 msgid "InDefero API (Application Programming Interface)"
 msgstr ""
 
-#: IDF/WikiPage.php:62
+#: IDF/Wiki/Page.php:62 IDF/Wiki/Resource.php:64
 msgid "title"
 msgstr "标题"
 
-#: IDF/WikiPage.php:63
+#: IDF/Wiki/Page.php:63
 msgid ""
 "The title of the page must only contain letters, digits or the dash "
 "character. For example: My-new-Wiki-Page."
 msgstr ""
 
-#: IDF/WikiPage.php:71
+#: IDF/Wiki/Page.php:71
 msgid "A one line description of the page content."
 msgstr ""
 
-#: IDF/WikiPage.php:196 IDF/WikiRevision.php:167
+#: IDF/Wiki/Page.php:196 IDF/Wiki/PageRevision.php:196
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View page\">%2$s</a>, %3$s"
 msgstr ""
 
-#: IDF/WikiPage.php:198
+#: IDF/Wiki/Page.php:198
 #, php-format
-msgid "Creation of <a href=\"%s\">page&nbsp;%s</a>, by %s"
+msgid "Creation of <a href=\"%1$s\">page %2$s</a>, by %3$s"
 msgstr ""
 
-#: IDF/WikiPage.php:208
+#: IDF/Wiki/Page.php:208
 #, php-format
-msgid "%s: Documentation page %s added - %s"
+msgid "%1$s: Documentation page %2$s added - %3$s"
 msgstr ""
 
-#: IDF/WikiRevision.php:48
+#: IDF/Wiki/PageRevision.php:48
 msgid "page"
 msgstr ""
 
-#: IDF/WikiRevision.php:66
+#: IDF/Wiki/PageRevision.php:66 IDF/Wiki/ResourceRevision.php:64
 msgid "A one line description of the changes."
 msgstr ""
 
-#: IDF/WikiRevision.php:72
+#: IDF/Wiki/PageRevision.php:72
 msgid "content"
 msgstr ""
 
-#: IDF/WikiRevision.php:189
+#: IDF/Wiki/PageRevision.php:218 IDF/Wiki/ResourceRevision.php:311
+#, fuzzy, php-format
+msgid "Change of <a href=\"%1$s\">%2$s</a>, by %3$s"
+msgstr "问题 <a href=\"%s\">%d</a>: %s"
+
+#: IDF/Wiki/PageRevision.php:231
 #, php-format
-msgid "Change of <a href=\"%s\">%s</a>, by %s"
+msgid "%1$s: Documentation page %2$s updated - %3$s"
 msgstr ""
 
-#: IDF/WikiRevision.php:208
+#: IDF/Wiki/PageRevision.php:293
 #, php-format
-msgid "%s: Documentation page %s updated - %s"
+msgid "New Documentation Page %1$s - %2$s (%3$s)"
 msgstr ""
 
-#: IDF/WikiRevision.php:262
+#: IDF/Wiki/PageRevision.php:297
 #, php-format
-msgid "New Documentation Page %s - %s (%s)"
+msgid "Documentation Page Changed %1$s - %2$s (%3$s)"
 msgstr ""
 
-#: IDF/WikiRevision.php:268
-#, php-format
-msgid "Documentation Page Changed %s - %s (%s)"
+#: IDF/Wiki/Resource.php:65
+msgid ""
+"The title of the resource must only contain letters, digits, dots or the "
+"dash character. For example: my-resource.png."
 msgstr ""
 
+#: IDF/Wiki/Resource.php:72
+msgid "MIME media type"
+msgstr ""
 
+#: IDF/Wiki/Resource.php:73
+msgid "The MIME media type of the resource."
+msgstr ""
+
+#: IDF/Wiki/Resource.php:81
+#, fuzzy
+msgid "A one line description of the resource."
+msgstr "项目简单描述"
+
+#: IDF/Wiki/Resource.php:176 IDF/Wiki/ResourceRevision.php:308
+#, fuzzy, php-format
+msgid "<a href=\"%1$s\" title=\"View resource\">%2$s</a>, %3$s"
+msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"新问题\">问题 %3$d</a>, %4$s"
+
+#: IDF/Wiki/Resource.php:178
+#, fuzzy, php-format
+msgid "Creation of <a href=\"%1$s\">resource %2$s</a>, by %3$s"
+msgstr "评论 <a href=\"%s\" class=\"%s\">issue&nbsp;%d</a>, 由 %s"
+
+#: IDF/Wiki/Resource.php:188
+#, php-format
+msgid "%1$s: Documentation resource %2$s added - %3$s"
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:47
+#, fuzzy
+msgid "resource"
+msgstr "源代码"
+
+#: IDF/Wiki/ResourceRevision.php:78
+msgid "File extension"
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:79
+msgid "The file extension of the uploaded resource."
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:94
+msgid "page usage"
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:116
+#, php-format
+msgid "id %d: %s"
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:263
+#, fuzzy, php-format
+msgid "Download (%s)"
+msgstr "下载 %s"
+
+#: IDF/Wiki/ResourceRevision.php:270
+msgid "View resource details"
+msgstr ""
+
+#: IDF/Wiki/ResourceRevision.php:324
+#, php-format
+msgid "%1$s: Documentation resource %2$s updated - %3$s"
+msgstr ""
+
+#~ msgid "Your mail"
+#~ msgstr "你的Email"
