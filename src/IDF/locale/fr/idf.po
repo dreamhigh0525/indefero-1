@@ -6,14 +6,15 @@
 # Benjamin Danon <benjamin@sphax3d.org>, 2011.
 # Jean-Philippe Fleury <contact@jpfleury.net>, 2011.
 # tommyd <me@thomaskeller.biz>, 2011.
+#   <victor.quinault@gmail.com>, 2012.
 # William MARTIN <wysman@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
 "POT-Creation-Date: 2012-03-22 01:16+0100\n"
-"PO-Revision-Date: 2012-03-22 00:19+0000\n"
-"Last-Translator: tommyd <me@thomaskeller.biz>\n"
+"PO-Revision-Date: 2012-03-30 10:41+0000\n"
+"Last-Translator: victorquinault <victor.quinault@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/indefero/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,7 +92,7 @@ msgstr "email"
 
 #: IDF/Form/Admin/ForgeConf.php:34
 msgid "Custom forge page enabled"
-msgstr ""
+msgstr "Page personnalisée de la forge activée"
 
 #: IDF/Form/Admin/ForgeConf.php:39 IDF/Form/WikiPageCreate.php:80
 #: IDF/Form/WikiPageUpdate.php:72
@@ -100,7 +101,7 @@ msgstr "Contenu"
 
 #: IDF/Form/Admin/LabelConf.php:40
 msgid "Predefined project labels"
-msgstr ""
+msgstr "Étiquettes prédéfinies des projets"
 
 #: IDF/Form/Admin/LabelConf.php:55
 #, php-format
@@ -164,7 +165,7 @@ msgstr "Une description d'une ligne du projet."
 #: IDF/Form/Admin/ProjectCreate.php:77 IDF/Form/Admin/ProjectUpdate.php:58
 #: IDF/Form/ProjectConf.php:56
 msgid "External URL"
-msgstr ""
+msgstr "URL externe"
 
 #: IDF/Form/Admin/ProjectCreate.php:84
 msgid "Repository type"
@@ -425,7 +426,7 @@ msgstr "Gestionnaire"
 
 #: IDF/Form/Admin/UserUpdate.php:164
 msgid "If you give staff rights to a user, you really need to trust him."
-msgstr ""
+msgstr "Si vous donnez des droits de gestionnaire à un utilisateur, vous devez lui faire confiance."
 
 #: IDF/Form/Admin/UserUpdate.php:172 IDF/Views/Admin.php:276
 msgid "Active"
@@ -509,7 +510,7 @@ msgstr "Vous avez fourni une étiquette invalide."
 #: IDF/Form/IssueCreate.php:217 IDF/Form/UpdateUpload.php:109
 #, php-format
 msgid "You cannot provide more than one label from the %s class to an issue."
-msgstr ""
+msgstr "Vous ne pouvez pas fournir plus d'une étiquette de la classe %s à un ticket."
 
 #: IDF/Form/IssueCreate.php:228 IDF/Form/IssueUpdate.php:194
 msgid "You need to provide a description of the issue."
@@ -578,7 +579,7 @@ msgstr "Les premières entrées «Type:» et «Priorité:» de cette liste sont 
 
 #: IDF/Form/IssueTrackingConf.php:133
 msgid "Each issue may have at most one label with each of these classes."
-msgstr ""
+msgstr "Chaque ticket ne peut avoir qu'une seule étiquette pour chacune de ces classes."
 
 #: IDF/Form/IssueTrackingConf.php:140
 msgid "Issue relations"
@@ -590,7 +591,7 @@ msgid ""
 "is blocked by\". For standard relations pre-configured translations exist, "
 "new relations should however be defined in a language that is understood by "
 "all project members."
-msgstr ""
+msgstr "ous pouvez définir des relations bidirectionnelles comme «&nbsp;est lié à&nbsp;» ou «&nbsp;bloque, est bloqué par&nbsp;». Pour des relations standards pré-configurées, il exite des traductions. De nouvelles relations peuvent cependant être définies dans un vocabulaire compris par tous les membres du projets."
 
 #: IDF/Form/IssueUpdate.php:56 IDF/Form/ReviewFileComment.php:45
 #: IDF/Form/WikiPageUpdate.php:82 IDF/Form/WikiResourceUpdate.php:66
