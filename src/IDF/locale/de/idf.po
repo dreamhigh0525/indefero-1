@@ -1566,9 +1566,11 @@ msgid ""
 "section of your project via the main menu or automatically generated object "
 "links."
 msgstr ""
+"Zugriffsberechtigungen bestimmen, ob ein bestimmter Nutzer in eine bestimmte "
+"Sektion Deines Projekts über das Hauptmenü oder über automatisch generierte "
+"Inhaltslinks gelangen kann."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:5
-#, fuzzy
 msgid ""
 "If you mark a project as private, only the project members and "
 "administrators, together with the extra authorized users you provide will "
@@ -1584,31 +1586,26 @@ msgstr ""
 "berücksichtigen."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:6
-#, fuzzy
 msgid ""
 "For the extra authorized user list, specify each person by its login. Each "
 "person must have already registered with the given login. Separate the "
 "logins with commas and/or new lines."
 msgstr ""
-"Gib für jede Person ihren Anmeldenamen ein. Jede Person muss sich bereits "
-"mit diesem Namen angemeldet haben. Trenne die Anmeldenamen durch Kommas und "
-"/ oder neue Zeilen."
+"Gib in der Liste der zusätzlich zu authorisierenden Nutzer für jede Person "
+"ihren Anmeldenamen ein. Jede Person muss sich bereits mit diesem Namen "
+"angemeldet haben. Trenne die Anmeldenamen durch Kommas und / oder neue "
+"Zeilen."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:7
-#, fuzzy
 msgid ""
 "Only project members and admins have write access to the source. If you "
 "restrict the access to the source, anonymous access is not provided and the "
 "users must authenticate themselves with their password or SSH key."
 msgstr ""
-"\n"
 "Nur Projektmitglieder und Administratoren haben Schreibzugriff auf den "
-"Quellcode.<br />\n"
-"Wenn Du den Zugriff auf den Quellcode beschränkst, wird kein anonymer "
-"Zugriff<br />\n"
-"angeboten und die Benutzer müssen sich mit ihrem Passwort oder "
-"öffentlichen<br />\n"
-"Schlüssel authentifizieren."
+"Quellcode. Wenn Du den Zugriff auf den Quellcode beschränkst, wird kein "
+"anonymer Zugriff angeboten und die Benutzer müssen sich mit ihrem Passwort "
+"oder öffentlichen Schlüssel authentifizieren."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:8
 #, php-format
@@ -1620,6 +1617,13 @@ msgid ""
 "mailing list actually accept notification emails.) Multiple email addresses "
 "must be separated through commas (',')."
 msgstr ""
+"Hier kannst Du konfigurieren, wer über Änderungen in einer bestimmten "
+"Sektion benachrichtigt werden soll. Du kannst auch weitere E-Mail-Adressen, "
+"wie etwa die einer Mailingliste, hier hinterlegen. (Vergiss nicht, dass Du "
+"unter Umständen die Absender-Adresse <strong>%%from_email%%</strong> vorher "
+"erst registrieren musst, bevor die Mailingliste Benachrichtigungs-E-Mails "
+"akzeptiert.) Mehrere E-Mail-Adressen müssen durch Kommas (',') voneinander "
+"getrennt werden."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:9
 msgid ""
@@ -1636,9 +1640,8 @@ msgstr "Zugriffsberechtigungen"
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:11
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:14
-#, fuzzy
 msgid "Notifications"
-msgstr "Benachrichtigungs-E-Mail"
+msgstr "Benachrichtigungen"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:3
 #: IDF/gettexttemplates/idf/base-full.html~.php:3
@@ -1656,7 +1659,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/base.html.php:6
 #: IDF/gettexttemplates/idf/project-list.html.php:6
 msgid "External link to project"
-msgstr ""
+msgstr "Externer Link zum Projekt"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:7
 #: IDF/gettexttemplates/idf/base-full.html~.php:6
@@ -1679,9 +1682,8 @@ msgid "New Download"
 msgstr "Neuer Download"
 
 #: IDF/gettexttemplates/idf/downloads/base.html.php:5
-#, fuzzy
 msgid "Upload Archive"
-msgstr "Archiv"
+msgstr "Archiv hochladen"
 
 #: IDF/gettexttemplates/idf/downloads/create.html.php:3
 msgid ""
@@ -1757,22 +1759,25 @@ msgid ""
 "files to process inside the archive. All processed files must be unique or "
 "replace existing files explicitely."
 msgstr ""
+"Das Archiv muss eine <code>manifest.xml</code>-Datei mit Meta-Informationen "
+"bezüglich\n"
+"der in diesem Archiv zu verarbeitenden Dateien beinhalten. Alle Dateien "
+"müssen eindeutig sein\n"
+"oder bestehende Dateien explizit ersetzen."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:5
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "You can learn more about the archive format <a href=\"%%url%%\">here</a>."
 msgstr ""
-"Wenn Du noch kein Benutzerkonto hast, kannst Du <a href=\"%%url%%\">hier</a> "
-"ein neues erstellen."
+"<a href=\"%%url%%\">Hier kannst mehr über das Archiv-Format lernen</a>."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:6
-#, fuzzy
 msgid ""
 "The form contains some errors. Please correct them to submit the archive."
 msgstr ""
-"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um die Datei "
-"einzusenden."
+"Die Eingabemaske enthält einige Fehler. Bitte korrigiere diese, um das "
+"Archiv einzusenden."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:7
 msgid "Submit Archive"
@@ -1998,7 +2003,6 @@ msgid "Projects"
 msgstr "Projekte"
 
 #: IDF/gettexttemplates/idf/faq.html.php:3
-#, fuzzy
 msgid ""
 "<p>This is simple:</p>\n"
 "<ol>\n"
@@ -2013,9 +2017,11 @@ msgid ""
 msgstr ""
 "<p>Ganz einfach:</p>\n"
 "<ol>\n"
-"<li>Schreibe in das Kommentarfeld: \"Dies ist ein Duplikat von issue 123\", "
-"ändere 123 in die dazugehörige Ticketnummer.</li>\n"
-"<li>Ändere den Status des aktuellen Tickets auf <em>Duplikat</em>.</li>\n"
+"<li>Schreibe in das Kommentarfeld \"Dies ist ein Duplikat von issue 123\" "
+"oder - wenn Du ein Mitglied des Teams bist - füge direkt eine "
+"\"duplicates\"-Verknüpfung mit dem Wert \"123\" hinzu. Ändere 123 in die "
+"dazugehörige Ticketnummer.</li>\n"
+"<li>Ändere den Status des aktuellen Tickets auf <em>Duplicate</em>.</li>\n"
 "<li>Speichere die Änderungen.</li>\n"
 "</ol>"
 
@@ -2056,6 +2062,34 @@ msgid ""
 "the resource at first and then also the page where it is referenced, "
 "otherwise the change won't be visible until the next regular edit. \n"
 msgstr ""
+"\n"
+"<p>Um eine vorher hochgeladene Ressource in Deine Wiki-Seite einzubetten, "
+"kannst Du die <code>[[!RessourcenName]]</code>-Syntax verwenden.</p>\n"
+"\n"
+"<p>Die Darstellung der Ressource kann dann weiter angepasst werden:\n"
+"<ul>\n"
+"<li><code>[[!BildRessource, align=right, width=200]]</code> stellt "
+"\"BildResource\" rechts ausgerichtet und in der Breite auf 200 Pixel Größe "
+"skaliert dar</li>\n"
+"<li><code>[[!TextRessource, align=center, width=300, height=300]]</code> "
+"stellt \"TextResource\" in einem zentrierten, 300 x 300 Pixel großen IFRAME "
+"dar</li>\n"
+"<li><code>[[!JedeRessource, preview=no]]</code> stellt keine Vorschau der "
+"Ressource dar, sondern zeigt lediglich einen Download-Link an (Standard für "
+"Binär-Ressourcen)</li>\n"
+"<li><code>[[!BinärRessource, title=Download]]</code> stellt den "
+"Download-Link von \"BinärResource\" mit einem alternativen Titel dar</li>\n"
+"</ul>\n"
+"</p>\n"
+"\n"
+"Ressourcen werden, wie Wiki-Seiten auch, versionisiert. Wenn Du eine "
+"Ressource aktualisierst, zeigen alte Wikiseiten weiterhin\n"
+"die Version der Ressource an, die aktuell war, als die Wiki-Seite bearbeitet "
+"wurde. Wenn Du eine Ressource auf einer bestimmten\n"
+"Seite aktualisieren möchtest, aktualisiere zunächst die Ressource und danach "
+"auch die Seite, auf welcher die Ressource referenziert\n"
+"ist, andernfalls werden die Änderungen an der Ressourcen bis zur nächsten "
+"regulären Inhaltsänderung der Seite nicht sichtbar.\n"
 
 #: IDF/gettexttemplates/idf/faq.html.php:28
 msgid ""
@@ -2073,6 +2107,20 @@ msgid ""
 "information, unpacks the other files from\n"
 "the archive and creates new individual downloads for each of them.</p>"
 msgstr ""
+"<p>Wenn Du viele Dateien auf einmal für ein Release veröffentlichen musst, "
+"ist es eine sehr langwierige Aufgabe,\n"
+"jede Datei einzeln hochzuladen und Meta-Informationen wie Zusammenfasssung, "
+"Beschreibung oder zusätzliche\n"
+"Marken in die Eingabefelder einzugeben.<p>\n"
+"<p>InDefero unterstützt daher ein spezielles Archiv-Format, welches im "
+"Grunde genommen eine normale\n"
+"ZIP-Datei ist, die weitere Meta-Informationen enthält. Diese "
+"Meta-Informationen werden in einer speziellen\n"
+"Manifest-Datei aufgehoben, die getrennt von den anderen Dateien des Archivs "
+"behandelt wird.</p>\n"
+"<p>Sobald das Archiv hochgeladen wurde, liest InDefero die Meta-Informatine "
+"aus, entpackt die anderen Dateien\n"
+"vom Archiv und erzeugt für jede von ihnen individuelle Downloads.</p>"
 
 #: IDF/gettexttemplates/idf/faq.html.php:36
 #, php-format
@@ -2113,11 +2161,13 @@ msgstr "Wie kann ich meinen Kommentaren ein Foto von mir hinzufügen?"
 #: IDF/gettexttemplates/idf/faq.html.php:62
 msgid "How can I embed images and other resources in my documentation pages?"
 msgstr ""
+"Wie kann ich Bilder oder andere Ressourcen in meine Dokumentationsseiten "
+"einbetten?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:43
 #: IDF/gettexttemplates/idf/faq.html.php:63
 msgid "What is this \"Upload Archive\" functionality about?"
-msgstr ""
+msgstr "Um was geht es bei der Funktion \"Archiv hochladen\"?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:44
 #: IDF/gettexttemplates/idf/faq.html.php:64
@@ -2217,6 +2267,22 @@ msgid ""
 "</ul>\n"
 "</p>\n"
 msgstr ""
+"\n"
+"<p><strong>Anweisungen:</strong></p>\n"
+"<p>Du kannst eine eigene Forge-Startseite einrichtem, die anstatt der "
+"einfachen Projektliste angezeigt wird. Diese Seite ist dann auch über den "
+"'Startseite'-Link im Hauptmenü zu erreichen.</p>\n"
+"<p>Für den Inhalt der Seite kann die <a "
+"href=\"%%burl%%\">Markdown-Syntax</a> mit der <a "
+"href=\"%%eurl%%\"><em>Extra</em>-Erweiterung</a> verwendet werden.</p>\n"
+"<p>Zusätzlich sind die folgenden Makros verfügbar:<br />\n"
+"<ul>\n"
+"<li><code>&#x7b;projectlist, label=..., order=(name|activity), "
+"limit=...}</code> -Zeigt eine Projektliste an, die optional nach "
+"Markegefiltert und nach Name oder Aktivität sortiert und / oder auf eine "
+"bestimmte Anzahl von Projekten beschränkt werden kann.</li>\n"
+"</ul>\n"
+"</p>\n"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:3
 #: IDF/gettexttemplates/idf/main-menu.html.php:7
@@ -3067,31 +3133,27 @@ msgstr "Dieses Ticket %%verb%%"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:10
 msgid "Remove this issue from your watch list"
-msgstr "Entferne dieses Ticket von Deiner Beobachtungsliste."
+msgstr "Entferne dieses Ticket von Deiner Beobachtungsliste"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:11
 msgid "Add this issue to your watch list"
-msgstr "Füge dieses Ticket zu Deiner Beobachtungsliste hinzu."
+msgstr "Füge dieses Ticket zu Deiner Beobachtungsliste hinzu"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:12
-#, fuzzy
 msgid "View the previous closed issue"
-msgstr "Klicke hier, um das vorherige geschlossene Ticket zu sehen."
+msgstr "Zeige das vorherige geschlossene Ticket"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:13
-#, fuzzy
 msgid "View the previous open issue"
-msgstr "Klicke hier, um das vorherige offene Ticket zu sehen."
+msgstr "Zeige das vorherige offene Ticket"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:14
-#, fuzzy
 msgid "View the next closed issue"
-msgstr "Klicke hier, um das nächte geschlossene Ticket zu sehen."
+msgstr "Zeige das nächte geschlossene Ticket"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:15
-#, fuzzy
 msgid "View the next open issue"
-msgstr "Klicke hier, um das nächste offene Ticket zu sehen."
+msgstr "Zeige das nächste offene Ticket"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:16
 msgid "download"
@@ -3116,16 +3178,16 @@ msgid "Followed by:"
 msgstr "Beobachtet von:"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid "1 project"
 msgid_plural "%%label.project_count%% projects"
-msgstr[0] "Projekt"
-msgstr[1] "Projekt"
+msgstr[0] "1 Projekt"
+msgstr[1] "%%label.project_count%% Projekte"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:4
 #, php-format
 msgid "Remove filter for %%tag%%"
-msgstr ""
+msgstr "Entferne Filter für %%tag%%"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:5
 msgid "No projects managed with InDefero were found."
@@ -3133,29 +3195,27 @@ msgstr "Es wurden keine verwalteten Projekte gefunden."
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:7
 msgid "Filter projects by label"
-msgstr ""
+msgstr "Filtere Projekte nach Marke"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:8
-#, fuzzy
 msgid "No projects with labels found."
-msgstr "Es wurden keine Projekte gefunden."
+msgstr "Keine Projekte mit Marken gefunden."
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:9
 msgid "Order"
-msgstr ""
+msgstr "Sortierung"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:10
-#, fuzzy
 msgid "By name"
-msgstr "Name"
+msgstr "Nach Name"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:11
 msgid "By activity"
-msgstr ""
+msgstr "Nach Aktivität"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:12
 msgid "Filtered project stats"
-msgstr ""
+msgstr "Statistiken der gefilterten Projekte"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:13
 msgid "Members:"
@@ -3178,12 +3238,12 @@ msgid "Code reviews:"
 msgstr "Code-Besprechungen:"
 
 #: IDF/gettexttemplates/idf/login_form.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "You can <a href=\"%%url%%\">create an account</a> if you don't have one yet."
 msgstr ""
-"Du kannst die <a href=\"%%url%%\">Markdown-Syntax</a> für die Beschreibung "
-"nutzen."
+"Du kannst <a href=\"%%url%%\">ein Konto erstellen</a>, wenn Du noch keins "
+"hast."
 
 #: IDF/gettexttemplates/idf/login_form.html.php:4
 msgid "What is your account information?"
@@ -3260,9 +3320,8 @@ msgid "Featured Downloads"
 msgstr "Empfohlene Downloads"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:6
-#, fuzzy
 msgid "Show more featured downloads"
-msgstr "Empfohlene Downloads"
+msgstr "Zeige mehr empfohlene Downloads"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:7
 #: IDF/gettexttemplates/idf/project/home.html.php:10
@@ -3274,9 +3333,8 @@ msgid "Featured Documentation"
 msgstr "Empfohlene Dokumentation"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:9
-#, fuzzy
 msgid "Show more featured documentation"
-msgstr "Empfohlene Dokumentation"
+msgstr "Zeige mehr empfohlene Dokumentation"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:11
 msgid "Development Team"
@@ -3316,11 +3374,11 @@ msgstr "Atom-Feed"
 
 #: IDF/gettexttemplates/idf/project-list.html.php:3
 msgid "Project activity: %%activity%%%"
-msgstr ""
+msgstr "Projekt-Aktivität: %%activity%%%"
 
 #: IDF/gettexttemplates/idf/project-list.html.php:9
 msgid "n/a"
-msgstr ""
+msgstr "n.v."
 
 #: IDF/gettexttemplates/idf/register/confirmation-email.txt.php:3
 #, php-format
@@ -3401,25 +3459,23 @@ msgstr ""
 "Cookies aktiviert hast</strong>, um Dich im Folgenden anzumelden."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:3
-#, fuzzy
 msgid ""
 "Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> – "
 "basically <em>\"Please be nice, we respect you\"</em>."
 msgstr ""
-"Lies die <a id=\"showterms\" href=\"#theterms\">Geschäftsbedingungen</a> "
-"&ndash; kurz zusammengefast <em>\"Bitte sei nett, wir respektieren "
-"Dich\"</em>."
+"Lies die <a id=\"showterms\" href=\"#theterms\">Geschäftsbedingungen</a> - "
+"kurz zusammengefast <em>\"Bitte sei nett, wir respektieren Dich\"</em>."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:4
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "If you have just forgotten your login information, then there is no need to "
 "create a new account. You can just <a href=\"%%url%%\">recover your login "
 "name and password</a>."
 msgstr ""
 "Wenn Du einfach nur Deine Anmeldedaten vergessen hast, gibt es keinen Grund, "
-"ein neues Benutzerkonto zu erstellen. Gehe einfach <a href=\"%%url%%\">hier "
-"her</a>, um Deinen Anmeldenamen und Dein Passwort wiederherzustellen."
+"ein neues Benutzerkonto zu erstellen. Du kannst einfach <a "
+"href=\"%%url%%\">Deinen Anmeldenamen und Dein Passwort wiederherstellen</a>."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
 #, php-format
@@ -3818,7 +3874,6 @@ msgid "modified"
 msgstr "verändert"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:20
-#, fuzzy
 msgid "properties changed"
 msgstr "Eigenschaften geändert"
 
@@ -4409,9 +4464,8 @@ msgid "List Pages"
 msgstr "Seiten anzeigen"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:4
-#, fuzzy
 msgid "List Resources"
-msgstr "%s Quellcode"
+msgstr "Ressourcen anzeigen"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:5
 #: IDF/gettexttemplates/idf/wiki/listPages.html.php:4
@@ -4421,18 +4475,16 @@ msgstr "Neue Seite"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:6
 #: IDF/gettexttemplates/idf/wiki/listResources.html.php:3 IDF/Views/Wiki.php:256
-#, fuzzy
 msgid "New Resource"
-msgstr "Neues Ticket"
+msgstr "Neue Ressource"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:7
 msgid "Update This Page"
 msgstr "Diese Seite aktualisieren"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:8
-#, fuzzy
 msgid "Update This Resource"
-msgstr "Diese Seite aktualisieren"
+msgstr "Diese Ressource aktualisieren"
 
 #: IDF/gettexttemplates/idf/wiki/createPage.html.php:3
 #: IDF/gettexttemplates/idf/wiki/updatePage.html.php:3
@@ -4457,11 +4509,14 @@ msgid ""
 "that you\n"
 "give your resource a unique and an easy to remember name.\n"
 msgstr ""
+"\n"
+"Wiki-Ressourcen werden später in Wiki-Seiten über ihren Titel referenziert,\n"
+"stelle also sicher, dass Du Deiner Ressource einen eindeutigen und einfach\n"
+"zu merkenden Namen gibst.\n"
 
 #: IDF/gettexttemplates/idf/wiki/createResource.html.php:8
-#, fuzzy
 msgid "Create Resource"
-msgstr "Benutzer anlegen"
+msgstr "Ressource anlegen"
 
 #: IDF/gettexttemplates/idf/wiki/deletePage.html.php:3
 msgid ""
@@ -4557,7 +4612,7 @@ msgstr ""
 "%%submitter%% angelegt."
 
 #: IDF/gettexttemplates/idf/wiki/edit-info.html.php:3
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "\n"
 "<p><strong>Instructions:</strong></p>\n"
@@ -4580,6 +4635,9 @@ msgstr ""
 "<p>Website-Adresses werden automatisch verlinkt und Du kannst außerdem zu "
 "anderen Dokumentations-Seiten durch die Benutzung von doppelten, eckigen "
 "Klammern verlinken, etwa so: [[AndereSeite]].</p>\n"
+"<p>Wenn Du hochgeladene Ressourcen einbetten möchtest, verwende die "
+"<code>[[!RessourcenName]]</code>-Syntax dafür. Dies wird <a "
+"href=\"%%furl%%#q-wiki\">in der FAQ näher beschrieben.</a></p>\n"
 "<p>Um direkt die Inhalte einer Datei aus dem Depot einzubinden, umklammere "
 "den Pfad zur Datei mit dreifachen, eckigen Klammern: "
 "[[[Pfad/zu/Datei.txt]]].</p>\n"
