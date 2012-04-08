@@ -38,6 +38,10 @@ function IDF_Migrations_21WikiPageRevisionName_up($params=null)
     $db->execute('ALTER TABLE '.$db->pfx.'idf_wikirevisions RENAME TO '.$db->pfx.'idf_wikipagerevs');
     $db->execute("UPDATE ".$db->pfx."idf_timeline SET model_class='IDF_Wiki_Page' WHERE model_class LIKE 'IDF_WikiPage'");
     $db->execute("UPDATE ".$db->pfx."idf_timeline SET model_class='IDF_Wiki_PageRevision' WHERE model_class LIKE 'IDF_WikiRevision'");
+    $db->execute("UPDATE ".$db->pfx."idf_search_occs SET model_class='IDF_Wiki_Page' WHERE model_class LIKE 'IDF_WikiPage'");
+    $db->execute("UPDATE ".$db->pfx."idf_search_occs SET model_class='IDF_Wiki_PageRevision' WHERE model_class LIKE 'IDF_WikiRevision'");
+    $db->execute("UPDATE ".$db->pfx."pluf_search_stats SET model_class='IDF_Wiki_Page' WHERE model_class LIKE 'IDF_WikiPage'");
+    $db->execute("UPDATE ".$db->pfx."pluf_search_stats SET model_class='IDF_Wiki_PageRevision' WHERE model_class LIKE 'IDF_WikiRevision'");
 }
 
 function IDF_Migrations_21WikiPageRevisionName_down($params=null)
@@ -57,4 +61,8 @@ function IDF_Migrations_21WikiPageRevisionName_down($params=null)
     $db->execute('ALTER TABLE '.$db->pfx.'idf_wikipagerevs RENAME TO '.$db->pfx.'idf_wikirevisions');
     $db->execute("UPDATE ".$db->pfx."idf_timeline SET model_class='IDF_WikiPage' WHERE model_class LIKE 'IDF_Wiki_Page'");
     $db->execute("UPDATE ".$db->pfx."idf_timeline SET model_class='IDF_WikiRevision' WHERE model_class LIKE 'IDF_Wiki_PageRevision'");
+    $db->execute("UPDATE ".$db->pfx."idf_search_occs SET model_class='IDF_WikiPage' WHERE model_class LIKE 'IDF_Wiki_Page'");
+    $db->execute("UPDATE ".$db->pfx."idf_search_occs SET model_class='IDF_WikiRevision' WHERE model_class LIKE 'IDF_Wiki_PageRevision'");
+    $db->execute("UPDATE ".$db->pfx."pluf_search_stats SET model_class='IDF_WikiPage' WHERE model_class LIKE 'IDF_Wiki_Page'");
+    $db->execute("UPDATE ".$db->pfx."pluf_search_stats SET model_class='IDF_WikiRevision' WHERE model_class LIKE 'IDF_Wiki_PageRevision'");
 }
