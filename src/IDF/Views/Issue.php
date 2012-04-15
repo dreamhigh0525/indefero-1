@@ -130,7 +130,7 @@ class IDF_Views_Issue
                     uasort($tagStatistics[$class], function ($a, $b) {
                         if ($a[0] === $b[0])
                             return 0;
-                            
+
                         return ($a[0] > $b[0]) ? -1 : 1;
                     });
                 }
@@ -326,7 +326,7 @@ class IDF_Views_Issue
     public function userIssues($request, $match)
     {
         $prj = $request->project;
-        
+
         $sql = new Pluf_SQL('login=%s', array($match[2]));
         $user = Pluf::factory('Pluf_User')->getOne(array('filter' => $sql->gen()));
         if ($user === null) {
@@ -334,7 +334,7 @@ class IDF_Views_Issue
                                             array($prj->shortname));
             return new Pluf_HTTP_Response_Redirect($url);
         }
-        
+
         $otags = $prj->getTagIdsByStatus('open');
         $ctags = $prj->getTagIdsByStatus('closed');
         if (count($otags) == 0) $otags[] = 0;
@@ -361,7 +361,7 @@ class IDF_Views_Issue
                          $user->first_name,
                          $user->last_name,
                          (string) $prj);
-        
+
         // Get stats about the issues
         $sql = new Pluf_SQL('project=%s AND submitter=%s AND status IN ('.implode(', ', $otags).')', array($prj->id, $user->id));
         $nb_submit = Pluf::factory('IDF_Issue')->getCount(array('filter'=>$sql->gen()));
@@ -601,7 +601,7 @@ class IDF_Views_Issue
 
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::view',
                                         array($prj->shortname, $issue->id));
-        $title = Pluf_Template::markSafe(sprintf(__('Issue <a href="%1$s">%2$d</a>: %3$s'), $url, $issue->id, $issue->summary));
+        $title = Pluf_Template::markSafe(sprintf(__('Issue <a href="%1$s">%2$d</a>: %3$s'), $url, $issue->id, Pluf_esc($issue->summary)));
         $form = false; // The form is available only if logged in.
         $starred = false;
         $closed = in_array($issue->status, $prj->getTagIdsByStatus('closed'));
@@ -735,13 +735,13 @@ class IDF_Views_Issue
     {
         $prj = $request->project;
         $status = $match[2];
-        
+
         if (mb_strtolower($status) == 'open') {
             $url = Pluf_HTTP_URL_urlForView('IDF_Views_Issue::index',
                                             array($prj->shortname));
-            return new Pluf_HTTP_Response_Redirect($url);            
+            return new Pluf_HTTP_Response_Redirect($url);
         }
-        
+
         $title = sprintf(__('%s Closed Issues'), (string) $prj);
         // Get stats about the issues
         $open = $prj->getIssueCountByStatus('open');

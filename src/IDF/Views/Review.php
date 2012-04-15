@@ -137,7 +137,7 @@ class IDF_Views_Review
         $prj->inOr404($review);
         $url = Pluf_HTTP_URL_urlForView('IDF_Views_Review::view',
                                         array($prj->shortname, $review->id));
-        $title = Pluf_Template::markSafe(sprintf(__('Review <a href="%1$s">%2$d</a>: %3$s'), $url, $review->id, $review->summary));
+        $title = Pluf_Template::markSafe(sprintf(__('Review <a href="%1$s">%2$d</a>: %3$s'), $url, $review->id, Pluf_esc($review->summary)));
 
         $patches = $review->get_patches_list();
         $patch = $patches[0];
