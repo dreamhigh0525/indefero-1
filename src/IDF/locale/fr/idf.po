@@ -7,14 +7,14 @@
 # Jean-Philippe Fleury <contact@jpfleury.net>, 2011.
 # tommyd <me@thomaskeller.biz>, 2011.
 #   <victor.quinault@gmail.com>, 2012.
-# William MARTIN <wysman@gmail.com>, 2011.
+# William MARTIN <wysman@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
 "POT-Creation-Date: 2012-03-22 01:16+0100\n"
-"PO-Revision-Date: 2012-03-30 10:41+0000\n"
-"Last-Translator: victorquinault <victor.quinault@gmail.com>\n"
+"PO-Revision-Date: 2012-04-17 08:06+0000\n"
+"Last-Translator: William MARTIN <wysman@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/indefero/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,12 +59,12 @@ msgstr "date de création"
 #: IDF/Commit.php:238
 #, php-format
 msgid "Commit %1$s, by %2$s"
-msgstr ""
+msgstr "Commit %1$s, par %2$s"
 
 #: IDF/Commit.php:337
 #, php-format
 msgid "New Commit %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Nouveau Commit %1$s - %2$s (%3$s)"
 
 #: IDF/Conf.php:61 IDF/Gconf.php:73
 msgid "key"
@@ -109,7 +109,7 @@ msgid ""
 "The label \"%s\" is invalid: A label must only consist of alphanumeric "
 "characters and dashes, and can optionally contain a \":\" with a group "
 "prefix."
-msgstr ""
+msgstr "L'étiquette \"%s\" est invalide : Une étiquette ne peut être composée seulement que de caractères alphanumérique et de tirets, et peut éventuellement contenir un \":\" avec un préfixe de groupe."
 
 #: IDF/Form/Admin/ProjectCreate.php:38 IDF/Views/Project.php:600
 msgid "git"
@@ -706,7 +706,7 @@ msgstr "L'image doit avoir une taille de 32 × 32 pixels."
 
 #: IDF/Form/ProjectConf.php:164
 msgid "The entered URL is invalid. Only http and https URLs are allowed."
-msgstr ""
+msgstr "L'adresse entrée est invalide. Seul les sites \"http\" et \"https\" sont autorisés."
 
 #: IDF/Form/Register.php:41
 msgid "Your login"
@@ -741,7 +741,7 @@ msgstr "Nous savons que c'est inintéressant, mais vous devez accepter les condi
 msgid ""
 "The email \"%1$s\" is already used. If you need to, you can <a "
 "href=\"%2$s\">recover your password</a>."
-msgstr ""
+msgstr "L'email \"%1$s\" est déjà utilisé. Si vous le voulez, vous pouvez <a href=\"%2$s\">récupérer votre mot de passe</a>."
 
 #: IDF/Form/Register.php:148
 msgid "Confirm the creation of your account."
@@ -768,7 +768,7 @@ msgstr "Nous sommes désolés, mais cette clé de confirmation est invalide. Peu
 msgid ""
 "This account has already been confirmed. Maybe should you try to <a "
 "href=\"%s\">recover your password</a>."
-msgstr ""
+msgstr "Ce compte à déjà été validé. Vous voulez peut-être <a href=\"%s\">récupérer votre mot de passe</a>."
 
 #: IDF/Form/ReviewCreate.php:74
 #: IDF/gettexttemplates/idf/source/base.html.php:5
@@ -870,7 +870,7 @@ msgstr "Fermé"
 
 #: IDF/Form/TabsConf.php:84
 msgid "Others"
-msgstr ""
+msgstr "Autres"
 
 #: IDF/Form/TabsConf.php:107
 msgid "Extra authorized users"
@@ -895,77 +895,77 @@ msgstr "Pour des raisons de sécurité, vous ne pouvez pas mettre en ligne un fi
 #, php-format
 msgid ""
 "You cannot provide more than one label from the %s class to a download."
-msgstr ""
+msgstr "Vous ne pouvez pas fournir plus d'une étiquette de la classe %s pour un téléchargement."
 
 #: IDF/Form/UploadArchive.php:41
 msgid "Archive file"
-msgstr ""
+msgstr "Fichier archivé"
 
 #: IDF/Form/UploadArchive.php:67
 #, php-format
 msgid ""
 "For security reasons, you cannot upload a file (%s) with this extension."
-msgstr ""
+msgstr "Pour des raisons de sécurité, vous ne pouvez pas uploader une fichier (%s) sans son extension."
 
 #: IDF/Form/UploadArchive.php:98
 #, php-format
 msgid ""
 "You cannot provide more than label from the %1$s class to a download (%2$s)."
-msgstr ""
+msgstr "Vous ne pouvez pas fournir plus d'une étiquette de la  classe %1$s pour un téléchargement (%2$s)."
 
 #: IDF/Form/UploadArchive.php:109
 #, php-format
 msgid ""
 "A file with the name \"%s\" has already been uploaded and is not marked to "
 "be replaced."
-msgstr ""
+msgstr "Un fichier avec ce nom \"%s\" à été déjà été envoyé et n'a pas été signalé comme un fichier qui devait être remplacé."
 
 #: IDF/Form/UploadArchiveHelper.php:41
 msgid "The archive does not exist."
-msgstr ""
+msgstr "L'archive n'existe pas."
 
 #: IDF/Form/UploadArchiveHelper.php:48
 #, php-format
 msgid "The archive could not be read (code %d)."
-msgstr ""
+msgstr "L'archive ne peut pas être lue (code %d)."
 
 #: IDF/Form/UploadArchiveHelper.php:53
 msgid "The archive does not contain a manifest.xml."
-msgstr ""
+msgstr "L'archive ne contient pas de fichier \"manifest.xml\"."
 
 #: IDF/Form/UploadArchiveHelper.php:61
 #, php-format
 msgid "The archive's manifest is invalid: %s"
-msgstr ""
+msgstr "Le manifeste de l'archive est invalide : %s."
 
 #: IDF/Form/UploadArchiveHelper.php:77
 #, php-format
 msgid "The entry %d in the manifest is missing a file name."
-msgstr ""
+msgstr "Il manque le nom du fichier dans l'entrée %d du manifeste."
 
 #: IDF/Form/UploadArchiveHelper.php:82
 #, php-format
 msgid "The entry %d in the manifest is missing a summary."
-msgstr ""
+msgstr "Il manque une résumé dans l'entrée %d du manifeste."
 
 #: IDF/Form/UploadArchiveHelper.php:86
 msgid "The manifest must not reference itself."
-msgstr ""
+msgstr "Le manifeste ne doit pas se faire référence à lui même."
 
 #: IDF/Form/UploadArchiveHelper.php:91
 #, php-format
 msgid "The entry %s in the manifest does not exist in the archive."
-msgstr ""
+msgstr "L'entrée %s du manifeste n'existe pas dans l'archive."
 
 #: IDF/Form/UploadArchiveHelper.php:96
 #, php-format
 msgid "The entry %s in the manifest is referenced more than once."
-msgstr ""
+msgstr "L'entrée %s du manifeste est référencée plus d'une fois."
 
 #: IDF/Form/UploadArchiveHelper.php:108
 #, php-format
 msgid "The entry %s in the manifest has more than the six allowed labels set."
-msgstr ""
+msgstr "L'entrée %s du manifeste contient plus que le maximum des 6 étiquettes autorisées."
 
 #: IDF/Form/UploadConf.php:53
 msgid "Predefined download labels"
@@ -993,11 +993,11 @@ msgstr "Copiez une clé publique SSH ou monotone. Faites bien attention à ne pa
 
 #: IDF/Form/UserAccount.php:171
 msgid "Add a secondary email address"
-msgstr ""
+msgstr "Ajouter une adresse email secondaire"
 
 #: IDF/Form/UserAccount.php:173
 msgid "You will get an email to confirm that you own the address you specify."
-msgstr ""
+msgstr "Vous allez recevoir un email de confirmation à l'adresse que vous avez spécifié."
 
 #: IDF/Form/UserAccount.php:200
 msgid "Confirm your new email address."
@@ -1090,7 +1090,7 @@ msgstr "Une page avec ce titre existe déjà."
 #: IDF/Form/WikiPageCreate.php:150 IDF/Form/WikiPageUpdate.php:161
 #, php-format
 msgid "You cannot provide more than one label from the %s class to a page."
-msgstr ""
+msgstr "Vous ne pouvez pas fournir plus d'une étiquette de la classe %s pour une page."
 
 #: IDF/Form/WikiPageCreate.php:200
 msgid "Initial page creation"
@@ -1110,45 +1110,45 @@ msgstr "Une ligne pour décrire les modifications que vous avez effectuées."
 
 #: IDF/Form/WikiResourceCreate.php:40
 msgid "ResourceName"
-msgstr ""
+msgstr "Nom de la ressource"
 
 #: IDF/Form/WikiResourceCreate.php:44
 msgid "Resource title"
-msgstr ""
+msgstr "Titre de la ressource"
 
 #: IDF/Form/WikiResourceCreate.php:50
 msgid ""
 "The resource name must contains only letters, digits and the dash (-) "
 "character."
-msgstr ""
+msgstr "Le nom de la ressource ne peut contenir que des lettre, des chiffres, et des tirets (-)."
 
 #: IDF/Form/WikiResourceCreate.php:55 IDF/Form/WikiResourceUpdate.php:47
 msgid "This one line description is displayed in the list of resources."
-msgstr ""
+msgstr "Cette ligne de description est affichée dans la liste des ressources."
 
 #: IDF/Form/WikiResourceCreate.php:84
 msgid "A resource with this title already exists."
-msgstr ""
+msgstr "Une ressource avec ce titre existe déjà."
 
 #: IDF/Form/WikiResourceCreate.php:142
 msgid "Initial resource creation"
-msgstr ""
+msgstr "Création initiale de la ressource"
 
 #: IDF/Form/WikiResourceDelete.php:39
 msgid ""
 "Yes, I understand that the resource and all its revisions will be deleted."
-msgstr ""
+msgstr "Oui, je comprend cette ressource et cette révision va être supprimée."
 
 #: IDF/Form/WikiResourceUpdate.php:89
 #, php-format
 msgid ""
 "The mime type of the uploaded file \"%1$s\" does not match the mime type of "
 "this resource \"%2$s\""
-msgstr ""
+msgstr "Le type MIME du fichier envoyé \"%1$s\" ne correspond pas avec le type MIME de cette ressource \"%2$s\""
 
 #: IDF/Form/WikiResourceUpdate.php:97
 msgid "The current version of the resource and the uploaded file are equal."
-msgstr ""
+msgstr "La version actuelle de la ressource et du fichier envoyé sont les mêmes"
 
 #: IDF/Gconf.php:60 IDF/Search/Occ.php:56
 msgid "model class"
@@ -1215,7 +1215,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/admin/downloads.html.php:31
 #: IDF/gettexttemplates/idf/admin/source.html.php:30
 msgid "Web-Hook authentication key:"
-msgstr ""
+msgstr "Clé d’authentification du Web-Hook :"
 
 #: IDF/gettexttemplates/idf/admin/downloads.html.php:32
 #: IDF/gettexttemplates/idf/admin/issue-tracking.html.php:8
@@ -1332,14 +1332,14 @@ msgstr "Votre projet ne dispose pas encore d'un logo."
 msgid ""
 "This section allows you to configure project tabs access rights and "
 "notifications."
-msgstr ""
+msgstr "Cette section vous autorise à configurer les droits d'accès et les notifications des onglets de projets."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:4
 msgid ""
 "Tab access controls whether a single user can navigate into a particular "
 "section of your project via the main menu or automatically generated object "
 "links."
-msgstr ""
+msgstr "L'onglet d'accès contrôle si un seul utilisateur peut naviguer dans une section particulière de votre projet à partir du menu principal où des liens d'objets automatiquement générés."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:5
 msgid ""
@@ -1348,21 +1348,21 @@ msgid ""
 "have access to the project as a whole. You will still be able to define "
 "further access rights for the different tabs but the \"Open to all\" and "
 "\"Signed in users\" will default to authorized users only."
-msgstr ""
+msgstr "Si vous indiquer que votre projet est privé, seul les administrateurs et les membres du projet, ainsi que les autres utilisateurs auxquels vous en aurez donné l'accès, auront accès au projet dans son ensemble. Vous serez toujours capable de définir d'autres droits d'accès pour d'autres onglets, mais les onglets \"Ouvert à tous\" et \"Utilisateurs authentifiés\" ne seront, par défaut, accessible qu'aux utilisateur autorisés."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:6
 msgid ""
 "For the extra authorized user list, specify each person by its login. Each "
 "person must have already registered with the given login. Separate the "
 "logins with commas and/or new lines."
-msgstr ""
+msgstr "Pour remplir la liste des autres utilisateurs, spécifié chacun des utilisateurs par son identifiant. Chaque utilisateur doit déjà être enregistrer avec l'identifiant donné. Séparer chaque identifiant avec des virgules et/ou avec des nouvelles lignes."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:7
 msgid ""
 "Only project members and admins have write access to the source. If you "
 "restrict the access to the source, anonymous access is not provided and the "
 "users must authenticate themselves with their password or SSH key."
-msgstr ""
+msgstr "Seul les membres et les administrateurs ont les accès en écriture à cette ressource. Si vous restreignez l’accès à la source, les accès anonyme ne seront pas disponible et les utilisateurs devront s'authentifier avec leur mot de passe ou leur clé SSH."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:8
 #, php-format
@@ -1373,7 +1373,7 @@ msgid ""
 "register the sender address <strong>%%from_email%%</strong> to let the "
 "mailing list actually accept notification emails.) Multiple email addresses "
 "must be separated through commas (',')."
-msgstr ""
+msgstr "Ici, vous pouvez configurer qui va être notifier lors d'un changement dans une section spécifique. Vous pouvez aussi configurer des adresses supplémentaires, comme celle d'une liste de diffusion (mailling list), qui doit être avertie. (Rappelez vous que vous pouvez avoir enregistrer une adresse email d'envoi <strong>%%from_email%%</strong> pour que la liste de diffusion (mailling list) puisse accepter les mails de notifications.) Quand plusieurs adresses email sont spécifiés, elles doivent être séparées par des virgules (',')."
 
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:9
 msgid ""
@@ -1389,7 +1389,7 @@ msgstr "Droits d'accès"
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:11
 #: IDF/gettexttemplates/idf/admin/tabs.html.php:14
 msgid "Notifications"
-msgstr ""
+msgstr "Notifications"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:3
 #: IDF/gettexttemplates/idf/base-full.html~.php:3
@@ -1405,7 +1405,7 @@ msgstr "<a href=\"%%url%%\">Connectez-vous ou créez votre compte</a> pour soume
 #: IDF/gettexttemplates/idf/base.html.php:6
 #: IDF/gettexttemplates/idf/project-list.html.php:6
 msgid "External link to project"
-msgstr ""
+msgstr "Liens externe vers le projet"
 
 #: IDF/gettexttemplates/idf/base-full.html.php:7
 #: IDF/gettexttemplates/idf/base-full.html~.php:6
@@ -1429,7 +1429,7 @@ msgstr "Nouveau téléchargement"
 
 #: IDF/gettexttemplates/idf/downloads/base.html.php:5
 msgid "Upload Archive"
-msgstr ""
+msgstr "Ajouter une archive"
 
 #: IDF/gettexttemplates/idf/downloads/create.html.php:3
 msgid ""
@@ -1495,21 +1495,21 @@ msgstr "Instructions"
 msgid ""
 "The archive must include a <code>manifest.xml</code> file with meta information about the\n"
 "files to process inside the archive. All processed files must be unique or replace existing files explicitely."
-msgstr ""
+msgstr "L'archive doit inclure un fichier <code>manifest.xml</code> comportant des méta-informations à propos du fichier à traiter à l’intérieur de l'archive.\nTous les fichiers traiter doivent être unique ou doivent remplacer des fichiers existant explicitement."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:5
 #, php-format
 msgid "You can learn more about the archive format <a href=\"%%url%%\">here</a>."
-msgstr ""
+msgstr "Vous pouvez en lire d'avantage à propos du format de l'archive <a href=\"%%url%%\">ici</a>."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:6
 msgid ""
 "The form contains some errors. Please correct them to submit the archive."
-msgstr ""
+msgstr "La forme contient quelques erreurs. Corrigez les pour pouvoir soumettre l'archive."
 
 #: IDF/gettexttemplates/idf/downloads/createFromArchive.html.php:7
 msgid "Submit Archive"
-msgstr ""
+msgstr "Soumettre archive"
 
 #: IDF/gettexttemplates/idf/downloads/delete.html.php:3
 msgid ""
@@ -1651,7 +1651,7 @@ msgstr "Description:"
 
 #: IDF/gettexttemplates/idf/downloads/download-updated-email.txt.php:3
 msgid "A file download was updated:"
-msgstr ""
+msgstr "Un fichier télécharger à été mis à jour :"
 
 #: IDF/gettexttemplates/idf/downloads/feedfragment.xml.php:3
 msgid "Details"
@@ -1731,7 +1731,7 @@ msgid ""
 "<li>Change the status of the current issue to <em>Duplicate</em>.</li>\n"
 "<li>Submit the changes.</li>\n"
 "</ol>"
-msgstr ""
+msgstr "<p>C'est simple :</p>\n<ol>\n<li>Ajouter un commentaire \"C'est un doublon du ticket 123\" ou - si vous  faite partit de l'équipe - ajouter la relation \"Duplicates\" avec l'identifiant du ticket en question.</li>\n<li>Changer le statut du ticket a <em>Duplicate</em>.</li>\n<li>Valider</li>\n</ol>"
 
 #: IDF/gettexttemplates/idf/faq.html.php:11
 msgid ""
@@ -1774,7 +1774,7 @@ msgstr ""
 #: IDF/gettexttemplates/idf/faq.html.php:36
 #, php-format
 msgid "<a href=\"%%url%%\">Learn more about the archive format</a>."
-msgstr ""
+msgstr "<a href=\"%%url%%\">En apprendre d'avantage à propos du format des archives</a>."
 
 #: IDF/gettexttemplates/idf/faq.html.php:37
 msgid ""
@@ -1806,12 +1806,12 @@ msgstr "Comment puis-je afficher mon visage à côté de mes commentaires?"
 #: IDF/gettexttemplates/idf/faq.html.php:42
 #: IDF/gettexttemplates/idf/faq.html.php:62
 msgid "How can I embed images and other resources in my documentation pages?"
-msgstr ""
+msgstr "Comment puis-je intégrés des images et d'autres ressources dans ma page de documentations ?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:43
 #: IDF/gettexttemplates/idf/faq.html.php:63
 msgid "What is this \"Upload Archive\" functionality about?"
-msgstr ""
+msgstr "Quelle est l’utilité de cette \"Archive envoyée\" ?"
 
 #: IDF/gettexttemplates/idf/faq.html.php:44
 #: IDF/gettexttemplates/idf/faq.html.php:64
@@ -1876,7 +1876,7 @@ msgstr "<kbd>Alt+4</kbd>: rechercher (si disponible)."
 
 #: IDF/gettexttemplates/idf/gadmin/base.html.php:3
 msgid "Forge"
-msgstr ""
+msgstr "Forge"
 
 #: IDF/gettexttemplates/idf/gadmin/base.html.php:5
 msgid "People"
@@ -1888,7 +1888,7 @@ msgstr "Usher"
 
 #: IDF/gettexttemplates/idf/gadmin/forge/base.html.php:3
 msgid "Frontpage"
-msgstr ""
+msgstr "Frontpage"
 
 #: IDF/gettexttemplates/idf/gadmin/forge/index.html.php:3
 #, php-format
@@ -1912,7 +1912,7 @@ msgstr "Liste des projets"
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:4
 #: IDF/Views/Admin.php:110
 msgid "Project Labels"
-msgstr ""
+msgstr "Étiquettes de projet."
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:5
 #: IDF/gettexttemplates/idf/gadmin/projects/create.html.php:16
@@ -2296,7 +2296,7 @@ msgstr "Flux personnel de %%user%% pour ce projet."
 #: IDF/gettexttemplates/idf/index.html.php:3
 #: IDF/gettexttemplates/idf/main-menu.html.php:6
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: IDF/gettexttemplates/idf/issues/attachment.html.php:3
 #, php-format
@@ -2483,11 +2483,11 @@ msgstr "<p><strong>Tickets ouverts:</strong> <a href=\"%%open_url%%\">%%open%%</
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:3
 msgid "A new issue has been created and assigned to you:"
-msgstr ""
+msgstr "Un nouveau ticket à été crée et vous à été assigné :"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:4
 msgid "A new issue has been created:"
-msgstr ""
+msgstr "Un nouveau ticket à été crée :"
 
 #: IDF/gettexttemplates/idf/issues/issue-created-email.txt.php:8
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:9
@@ -2505,7 +2505,7 @@ msgstr "Ticket:"
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:3
 msgid "The following issue you are owning has been updated:"
-msgstr ""
+msgstr "Ce ticket que vous avez crée à été mis à jour :"
 
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt.php:4
 #: IDF/gettexttemplates/idf/issues/issue-updated-email.txt~.php:3
@@ -2548,18 +2548,18 @@ msgstr "<p><strong>Étiquette:</strong>\n<a href=\"%%open_url%%\" class=\"label\
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:3
 msgid "View all open issues."
-msgstr ""
+msgstr "Voir tous les tickets ouvert."
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:4
 msgid "Create an issue."
-msgstr ""
+msgstr "Créer un ticket."
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:5
 #, php-format
 msgid ""
 "The issue tracker is empty.<br /><a href=\"%%create_url%%\">Create your "
 "first issue</a>."
-msgstr ""
+msgstr "Le répertoire des tickets est vide.<br /><a href=\"%%create_url%%\">Créer votre premier ticket</a>."
 
 #: IDF/gettexttemplates/idf/issues/summary.html.php:6
 #: IDF/gettexttemplates/idf/issues/summary.html~.php:4
@@ -2655,19 +2655,19 @@ msgstr "Ajouter ce ticket à votre liste de surveillance"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:12
 msgid "View the previous closed issue"
-msgstr ""
+msgstr "Voir le dernier ticket fermée"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:13
 msgid "View the previous open issue"
-msgstr ""
+msgstr "Voir le dernier ticket ouvert"
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:14
 msgid "View the next closed issue"
-msgstr ""
+msgstr "Voir le ticket fermé suivant."
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:15
 msgid "View the next open issue"
-msgstr ""
+msgstr "Voir le ticket ouvert suivant."
 
 #: IDF/gettexttemplates/idf/issues/view.html.php:16
 msgid "download"
@@ -2694,13 +2694,13 @@ msgstr "Suivi par:"
 #, php-format
 msgid "1 project"
 msgid_plural "%%label.project_count%% projects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 projet"
+msgstr[1] "%%label.project_count%% projets"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:4
 #, php-format
 msgid "Remove filter for %%tag%%"
-msgstr ""
+msgstr "Enlever le filtre pour %%tag%%"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:5
 msgid "No projects managed with InDefero were found."
@@ -2708,27 +2708,27 @@ msgstr "Aucun projet géré avec InDefero n'a été trouvé."
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:7
 msgid "Filter projects by label"
-msgstr ""
+msgstr "Filtrer les projet par étiquettes"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:8
 msgid "No projects with labels found."
-msgstr ""
+msgstr "Aucun projet possédant une étiquette n'a été trouvé."
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:9
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:10
 msgid "By name"
-msgstr ""
+msgstr "Par nom"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:11
 msgid "By activity"
-msgstr ""
+msgstr "Par activité"
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:12
 msgid "Filtered project stats"
-msgstr ""
+msgstr "Statistiques du projet filtrée. "
 
 #: IDF/gettexttemplates/idf/listProjects.html.php:13
 msgid "Members:"
@@ -2754,7 +2754,7 @@ msgstr "Revues de code:"
 #, php-format
 msgid ""
 "You can <a href=\"%%url%%\">create an account</a> if you don't have one yet."
-msgstr ""
+msgstr "Vous pouvez <a href=\"%%url%%\">crée un compte</a> si vous n'en n'avez pas."
 
 #: IDF/gettexttemplates/idf/login_form.html.php:4
 msgid "What is your account information?"
@@ -2829,7 +2829,7 @@ msgstr "Téléchargements recommandés"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:6
 msgid "Show more featured downloads"
-msgstr ""
+msgstr "Montrer plus de téléchargements."
 
 #: IDF/gettexttemplates/idf/project/home.html.php:7
 #: IDF/gettexttemplates/idf/project/home.html.php:10
@@ -2842,7 +2842,7 @@ msgstr "Documentation recommandée"
 
 #: IDF/gettexttemplates/idf/project/home.html.php:9
 msgid "Show more featured documentation"
-msgstr ""
+msgstr "Montrer plus de documentations."
 
 #: IDF/gettexttemplates/idf/project/home.html.php:11
 msgid "Development Team"
@@ -2883,11 +2883,11 @@ msgstr "Atom"
 
 #: IDF/gettexttemplates/idf/project-list.html.php:3
 msgid "Project activity: %%activity%%%"
-msgstr ""
+msgstr "Activité du projet : %%activity%%%"
 
 #: IDF/gettexttemplates/idf/project-list.html.php:9
 msgid "n/a"
-msgstr ""
+msgstr "n/d"
 
 #: IDF/gettexttemplates/idf/register/confirmation-email.txt.php:3
 #, php-format
@@ -2945,7 +2945,7 @@ msgstr "C'est la dernière étape, mais <strong>assurez-vous que les témoins (c
 msgid ""
 "Read the <a id=\"showterms\" href=\"#theterms\">terms and conditions</a> – "
 "basically <em>\"Please be nice, we respect you\"</em>."
-msgstr ""
+msgstr "Lire les &lt;a id=\"showterms\" href=\"#theterms\"&gt;conditions d'utilisation –&lt;/a&gt;en gros &lt;em&gt;Soyez sympa, on vous respecte&lt;/em&gt;."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:4
 #, php-format
@@ -2953,7 +2953,7 @@ msgid ""
 "If you have just forgotten your login information, then there is no need to "
 "create a new account. You can just <a href=\"%%url%%\">recover your login "
 "name and password</a>."
-msgstr ""
+msgstr "Si vous avez oublié vos informations de connexions, alors il n'y as pas besoin de créer un nouveau compte. Vous pouvez juste <a href=\"%%url%%\">récupérer votre identifiant et votre mot de passe</a>."
 
 #: IDF/gettexttemplates/idf/register/index.html.php:5
 #, php-format
@@ -3301,7 +3301,7 @@ msgstr "modifié"
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:20
 msgid "properties changed"
-msgstr ""
+msgstr "Propriétés changées."
 
 #: IDF/gettexttemplates/idf/source/commit.html.php:21
 #: IDF/gettexttemplates/idf/source/commit.html~.php:20
@@ -3793,7 +3793,7 @@ msgstr "Liste des pages"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:4
 msgid "List Resources"
-msgstr ""
+msgstr "Liste des ressources"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:5
 #: IDF/gettexttemplates/idf/wiki/listPages.html.php:4
@@ -3805,7 +3805,7 @@ msgstr "Nouvelle page"
 #: IDF/gettexttemplates/idf/wiki/listResources.html.php:3
 #: IDF/Views/Wiki.php:256
 msgid "New Resource"
-msgstr ""
+msgstr "Nouvelle ressource"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:7
 msgid "Update This Page"
@@ -3813,7 +3813,7 @@ msgstr "Mettre à jour cette page"
 
 #: IDF/gettexttemplates/idf/wiki/base.html.php:8
 msgid "Update This Resource"
-msgstr ""
+msgstr "Mettre à jour cette ressource"
 
 #: IDF/gettexttemplates/idf/wiki/createPage.html.php:3
 #: IDF/gettexttemplates/idf/wiki/updatePage.html.php:3
@@ -3834,11 +3834,11 @@ msgid ""
 "\n"
 "Wiki resources are later addressed in wiki pages by their title, so ensure that you\n"
 "give your resource a unique and an easy to remember name.\n"
-msgstr ""
+msgstr "\nLes ressources du Wiki sont accessibles par leurs titres. Utilisez des titres simple et unique.\n"
 
 #: IDF/gettexttemplates/idf/wiki/createResource.html.php:8
 msgid "Create Resource"
-msgstr ""
+msgstr "Créer une ressource"
 
 #: IDF/gettexttemplates/idf/wiki/deletePage.html.php:3
 msgid ""
@@ -3885,31 +3885,31 @@ msgid ""
 "If you delete this documentation resource, it will be removed from the database with all the associated revisions \n"
 "and <strong>you will not be able to recover it</strong>. Any documentation pages that reference this resource,\n"
 "will no longer be able to render it, but won't be deleted."
-msgstr ""
+msgstr "Si vous supprimer cette documentation de ressource, elle sera enlever de la basse de donnée avec toutes les versions qui lui sont associées\net <strong>vous ne pourrez pas les récupérer</strong>. Caque page de documentation qui fait référence à cette ressource ne seront plus capable de s'y rendre, mais elles ne seront pas supprimé."
 
 #: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:8
 msgid "Delete Resource"
-msgstr ""
+msgstr "Supprimer une ressource."
 
 #: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:10
 #: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:10
 #: IDF/gettexttemplates/idf/wiki/viewResource.html.php:8
 msgid "File size"
-msgstr ""
+msgstr "Taille du fichier"
 
 #: IDF/gettexttemplates/idf/wiki/deleteResource.html.php:11
 #: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:11
 #: IDF/gettexttemplates/idf/wiki/viewResource.html.php:9
 #: IDF/Views/Wiki.php:101
 msgid "MIME type"
-msgstr ""
+msgstr "Type MIME"
 
 #: IDF/gettexttemplates/idf/wiki/deleteResourceRev.html.php:3
 #, php-format
 msgid ""
 "You are looking at an old revision (<em>%%oldrev.summary%%</em>) of the resource \n"
 "<a href=\"%%url%%\">%%resource.title%%</a>. This revision was created by %%submitter%%."
-msgstr ""
+msgstr "Vous être en train de consulter une vielle version (<em>%%oldrev.summary%%</em>) de la ressource \n<a href=\"%%url%%\">%%resource.title%%</a>. Cette version à été créée par %%submitter%%."
 
 #: IDF/gettexttemplates/idf/wiki/edit-info.html.php:3
 #, php-format
@@ -3920,11 +3920,11 @@ msgid ""
 "<p>Website addresses are automatically linked and you can link to another page in the documentation using double square brackets like that <code>[[AnotherPage]]</code>.</p>\n"
 "<p>If you want to embed uploaded resources, use the <code>[[!ResourceName]]</code> syntax for that. This is described more in detail <a href=\"%%furl%%#q-wiki\">in the FAQ.</a></p> \n"
 "<p>To directly include a file content from the repository, embrace its path with triple square brackets: <code>[[[my/file.txt]]]</code>.</p>\n"
-msgstr ""
+msgstr "\n<p><strong>Instructions :</strong></p>\n<p>Le contenue de la page peut utiliser le <a href=\"%%burl%%\">syntaxe Markdown</a> with the <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n<p>Les adresses de site internet sont automatiquement liées et vous pouvez définir un lien vers une autre page dans la documentation en utilisant des doubles crochets, comme ceci <code>[[AnotherPage]]</code>.</p>\n<p>Si vous voulez embarquer des ressources envoyées, utilisez cette <code>[[!ResourceName]]</code> syntaxe. Pour plus de détails, <a href=\"%%furl%%#q-wiki\">consulter la FAQ.</a></p> \n<p>Pour inclure directement un fichier dans le dépôt, indiquez son chemin entre triples : <code>[[[my/file.txt]]]</code>.</p>\n"
 
 #: IDF/gettexttemplates/idf/wiki/feedfragment-resource.xml.php:4
 msgid "Initial creation"
-msgstr ""
+msgstr "Création initiale"
 
 #: IDF/gettexttemplates/idf/wiki/listPages.html.php:3
 #, php-format
@@ -3937,7 +3937,7 @@ msgstr "Nombre de pages:"
 
 #: IDF/gettexttemplates/idf/wiki/listResources.html.php:4
 msgid "Number of resources:"
-msgstr ""
+msgstr "Nombre de ressources :"
 
 #: IDF/gettexttemplates/idf/wiki/search.html.php:4
 msgid "Pages found:"
@@ -3960,13 +3960,13 @@ msgstr "Supprimer cette page"
 
 #: IDF/gettexttemplates/idf/wiki/updateResource.html.php:4
 msgid "Update Resource"
-msgstr ""
+msgstr "Mettre à jour la ressource"
 
 #: IDF/gettexttemplates/idf/wiki/updateResource.html.php:6
 #: IDF/gettexttemplates/idf/wiki/updateResource.html.php:8
 #: IDF/gettexttemplates/idf/wiki/updateResource.html.php:9
 msgid "Delete this resource"
-msgstr ""
+msgstr "Supprimer cette ressource"
 
 #: IDF/gettexttemplates/idf/wiki/viewPage.html.php:3
 msgid ""
@@ -3999,15 +3999,15 @@ msgid ""
 "You are looking at an old revision of the resource \n"
 "<a href=\"%%url%%\">%%resource.title%%</a>. This revision was created\n"
 "by %%submitter%%."
-msgstr ""
+msgstr "Vous consultez actuellement une ancienne version de la ressource \n<a href=\"%%url%%\">%%resource.title%%</a>. Cette version à été créée par %%submitter%%."
 
 #: IDF/gettexttemplates/idf/wiki/viewResource.html.php:14
 msgid "Page Usage"
-msgstr ""
+msgstr "Utilisation de la page"
 
 #: IDF/gettexttemplates/idf/wiki/viewResource.html.php:15
 msgid "This resource is not used on any pages yet."
-msgstr ""
+msgstr "Cette ressource n'est toujours pas utilisée sur une page."
 
 #: IDF/gettexttemplates/idf/wiki/wiki-created-email.txt.php:3
 msgid "A new documentation page has been created:"
@@ -4061,22 +4061,22 @@ msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"Voir le ticket\">Ticket %3$d</a>
 #: IDF/Issue.php:214
 #, php-format
 msgid "Creation of <a href=\"%1$s\" class=\"%2$s\">issue %3$d</a>, by %4$s"
-msgstr ""
+msgstr "Création du <a href=\"%1$s\" class=\"%2$s\">ticket %3$d</a>, par %4$s"
 
 #: IDF/Issue.php:224
 #, php-format
 msgid "%1$s: Issue %2$d created - %3$s"
-msgstr ""
+msgstr "%1$s: Création du ticket %2$d - %3$s"
 
 #: IDF/Issue.php:307
 #, php-format
 msgid "Issue %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Ticket %1$s - %2$s (%3$s)"
 
 #: IDF/Issue.php:311
 #, php-format
 msgid "Updated Issue %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Ticket mis à jour %1$s - %2$s (%3$s)"
 
 #: IDF/IssueComment.php:51 IDF/IssueRelation.php:47
 msgid "issue"
@@ -4099,12 +4099,12 @@ msgstr "Tableau sérialisé des modifications du ticket."
 #: IDF/IssueComment.php:180
 #, php-format
 msgid "Comment on <a href=\"%1$s\" class=\"%2$s\">issue %3$d</a>, by %4$s"
-msgstr ""
+msgstr "Commentaire sur le <a href=\"%1$s\" class=\"%2$s\">ticket %3$d</a>, par %4$s"
 
 #: IDF/IssueComment.php:191
 #, php-format
 msgid "%1$s: Comment on issue %2$d - %3$s"
-msgstr ""
+msgstr "%1$s: Commentaire sur le ticket %2$d - %3$s"
 
 #: IDF/IssueFile.php:64
 msgid "file name"
@@ -4212,7 +4212,7 @@ msgstr "Impossible d'écrire le fichier de configuration «%s»"
 #: IDF/Plugin/SyncMonotone.php:309 IDF/Plugin/SyncMonotone.php:525
 #, php-format
 msgid "Could not parse usher configuration in \"%1$s\": %2$s"
-msgstr ""
+msgstr "Impossible de parcourir la configuration d'usher dans «%1$s»: %2$s"
 
 #: IDF/Plugin/SyncMonotone.php:320
 #, php-format
@@ -4257,7 +4257,7 @@ msgstr "Impossible de supprimer la clé privée cliente «%s»"
 #: IDF/Plugin/SyncMonotone.php:599 IDF/Plugin/SyncMonotone.php:718
 #, php-format
 msgid "Could not parse read-permissions for project \"%1$s\": %2$s"
-msgstr ""
+msgstr "N'a pas pu consulter les permissions de lecture pour le projet \"%1$s\": %2$s"
 
 #: IDF/Plugin/SyncMonotone.php:643 IDF/Plugin/SyncMonotone.php:741
 #, php-format
@@ -4295,7 +4295,7 @@ msgstr "nom court"
 msgid ""
 "Used in the URL to access the project, must be short with only letters and "
 "numbers."
-msgstr ""
+msgstr "Utilisé dans l'adresse URL pour accéder au projet, doit être court et ne comportant que des lettres et des chiffres."
 
 #: IDF/Project.php:78
 msgid "short description"
@@ -4307,7 +4307,7 @@ msgstr "description"
 
 #: IDF/Project.php:87
 msgid "The description can be extended using the Markdown syntax."
-msgstr ""
+msgstr "La description peut être complété en utilisant la syntaxe Markdown."
 
 #: IDF/Project.php:100
 msgid "private"
@@ -4315,7 +4315,7 @@ msgstr "privé"
 
 #: IDF/Project.php:108
 msgid "current project activity"
-msgstr ""
+msgstr "Activité du projet actuel"
 
 #: IDF/Project.php:159
 #, php-format
@@ -4324,7 +4324,7 @@ msgstr "Projet «%s» non trouvé."
 
 #: IDF/ProjectActivity.php:56
 msgid "date"
-msgstr ""
+msgstr "Date"
 
 #: IDF/Review/Comment.php:55 IDF/Review/Patch.php:80
 msgid "patch"
@@ -4342,17 +4342,17 @@ msgstr "<a href=\"%1$s\" class=\"%2$s\" title=\"Voir la revue\">Revue %3$d</a>, 
 #: IDF/Review/Comment.php:141
 #, php-format
 msgid "Update of <a href=\"%1$s\" class=\"%2$s\">review %3$d</a>, by %4$s"
-msgstr ""
+msgstr "Mis à jour de la <a href=\"%1$s\" class=\"%2$s\">revue %3$d</a>, par %4$s"
 
 #: IDF/Review/Comment.php:151
 #, php-format
 msgid "%1$s: Updated review %2$d - %3$s"
-msgstr ""
+msgstr "%1$s : Mise à jour de la ressource %2$d - %3$s"
 
 #: IDF/Review/Comment.php:222
 #, php-format
 msgid "Updated Code Review %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Mettre à jour la revue de code %1$s - %2$s (%3$s)"
 
 #: IDF/Review/Patch.php:52
 msgid "review"
@@ -4365,17 +4365,17 @@ msgstr "commit"
 #: IDF/Review/Patch.php:153
 #, php-format
 msgid "Creation of <a href=\"%1$s\" class=\"%2$s\">review %3$d</a>, by %4$s"
-msgstr ""
+msgstr "Création de la <a href=\"%1$s\" class=\"%2$s\">revue %3$d</a>, par %4$s"
 
 #: IDF/Review/Patch.php:163
 #, php-format
 msgid "%1$s: Creation of Review %2$d - %3$s"
-msgstr ""
+msgstr "%1$s: Création de la revue %2$d - %3$s"
 
 #: IDF/Review/Patch.php:208
 #, php-format
 msgid "New Code Review %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Nouvelle revue de code %1$s - %2$s (%3$s)"
 
 #: IDF/Scm/Git.php:309 IDF/Scm/Mercurial.php:199
 #, php-format
@@ -4403,7 +4403,7 @@ msgstr "Impossible d'écrire la clé cliente «%s»"
 
 #: IDF/Search/Occ.php:33
 msgid "occurrence"
-msgstr ""
+msgstr "Occurrence"
 
 #: IDF/Search/Occ.php:49
 msgid "word"
@@ -4411,11 +4411,11 @@ msgstr "mot"
 
 #: IDF/Search/Occ.php:75
 msgid "occurrences"
-msgstr ""
+msgstr "Occurrences"
 
 #: IDF/Search/Occ.php:81
 msgid "ponderated occurrence"
-msgstr ""
+msgstr "Occurrence pondérée"
 
 #: IDF/Tag.php:59
 msgid "tag class"
@@ -4439,19 +4439,19 @@ msgstr "Créer cette page de documentation"
 
 #: IDF/Template/Markdown.php:97
 msgid "You are not allowed to access the wiki."
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à accéder au wiki."
 
 #: IDF/Template/Markdown.php:106
 msgid "The wiki resource has not been found."
-msgstr ""
+msgstr "La ressource du wiki n'a pas été trouvé."
 
 #: IDF/Template/Markdown.php:113
 msgid "The wiki resource has not been found. Create it!"
-msgstr ""
+msgstr "La ressource du wiki n'a pas été trouvé. Créez-la !"
 
 #: IDF/Template/Markdown.php:146
 msgid "This revision of the resource is no longer available."
-msgstr ""
+msgstr "La version de cette ressource n'est plus disponible."
 
 #: IDF/Template/ShowUser.php:51
 msgid "Anonymous"
@@ -4493,26 +4493,26 @@ msgstr "<a href=\"%1$s\" title=\"Voir le téléchargement\">Téléchargement %2$
 #: IDF/Upload.php:204
 #, php-format
 msgid "Addition of <a href=\"%1$s\">download %2$d</a>, by %3$s"
-msgstr ""
+msgstr "Somme des <a href=\"%1$s\">téléchargements %2$d</a>, par %3$s"
 
 #: IDF/Upload.php:214
 #, php-format
 msgid "%1$s: Download %2$d added - %3$s"
-msgstr ""
+msgstr "%1$s: Téléchargement %2$d ajouté - %3$s"
 
 #: IDF/Upload.php:301
 #, php-format
 msgid "New download - %1$s (%2$s)"
-msgstr ""
+msgstr "Nouveau téléchargement - %1$s (%2$s)"
 
 #: IDF/Upload.php:305
 #, php-format
 msgid "Updated download - %1$s (%2$s)"
-msgstr ""
+msgstr "Téléchargement mis à jour - %1$s (%2$s)"
 
 #: IDF/Views/Admin.php:47
 msgid "The forge configuration has been saved."
-msgstr ""
+msgstr "La configuration de la forge à été sauvegardée."
 
 #: IDF/Views/Admin.php:80
 msgid "This table shows the projects in the forge."
@@ -4532,7 +4532,7 @@ msgstr "Aucun projet n'a été trouvé."
 
 #: IDF/Views/Admin.php:116
 msgid "The label configuration has been saved."
-msgstr ""
+msgstr "La configuration des étiquettes à été sauvegardée."
 
 #: IDF/Views/Admin.php:147 IDF/Views/Admin.php:314 IDF/Views/Wiki.php:484
 #: IDF/Views/Wiki.php:536
@@ -4690,11 +4690,11 @@ msgstr "Le <a href=\"%s\">fichier</a> a été mis en ligne."
 
 #: IDF/Views/Download.php:271
 msgid "New Downloads from Archive"
-msgstr ""
+msgstr "Nouveau téléchargements depuis l'archive"
 
 #: IDF/Views/Download.php:278
 msgid "The archive has been uploaded and processed."
-msgstr ""
+msgstr "L'archive à été envoyée et traitée."
 
 #: IDF/Views/Download.php:331
 #, php-format
@@ -4785,22 +4785,22 @@ msgstr "Projet"
 #: IDF/Views/Issue.php:344
 #, php-format
 msgid "%1$s %2$s Submitted %3$s Issues"
-msgstr ""
+msgstr "Tickets soumis par %1$s %2$s pour %2$s"
 
 #: IDF/Views/Issue.php:348
 #, php-format
 msgid "%1$s %2$s Closed Submitted %3$s Issues"
-msgstr ""
+msgstr "Tickets fermés et soumis par %1$s %2$s pour %3$s"
 
 #: IDF/Views/Issue.php:352
 #, php-format
 msgid "%1$s %2$s Closed Working %3$s Issues"
-msgstr ""
+msgstr "Tickets fermés et assignés à %1$s %2$s pour %3$s"
 
 #: IDF/Views/Issue.php:356
 #, php-format
 msgid "%1$s %2$s Working %3$s Issues"
-msgstr ""
+msgstr "Tickets assignés à %1$s %2$s pour %3$s"
 
 #: IDF/Views/Issue.php:417
 msgid "Submit a new issue"
@@ -4809,7 +4809,7 @@ msgstr "Soumettre un nouveau ticket"
 #: IDF/Views/Issue.php:433
 #, php-format
 msgid "<a href=\"%1$s\">Issue %2$d</a> has been created."
-msgstr ""
+msgstr "<a href=\"%1$s\">Ticket %2$d</a> à été créé."
 
 #: IDF/Views/Issue.php:490
 #, php-format
@@ -4828,12 +4828,12 @@ msgstr "Ce tableau affiche les tickets trouvés."
 #: IDF/Views/Issue.php:604
 #, php-format
 msgid "Issue <a href=\"%1$s\">%2$d</a>: %3$s"
-msgstr ""
+msgstr "Ticket <a href=\"%1$s\">%2$d</a> : %3$s"
 
 #: IDF/Views/Issue.php:628
 #, php-format
 msgid "<a href=\"%1$s\">Issue %2$d</a> has been updated."
-msgstr ""
+msgstr "<a href=\"%1$s\">Ticket %2$d</a> à été mis à jour."
 
 #: IDF/Views/Issue.php:718
 #, php-format
@@ -4949,7 +4949,7 @@ msgstr "Droits d'accès aux onglets de %s"
 #: IDF/Views/Project.php:517
 msgid ""
 "The project tabs access rights and notification settings have been saved."
-msgstr ""
+msgstr "Les paramètres de l'onglet de droit d'accès et de notifications on été sauvegardés."
 
 #: IDF/Views/Project.php:566
 #, php-format
@@ -4976,17 +4976,17 @@ msgstr "Aucune revue n'a été trouvée."
 #: IDF/Views/Review.php:94
 #, php-format
 msgid "The <a href=\"%1$s\">code review %2$d</a> has been created."
-msgstr ""
+msgstr "La <a href=\"%1$s\">revue de code %2$d</a> à été crée."
 
 #: IDF/Views/Review.php:140
 #, php-format
 msgid "Review <a href=\"%1$s\">%2$d</a>: %3$s"
-msgstr ""
+msgstr "Revue <a href=\"%1$s\">%2$d</a> : %3$s"
 
 #: IDF/Views/Review.php:160
 #, php-format
 msgid "Your <a href=\"%1$s\">code review %2$d</a> has been published."
-msgstr ""
+msgstr "Votre <a href=\"%1$s\">revue de code %2$d</a> à été publiée."
 
 #: IDF/Views/Source.php:40
 #, php-format
@@ -5021,7 +5021,7 @@ msgstr "Détails d'un commit de %s"
 #: IDF/Views/Source.php:311
 #, php-format
 msgid "%1$s Commit Details - %2$s"
-msgstr ""
+msgstr "%1$s Détails du commit - %2$s"
 
 #: IDF/Views/User.php:59
 msgid "Your Dashboard - Working Issues"
@@ -5089,20 +5089,20 @@ msgstr "Aucune page de documentation n'a été trouvée."
 #: IDF/Views/Wiki.php:88
 #, php-format
 msgid "%s Documentation Resources"
-msgstr ""
+msgstr "%s Documentation de la ressource"
 
 #: IDF/Views/Wiki.php:94
 msgid ""
 "This table shows the resources that can be used on documentation pages."
-msgstr ""
+msgstr "Ce tableau montre quelles ressources peuvent être utilisé dans les pages de documentations."
 
 #: IDF/Views/Wiki.php:100
 msgid "Resource Title"
-msgstr ""
+msgstr "Titre de la ressource"
 
 #: IDF/Views/Wiki.php:107
 msgid "No resources were found."
-msgstr ""
+msgstr "Aucune ressource n'a été trouvée."
 
 #: IDF/Views/Wiki.php:128
 #, php-format
@@ -5130,12 +5130,12 @@ msgstr "Ce tableau liste les pages de documentation avec l'étiquette %s."
 #: IDF/Views/Wiki.php:222
 #, php-format
 msgid "The page <a href=\"%1$s\">%2$s</a> has been created."
-msgstr ""
+msgstr "La page <a href=\"%1$s\">%2$s</a> à été créée."
 
 #: IDF/Views/Wiki.php:265
 #, php-format
 msgid "The resource <a href=\"%1$s\">%2$s</a> has been created."
-msgstr ""
+msgstr "La ressource <a href=\"%1$s\">%2$s</a> à été créée."
 
 #: IDF/Views/Wiki.php:409 IDF/Views/Wiki.php:448
 msgid "The old revision has been deleted."
@@ -5149,12 +5149,12 @@ msgstr "Supprimer l'ancienne révision de %s"
 #: IDF/Views/Wiki.php:496
 #, php-format
 msgid "The page <a href=\"%1$s\">%2$s</a> has been updated."
-msgstr ""
+msgstr "La page <a href=\"%1$s\">%2$s</a> à été mise à jour."
 
 #: IDF/Views/Wiki.php:548
 #, php-format
 msgid "The resource <a href=\"%1$s\">%2$s</a> has been updated."
-msgstr ""
+msgstr "La ressource <a href=\"%1$s\">%2$s</a> à été mise à jour."
 
 #: IDF/Views/Wiki.php:583
 msgid "The documentation page has been deleted."
@@ -5167,12 +5167,12 @@ msgstr "Supprimer la page %s"
 
 #: IDF/Views/Wiki.php:623
 msgid "The documentation resource has been deleted."
-msgstr ""
+msgstr "La documentation de la ressource à été supprimée."
 
 #: IDF/Views/Wiki.php:631
 #, php-format
 msgid "Delete Resource %s"
-msgstr ""
+msgstr "Ressource supprimée %s"
 
 #: IDF/Views.php:173 IDF/Views.php:199
 msgid "Confirm Your Account Creation"
@@ -5199,7 +5199,7 @@ msgstr "Ici pour vous aider!"
 
 #: IDF/Views.php:347
 msgid "InDefero Upload Archive Format"
-msgstr ""
+msgstr "Format de l'archive envoyé : InDefero"
 
 #: IDF/Views.php:363
 msgid "InDefero API (Application Programming Interface)"
@@ -5227,12 +5227,12 @@ msgstr "<a href=\"%1$s\" title=\"Voir la page\">%2$s</a>, %3$s"
 #: IDF/Wiki/Page.php:198
 #, php-format
 msgid "Creation of <a href=\"%1$s\">page %2$s</a>, by %3$s"
-msgstr ""
+msgstr "Création de <a href=\"%1$s\">le page %2$s</a>, par %3$s"
 
 #: IDF/Wiki/Page.php:208
 #, php-format
 msgid "%1$s: Documentation page %2$s added - %3$s"
-msgstr ""
+msgstr "%1$s: Page de documentation %2$s ajouté - %3$s"
 
 #: IDF/Wiki/PageRevision.php:48
 msgid "page"
@@ -5249,87 +5249,87 @@ msgstr "contenu"
 #: IDF/Wiki/PageRevision.php:218 IDF/Wiki/ResourceRevision.php:311
 #, php-format
 msgid "Change of <a href=\"%1$s\">%2$s</a>, by %3$s"
-msgstr ""
+msgstr "Changement de <a href=\"%1$s\">%2$s</a>, par %3$s"
 
 #: IDF/Wiki/PageRevision.php:231
 #, php-format
 msgid "%1$s: Documentation page %2$s updated - %3$s"
-msgstr ""
+msgstr "%1$s: Page de documentation %2$s mise à jjour - %3$s"
 
 #: IDF/Wiki/PageRevision.php:293
 #, php-format
 msgid "New Documentation Page %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Nouvelle page de documentation %1$s - %2$s (%3$s)"
 
 #: IDF/Wiki/PageRevision.php:297
 #, php-format
 msgid "Documentation Page Changed %1$s - %2$s (%3$s)"
-msgstr ""
+msgstr "Page de documentation changée %1$s - %2$s (%3$s)"
 
 #: IDF/Wiki/Resource.php:65
 msgid ""
 "The title of the resource must only contain letters, digits, dots or the "
 "dash character. For example: my-resource.png."
-msgstr ""
+msgstr "Le titre de la ressource ne peut seulement contenir que des lettres, des chiffres, des points, ou des tirets. Par exemple : my-resource.png."
 
 #: IDF/Wiki/Resource.php:72
 msgid "MIME media type"
-msgstr ""
+msgstr "Type média MIME"
 
 #: IDF/Wiki/Resource.php:73
 msgid "The MIME media type of the resource."
-msgstr ""
+msgstr "Le type média MIME de la ressource."
 
 #: IDF/Wiki/Resource.php:81
 msgid "A one line description of the resource."
-msgstr ""
+msgstr "Une description en une ligne de la ressource."
 
 #: IDF/Wiki/Resource.php:176 IDF/Wiki/ResourceRevision.php:308
 #, php-format
 msgid "<a href=\"%1$s\" title=\"View resource\">%2$s</a>, %3$s"
-msgstr ""
+msgstr "<a href=\"%1$s\" title=\"Voir la ressource\">%2$s</a>, %3$s"
 
 #: IDF/Wiki/Resource.php:178
 #, php-format
 msgid "Creation of <a href=\"%1$s\">resource %2$s</a>, by %3$s"
-msgstr ""
+msgstr "Création de  <a href=\"%1$s\">la ressource %2$s</a>, par %3$s"
 
 #: IDF/Wiki/Resource.php:188
 #, php-format
 msgid "%1$s: Documentation resource %2$s added - %3$s"
-msgstr ""
+msgstr "%1$s: Documentation de la ressource %2$s ajoutée - %3$s"
 
 #: IDF/Wiki/ResourceRevision.php:47
 msgid "resource"
-msgstr ""
+msgstr "Ressource"
 
 #: IDF/Wiki/ResourceRevision.php:78
 msgid "File extension"
-msgstr ""
+msgstr "Extension du fichier"
 
 #: IDF/Wiki/ResourceRevision.php:79
 msgid "The file extension of the uploaded resource."
-msgstr ""
+msgstr "L'extension du fichier de la ressource envoyée."
 
 #: IDF/Wiki/ResourceRevision.php:94
 msgid "page usage"
-msgstr ""
+msgstr "Utilisation de la page"
 
 #: IDF/Wiki/ResourceRevision.php:116
 #, php-format
 msgid "id %d: %s"
-msgstr ""
+msgstr "ID %d: %s"
 
 #: IDF/Wiki/ResourceRevision.php:263
 #, php-format
 msgid "Download (%s)"
-msgstr ""
+msgstr "Téléchargements (%s)"
 
 #: IDF/Wiki/ResourceRevision.php:270
 msgid "View resource details"
-msgstr ""
+msgstr "Voir les détails de la ressource"
 
 #: IDF/Wiki/ResourceRevision.php:324
 #, php-format
 msgid "%1$s: Documentation resource %2$s updated - %3$s"
-msgstr ""
+msgstr "%1$s: Documentation de la ressource %2$s mis à jour - %3$s"
