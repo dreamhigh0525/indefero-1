@@ -1,4 +1,13 @@
-# InDefero 1.3 - Sun Apr 15 21:10 2011 UTC
+# InDefero 1.3.1 - xxx xxx xx xx:xx 2012 UTC
+
+## Bugfixes
+
+- Compatiblity fixes for PostgreSQL
+
+## Language and Translations
+
+
+# InDefero 1.3 - Sun Apr 15 21:10 2012 UTC
 
 This new major release of Indefero is possible thanks to the sponsor of
 [Scilab Enterprises](http://www.scilab-enterprises.com/).

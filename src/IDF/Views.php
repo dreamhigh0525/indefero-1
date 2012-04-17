@@ -382,7 +382,7 @@ class IDF_Views
     {
         $db =& Pluf::db();
         $false = Pluf_DB_BooleanToDb(false, $db);
-        $sql = new Pluf_SQL(1);
+        $sql = new Pluf_SQL('1=1');
         if ($tag !== false) {
             $sql->SAnd(new Pluf_SQL('idf_tag_id=%s', $tag->id));
         }

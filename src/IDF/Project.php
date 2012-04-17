@@ -115,8 +115,7 @@ class IDF_Project extends Pluf_Model
                 array(
                     'join' => 'LEFT JOIN '.$activityTable.' ON current_activity='.$activityTable.'.id '
                              .'LEFT JOIN '.$tagTable.' ON idf_project_id='.$this->getSqlTable().'.id',
-                    'select' => $this->getSelect().', date, value',
-                    'group' => $this->getSqlTable().'.id',
+                    'select' => 'DISTINCT '.$this->getSelect().', date, value',
                     'props' => array(
                         'date' => 'current_activity_date',
                         'value' => 'current_activity_value'
