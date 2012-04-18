@@ -82,7 +82,7 @@ class IDF_Tag extends Pluf_Model
                 'join' => 'LEFT JOIN '.$table
                         .' ON idf_tag_id=id',
                 'select' => $this->getSelect().',COUNT(idf_project_id) as project_count',
-                'group' => 'idf_tag_id',
+                'group' => 'id',
                 'props' => array('project_count' => 'project_count'),
                 ),
         );
