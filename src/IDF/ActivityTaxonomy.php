@@ -141,7 +141,12 @@ class IDF_ActivityTaxonomy
 
         $cache[$argIdent] = 0;
         list($higher, $lower) = $dateBoundaries;
-        $sql = new Pluf_SQL('model_class IN ("'.implode('","', $classes).'") '.
+        $db = Pluf::db();
+        $classes_esc = array();
+        foreach ($classes as $class) {
+            $classes_esc[] = $db->esc($class);
+        }
+        $sql = new Pluf_SQL('model_class IN ('.implode(',', $classes_esc).') '.
                             'AND creation_dtime >= %s AND creation_dtime <= %s',
                          array($lower, $higher));
 
