@@ -156,6 +156,7 @@ class IDF_Tag extends Pluf_Model
             $tag = new IDF_Tag();
             $tag->name = $name;
             $tag->class = $class;
+            $tag->project = null;
             $tag->create();
             return $tag;
         }
