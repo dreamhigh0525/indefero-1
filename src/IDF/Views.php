@@ -389,7 +389,7 @@ class IDF_Views
 
         if ($user->isAnonymous())
         {
-            $authSql = new Pluf_SQL('private=%s', $false);
+            $authSql = new Pluf_SQL($db->qn('private').'=%s', $false);
             $sql->SAnd($authSql);
         } else
         if (!$user->administrator) {
@@ -403,7 +403,7 @@ class IDF_Views
             $permSql = new Pluf_SQL("model_class='IDF_Project' AND owner_class='Pluf_User' AND owner_id=%s AND negative=".$false, $user->id);
             $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $permSql->gen()));
 
-            $authSql = new Pluf_SQL('private=%s', $false);
+            $authSql = new Pluf_SQL($db->qn('private').'=%s', $false);
             if ($rows->count() > 0) {
                 $ids = array();
                 foreach ($rows as $row) {
