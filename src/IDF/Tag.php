@@ -48,7 +48,8 @@ class IDF_Tag extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
-                                  'blank' => false,
+                                  'blank' => true,
+                                  'is_null' => true,
                                   'verbose' => __('project'),
                                   ),
                             'class' =>
@@ -147,7 +148,7 @@ class IDF_Tag extends Pluf_Model
         $class = trim($class);
         $name = trim($name);
         $gtag = new IDF_Tag();
-        $sql = new Pluf_SQL('class=%s AND lcname=%s AND project=0',
+        $sql = new Pluf_SQL('class=%s AND lcname=%s AND project IS NULL',
                             array($class, mb_strtolower($name)));
         $tags = $gtag->getList(array('filter' => $sql->gen()));
         if ($tags->count() < 1) {

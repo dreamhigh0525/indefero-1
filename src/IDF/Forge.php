@@ -53,7 +53,7 @@ class IDF_Forge
     }
 
     public function getProjectLabelsWithCounts() {
-        $sql = new Pluf_SQL('project=0');
+        $sql = new Pluf_SQL('project IS NULL');
         $tagList = Pluf::factory('IDF_Tag')->getList(array(
             'filter' => $sql->gen(),
             'view' => 'join_projects',

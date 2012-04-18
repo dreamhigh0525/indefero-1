@@ -83,7 +83,7 @@ class IDF_Template_MarkdownForge extends Pluf_Template_Tag
                     $name = $class;
                     $class = IDF_TAG_DEFAULT_CLASS;
                 }
-                $sql = new Pluf_SQL('class=%s AND lcname=%s AND project=0',
+                $sql = new Pluf_SQL('class=%s AND lcname=%s AND project IS NULL',
                                     array(strtolower($class), mb_strtolower($name)));
                 $tag = Pluf::factory('IDF_Tag')->getOne(array('filter' => $sql->gen()));
             }
