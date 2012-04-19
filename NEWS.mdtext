@@ -44,7 +44,7 @@ or newer to properly run this version of Indefero!
   emails for one object are uniquely identifyable to support a grouped view
   in email clients that support that. (fixes issues  334, 452, 480, and 791)
 - Indefero can now be configured to record activity metrics for all projects
-  in a forge. This needs a special cron job named 'activitycron.php` 
+  in a forge. This needs a special cron job named `activitycron.php` 
   (under `scripts`) that is run on a regular basis. The metrics can be
   fine-tuned via `activity_section_weights` and `activity_lookback` in
   `idf.php` and the result is visible as green bar in the project list view.
