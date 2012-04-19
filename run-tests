@@ -2,7 +2,7 @@
 <?php
 
 $xmlfile = dirname(__FILE__) .'/test/report.xml';
-passthru('phpunit --coverage-clover='.$xmlfile);
+passthru('phpunit --coverage-clover='.escapeshellarg($xmlfile));
 $xml = simplexml_load_string(file_get_contents($xmlfile));
 unlink($xmlfile);
 printf(
