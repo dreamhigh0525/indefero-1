@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Indefero\n"
 "Report-Msgid-Bugs-To: http://projects.ceondo.com/p/indefero/issues/\n"
 "POT-Creation-Date: 2012-03-22 01:16+0100\n"
-"PO-Revision-Date: 2012-04-17 08:06+0000\n"
+"PO-Revision-Date: 2012-04-21 08:44+0000\n"
 "Last-Translator: William MARTIN <wysman@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/indefero/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -812,7 +812,7 @@ msgstr "Ce champ est obligatoire."
 
 #: IDF/Form/SourceConf.php:54 IDF/Form/UploadConf.php:70
 msgid "Webhook URL"
-msgstr "URL du webhook"
+msgstr "URL de notification"
 
 #: IDF/Form/TabsConf.php:38 IDF/gettexttemplates/idf/admin/base.html.php:4
 #: IDF/gettexttemplates/idf/base-full.html.php:8
@@ -1210,7 +1210,7 @@ msgid ""
 "<p>For example, updating download 123 of project 'my-project' with\n"
 "web hook URL <code>http://mydomain.com/%p/%d</code> would send a POST request to\n"
 "<code>http://mydomain.com/my-project/123</code>.</p>"
-msgstr ""
+msgstr "<p>Il est possible de mettre en place l'envoie de méta-information à l'aide d'une requête HTTP PUT lors de la création, ou POST lors de la mise a jour d'un téléchargement. Laisser ce champs vide pour désactiver les notifications.</p>\n\n<p>Le lien ne doit pas contenir de caractères spéciaux, par exemple :</p>\n\n<ul>\n<li><code>http://domain.com/upload</code></li>\n<li><code>http://domain.com/upload?my%20param</code></li>\n</ul>\n\n<p>De plus, il peut contenir les séquences suivantes qui seront remplacer par les valeurs spécifiques au projet et au téléchargement en question.</p>\n\n<ul>\n<li><code>%p</code> - le nom du projet</li>\n<li><code>%d</code> - l'identifiant du téléchargement</li>\n</ul>\n\n<p>Par exemple, la mise a jour du téléchargement 123 dans le projet 'my-project', avec le lien suivant <code>http://mydomain.com/%p/%d</code>\nenverra une requête POST à l’adresse suivante <code>http://mydomain.com/my-project/123</code>.</p>"
 
 #: IDF/gettexttemplates/idf/admin/downloads.html.php:31
 #: IDF/gettexttemplates/idf/admin/source.html.php:30
@@ -1277,7 +1277,7 @@ msgid ""
 "<p>For example, committing revision 123 to project 'my-project' with\n"
 "post-commit URL <code>http://mydomain.com/%p/%r</code> would send a request to\n"
 "<code>http://mydomain.com/my-project/123</code>.</p>"
-msgstr ""
+msgstr "<p>Il est possible de mettre en place l'envoie de méta-information à l'aide d'une requête HTTP <strong>%%hook_request_method%%</strong> lors de la réception de commit dans le dépôt .Laisser ce champs vide pour désactiver les notifications.</p>\n\n<p>Le lien ne doit pas contenir de caractères spéciaux, par exemple :</p>\n\n<ul>\n<li><code>http://domain.com/commit</code></li>\n<li><code>http://domain.com/commit?my%20param</code></li>\n</ul>\n\n<p>De plus, il peut contenir les séquences suivantes qui seront remplacer par les valeurs spécifiques au projet et au téléchargement en question.</p>\n\n<ul>\n<li><code>%p</code> - le nom du projet</li>\n<li><code>%r</code> - l'identifiant du commit</li>\n</ul>\n\n<p>Par exemple, la réception du commit 123 dans le projet 'my-project', avec le lien suivant <code>http://mydomain.com/%p/%r</code>enverra une requête à l’adresse suivante \n<code>http://mydomain.com/my-project/123</code>.</p>"
 
 #: IDF/gettexttemplates/idf/admin/source.html.php:26
 msgid ""
@@ -1757,7 +1757,7 @@ msgid ""
 "Resources are versioned, just like wiki pages. If you update a resource, old wiki pages still show the state of the resource\n"
 "at the time when the wiki page was edited. If you specifically want to update a resource on a page, you therefor need to update\n"
 "the resource at first and then also the page where it is referenced, otherwise the change won't be visible until the next regular edit. \n"
-msgstr ""
+msgstr "\n<p>Pour insérer des ressources dans votre page de Wiki, vous pouvez utiliser la syntaxe suivante <code>[[!ResourceName]]</code>.</p>\n\n<p>Vous pouvez ajuster l'affichage des resources avec les paramètres suivants :\n<ul>\n<li><code>[[!ImageResource, align=right, width=200]]</code> affiche \"ImageResource\" aligné a droite, et mit a l'échelle pour avoir une largeur de 200 pixels.</li>\n<li><code>[[!TextResource, align=center, width=300, height=300]]</code> affiche \"TextResource\" aligné au centre de la page avec une taille de 300 par 300 pixels.</li>\n<li><code>[[!AnyResource, preview=no]]</code> permet de fournir uniquement un lien de téléchargement vers la ressource.</li>\n<li><code>[[!BinaryResource, title=Download]]</code> affiche le lien téléchargement \"BinaryResource\" avec un `title` alternatif</li>\n</ul>\n</p>\n\nLes resources sont versionnées, comme les pages de Wiki. Si vous mettez a jour une ressource, les pages de wiki continueront d'afficher la resource dans l'état ou elle était lors de la dernière édition. Une simple édition de la page mettra a jour les ressources contenu dans celle ci.\n"
 
 #: IDF/gettexttemplates/idf/faq.html.php:28
 msgid ""
@@ -1769,7 +1769,7 @@ msgid ""
 "the rest of the files in the archive that should be published.</p>\n"
 "<p>Once this archive has been uploaded, InDefero reads in the meta information, unpacks the other files from\n"
 "the archive and creates new individual downloads for each of them.</p>"
-msgstr ""
+msgstr "<p>Si vous avez a publié de nombreux fichiers à la fois, il peut être long et ennuyeux de les envoyés un par un, de leur mettre un nom, une description et des labels.</p>\n<p>InDefero supporte l'envoie d'une archive au format ZIP qui contient des meta-informations. Ces informations sont contenu dans un fichier de manifest, qui est a part des autres fichiers a publier.</p>\n<p>Lors de l'envoie de cette archive, InDefero va créer un nouveau téléchargement pour chaque fichier contenu dans l'archive et remplira les meta-information de ceux-ci à l'aide du fichier manifest.</p>"
 
 #: IDF/gettexttemplates/idf/faq.html.php:36
 #, php-format
@@ -1902,7 +1902,7 @@ msgid ""
 "<li><code>&#x7b;projectlist, label=..., order=(name|activity), limit=...}</code> - Renders a project list that can optionally be filtered by label, ordered by 'name' or 'activity' and / or limited to a specific number of projects.</li>\n"
 "</ul>\n"
 "</p>\n"
-msgstr ""
+msgstr "\n<p><strong>Procédure :</strong></p>\n<p>Vous pouvez définir une page personnalisée qui sera utilisé à la place de la page ou sont listés les projets.Cette page est aussi accessible par le lien 'Home', dans la bar de menu principale.</p>\n\n<p>Le contenu de cette page peut utilisé la <a href=\"%%burl%%\">syntaxe Markdown</a> avec cette <a href=\"%%eurl%%\"><em>Extra</em> extension</a>.</p>\n\n<p>Les macros suivantes sont aussi disponibles :<br />\n<ul>\n<li><code>&#x7b;projectlist, label=..., order=(name|activity), limit=...}</code> - Affiche la liste des projets qui peut être filtrée par labels, et ordonnées par nom ou activité, le nombre de résultat affiché peut être limité.</li>\n</ul>\n</p>\n"
 
 #: IDF/gettexttemplates/idf/gadmin/projects/base.html.php:3
 #: IDF/gettexttemplates/idf/main-menu.html.php:7
@@ -4785,7 +4785,7 @@ msgstr "Projet"
 #: IDF/Views/Issue.php:344
 #, php-format
 msgid "%1$s %2$s Submitted %3$s Issues"
-msgstr "Tickets soumis par %1$s %2$s pour %2$s"
+msgstr "Tickets soumis par %1$s %2$s pour %3$s"
 
 #: IDF/Views/Issue.php:348
 #, php-format
