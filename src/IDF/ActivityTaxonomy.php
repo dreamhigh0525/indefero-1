@@ -44,10 +44,15 @@ class IDF_ActivityTaxonomy
 {
     public static function recalculateTaxnomies(DateTime $date)
     {
+        $sectionWeights = Pluf::f('activity_section_weights', null);
+        $lookback = Pluf::f('activity_lookback', null);
+        if ($sectionWeights === null || $lookback === null) {
+            throw new LogicException('activity configuration is missing in idf.php');
+        }
+
         //
         // query and normalize the section weights
         //
-        $sectionWeights = Pluf::f('activity_section_weights', array());
         $allWeights = array_sum($sectionWeights);
         if ($allWeights == 0) {
             throw new LogicException('the sum of all "activity_section_weights" must not be 0');
@@ -59,7 +64,6 @@ class IDF_ActivityTaxonomy
         //
         // determine the date boundaries
         //
-        $lookback = Pluf::f('activity_lookback', 0);
         if ($lookback < 1) {
             throw new LogicException('lookback must be greater or equal to 1');
         }
