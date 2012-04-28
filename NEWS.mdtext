@@ -3,6 +3,7 @@
 ## Bugfixes
 
 - Compatiblity fixes for PostgreSQL (fixes issue 800)
+- Fix TOC generation in wiki (issue 803)
 
 ## Language and Translations
 
