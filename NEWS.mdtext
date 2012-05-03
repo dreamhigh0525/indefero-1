@@ -4,6 +4,7 @@
 
 - Compatiblity fixes for PostgreSQL (fixes issue 800)
 - Fix TOC generation in wiki (issue 803)
+- Make the display of large files and diffs faster (fixes issue 804)
 
 ## Language and Translations
 

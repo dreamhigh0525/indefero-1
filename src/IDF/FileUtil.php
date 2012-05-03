@@ -147,27 +147,22 @@ class IDF_FileUtil
      * Splits a string into separate lines while retaining the individual
      * line ending character for every line.
      *
-     * OS9 line endings are not supported.
-     *
      * @param string content
      * @param boolean if true, skip completely empty lines
      * @return string
      */
     public static function splitIntoLines($content, $skipEmpty = false)
     {
-        $flags = PREG_SPLIT_OFFSET_CAPTURE;
-        if ($skipEmpty) $flags |= PREG_SPLIT_NO_EMPTY;
-        $splitted = preg_split("/\r\n|\n/", $content, -1, $flags);
-
-        $last_off = -1;
+        $last_off = 0;
         $lines = array();
-        while (($split = array_shift($splitted)) !== null) {
-            if ($last_off != -1) {
-                $lines[] .= substr($content, $last_off, $split[1] - $last_off);
-            }
-            $last_off = $split[1];
+        while (preg_match("/\r\n|\n|\r/", $content, $m, PREG_OFFSET_CAPTURE, $last_off)) {
+            $next_off = strlen($m[0][0]) + $m[0][1];
+            $line = substr($content, $last_off, $next_off - $last_off);
+            $last_off = $next_off;
+            if ($line !== $m[0][0] || !$skipEmpty) $lines[] = $line;
         }
-        $lines[] = substr($content, $last_off);
+        $line = substr($content, $last_off);
+        if ($line !== false && strlen($line) > 0) $lines[] = $line;
         return $lines;
     }
 
