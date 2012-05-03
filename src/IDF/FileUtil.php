@@ -147,6 +147,8 @@ class IDF_FileUtil
      * Splits a string into separate lines while retaining the individual
      * line ending character for every line.
      *
+     * OS 9 line endings are not supported.
+     *
      * @param string content
      * @param boolean if true, skip completely empty lines
      * @return string
@@ -155,7 +157,7 @@ class IDF_FileUtil
     {
         $last_off = 0;
         $lines = array();
-        while (preg_match("/\r\n|\n|\r/", $content, $m, PREG_OFFSET_CAPTURE, $last_off)) {
+        while (preg_match("/\r\n|\n/", $content, $m, PREG_OFFSET_CAPTURE, $last_off)) {
             $next_off = strlen($m[0][0]) + $m[0][1];
             $line = substr($content, $last_off, $next_off - $last_off);
             $last_off = $next_off;
