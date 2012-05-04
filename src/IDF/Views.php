@@ -85,7 +85,7 @@ class IDF_Views
 
         $projects = self::getProjects($request->user, $tag, $order);
         $stats = self::getProjectsStatistics($projects);
-        $projectLabels = IDF_Forge::instance()->getProjectLabelsWithCounts();
+        $projectLabels = self::getProjectLabelsWithCounts($request->user);
 
         return Pluf_Shortcuts_RenderToResponse('idf/listProjects.html',
                                                array('page_title' => __('Projects'),
@@ -372,6 +372,61 @@ class IDF_Views
     }
 
     /**
+     * Returns a list of ids of projects that are visible for the given user
+     *
+     * @param Pluf_User $user
+     */
+    private static function getUserVisibleProjectIds($user)
+    {
+        $db =& Pluf::db();
+        // the administrator can see all projects
+        if ($user->administrator) {
+            $sql_results = $db->select(
+                'SELECT id FROM '.Pluf::f('db_table_prefix', '').'idf_projects'
+            );
+            foreach ($sql_results as $id) {
+                $ids[] = $id['id'];
+            }
+            return $ids;
+        }
+
+        // anonymous users can only see non-private projects
+        $false = Pluf_DB_BooleanToDb(false, $db);
+        $sql_results = $db->select(
+            'SELECT id FROM '.$db->pfx.'idf_projects '.
+            'WHERE '.$db->qn('private').'='.$false
+        );
+
+        $ids = array();
+        foreach ($sql_results as $id) {
+            $ids[] = $id['id'];
+        }
+
+        // registered users may additionally see private projects with which
+        // they're somehow affiliated
+        if (!$user->isAnonymous()) {
+            $perms = array(
+                Pluf_Permission::getFromString('IDF.project-member'),
+                Pluf_Permission::getFromString('IDF.project-owner'),
+                Pluf_Permission::getFromString('IDF.project-authorized-user')
+            );
+            $permSql = new Pluf_SQL(
+                "model_class='IDF_Project' AND owner_class='Pluf_User' ".
+                "AND owner_id=%s AND negative=".$false, $user->id
+            );
+            $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $permSql->gen()));
+            if ($rows->count() > 0) {
+                foreach ($rows as $row) {
+                    if (in_array($row->model_id, $ids))
+                        continue;
+                    $ids[] = $row->model_id;
+                }
+            }
+        }
+        return $ids;
+    }
+
+    /**
      * Returns a list of projects accessible for the user and optionally filtered by tag.
      *
      * @param Pluf_User
@@ -381,37 +436,14 @@ class IDF_Views
     public static function getProjects($user, $tag = false, $order = 'name')
     {
         $db =& Pluf::db();
-        $false = Pluf_DB_BooleanToDb(false, $db);
         $sql = new Pluf_SQL('1=1');
         if ($tag !== false) {
             $sql->SAnd(new Pluf_SQL('idf_tag_id=%s', $tag->id));
         }
 
-        if ($user->isAnonymous())
-        {
-            $authSql = new Pluf_SQL($db->qn('private').'='.$false);
-            $sql->SAnd($authSql);
-        } else
-        if (!$user->administrator) {
-            // grab the list of projects where the user is admin,
-            // member or authorized
-            $perms = array(
-                Pluf_Permission::getFromString('IDF.project-member'),
-                Pluf_Permission::getFromString('IDF.project-owner'),
-                Pluf_Permission::getFromString('IDF.project-authorized-user')
-            );
-            $permSql = new Pluf_SQL("model_class='IDF_Project' AND owner_class='Pluf_User' AND owner_id=%s AND negative=".$false, $user->id);
-            $rows = Pluf::factory('Pluf_RowPermission')->getList(array('filter' => $permSql->gen()));
-
-            $authSql = new Pluf_SQL($db->qn('private').'='.$false);
-            if ($rows->count() > 0) {
-                $ids = array();
-                foreach ($rows as $row) {
-                    $ids[] = $row->model_id;
-                }
-                $authSql->SOr(new Pluf_SQL(sprintf($db->pfx.'idf_projects.id IN (%s)', implode(', ', $ids))));
-            }
-            $sql->SAnd($authSql);
+        $projectIds = self::getUserVisibleProjectIds($user);
+        if (count($projectIds) > 0) {
+            $sql->SAnd(new Pluf_SQL(sprintf($db->pfx.'idf_projects.id IN (%s)', implode(', ', $projectIds))));
         }
 
         $orderTypes = array(
@@ -426,6 +458,46 @@ class IDF_Views
     }
 
     /**
+     * Returns a list of global tags each carrying the number of projects that have the
+     * particular tag set
+     *
+     * @param Pluf_User $user
+     * @return array
+     */
+    public static function getProjectLabelsWithCounts($user) {
+
+        $sql = new Pluf_SQL('project IS NULL');
+
+        $projectIds = self::getUserVisibleProjectIds($user);
+        if (count($projectIds) > 0) {
+            $sql->SAnd(new Pluf_SQL(sprintf('idf_project_id IN (%s)', implode(', ', $projectIds))));
+        }
+
+        $tagList = Pluf::factory('IDF_Tag')->getList(array(
+            'filter' => $sql->gen(),
+            'view' => 'join_projects',
+            'order' => 'class ASC, lcname ASC'
+        ));
+
+        $maxProjectCount = 0;
+        foreach ($tagList as $tag) {
+            $maxProjectCount = max($maxProjectCount, $tag->project_count);
+        }
+
+        $tags = array();
+        foreach ($tagList as $tag) {
+            // group by class
+            if (!array_key_exists($tag->class, $tags)) {
+                $tags[$tag->class] = array();
+            }
+            $tag->rel_project_count = $tag->project_count / (double) $maxProjectCount;
+            $tags[$tag->class][] = $tag;
+        }
+        return $tags;
+    }
+
+
+    /**
      * Returns statistics on a list of projects.
      *
      * @param ArrayObject IDF_Project
@@ -433,27 +505,30 @@ class IDF_Views
      */
     public static function getProjectsStatistics($projects)
     {
-        // Init the return var
-        $forgestats = array('downloads' => 0,
-                            'reviews' => 0,
-                            'issues' => 0,
-                            'docpages' => 0,
-                            'commits' => 0);
-
-        // Count for each projects
-        foreach ($projects as $p) {
-            $pstats = $p->getStats();
-            $forgestats['downloads'] += $pstats['downloads'];
-            $forgestats['reviews'] += $pstats['reviews'];
-            $forgestats['issues'] += $pstats['issues'];
-            $forgestats['docpages'] += $pstats['docpages'];
-            $forgestats['commits'] += $pstats['commits'];
+        $projectIds = array();
+        foreach ($projects as $project) {
+            $projectIds[] = $project->id;
         }
 
-        // Count members
-        $sql = new Pluf_SQL('first_name != %s', array('---'));
-        $forgestats['members'] = Pluf::factory('Pluf_User')
-            ->getCount(array('filter' => $sql->gen()));
+        $forgestats = array();
+
+        // count overall project stats
+        $forgestats['total'] = 0;
+        $what = array(
+            'downloads' => 'IDF_Upload',
+            'reviews'   => 'IDF_Review',
+            'issues'    => 'IDF_Issue',
+            'docpages'  => 'IDF_Wiki_Page',
+            'commits'   => 'IDF_Commit',
+        );
+
+        foreach ($what as $key => $model) {
+            $count = Pluf::factory($model)->getCount(array(
+                'filter' => sprintf('project IN (%s)', implode(', ', $projectIds))
+            ));
+            $forgestats[$key] = $count;
+            $forgestats['total'] += $count;
+        }
 
         return $forgestats;
     }

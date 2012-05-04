@@ -5,6 +5,8 @@
 - Compatiblity fixes for PostgreSQL (fixes issue 800)
 - Fix TOC generation in wiki (issue 803)
 - Make the display of large files and diffs faster (fixes issue 804)
+- Make the project list faster and its tag list more accurate by not
+  counting projects that are invisible to the current user
 
 ## Language and Translations
 
