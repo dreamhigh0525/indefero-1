@@ -505,7 +505,7 @@ class IDF_Views
      */
     public static function getProjectsStatistics($projects)
     {
-        $projectIds = array();
+        $projectIds = array(0);
         foreach ($projects as $project) {
             $projectIds[] = $project->id;
         }
