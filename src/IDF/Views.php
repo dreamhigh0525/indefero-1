@@ -443,9 +443,11 @@ class IDF_Views
         }
 
         $projectIds = self::getUserVisibleProjectIds($user);
-        if (count($projectIds) > 0) {
-            $sql->SAnd(new Pluf_SQL(sprintf($db->pfx.'idf_projects.id IN (%s)', implode(', ', $projectIds))));
+        if (count($projectIds) == 0) {
+            return new ArrayObject();
         }
+
+        $sql->SAnd(new Pluf_SQL(sprintf($db->pfx.'idf_projects.id IN (%s)', implode(', ', $projectIds))));
 
         $orderTypes = array(
             'name' => 'name ASC',
@@ -470,9 +472,11 @@ class IDF_Views
         $sql = new Pluf_SQL('project IS NULL');
 
         $projectIds = self::getUserVisibleProjectIds($user);
-        if (count($projectIds) > 0) {
-            $sql->SAnd(new Pluf_SQL(sprintf('idf_project_id IN (%s)', implode(', ', $projectIds))));
+        if (count($projectIds) == 0) {
+            return new ArrayObject();
         }
+
+        $sql->SAnd(new Pluf_SQL(sprintf('idf_project_id IN (%s)', implode(', ', $projectIds))));
 
         $tagList = Pluf::factory('IDF_Tag')->getList(array(
             'filter' => $sql->gen(),
