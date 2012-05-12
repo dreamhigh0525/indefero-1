@@ -37,10 +37,11 @@ help:
 	@printf "\tpo-push    - Send the all PO files to the transifex server.\n"
 	@printf "\tpo-pull    - Get all PO files from the transifex server.\n"
 	@printf "\tpo-stats   - Show translation statistics of all PO files.\n"
-	@printf "\nMisc Rules :\n";
-	@printf "\tdb-install - Install the database schema.\n"
-	@printf "\tdb-update  - Update the database schema.\n"
-
+	@printf "\nRules for managing the database :\n";
+	@printf "\tdb-install	- Install the database schema.\n"
+	@printf "\tdb-update	- Update the database schema.\n"
+	@printf "\tdb-backup-foo	- Create a named backup 'foo' with data from the current database.\n"
+	@printf "\tdb-restore-foo	- Restore schema and the data from a named backup 'foo' to an empty database.\n"
 
 #
 #   Internationalization rule, POT & PO file manipulation
@@ -139,8 +140,8 @@ po-stats:
 #       make develop_zipfile
 #
 %-zipfile:
-	@git archive --format=zip --prefix="indefero/" $(@:-zipfile=) \
-		> indefero-$(@:-zipfile=)-`git log $(@:-zipfile=) -n 1 \
+	@git archive --format=zip --prefix="indefero/" $* \
+		> indefero-$*-`git log $* -n 1 \
 		--pretty=format:%h`.zip
 
 db-install:
@@ -148,3 +149,13 @@ db-install:
 
 db-update:
 	@cd src && php "$(PLUF_PATH)/migrate.php" --conf=IDF/conf/idf.php -a -d
+
+db-backup-%:
+	@[ -e backups ] || mkdir backups
+	@cd src && php "$(PLUF_PATH)/migrate.php" --conf=IDF/conf/idf.php -a -b ../backups $*
+	@echo Files for named backup $* have been saved into backups/ directory.
+
+db-restore-%:
+	@cd src && php "$(PLUF_PATH)/migrate.php" --conf=IDF/conf/idf.php -a -r ../backups $*
+	@echo Files for named backup $* have been restored from the backups/ directory.
+

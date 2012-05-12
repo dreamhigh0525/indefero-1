@@ -5,6 +5,7 @@
 .settings
 .tx/config
 attachments
+backups
 indefero-*.zip
 src/IDF/conf/idf.php
 src/IDF/conf/idf.test.php
