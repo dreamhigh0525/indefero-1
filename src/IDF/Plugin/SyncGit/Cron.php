@@ -64,7 +64,7 @@ class IDF_Plugin_SyncGit_Cron
         // We update only the part of the file between IDF_START / IDF_END comment
         $original_keys = file_get_contents($authorized_keys);
         if (strstr($original_keys, "# indefero start") && strstr($original_keys, "# indefero end")) {
-            $out = preg_replace('/(#\sindefero\sstart).+(#\sindefero\send\s\s?)/isU', 
+            $out = preg_replace('%(#\sindefero\sstart).+(#\sindefero\send\s\s?)%isU', 
                                 $out, $original_keys);
         } else {
              $out .= $original_keys;   

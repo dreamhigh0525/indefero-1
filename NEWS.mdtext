@@ -7,6 +7,11 @@
   for him (but still no one was actually accessible).
   This has been fixed. 
 
+- Fixed a problem where the SyncGit plugin doesn't properly
+  updates the authorized_keys file when the public key
+  data contained slashes (thanks to Simon Gareste for the
+  fix!)
+
 # InDefero 1.3.2 - Wed May 09 20:05 2012 UTC
 
 ## Bugfixes
