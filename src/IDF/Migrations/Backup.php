@@ -119,5 +119,9 @@ function IDF_Migrations_Backup_restore($folder, $name)
     foreach ($full_data as $model => $data) {
         Pluf_Test_Fixture::load($data, false);
     }
+    foreach ($models as $model) {
+        $schema->model = new $model();
+        $schema->createConstraints();
+    }
     return true;
 }

@@ -62,6 +62,10 @@ function IDF_Migrations_Install_setup($params=null)
         $schema->model = new $model();
         $schema->createTables();
     }
+    foreach ($models as $model) {
+        $schema->model = new $model();
+        $schema->createConstraints();
+    }
     // Install the permissions
     $perm = new Pluf_Permission();
     $perm->name = 'Project membership';
@@ -120,6 +124,10 @@ function IDF_Migrations_Install_teardown($params=null)
                     );
     $db = Pluf::db();
     $schema = new Pluf_DB_Schema($db);
+    foreach ($models as $model) {
+        $schema->model = new $model();
+        $schema->dropConstraints();
+    }
     foreach ($models as $model) {
         $schema->model = new $model();
         $schema->dropTables();
