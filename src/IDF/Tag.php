@@ -50,6 +50,7 @@ class IDF_Tag extends Pluf_Model
                                   'model' => 'IDF_Project',
                                   'blank' => true,
                                   'is_null' => true,
+                                  'default' => null,
                                   'verbose' => __('project'),
                                   ),
                             'class' =>

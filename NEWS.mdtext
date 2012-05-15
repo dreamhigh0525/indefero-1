@@ -2,15 +2,17 @@
 
 ## Bugfixes
 
-- If an anonymous or authenticated user had no access
-  to any project in a forge, all projects were listed
-  for him (but still no one was actually accessible).
-  This has been fixed. 
+- If an anonymous or authenticated user had no access to any project in a 
+  forge, all projects were listed for him (but still no one was actually
+  accessible). This has been fixed. 
 
-- Fixed a problem where the SyncGit plugin doesn't properly
-  updates the authorized_keys file when the public key
-  data contained slashes (thanks to Simon Gareste for the
-  fix!)
+- Fixed a problem where the SyncGit plugin doesn't properly updates the
+  authorized_keys file when the public key data contained slashes (thanks
+  to Simon Gareste for the fix!)
+
+- Under PostgreSQL new projects could not be created due to a failing
+  foreign key relation. Adding project tags was not possible for a similar
+  reason. This has been fixed (issue 800, continued).
 
 # InDefero 1.3.2 - Wed May 09 20:05 2012 UTC
 

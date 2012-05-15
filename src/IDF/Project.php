@@ -105,6 +105,8 @@ class IDF_Project extends Pluf_Model
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_ProjectActivity',
                                   'blank' => true,
+                                  'is_null' => true,
+                                  'default' => null,
                                   'verbose' => __('current project activity'),
                                   ),
                             );
