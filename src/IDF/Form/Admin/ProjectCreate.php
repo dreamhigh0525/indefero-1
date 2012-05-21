@@ -360,44 +360,34 @@ class IDF_Form_Admin_ProjectCreate extends Pluf_Form
 
         $conf = new IDF_Conf();
         $conf->setProject($project);
-        $keys = array('scm', 'svn_remote_url', 'svn_username',
-                      'svn_password', 'mtn_master_branch', 'external_project_url');
-        foreach ($keys as $key) {
-            $this->cleaned_data[$key] = (!empty($this->cleaned_data[$key])) ?
-                $this->cleaned_data[$key] : '';
-            $conf->setVal($key, $this->cleaned_data[$key]);
-        }
+
         if ($this->cleaned_data['template'] != '--') {
             $tmplconf = new IDF_Conf();
             $tmplconf->setProject($tmpl);
-            // We need to get all the configuration variables we want from
-            // the old project and put them into the new project.
-            $props = array(
-                           'labels_download_predefined' => IDF_Form_UploadConf::init_predefined,
-                           'labels_download_one_max' => IDF_Form_UploadConf::init_one_max,
-                           'labels_wiki_predefined' => IDF_Form_WikiConf::init_predefined,
-                           'labels_wiki_one_max' => IDF_Form_WikiConf::init_one_max,
-                           'labels_issue_template' => IDF_Form_IssueTrackingConf::init_template,
-                           'labels_issue_open' => IDF_Form_IssueTrackingConf::init_open,
-                           'labels_issue_closed' => IDF_Form_IssueTrackingConf::init_closed,
-                           'labels_issue_predefined' =>  IDF_Form_IssueTrackingConf::init_predefined,
-                           'labels_issue_one_max' => IDF_Form_IssueTrackingConf::init_one_max,
-                           'issue_relations' => IDF_Form_IssueTrackingConf::init_relations,
-                           'webhook_url' => '',
-                           'downloads_access_rights' => 'all',
-                           'review_access_rights' => 'all',
-                           'wiki_access_rights' => 'all',
-                           'source_access_rights' => 'all',
-                           'issues_access_rights' => 'all',
-                           'downloads_notification_email' => '',
-                           'review_notification_email' => '',
-                           'wiki_notification_email' => '',
-                           'source_notification_email' => '',
-                           'issues_notification_email' => '',
-                           );
-            foreach ($props as $prop => $def) {
-                $conf->setVal($prop, $tmplconf->getVal($prop, $def));
+
+            $allKeys =  $tmplconf->getKeys();
+            $scm = $this->cleaned_data['scm'];
+            $ignoreKeys = array('scm', 'external_project_url', 'logo');
+
+            // copy over all existing variables, except scm-related data and
+            // the project url / logo
+            foreach ($allKeys as $key) {
+                if (in_array($key, $ignoreKeys) || strpos($key, $scm.'_') === 0) {
+                    continue;
+                }
+                $conf->setVal($key, $tmplconf->getVal($key));
             }
+        }
+
+        $keys = array(
+            'scm', 'svn_remote_url', 'svn_username',
+            'svn_password', 'mtn_master_branch',
+            'external_project_url'
+        );
+        foreach ($keys as $key) {
+            $this->cleaned_data[$key] = !empty($this->cleaned_data[$key]) ?
+                $this->cleaned_data[$key] : '';
+            $conf->setVal($key, $this->cleaned_data[$key]);
         }
         $project->created();
 

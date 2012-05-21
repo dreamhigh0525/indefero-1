@@ -44,9 +44,9 @@ class IDF_Conf extends Pluf_Model
                             array(
                                   'type' => 'Pluf_DB_Field_Sequence',
                                   //It is automatically added.
-                                  'blank' => true, 
+                                  'blank' => true,
                                   ),
-                            'project' => 
+                            'project' =>
                             array(
                                   'type' => 'Pluf_DB_Field_Foreignkey',
                                   'model' => 'IDF_Project',
@@ -84,7 +84,7 @@ class IDF_Conf extends Pluf_Model
 
     function initCache()
     {
-        $this->datacache = new ArrayObject();
+        $this->datacache = array();
         $sql = new Pluf_SQL('project=%s', $this->_project->id);
         foreach ($this->getList(array('filter' => $sql->gen())) as $val) {
             $this->datacache[$val->vkey] = $val->vdesc;
@@ -97,7 +97,7 @@ class IDF_Conf extends Pluf_Model
      */
     function setVal($key, $value)
     {
-        if (!is_null($this->getVal($key, null)) 
+        if (!is_null($this->getVal($key, null))
             and $value == $this->getVal($key)) {
             return;
         }
@@ -128,5 +128,13 @@ class IDF_Conf extends Pluf_Model
         if ($initcache) {
             $this->initCache();
         }
+    }
+
+    function getKeys()
+    {
+        if ($this->datacache === null) {
+            $this->initCache();
+        }
+        return array_keys($this->datacache);
     }
 }
