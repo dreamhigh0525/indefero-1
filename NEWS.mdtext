@@ -5,6 +5,10 @@ or newer to run properly!
 
 ## Bugfixes
 
+- A long standing bug in the Mercurial plugin that lead to corruption
+  of boolean configuration values in the `hgrc` of the served repository
+  has been fixed (issue 523).
+ 
 - If an anonymous or authenticated user had no access to any project in a 
   forge, all projects were listed for him (but still no one was actually
   accessible). This has been fixed. 
