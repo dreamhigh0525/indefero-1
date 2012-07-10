@@ -52,11 +52,11 @@ class IDF_Scm_Git extends IDF_Scm
      * A       doc/Guide utilisateur/images/ftp-nautilus.png
      * M       doc/Guide utilisateur/textes/log_boot_PEGASE.txt
      *
-     * Status letters mean : Added (A), Deleted (D), Modified (M), Renamed (R)
+     * Status letters mean : Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R)
      */
     public function getChanges($commit)
     {
-        $cmd = sprintf('GIT_DIR=%s '.Pluf::f('git_path', 'git').' show %s --name-status --pretty="format:" --diff-filter="[A|D|M|R]" -M',
+        $cmd = sprintf('GIT_DIR=%s '.Pluf::f('git_path', 'git').' show %s --name-status --pretty="format:" --diff-filter="[A|C|D|M|R]" -C -C',
                    escapeshellarg($this->repo),
                    escapeshellarg($commit));
         $out = array();
@@ -89,6 +89,9 @@ class IDF_Scm_Git extends IDF_Scm
                 } else if ($action == 'R') {
                     $matches = preg_split("/\t/", $line);
                     $return->renames[$matches[1]] = $matches[2];
+                } else if ($action == 'C') {
+                    $matches = preg_split("/\t/", $line);
+                    $return->copies[$matches[1]] = $matches[2];
                 }
             }
         }
