@@ -167,7 +167,7 @@ class IDF_Wiki_PageRevision extends Pluf_Model
             if (count($matches) > 1 && count($matches[1]) > 0) {
                 foreach ($matches[1] as $resourceName) {
                     $sql = new Pluf_SQL('project=%s AND title=%s',
-                                        array($prj->id, $resourceName));
+                                        array($page->get_project()->id, $resourceName));
                     $resources = Pluf::factory('IDF_Wiki_Resource')->getList(array('filter'=>$sql->gen()));
                     if ($resources->count() == 0)
                         continue;
